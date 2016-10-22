@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+        <item
+            android:id="@+id/menu_opcion_terror"
+            android:title="Terror">
+        </item>
+
+        <item
+            android:id="@+id/menu_opcion_accion"
+            android:title="Accion">
+        </item>
+
+        <item
+            android:id="@+id/menu_opcion_comedia"
+            android:title="Comedia">
+        </item>
+</menu>
