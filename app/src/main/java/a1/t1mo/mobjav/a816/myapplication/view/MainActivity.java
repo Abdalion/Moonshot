@@ -9,6 +9,13 @@ import android.widget.Toast;
 
 import a1.t1mo.mobjav.a816.myapplication.R;
 
+/**
+ * MoonShot App
+ * Proyecto Integrador
+ * Curso de Desarrollo Mobile Android
+ * Turno Tarde
+ */
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
