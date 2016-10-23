@@ -1,7 +1,6 @@
 package a1.t1mo.mobjav.a816.myapplication.model;
 
 import java.util.Date;
-import java.util.List;
 
 /**
  * MoonShot App
@@ -12,22 +11,22 @@ import java.util.List;
  */
 
 public class Pelicula {
-    private Integer mImdbID;
+    private String mImdbId;
     private String mTitulo;
     private String mDirector;
-    private List<String> mActores;
+    private String mActores;
     private Date mFechaDeEstreno;
     private String mTrama;
     private Float mImdbRating;
     private String mLenguaje;
     private Integer mImagenId;
 
-    public Integer getImdbID() {
-        return mImdbID;
+    public String getImdbId() {
+        return mImdbId;
     }
 
-    public void setImdbID(Integer imdbID) {
-        mImdbID = imdbID;
+    public void setImdbId(String imdbId) {
+        mImdbId = imdbId;
     }
 
     public String getTitulo() {
@@ -46,12 +45,16 @@ public class Pelicula {
         mDirector = director;
     }
 
-    public List<String> getActores() {
+    public String getActores() {
         return mActores;
     }
 
-    public void setActores(List<String> actores) {
+    public void setActores(String actores) {
         mActores = actores;
+    }
+
+    public String getTrama() {
+        return mTrama;
     }
 
     public Date getFechaDeEstreno() {
@@ -60,10 +63,6 @@ public class Pelicula {
 
     public void setFechaDeEstreno(Date fechaDeEstreno) {
         mFechaDeEstreno = fechaDeEstreno;
-    }
-
-    public String getTrama() {
-        return mTrama;
     }
 
     public void setTrama(String trama) {
