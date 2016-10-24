@@ -2,9 +2,13 @@ package a1.t1mo.mobjav.a816.myapplication.view;
 
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import a1.t1mo.mobjav.a816.myapplication.R;
@@ -32,7 +36,22 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        Button button = (Button) findViewById(R.id.main_botonDrawer);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onClickBotonDrawer();
+            }
+        });
+
     }
+
+    private void onClickBotonDrawer() {
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.main_drawerLayout);
+        drawer.openDrawer(Gravity.LEFT);
+    }
+
 
     private void onSelectItem(MenuItem item) {
         if(item.getItemId() == R.id.menu_opcion_accion) {

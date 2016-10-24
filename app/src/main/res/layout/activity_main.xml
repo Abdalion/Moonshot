@@ -4,18 +4,54 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="a1.t1mo.mobjav.a816.myapplication.view.MainActivity">
+    android:background="@color/colorPrimary"
+    tools:context="a1.t1mo.mobjav.a816.myapplication.view.MainActivity"
+    android:id="@+id/main_drawerLayout">
 
-
-    <FrameLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/main_contenedorDeFragment">
+        android:orientation="vertical">
 
-    </FrameLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="90"
+            android:orientation="horizontal">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="10"
+                android:background="@color/colorPrimaryDark"
+                android:drawableLeft="@drawable/ic_hamburger_white"
+                android:id="@+id/main_botonDrawer"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Peliculas"
+                android:layout_weight="10"
+                android:background="@color/colorPrimaryDark"
+                android:textSize="30sp"
+                android:textColor="@color/colorAccent"
+                android:gravity="center"/>
+
+        </LinearLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/main_contenedorDeFragment"
+            android:layout_weight="10">
+        </FrameLayout>
+
+    </LinearLayout>
+
 
 
     <android.support.design.widget.NavigationView
+        app:itemTextColor="@color/colorAccent"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
