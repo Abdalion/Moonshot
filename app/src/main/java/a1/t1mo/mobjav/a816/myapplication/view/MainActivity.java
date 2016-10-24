@@ -11,7 +11,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import java.util.List;
+
 import a1.t1mo.mobjav.a816.myapplication.R;
+import a1.t1mo.mobjav.a816.myapplication.controller.PeliculaController;
+import a1.t1mo.mobjav.a816.myapplication.model.Pelicula;
 
 /**
  * MoonShot App
@@ -56,6 +60,10 @@ public class MainActivity extends AppCompatActivity {
     private void onSelectItem(MenuItem item) {
         if(item.getItemId() == R.id.menu_opcion_drama) {
             //Pedir fragment con las peliculas de accion cargadas.
+
+            PeliculaController peliculaController = new PeliculaController();
+            List<Pelicula> list = peliculaController.getGenero(MainActivity.this, "Drama");
+
             Toast.makeText(MainActivity.this, "Se cargaron las peliculas de drama", Toast.LENGTH_SHORT).show();
         }
         else if(item.getItemId() == R.id.menu_opcion_thriller) {
