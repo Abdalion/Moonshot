@@ -30,7 +30,7 @@ import java.text.SimpleDateFormat;
 public class PeliculaDAO {
     private static final String TAG = PeliculaDAO.class.getSimpleName();
 
-    public Pelicula getPelicula(Context context, String asset, Integer imgId) {
+    public Pelicula getPelicula(Context context, String asset, Integer imgId, String generos) {
         Pelicula pelicula = null;
         AssetManager manager = context.getAssets();
         try {
@@ -47,6 +47,7 @@ public class PeliculaDAO {
             Toast.makeText(context, "Error de parseo", Toast.LENGTH_SHORT).show();
         }
         pelicula.setImagenId(imgId);
+        pelicula.setGeneros(generos);
         return pelicula;
     }
 

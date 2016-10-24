@@ -24,9 +24,9 @@ public class PeliculaController {
         mDAO = new PeliculaDAO();
     }
 
-    public Pelicula getPelicula(Context context, String asset, Integer imgId) {
+    public Pelicula getPelicula(Context context, String asset, Integer imgId, String generos) {
         // TODO: 23/10/2016 las imagenes las tendriamos que traer de algun servidor y cachearlas
-        return mDAO.getPelicula(context, asset, imgId);
+        return mDAO.getPelicula(context, asset, imgId, generos);
     }
 
     public List<Pelicula> getPeliculas(Context context) {
@@ -40,9 +40,14 @@ public class PeliculaController {
                 R.drawable.the_girl_on_the_train, R.drawable.the_light_between_oceans,
                 R.drawable.the_magnificent_seven, R.drawable.war_dogs};
 
+        String[] generos = {"Action, Drama, Thriller", "Crime, Drama", "Action, Adventure, Crime",
+                "Biography, Drama, Thriller", "Biography, Drama", "Action, Crime, Drama",
+                "Mystery, Thriller", "Drama, Romance", "Action, Adventure, Western",
+                "Comedy, Crime, Drama"};
+
         List<Pelicula> listaDePeliculas = new ArrayList<>();
         for (int i=0; i < assets.length; i++) {
-            listaDePeliculas.add(this.getPelicula(context, assets[i], imgIds[i]));
+            listaDePeliculas.add(this.getPelicula(context, assets[i], imgIds[i], generos[i]));
         }
         return listaDePeliculas;
     }

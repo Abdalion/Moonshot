@@ -19,6 +19,7 @@ public class Pelicula {
     private String mTrama;
     private Float mImdbRating;
     private String mLenguaje;
+    private String mGeneros;
     private Integer mImagenId;
 
     public String getImdbId() {
@@ -83,6 +84,14 @@ public class Pelicula {
 
     public void setLenguaje(String lenguaje) {
         mLenguaje = lenguaje;
+    }
+
+    public String getGeneros() {
+        return mGeneros;
+    }
+
+    public void setGeneros(String generos) {
+        mGeneros = generos;
     }
 
     public Integer getImagenId() {
