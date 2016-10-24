@@ -4,6 +4,7 @@ import android.content.Context;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.StringTokenizer;
 
 import a1.t1mo.mobjav.a816.myapplication.R;
 import a1.t1mo.mobjav.a816.myapplication.model.Pelicula;
@@ -50,5 +51,30 @@ public class PeliculaController {
             listaDePeliculas.add(this.getPelicula(context, assets[i], imgIds[i], generos[i]));
         }
         return listaDePeliculas;
+    }
+
+    public List<Pelicula> getGenero(Context context, String genero) {
+        ArrayList<Pelicula> peliculas = new ArrayList<>();
+        switch (genero) {
+            case "Accion":
+                peliculas.add(getPelicula(context, "deepwater_horizon", R.drawable.deepwater_horizon,
+                        "Action, Drama, Thriller"));
+                peliculas.add(getPelicula(context, "inferno", R.drawable.inferno,
+                        "Action, Adventure, Crime"));
+                peliculas.add(getPelicula(context, "the_accountant", R.drawable.the_accountant,
+                        "Action, Crime, Drama"));
+                peliculas.add(getPelicula(context, "the_magnificent_seven",
+                        R.drawable.the_magnificent_seven, "Action, Adventure, Western"));
+                break;
+            case "Drama":
+                peliculas.add(getPelicula(context, "deepwater_horizon", R.drawable.deepwater_horizon,
+                        "Action, Drama, Thriller"));
+                peliculas.add(getPelicula(context, "hell_on_high_water",
+                        R.drawable.hell_on_high_water, "Crime, Drama"));
+                peliculas.add(getPelicula(context, "snowden", R.drawable.hell_on_high_water,
+                        "Biography, Drama, Thriller"));
+                
+
+        }
     }
 }
