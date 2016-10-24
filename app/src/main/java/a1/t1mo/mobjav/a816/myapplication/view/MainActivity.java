@@ -54,17 +54,17 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void onSelectItem(MenuItem item) {
-        if(item.getItemId() == R.id.menu_opcion_accion) {
+        if(item.getItemId() == R.id.menu_opcion_drama) {
             //Pedir fragment con las peliculas de accion cargadas.
-            Toast.makeText(MainActivity.this, "Se cargaron las peliculas de accion", Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, "Se cargaron las peliculas de drama", Toast.LENGTH_SHORT).show();
         }
-        else if(item.getItemId() == R.id.menu_opcion_comedia) {
+        else if(item.getItemId() == R.id.menu_opcion_thriller) {
             //Pedir fragment con las peliculas de comedia cargadas.
-            Toast.makeText(MainActivity.this, "Se cargaron las peliculas de comedia", Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, "Se cargaron las peliculas de thriller", Toast.LENGTH_SHORT).show();
         }
-        else if(item.getItemId() == R.id.menu_opcion_terror) {
+        else if(item.getItemId() == R.id.menu_opcion_accion) {
             //Pedir fragment con las peliculas de terror cargadas.
-            Toast.makeText(MainActivity.this, "Se cargaron las peliculas de terror", Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, "Se cargaron las peliculas de accion", Toast.LENGTH_SHORT).show();
         }
     }
 
