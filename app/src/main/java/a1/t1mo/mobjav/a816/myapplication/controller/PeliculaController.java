@@ -71,10 +71,26 @@ public class PeliculaController {
                         "Action, Drama, Thriller"));
                 peliculas.add(getPelicula(context, "hell_on_high_water",
                         R.drawable.hell_on_high_water, "Crime, Drama"));
-                peliculas.add(getPelicula(context, "snowden", R.drawable.hell_on_high_water,
+                peliculas.add(getPelicula(context, "snowden", R.drawable.snowden,
                         "Biography, Drama, Thriller"));
-                
-
+                peliculas.add(getPelicula(context, "sully", R.drawable.sully,
+                        "Biography, Drama"));
+                peliculas.add(getPelicula(context, "the_accountant", R.drawable.the_accountant,
+                        "Action, Crime, Drama"));
+                peliculas.add(getPelicula(context, "the_light_between_oceans",
+                        R.drawable.the_light_between_oceans, "Drama, Romance"));
+                peliculas.add(getPelicula(context, "war_dogs",
+                        R.drawable.war_dogs, "Comedy, Crime, Drama"));
+                break;
+            case "Thriller":
+                peliculas.add(getPelicula(context, "deepwater_horizon", R.drawable.deepwater_horizon,
+                        "Action, Drama, Thriller"));
+                peliculas.add(getPelicula(context, "snowden", R.drawable.snowden,
+                        "Biography, Drama, Thriller"));
+                peliculas.add(getPelicula(context, "the_girl_on_the_train",
+                        R.drawable.the_girl_on_the_train, "Mystery, Thriller"));
+                break;
         }
+        return peliculas;
     }
 }
