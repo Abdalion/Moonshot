@@ -24,6 +24,10 @@ import a1.t1mo.mobjav.a816.myapplication.model.Pelicula;
 public class PeliculasAdapter extends RecyclerView.Adapter<PeliculasAdapter.PeliculaHolder> {
     private List<Pelicula> mPeliculas;
 
+    public PeliculasAdapter(List<Pelicula> peliculas) {
+        mPeliculas = peliculas;
+    }
+
     @Override
     public PeliculaHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
@@ -55,12 +59,12 @@ public class PeliculasAdapter extends RecyclerView.Adapter<PeliculasAdapter.Peli
 
         private void bindPelicula(Pelicula pelicula) {
             mPelicula = pelicula;
-            mImagen.setImageResource(pelicula.getImagenId());
+            mImagen.setImageResource(mPelicula.getImagenId());
         }
 
         @Override
         public void onClick(View v) {
-
+        // TODO: 25/10/2016 Implementar el listener
         }
     }
 }
