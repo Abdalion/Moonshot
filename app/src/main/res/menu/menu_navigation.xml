@@ -3,6 +3,11 @@
 
     <group android:checkableBehavior="single">
         <item
+            android:id="@+id/menu_opcion_todas"
+            android:title="Todas">
+        </item>
+
+        <item
             android:id="@+id/menu_opcion_thriller"
             android:title="Thriller">
         </item>

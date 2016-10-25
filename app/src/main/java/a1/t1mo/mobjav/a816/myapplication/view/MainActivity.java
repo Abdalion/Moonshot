@@ -1,6 +1,7 @@
 package a1.t1mo.mobjav.a816.myapplication.view;
 
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -31,6 +32,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.main_navigationView);
+        navigationView.setCheckedItem(R.id.menu_opcion_todas);
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().add(PeliculaFragment.)
+
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem item) {
@@ -59,6 +64,8 @@ public class MainActivity extends AppCompatActivity {
     private void onSelectItem(MenuItem item) {
         if(item.getItemId() == R.id.menu_opcion_drama) {
             //Pedir fragment con las peliculas de accion cargadas.
+
+
 
             PeliculaController peliculaController = new PeliculaController();
             List<Pelicula> list = peliculaController.getGenero(MainActivity.this, "Drama");
