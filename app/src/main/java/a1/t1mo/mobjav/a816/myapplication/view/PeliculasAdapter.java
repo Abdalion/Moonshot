@@ -21,11 +21,16 @@ import a1.t1mo.mobjav.a816.myapplication.model.Pelicula;
  * Archivo creado por Juan Pablo on 25/10/2016.
  */
 
-public class PeliculasAdapter extends RecyclerView.Adapter<PeliculasAdapter.PeliculaHolder> {
+public class PeliculasAdapter extends RecyclerView.Adapter<PeliculasAdapter.PeliculaHolder>{
     private List<Pelicula> mPeliculas;
+    private View.OnClickListener listener;
 
     public PeliculasAdapter(List<Pelicula> peliculas) {
         mPeliculas = peliculas;
+    }
+
+    public void setListener(View.OnClickListener listener) {
+        this.listener = listener;
     }
 
     @Override
@@ -44,6 +49,7 @@ public class PeliculasAdapter extends RecyclerView.Adapter<PeliculasAdapter.Peli
     public int getItemCount() {
         return mPeliculas.size();
     }
+
 
     public class PeliculaHolder extends RecyclerView.ViewHolder
             implements View.OnClickListener {
@@ -64,7 +70,7 @@ public class PeliculasAdapter extends RecyclerView.Adapter<PeliculasAdapter.Peli
 
         @Override
         public void onClick(View v) {
-        // TODO: 25/10/2016 Implementar el listener
+            listener.onClick(v);
         }
     }
 }

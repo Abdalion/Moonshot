@@ -24,16 +24,20 @@ import a1.t1mo.mobjav.a816.myapplication.model.Pelicula;
  * Turno Tarde
  */
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements PeliculaFragment.Escuchable{
+
+    FragmentManager fragmentManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        fragmentManager = getSupportFragmentManager();
+
         NavigationView navigationView = (NavigationView) findViewById(R.id.main_navigationView);
         navigationView.setCheckedItem(R.id.menu_opcion_todas);
-        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager = getSupportFragmentManager();
         PeliculaFragment peliculaFragment = PeliculaFragment.getPeliculaFragment("todas");
         fragmentManager.beginTransaction().replace(R.id.main_contenedorDeFragment, peliculaFragment).commit();
 
@@ -63,24 +67,35 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void onSelectItem(MenuItem item) {
-        if(item.getItemId() == R.id.menu_opcion_drama) {
-            //Pedir fragment con las peliculas de accion cargadas.
+        if(item.getItemId() == R.id.menu_opcion_todas) {
+            PeliculaFragment peliculaFragment = PeliculaFragment.getPeliculaFragment("Todas");
+            fragmentManager.beginTransaction().replace(R.id.main_contenedorDeFragment, peliculaFragment).commit();
 
-
-
-            PeliculaController peliculaController = new PeliculaController();
-            List<Pelicula> list = peliculaController.getGenero(MainActivity.this, "Drama");
+            Toast.makeText(MainActivity.this, "Se cargaron todas las peliculas", Toast.LENGTH_SHORT).show();
+        }
+        else if(item.getItemId() == R.id.menu_opcion_drama) {
+            PeliculaFragment peliculaFragment = PeliculaFragment.getPeliculaFragment("Drama");
+            fragmentManager.beginTransaction().replace(R.id.main_contenedorDeFragment, peliculaFragment).commit();
 
             Toast.makeText(MainActivity.this, "Se cargaron las peliculas de drama", Toast.LENGTH_SHORT).show();
         }
         else if(item.getItemId() == R.id.menu_opcion_thriller) {
-            //Pedir fragment con las peliculas de comedia cargadas.
+            PeliculaFragment peliculaFragment = PeliculaFragment.getPeliculaFragment("Thriller");
+            fragmentManager.beginTransaction().replace(R.id.main_contenedorDeFragment, peliculaFragment).commit();
+
             Toast.makeText(MainActivity.this, "Se cargaron las peliculas de thriller", Toast.LENGTH_SHORT).show();
         }
         else if(item.getItemId() == R.id.menu_opcion_accion) {
-            //Pedir fragment con las peliculas de terror cargadas.
+            PeliculaFragment peliculaFragment = PeliculaFragment.getPeliculaFragment("Accion");
+            fragmentManager.beginTransaction().replace(R.id.main_contenedorDeFragment, peliculaFragment).commit();
+
             Toast.makeText(MainActivity.this, "Se cargaron las peliculas de accion", Toast.LENGTH_SHORT).show();
         }
     }
 
+
+    @Override
+    public void onClickItem(Pelicula pelicula) {
+        Toast.makeText(this, "La concha de tu vieja", Toast.LENGTH_SHORT).show();
+    }
 }

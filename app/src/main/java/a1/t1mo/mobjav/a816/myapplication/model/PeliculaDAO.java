@@ -64,14 +64,20 @@ public class PeliculaDAO {
             pelicula.setTitulo(jsonObject.get("Title").getAsString());
             pelicula.setTrama(jsonObject.get("Plot").getAsString());
             pelicula.setLenguaje(jsonObject.get("Language").getAsString());
-            pelicula.setImdbRating(Float.parseFloat(jsonObject.get("imdbRating").getAsString()));
-            pelicula.setmDuracion(jsonObject.get("Runtime").getAsString());
-            SimpleDateFormat formato = new SimpleDateFormat("dd MMM yyyy");
+            try {
+                pelicula.setImdbRating(Float.parseFloat(jsonObject.get("imdbRating").getAsString()));
+            }
+            catch(Exception e) {
+                pelicula.setImdbRating(0.0f);
+                e.printStackTrace();
+            }
+            pelicula.setDuracion(jsonObject.get("Runtime").getAsString());
+ /*           SimpleDateFormat formato = new SimpleDateFormat("dd MMM yyyy");
             try {
                 pelicula.setFechaDeEstreno(formato.parse(jsonObject.get("Released").getAsString()));
             } catch (ParseException e) {
                 Log.e(TAG, "Error al parsear la fecha", e);
-            }
+            }*/
             return pelicula;
         }
     }

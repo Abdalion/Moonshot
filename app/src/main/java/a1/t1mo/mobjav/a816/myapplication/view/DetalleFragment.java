@@ -45,9 +45,9 @@ public class DetalleFragment extends Fragment {
         TextView textViewNombre =  (TextView) view.findViewById(R.id.fragment_detalle_titulo);
         textViewNombre.setText(pelicula.getTitulo());
 
-        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+/*        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
         TextView textView = (TextView) view.findViewById(R.id.fragment_detalle_fechaDeEstreno);
-        textView.setText(df.format(pelicula.getFechaDeEstreno()));
+        textView.setText(df.format(pelicula.getFechaDeEstreno()));*/
 
 
         TextView textView1Duracion =  (TextView) view.findViewById(R.id.fragment_detalle_duracion);
