@@ -103,11 +103,11 @@ public class Pelicula {
         mImagenId = imagenId;
     }
 
-    public String getmDuracion() {
+    public String getDuracion() {
         return mDuracion;
     }
 
-    public void setmDuracion(String mDuracion) {
+    public void setDuracion(String mDuracion) {
         this.mDuracion = mDuracion;
     }
 }

@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
+
 import a1.t1mo.mobjav.a816.myapplication.R;
 import a1.t1mo.mobjav.a816.myapplication.controller.PeliculaController;
 import a1.t1mo.mobjav.a816.myapplication.model.Pelicula;
@@ -42,6 +44,14 @@ public class DetalleFragment extends Fragment {
 
         TextView textViewNombre =  (TextView) view.findViewById(R.id.fragment_detalle_titulo);
         textViewNombre.setText(pelicula.getTitulo());
+
+        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+        TextView textView = (TextView) view.findViewById(R.id.fragment_detalle_fechaDeEstreno);
+        textView.setText(df.format(pelicula.getFechaDeEstreno()));
+
+
+        TextView textView1Duracion =  (TextView) view.findViewById(R.id.fragment_detalle_duracion);
+        textView1Duracion.setText(pelicula.getDuracion());
 
         TextView textViewGenre =  (TextView) view.findViewById(R.id.fragment_detalle_genero);
         textViewGenre.setText(pelicula.getGeneros());
