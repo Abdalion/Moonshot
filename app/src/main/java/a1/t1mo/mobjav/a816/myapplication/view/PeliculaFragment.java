@@ -17,7 +17,7 @@ import a1.t1mo.mobjav.a816.myapplication.model.Pelicula;
 
 public class PeliculaFragment extends Fragment {
 
-    public PeliculaFragment getPeliculaFragment(String genero) {
+    public static PeliculaFragment getPeliculaFragment(String genero) {
         Bundle bundle = new Bundle();
         bundle.putString("genero", genero);
         PeliculaFragment fragment = new PeliculaFragment();
