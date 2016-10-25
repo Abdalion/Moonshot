@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import a1.t1mo.mobjav.a816.myapplication.R;
@@ -16,12 +17,21 @@ import a1.t1mo.mobjav.a816.myapplication.model.Pelicula;
 
 public class PeliculaFragment extends Fragment {
 
+    public PeliculaFragment getPeliculaFragment(String genero) {
+        Bundle bundle = new Bundle();
+        bundle.putString("genero", genero);
+        PeliculaFragment fragment = new PeliculaFragment();
+        fragment.setArguments(bundle);
+        return fragment;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // TODO: 25/10/2016 El controller tendria que ser un singleton
+
+        String genero = getArguments().getString("genero");
         PeliculaController peliculaController = new PeliculaController();
-        List<Pelicula> peliculas = peliculaController.getPeliculas(getActivity());
+        ArrayList<Pelicula> peliculas = peliculaController.getGenero(getContext(), genero);
 
         View view = inflater.inflate(R.layout.fragment_pelicula, container, false);
         RecyclerView rv = (RecyclerView) view.findViewById(R.id.rv_grillaDePeliculas);

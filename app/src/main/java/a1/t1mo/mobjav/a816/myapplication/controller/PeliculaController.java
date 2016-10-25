@@ -3,7 +3,7 @@ package a1.t1mo.mobjav.a816.myapplication.controller;
 import android.content.Context;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.ArrayList;
 import java.util.StringTokenizer;
 
 import a1.t1mo.mobjav.a816.myapplication.R;
@@ -30,7 +30,7 @@ public class PeliculaController {
         return mDAO.getPelicula(context, asset, imgId, generos);
     }
 
-    public List<Pelicula> getPeliculas(Context context) {
+    public ArrayList<Pelicula> getPeliculas(Context context) {
         // Por ahora, hardcodeamos la lista de peliculas
         String[] assets = {"deepwater_horizon", "hell_on_high_water", "inferno", "snowden", "sully",
                 "the_accountant", "the_girl_on_the_train", "the_light_between_oceans",
@@ -46,14 +46,14 @@ public class PeliculaController {
                 "Mystery, Thriller", "Drama, Romance", "Action, Adventure, Western",
                 "Comedy, Crime, Drama"};
 
-        List<Pelicula> listaDePeliculas = new ArrayList<>();
+        ArrayList<Pelicula> listaDePeliculas = new ArrayList<>();
         for (int i=0; i < assets.length; i++) {
             listaDePeliculas.add(this.getPelicula(context, assets[i], imgIds[i], generos[i]));
         }
         return listaDePeliculas;
     }
 
-    public List<Pelicula> getGenero(Context context, String genero) {
+    public ArrayList<Pelicula> getGenero(Context context, String genero) {
         ArrayList<Pelicula> peliculas = new ArrayList<>();
         switch (genero) {
             case "Accion":
@@ -90,6 +90,8 @@ public class PeliculaController {
                 peliculas.add(getPelicula(context, "the_girl_on_the_train",
                         R.drawable.the_girl_on_the_train, "Mystery, Thriller"));
                 break;
+            default:
+                peliculas = getPeliculas(context);
         }
         return peliculas;
     }
