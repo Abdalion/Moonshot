@@ -65,7 +65,7 @@ public class PeliculaDAO {
             pelicula.setTrama(jsonObject.get("Plot").getAsString());
             pelicula.setLenguaje(jsonObject.get("Language").getAsString());
             pelicula.setImdbRating(Float.parseFloat(jsonObject.get("imdbRating").getAsString()));
-
+            pelicula.setmDuracion(jsonObject.get("Runtime").getAsString());
             SimpleDateFormat formato = new SimpleDateFormat("dd MMM yyyy");
             try {
                 pelicula.setFechaDeEstreno(formato.parse(jsonObject.get("Released").getAsString()));
