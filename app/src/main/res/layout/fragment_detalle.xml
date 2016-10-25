@@ -1,0 +1,167 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="a1.t1mo.mobjav.a816.myapplication.view.DetalleFragment"
+    >
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/sully"
+        android:id="@+id/fragment_detalle_imagenId"
+        android:layout_margin="30dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Titulo"
+        android:textColor="#000000"
+        android:textSize="20dp"
+        android:layout_marginBottom="3dp"
+        android:textStyle="bold"
+        android:layout_toRightOf="@+id/fragment_detalle_imagenId"
+        android:layout_marginTop="45dp"
+        android:id="@+id/fragment_detalle_titulo"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/fragment_detalle_titulo"
+        android:layout_toRightOf="@+id/fragment_detalle_imagenId"
+        android:id="@+id/fragment_detalle_genero"
+        android:text="Short, Action"
+        android:textSize="10dp"
+        android:textColor="#000000"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/fragment_detalle_genero"
+        android:layout_below="@+id/fragment_detalle_titulo"
+        android:id="@+id/fragment_detalle_duracion"
+        android:text="167 min"
+        android:textSize="10dp"
+        android:layout_marginLeft="15dp"
+        android:textColor="#000000"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/fragment_detalle_pais"
+        android:layout_below="@id/fragment_detalle_duracion"
+        android:id="@+id/fragment_detalle_lenguaje"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="20dp"
+        android:text="English"
+        android:textSize="10dp"
+        android:textColor="#000000"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/fragment_detalle_genero"
+        android:layout_toRightOf="@+id/fragment_detalle_imagenId"
+        android:id="@+id/fragment_detalle_pais"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:text="USA"
+        android:textSize="10dp"
+        android:textColor="#000000"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Fecha de estreno:"
+        android:layout_below="@+id/fragment_detalle_pais"
+        android:layout_toRightOf="@+id/fragment_detalle_imagenId"
+        android:textSize="11dp"
+        android:textStyle="bold"
+        android:textColor="#626262"
+        android:id="@+id/fechaDeEstrenoText"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/fragment_detalle_pais"
+        android:layout_toRightOf="@+id/fechaDeEstrenoText"
+        android:id="@+id/fragment_detalle_fechaDeEstreno"
+        android:layout_marginLeft="5dp"
+        android:paddingTop="0.5dp"
+        android:text="01 Jan 2001"
+        android:textSize="10dp"
+        android:textColor="#757575"
+
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Protagonizada por:"
+        android:layout_below="@+id/fechaDeEstrenoText"
+        android:layout_toRightOf="@+id/fragment_detalle_imagenId"
+        android:textSize="11dp"
+        android:textStyle="bold"
+        android:textColor="#626262"
+        android:id="@+id/protagonizadaPorText"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Jason Statham"
+        android:layout_below="@+id/fragment_detalle_fechaDeEstreno"
+        android:layout_toRightOf="@+id/protagonizadaPorText"
+        android:layout_marginLeft="5dp"
+        android:paddingTop="1dp"
+        android:textSize="11dp"
+        android:textColor="#757575"
+        android:id="@+id/fragment_detalle_actores"
+
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Director:"
+        android:layout_below="@+id/protagonizadaPorText"
+        android:layout_toRightOf="@+id/fragment_detalle_imagenId"
+        android:textSize="11dp"
+        android:textStyle="bold"
+        android:textColor="#626262"
+        android:id="@+id/directorText"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Esteban Quito"
+        android:layout_below="@+id/fragment_detalle_actores"
+        android:layout_toRightOf="@+id/directorText"
+        android:layout_marginLeft="5dp"
+        android:paddingTop="1dp"
+        android:textSize="11dp"
+        android:textColor="#757575"
+        android:id="@+id/fragment_detalle_director"
+        />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:text="ACA VA LA TRAMA"
+        android:layout_below="@+id/fragment_detalle_imagenId"
+        android:textSize="13dp"
+        android:id="@+id/fragment_detalle_trama"
+        android:textColor="#000000"
+        />
+
+</RelativeLayout>
