@@ -21,6 +21,7 @@ public class Pelicula {
     private String mLenguaje;
     private String mGeneros;
     private Integer mImagenId;
+    private String mDuracion;
 
     public String getImdbId() {
         return mImdbId;
@@ -100,5 +101,13 @@ public class Pelicula {
 
     public void setImagenId(Integer imagenId) {
         mImagenId = imagenId;
+    }
+
+    public String getDuracion() {
+        return mDuracion;
+    }
+
+    public void setDuracion(String mDuracion) {
+        this.mDuracion = mDuracion;
     }
 }
