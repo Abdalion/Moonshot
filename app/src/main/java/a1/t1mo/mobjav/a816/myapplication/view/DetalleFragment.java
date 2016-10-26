@@ -41,7 +41,7 @@ public class DetalleFragment extends Fragment {
         Integer imgIds = bundle.getInt("imgIds");
 
         Pelicula pelicula;
-        pelicula = peliculaController.getPelicula(getActivity(),assets,imgIds,generos);
+        pelicula = peliculaController.getPelicula(getActivity(), assets, imgIds, generos);
 
         TextView textViewNombre =  (TextView) view.findViewById(R.id.fragment_detalle_titulo);
         textViewNombre.setText(pelicula.getTitulo());
@@ -50,9 +50,8 @@ public class DetalleFragment extends Fragment {
         TextView textView = (TextView) view.findViewById(R.id.fragment_detalle_fechaDeEstreno);
         textView.setText(df.format(pelicula.getFechaDeEstreno()));
 
-
-        TextView textView1Duracion =  (TextView) view.findViewById(R.id.fragment_detalle_duracion);
-        textView1Duracion.setText(pelicula.getDuracion());
+        TextView textViewDuracion =  (TextView) view.findViewById(R.id.fragment_detalle_duracion);
+        textViewDuracion.setText(pelicula.getDuracion());
 
         TextView textViewGenre =  (TextView) view.findViewById(R.id.fragment_detalle_genero);
         textViewGenre.setText(pelicula.getGeneros());

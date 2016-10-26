@@ -17,7 +17,6 @@ import a1.t1mo.mobjav.a816.myapplication.controller.PeliculaController;
 import a1.t1mo.mobjav.a816.myapplication.model.Pelicula;
 
 public class PeliculaFragment extends Fragment{
-
     private Escuchable escuchable;
     private RecyclerView recyclerView;
     private ArrayList<Pelicula> listaDePeliculas;
@@ -40,7 +39,6 @@ public class PeliculaFragment extends Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         String genero = getArguments().getString("genero");
         final PeliculaController peliculaController = new PeliculaController();
         listaDePeliculas = peliculaController.getGenero(getContext(), genero);
@@ -49,7 +47,7 @@ public class PeliculaFragment extends Fragment{
         recyclerView = (RecyclerView) view.findViewById(R.id.rv_grillaDePeliculas);
         recyclerView.setHasFixedSize(true);
         final PeliculasAdapter peliculasAdapter = new PeliculasAdapter(listaDePeliculas);
-        peliculasAdapter.setListener(new ListenerRecetas());
+        peliculasAdapter.setListener(escuchable);
         recyclerView.setAdapter(peliculasAdapter);
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
         return view;
@@ -60,7 +58,6 @@ public class PeliculaFragment extends Fragment{
         public void onClick(View view) {
             int posicion = recyclerView.getChildAdapterPosition(view);
             Pelicula peliculaClickeada = listaDePeliculas.get(posicion);
-
             escuchable.onClickItem(peliculaClickeada);
 
         }

@@ -21,8 +21,7 @@ import a1.t1mo.mobjav.a816.myapplication.model.Pelicula;
  * Turno Tarde
  */
 
-public class MainActivity extends AppCompatActivity implements PeliculaFragment.Escuchable{
-
+public class MainActivity extends AppCompatActivity implements PeliculaFragment.Escuchable {
     FragmentManager fragmentManager;
 
     @Override
@@ -50,16 +49,10 @@ public class MainActivity extends AppCompatActivity implements PeliculaFragment.
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onClickBotonDrawer();
+                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.main_drawerLayout);
+                drawer.openDrawer(Gravity.LEFT);
             }
         });
-
-    }
-
-    private void onClickBotonDrawer() {
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.main_drawerLayout);
-        drawer.openDrawer(Gravity.LEFT);
     }
 
 
@@ -90,15 +83,15 @@ public class MainActivity extends AppCompatActivity implements PeliculaFragment.
         }
     }
 
-
     @Override
     public void onClickItem(Pelicula pelicula) {
-
         DetalleFragment detalleFragment = new DetalleFragment();
         Bundle bundle = new Bundle();
-        bundle.putString("assets", "AAAAAAA");/*todo: NOMBRE DEL ASSET DE LA PELICULA. AGREGARLO AL POJO PELICULA CUANDO SE LEE EL FILE */);
-        bundle.putString("generos", "AAAAAAA" );//No se que va aca
-        bundle.putString("imgIds", String.valueOf(pelicula.getImagenId()));
+        // Hardcoding is hard
+        bundle.putString("assets", "deepwater_horizon");
+        bundle.putString("generos", "Accion, Drama, Thriller" );
+        bundle.putInt("imgIds", R.drawable.deepwater_horizon);
+        detalleFragment.setArguments(bundle);
 
         fragmentManager.beginTransaction().replace(R.id.main_contenedorDeFragment, detalleFragment).commit();
     }
