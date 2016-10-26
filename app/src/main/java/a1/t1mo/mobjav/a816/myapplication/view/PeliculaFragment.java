@@ -16,9 +16,11 @@ import a1.t1mo.mobjav.a816.myapplication.R;
 import a1.t1mo.mobjav.a816.myapplication.controller.PeliculaController;
 import a1.t1mo.mobjav.a816.myapplication.model.Pelicula;
 
-public class PeliculaFragment extends Fragment implements View.OnClickListener {
+public class PeliculaFragment extends Fragment{
 
     private Escuchable escuchable;
+    private RecyclerView recyclerView;
+    private ArrayList<Pelicula> listaDePeliculas;
 
     public static PeliculaFragment getPeliculaFragment(String genero) {
         Bundle bundle = new Bundle();
@@ -41,21 +43,27 @@ public class PeliculaFragment extends Fragment implements View.OnClickListener {
 
         String genero = getArguments().getString("genero");
         final PeliculaController peliculaController = new PeliculaController();
-        final ArrayList<Pelicula> peliculas = peliculaController.getGenero(getContext(), genero);
+        listaDePeliculas = peliculaController.getGenero(getContext(), genero);
 
         final View view = inflater.inflate(R.layout.fragment_pelicula, container, false);
-        final RecyclerView rv = (RecyclerView) view.findViewById(R.id.rv_grillaDePeliculas);
-        rv.setHasFixedSize(true);
-        final PeliculasAdapter peliculasAdapter = new PeliculasAdapter(peliculas);
-        peliculasAdapter.setListener(this);
-        rv.setAdapter(peliculasAdapter);
-        rv.setLayoutManager(new GridLayoutManager(getActivity(), 3));
+        recyclerView = (RecyclerView) view.findViewById(R.id.rv_grillaDePeliculas);
+        recyclerView.setHasFixedSize(true);
+        final PeliculasAdapter peliculasAdapter = new PeliculasAdapter(listaDePeliculas);
+        peliculasAdapter.setListener(new ListenerRecetas());
+        recyclerView.setAdapter(peliculasAdapter);
+        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
         return view;
     }
 
-    @Override
-    public void onClick(View v) {
-        escuchable.onClickItem(peliculas.get(rv.getChildAdapterPosition(view)));
+    private class ListenerRecetas implements View.OnClickListener{
+        @Override
+        public void onClick(View view) {
+            int posicion = recyclerView.getChildAdapterPosition(view);
+            Pelicula peliculaClickeada = listaDePeliculas.get(posicion);
+
+            escuchable.onClickItem(peliculaClickeada);
+
+        }
     }
 
     public interface Escuchable {
