@@ -93,6 +93,13 @@ public class MainActivity extends AppCompatActivity implements PeliculaFragment.
 
     @Override
     public void onClickItem(Pelicula pelicula) {
-        Toast.makeText(this, "La concha de tu vieja", Toast.LENGTH_SHORT).show();
+
+        DetalleFragment detalleFragment = new DetalleFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("assets", "AAAAAAA");/*todo: NOMBRE DEL ASSET DE LA PELICULA. AGREGARLO AL POJO PELICULA CUANDO SE LEE EL FILE */);
+        bundle.putString("generos", "AAAAAAA" );//No se que va aca
+        bundle.putString("imgIds", String.valueOf(pelicula.getImagenId()));
+
+        fragmentManager.beginTransaction().replace(R.id.main_contenedorDeFragment, detalleFragment).commit();
     }
 }
