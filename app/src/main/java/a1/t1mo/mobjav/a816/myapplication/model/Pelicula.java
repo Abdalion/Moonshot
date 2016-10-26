@@ -22,6 +22,15 @@ public class Pelicula {
     private String mGeneros;
     private Integer mImagenId;
     private String mDuracion;
+    private String mAsset;
+
+    public String getAsset() {
+        return mAsset;
+    }
+
+    public void setAsset(String asset) {
+        mAsset = asset;
+    }
 
     public String getImdbId() {
         return mImdbId;

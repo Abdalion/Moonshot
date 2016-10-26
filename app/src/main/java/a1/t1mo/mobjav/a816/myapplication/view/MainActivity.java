@@ -87,10 +87,11 @@ public class MainActivity extends AppCompatActivity implements PeliculaFragment.
     public void onClickItem(Pelicula pelicula) {
         DetalleFragment detalleFragment = new DetalleFragment();
         Bundle bundle = new Bundle();
+
+        bundle.putString("assets", pelicula.getAsset());
         // Hardcoding is hard
-        bundle.putString("assets", "deepwater_horizon");
         bundle.putString("generos", "Accion, Drama, Thriller" );
-        bundle.putInt("imgIds", R.drawable.deepwater_horizon);
+        bundle.putInt("imgIds", pelicula.getImagenId());
         detalleFragment.setArguments(bundle);
 
         fragmentManager.beginTransaction().replace(R.id.main_contenedorDeFragment, detalleFragment).commit();

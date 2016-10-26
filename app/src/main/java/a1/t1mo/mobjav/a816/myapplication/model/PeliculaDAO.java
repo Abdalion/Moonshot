@@ -47,6 +47,7 @@ public class PeliculaDAO {
             Log.e(TAG, "Error de parseo", jsonEx);
             Toast.makeText(context, "Error de parseo", Toast.LENGTH_SHORT).show();
         }
+        pelicula.setAsset(asset);
         pelicula.setImagenId(imgId);
         pelicula.setGeneros(generos);
         return pelicula;
