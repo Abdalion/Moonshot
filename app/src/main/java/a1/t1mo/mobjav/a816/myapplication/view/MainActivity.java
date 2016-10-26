@@ -90,10 +90,10 @@ public class MainActivity extends AppCompatActivity implements PeliculaFragment.
 
         bundle.putString("assets", pelicula.getAsset());
         // Hardcoding is hard
-        bundle.putString("generos", "Accion, Drama, Thriller" );
+        bundle.putString("generos", pelicula.getGeneros());
         bundle.putInt("imgIds", pelicula.getImagenId());
         detalleFragment.setArguments(bundle);
 
-        fragmentManager.beginTransaction().replace(R.id.main_contenedorDeFragment, detalleFragment).commit();
+        fragmentManager.beginTransaction().replace(R.id.main_contenedorDeFragment, detalleFragment).addToBackStack("back").commit();
     }
 }

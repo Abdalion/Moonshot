@@ -1,6 +1,7 @@
 package a1.t1mo.mobjav.a816.myapplication.view;
 
 import android.app.Activity;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
@@ -45,6 +46,7 @@ public class PeliculaFragment extends Fragment{
 
         final View view = inflater.inflate(R.layout.fragment_pelicula, container, false);
         recyclerView = (RecyclerView) view.findViewById(R.id.rv_grillaDePeliculas);
+        recyclerView.addItemDecoration(new SpacesItemDecoration(4));
         recyclerView.setHasFixedSize(true);
         final PeliculasAdapter peliculasAdapter = new PeliculasAdapter(listaDePeliculas);
         peliculasAdapter.setListener(escuchable);
@@ -53,7 +55,7 @@ public class PeliculaFragment extends Fragment{
         return view;
     }
 
-    private class ListenerRecetas implements View.OnClickListener{
+/*    private class ListenerRecetas implements View.OnClickListener{
         @Override
         public void onClick(View view) {
             int posicion = recyclerView.getChildAdapterPosition(view);
@@ -61,10 +63,33 @@ public class PeliculaFragment extends Fragment{
             escuchable.onClickItem(peliculaClickeada);
 
         }
-    }
+    }*/
 
     public interface Escuchable {
         void onClickItem(Pelicula pelicula);
+    }
+
+    public class SpacesItemDecoration extends RecyclerView.ItemDecoration {
+        private int space;
+
+        public SpacesItemDecoration(int space) {
+            this.space = space;
+        }
+
+        @Override
+        public void getItemOffsets(Rect outRect, View view,
+                                   RecyclerView parent, RecyclerView.State state) {
+            outRect.left = space;
+            outRect.right = space;
+            outRect.bottom = space;
+
+            // Add top margin only for the first item to avoid double space between items
+            if (parent.getChildLayoutPosition(view) == 0) {
+                outRect.top = space;
+            } else {
+                outRect.top = 0;
+            }
+        }
     }
 }
 
