@@ -4,9 +4,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import java.util.List;
 
@@ -23,14 +21,14 @@ import a1.t1mo.mobjav.a816.myapplication.model.Pelicula;
 
 public class PeliculasAdapter extends RecyclerView.Adapter<PeliculasAdapter.PeliculaHolder>{
     private List<Pelicula> mPeliculas;
-    private View.OnClickListener listener;
+    private PeliculaFragment.Escuchable mListener;
 
     public PeliculasAdapter(List<Pelicula> peliculas) {
         mPeliculas = peliculas;
     }
 
-    public void setListener(View.OnClickListener listener) {
-        this.listener = listener;
+    public void setListener(PeliculaFragment.Escuchable listener) {
+        this.mListener = listener;
     }
 
     @Override
@@ -70,7 +68,7 @@ public class PeliculasAdapter extends RecyclerView.Adapter<PeliculasAdapter.Peli
 
         @Override
         public void onClick(View v) {
-            listener.onClick(v);
+            mListener.onClick(v);
         }
     }
 }

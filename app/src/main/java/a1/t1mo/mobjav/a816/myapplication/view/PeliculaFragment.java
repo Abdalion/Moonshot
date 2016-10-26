@@ -16,7 +16,7 @@ import a1.t1mo.mobjav.a816.myapplication.R;
 import a1.t1mo.mobjav.a816.myapplication.controller.PeliculaController;
 import a1.t1mo.mobjav.a816.myapplication.model.Pelicula;
 
-public class PeliculaFragment extends Fragment implements View.OnClickListener {
+public class PeliculaFragment extends Fragment {
 
     private Escuchable escuchable;
 
@@ -47,15 +47,10 @@ public class PeliculaFragment extends Fragment implements View.OnClickListener {
         final RecyclerView rv = (RecyclerView) view.findViewById(R.id.rv_grillaDePeliculas);
         rv.setHasFixedSize(true);
         final PeliculasAdapter peliculasAdapter = new PeliculasAdapter(peliculas);
-        peliculasAdapter.setListener(this);
+        peliculasAdapter.setListener(escuchable);
         rv.setAdapter(peliculasAdapter);
         rv.setLayoutManager(new GridLayoutManager(getActivity(), 3));
         return view;
-    }
-
-    @Override
-    public void onClick(View v) {
-        escuchable.onClickItem(peliculas.get(rv.getChildAdapterPosition(view)));
     }
 
     public interface Escuchable {

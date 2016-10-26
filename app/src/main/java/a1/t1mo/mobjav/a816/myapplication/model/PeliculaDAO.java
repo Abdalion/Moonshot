@@ -18,6 +18,7 @@ import java.io.InputStreamReader;
 import java.lang.reflect.Type;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Locale;
 
 /**
  * MoonShot App
@@ -72,12 +73,12 @@ public class PeliculaDAO {
                 e.printStackTrace();
             }
             pelicula.setDuracion(jsonObject.get("Runtime").getAsString());
- /*           SimpleDateFormat formato = new SimpleDateFormat("dd MMM yyyy");
+            SimpleDateFormat formato = new SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH);
             try {
                 pelicula.setFechaDeEstreno(formato.parse(jsonObject.get("Released").getAsString()));
             } catch (ParseException e) {
                 Log.e(TAG, "Error al parsear la fecha", e);
-            }*/
+            }
             return pelicula;
         }
     }
