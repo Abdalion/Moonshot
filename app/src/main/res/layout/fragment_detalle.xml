@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="a1.t1mo.mobjav.a816.myapplication.view.DetalleFragment"
-    android:background="@color/colorPrimary"
+    android:background="@color/colorPalabras2"
     >
 
     <ImageView
@@ -20,7 +20,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Titulo"
-        android:textColor="@color/colorPalabras"
+        android:textColor="@color/colorPalabras3"
         android:textSize="26dp"
         android:layout_marginLeft="20dp"
         android:textStyle="bold"
@@ -36,7 +36,7 @@
         android:text="Short, Action"
         android:textSize="13dp"
         android:textStyle="bold"
-        android:textColor="@color/colorPalabras"
+        android:textColor="@color/colorPalabras3"
         />
 
     <TextView
@@ -50,7 +50,7 @@
         android:layout_marginTop="5dp"
         android:layout_marginBottom="5dp"
         android:layout_marginLeft="20dp"
-        android:textColor="@color/colorPalabras"
+        android:textColor="@color/colorPalabras3"
         android:textStyle="bold"
         />
 
@@ -62,7 +62,7 @@
         android:id="@+id/fragment_detalle_lenguaje"
         android:text="English"
         android:textSize="13dp"
-        android:textColor="@color/colorPalabras"
+        android:textColor="@color/colorPalabras3"
         android:textStyle="bold"
         />
 
@@ -76,7 +76,7 @@
         android:layout_marginBottom="5dp"
         android:text="USA"
         android:textSize="13dp"
-        android:textColor="@color/colorPalabras"
+        android:textColor="@color/colorPalabras3"
         android:textStyle="bold"
         />
 
@@ -89,7 +89,7 @@
         android:textSize="13dp"
         android:layout_marginTop="10dp"
         android:textStyle="bold"
-        android:textColor="@color/colorPalabras"
+        android:textColor="@color/colorPalabras3"
         android:id="@+id/fechaDeEstrenoText"
         />
 
@@ -103,7 +103,7 @@
         android:paddingTop="0.5dp"
         android:text="01 Jan 2001"
         android:textSize="11dp"
-        android:textColor="@color/colorPalabras"
+        android:textColor="@color/colorPalabras3"
 
         />
 
@@ -116,7 +116,7 @@
         android:textSize="13dp"
         android:layout_marginTop="4dp"
         android:textStyle="bold"
-        android:textColor="@color/colorPalabras"
+        android:textColor="@color/colorPalabras3"
         android:id="@+id/protagonizadaPorText"
         />
 
@@ -129,7 +129,7 @@
         android:layout_marginLeft="5dp"
         android:paddingTop="1dp"
         android:textSize="11dp"
-        android:textColor="@color/colorPalabras"
+        android:textColor="@color/colorPalabras3"
         android:id="@+id/fragment_detalle_actores"
 
         />
@@ -142,7 +142,7 @@
         android:layout_toRightOf="@+id/fragment_detalle_imagenId"
         android:textSize="13dp"
         android:textStyle="bold"
-        android:textColor="@color/colorPalabras"
+        android:textColor="@color/colorPalabras3"
         android:id="@+id/directorText"
         android:layout_marginTop="4dp"
         />
@@ -156,7 +156,7 @@
         android:layout_marginLeft="5dp"
         android:paddingTop="1dp"
         android:textSize="11dp"
-        android:textColor="@color/colorPalabras"
+        android:textColor="@color/colorPalabras3"
         android:id="@+id/fragment_detalle_director"
         />
 
@@ -170,7 +170,7 @@
         android:layout_below="@+id/fragment_detalle_imagenId"
         android:textSize="20dp"
         android:id="@+id/fragment_detalle_trama"
-        android:textColor="@color/colorPalabras"
+        android:textColor="@color/colorPalabras3"
         android:layout_centerHorizontal="true"
 
         />
