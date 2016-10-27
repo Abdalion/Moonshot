@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/colorPrimary"
+    android:background="@color/colorPalabras2"
     tools:context="a1.t1mo.mobjav.a816.myapplication.view.MainActivity"
     android:id="@+id/main_drawerLayout">
 
@@ -17,12 +17,14 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="90"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            >
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="10"
+                android:paddingLeft="5dp"
                 android:background="@color/colorPrimaryDark"
                 android:drawableLeft="@drawable/ic_hamburger_white"
                 android:id="@+id/main_botonDrawer"/>
@@ -56,7 +58,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         app:menu="@menu/menu_navigation"
-        android:backgroundTint="@color/colorPrimary"
+        android:backgroundTint="@color/colorPalabras2"
         android:id="@+id/main_navigationView">
 
     </android.support.design.widget.NavigationView>

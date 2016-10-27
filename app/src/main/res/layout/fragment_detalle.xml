@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="a1.t1mo.mobjav.a816.myapplication.view.DetalleFragment"
+    android:background="@color/colorPrimary"
     >
 
     <ImageView
@@ -10,55 +11,59 @@
         android:layout_height="wrap_content"
         android:src="@drawable/sully"
         android:id="@+id/fragment_detalle_imagenId"
-        android:layout_margin="30dp" />
-
+        android:layout_marginLeft="20dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="80dp"
+        />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Titulo"
-        android:textColor="#000000"
-        android:textSize="20dp"
-        android:layout_marginBottom="3dp"
+        android:textColor="@color/colorPalabras"
+        android:textSize="26dp"
+        android:layout_marginLeft="20dp"
         android:textStyle="bold"
-        android:layout_toRightOf="@+id/fragment_detalle_imagenId"
-        android:layout_marginTop="45dp"
+        android:layout_marginTop="20dp"
         android:id="@+id/fragment_detalle_titulo"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/fragment_detalle_titulo"
         android:layout_toRightOf="@+id/fragment_detalle_imagenId"
         android:id="@+id/fragment_detalle_genero"
+        android:layout_marginTop="77dp"
         android:text="Short, Action"
-        android:textSize="10dp"
-        android:textColor="#000000"
+        android:textSize="13dp"
+        android:textStyle="bold"
+        android:textColor="@color/colorPalabras"
         />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/fragment_detalle_genero"
-        android:layout_below="@+id/fragment_detalle_titulo"
         android:id="@+id/fragment_detalle_duracion"
-        android:text="167 min"
-        android:textSize="10dp"
-        android:layout_marginLeft="15dp"
-        android:textColor="#000000"
-        />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_below="@+id/fragment_detalle_genero"
         android:layout_toRightOf="@+id/fragment_detalle_pais"
-        android:layout_below="@id/fragment_detalle_duracion"
-        android:id="@+id/fragment_detalle_lenguaje"
+        android:text="167 min"
+        android:textSize="13dp"
         android:layout_marginTop="5dp"
         android:layout_marginBottom="5dp"
         android:layout_marginLeft="20dp"
+        android:textColor="@color/colorPalabras"
+        android:textStyle="bold"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/fragment_detalle_imagenId"
+        android:layout_below="@id/fragment_detalle_pais"
+        android:id="@+id/fragment_detalle_lenguaje"
         android:text="English"
-        android:textSize="10dp"
-        android:textColor="#000000"
+        android:textSize="13dp"
+        android:textColor="@color/colorPalabras"
+        android:textStyle="bold"
         />
 
     <TextView
@@ -70,33 +75,35 @@
         android:layout_marginTop="5dp"
         android:layout_marginBottom="5dp"
         android:text="USA"
-        android:textSize="10dp"
-        android:textColor="#000000"
+        android:textSize="13dp"
+        android:textColor="@color/colorPalabras"
+        android:textStyle="bold"
         />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Fecha de estreno:"
-        android:layout_below="@+id/fragment_detalle_pais"
+        android:layout_below="@+id/fragment_detalle_lenguaje"
         android:layout_toRightOf="@+id/fragment_detalle_imagenId"
-        android:textSize="11dp"
+        android:textSize="13dp"
+        android:layout_marginTop="10dp"
         android:textStyle="bold"
-        android:textColor="#626262"
+        android:textColor="@color/colorPalabras"
         android:id="@+id/fechaDeEstrenoText"
         />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/fragment_detalle_pais"
-        android:layout_toRightOf="@+id/fechaDeEstrenoText"
+        android:layout_below="@+id/fechaDeEstrenoText"
+        android:layout_toRightOf="@id/fragment_detalle_imagenId"
         android:id="@+id/fragment_detalle_fechaDeEstreno"
         android:layout_marginLeft="5dp"
         android:paddingTop="0.5dp"
         android:text="01 Jan 2001"
-        android:textSize="10dp"
-        android:textColor="#757575"
+        android:textSize="11dp"
+        android:textColor="@color/colorPalabras"
 
         />
 
@@ -104,11 +111,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Protagonizada por:"
-        android:layout_below="@+id/fechaDeEstrenoText"
+        android:layout_below="@+id/fragment_detalle_fechaDeEstreno"
         android:layout_toRightOf="@+id/fragment_detalle_imagenId"
-        android:textSize="11dp"
+        android:textSize="13dp"
+        android:layout_marginTop="4dp"
         android:textStyle="bold"
-        android:textColor="#626262"
+        android:textColor="@color/colorPalabras"
         android:id="@+id/protagonizadaPorText"
         />
 
@@ -116,12 +124,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Jason Statham"
-        android:layout_below="@+id/fragment_detalle_fechaDeEstreno"
-        android:layout_toRightOf="@+id/protagonizadaPorText"
+        android:layout_below="@+id/protagonizadaPorText"
+        android:layout_toRightOf="@+id/fragment_detalle_imagenId"
         android:layout_marginLeft="5dp"
         android:paddingTop="1dp"
         android:textSize="11dp"
-        android:textColor="#757575"
+        android:textColor="@color/colorPalabras"
         android:id="@+id/fragment_detalle_actores"
 
         />
@@ -130,24 +138,25 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Director:"
-        android:layout_below="@+id/protagonizadaPorText"
+        android:layout_below="@+id/fragment_detalle_actores"
         android:layout_toRightOf="@+id/fragment_detalle_imagenId"
-        android:textSize="11dp"
+        android:textSize="13dp"
         android:textStyle="bold"
-        android:textColor="#626262"
+        android:textColor="@color/colorPalabras"
         android:id="@+id/directorText"
+        android:layout_marginTop="4dp"
         />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Esteban Quito"
-        android:layout_below="@+id/fragment_detalle_actores"
-        android:layout_toRightOf="@+id/directorText"
+        android:layout_below="@+id/directorText"
+        android:layout_toRightOf="@+id/fragment_detalle_imagenId"
         android:layout_marginLeft="5dp"
         android:paddingTop="1dp"
         android:textSize="11dp"
-        android:textColor="#757575"
+        android:textColor="@color/colorPalabras"
         android:id="@+id/fragment_detalle_director"
         />
 
@@ -155,13 +164,15 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:text="ACA VA LA TRAMA"
         android:layout_below="@+id/fragment_detalle_imagenId"
-        android:textSize="13dp"
+        android:textSize="20dp"
         android:id="@+id/fragment_detalle_trama"
-        android:textColor="#000000"
+        android:textColor="@color/colorPalabras"
+        android:layout_centerHorizontal="true"
+
         />
 
 </RelativeLayout>
