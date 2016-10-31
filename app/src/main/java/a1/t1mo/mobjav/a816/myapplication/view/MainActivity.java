@@ -2,6 +2,7 @@ package a1.t1mo.mobjav.a816.myapplication.view;
 
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -31,6 +32,13 @@ public class MainActivity extends AppCompatActivity implements PeliculaFragment.
         setContentView(R.layout.activity_main);
 
         fragmentManager = getSupportFragmentManager();
+
+        FragmentAdapterViewPager fragmentAdapter = new FragmentAdapterViewPager(fragmentManager);
+
+        ViewPager viewPager = (ViewPager)findViewById(R.id.activity_main_pager);
+
+        viewPager.setAdapter(fragmentAdapter);
+
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.main_navigationView);
         navigationView.setCheckedItem(R.id.menu_opcion_todas);
@@ -86,14 +94,14 @@ public class MainActivity extends AppCompatActivity implements PeliculaFragment.
 
     @Override
     public void onClickItem(Pelicula pelicula) {
-//        DetalleFragment detalleFragment = new DetalleFragment();
-//        Bundle bundle = new Bundle();
-//
-//        bundle.putString("assets", pelicula.getAsset());
-//        bundle.putString("generos", pelicula.getGeneros());
-//        bundle.putInt("imgIds", pelicula.getImagenId());
-//        detalleFragment.setArguments(bundle);
-//
-//        fragmentManager.beginTransaction().replace(R.id.main_contenedorDeFragment, detalleFragment).addToBackStack("back").commit();
+        DetalleFragment detalleFragment = new DetalleFragment();
+        Bundle bundle = new Bundle();
+
+        bundle.putString("titulo", pelicula.getTitulo());
+        bundle.putString("imagen", pelicula.getPosterPath());
+
+        detalleFragment.setArguments(bundle);
+
+        fragmentManager.beginTransaction().replace(R.id.main_contenedorDeFragment, detalleFragment).addToBackStack("back").commit();
     }
 }

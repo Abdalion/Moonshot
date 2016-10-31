@@ -3,31 +3,12 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="-15.5dp">
+    >
 
     <ImageView
         android:id="@+id/img_pelicula"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
-
-    <View
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
-        android:background="#7e000000"
-        android:layout_alignParentBottom="true"
-        android:id="@+id/item_pelicula_view"
-        />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:paddingBottom="25dp"
-        android:layout_alignParentLeft="true"
-        android:text="BITCH"
-        android:textColor="#ffffff"
-        android:textSize="10dp"
-        android:id="@+id/item_pelicula_titulo"
-        />
 
     </RelativeLayout>

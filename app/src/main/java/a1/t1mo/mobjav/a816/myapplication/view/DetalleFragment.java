@@ -8,12 +8,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.text.SimpleDateFormat;
-import java.util.Locale;
+import com.bumptech.glide.Glide;
 
 import a1.t1mo.mobjav.a816.myapplication.R;
-import a1.t1mo.mobjav.a816.myapplication.controller.PeliculaController;
-import a1.t1mo.mobjav.a816.myapplication.model.Pelicula;
+import a1.t1mo.mobjav.a816.myapplication.data.services.TmdbService;
 
 public class DetalleFragment extends Fragment {
 
@@ -25,21 +23,17 @@ public class DetalleFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-//        View view = inflater.inflate(R.layout.fragment_detalle, container, false);
+        View view = inflater.inflate(R.layout.fragment_detalle, container, false);
+
+
+        Bundle bundle = getArguments();
+
+
 //
-//        PeliculaController peliculaController = new PeliculaController();
 //
-//        Bundle bundle = getArguments();
 //
-//        String assets = bundle.getString("assets");
-//        String generos = bundle.getString("generos");
-//        Integer imgIds = bundle.getInt("imgIds");
-//
-//        Pelicula pelicula;
-//        pelicula = peliculaController.getPelicula(getActivity(), assets, imgIds, generos);
-//
-//        TextView textViewNombre =  (TextView) view.findViewById(R.id.fragment_detalle_titulo);
-//        textViewNombre.setText(pelicula.getTitulo());
+        TextView textViewNombre =  (TextView) view.findViewById(R.id.fragment_detalle_titulo);
+        textViewNombre.setText(bundle.getString("titulo"));
 //
 //        SimpleDateFormat df = new SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH);
 //        TextView textView = (TextView) view.findViewById(R.id.fragment_detalle_fechaDeEstreno);
@@ -50,9 +44,16 @@ public class DetalleFragment extends Fragment {
 //
 //        TextView textViewGenre =  (TextView) view.findViewById(R.id.fragment_detalle_genero);
 //        textViewGenre.setText(pelicula.getGeneros());
-//
-//        ImageView imageViewImagenId =  (ImageView) view.findViewById(R.id.fragment_detalle_imagenId);
-//        imageViewImagenId.setImageResource(pelicula.getImagenId());
+        ImageView imageViewImagenId =  (ImageView) view.findViewById(R.id.fragment_detalle_imagenId);
+
+        Glide.with(getContext())
+        .load(TmdbService.IMAGE_URL_W185 + bundle.getString("imagen"))
+                .fitCenter()
+                .into(imageViewImagenId);
+
+
+
+
 //
 //        TextView textViewLenguaje =  (TextView) view.findViewById(R.id.fragment_detalle_lenguaje);
 //        textViewLenguaje.setText(pelicula.getLenguaje());
@@ -67,7 +68,7 @@ public class DetalleFragment extends Fragment {
 //        textViewTrama.setText(pelicula.getTrama());
 //
 //        return view;
-        return null;
+        return view;
     }
 
 }

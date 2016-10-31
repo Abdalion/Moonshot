@@ -41,12 +41,22 @@
 
         </LinearLayout>
 
-        <FrameLayout
+        <android.support.v4.view.ViewPager
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/main_contenedorDeFragment"
-            android:layout_weight="10">
-        </FrameLayout>
+            android:layout_weight="10"
+            android:id="@+id/activity_main_pager">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/main_contenedorDeFragment"
+                >
+            </FrameLayout>
+
+        </android.support.v4.view.ViewPager>
+
+
 
     </LinearLayout>
 

@@ -13,6 +13,7 @@ import java.util.List;
 import a1.t1mo.mobjav.a816.myapplication.R;
 import a1.t1mo.mobjav.a816.myapplication.data.services.TmdbService;
 import a1.t1mo.mobjav.a816.myapplication.model.Pelicula;
+import a1.t1mo.mobjav.a816.myapplication.model.Serie;
 import a1.t1mo.mobjav.a816.myapplication.utils.Listener;
 
 /**
@@ -23,57 +24,57 @@ import a1.t1mo.mobjav.a816.myapplication.utils.Listener;
  * Archivo creado por Juan Pablo on 25/10/2016.
  */
 
-public class PeliculasAdapter extends RecyclerView.Adapter<PeliculasAdapter.PeliculaHolder>
-        implements Listener<List<Pelicula>> {
+public class SerieAdapter extends RecyclerView.Adapter<SerieAdapter.SerieHolder>
+        implements Listener<List<Serie>> {
 
-    private List<Pelicula> mPeliculas;
-    private PeliculaFragment.Escuchable mListener;
+    private List<Serie> mSeries;
+    private SerieFragment.Escuchable mListener;
 
-    public void setListener(PeliculaFragment.Escuchable listener) {
+    public void setListener(SerieFragment.Escuchable listener) {
         this.mListener = listener;
     }
 
     @Override
-    public PeliculaHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public SerieHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        View view = layoutInflater.inflate(R.layout.item_pelicula, parent, false);
-        return new PeliculaHolder(view);
+        View view = layoutInflater.inflate(R.layout.item_serie, parent, false);
+        return new SerieHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(PeliculaHolder holder, int position) {
-        holder.bindPelicula(mPeliculas.get(position));
+    public void onBindViewHolder(SerieHolder holder, int position) {
+        holder.bindSerie(mSeries.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return mPeliculas == null ? 0 : mPeliculas.size();
+        return mSeries == null ? 0 : mSeries.size();
     }
 
     @Override
-    public void done(List<Pelicula> peliculas) {
-        mPeliculas = peliculas;
+    public void done(List<Serie> series) {
+        mSeries = series;
         notifyDataSetChanged();
     }
 
 
-    public class PeliculaHolder extends RecyclerView.ViewHolder
+    public class SerieHolder extends RecyclerView.ViewHolder
             implements View.OnClickListener {
 
-        private Pelicula mPelicula;
+        private Serie mSerie;
         private ImageView mImagen;
 
-        public PeliculaHolder(View itemView) {
+        public SerieHolder(View itemView) {
             super(itemView);
             itemView.setOnClickListener(this);
             mImagen = (ImageView) itemView.findViewById(R.id.img_pelicula);
         }
 
-        private void bindPelicula(Pelicula pelicula) {
-            mPelicula = pelicula;
+        private void bindSerie(Serie serie) {
+            mSerie = serie;
             Glide.with(mImagen.getContext())
 
-                    .load(TmdbService.IMAGE_URL_W154 + pelicula.getPosterPath())
+                    .load(TmdbService.IMAGE_URL_W154 + serie.getPosterPath())
                     .fitCenter()
                     .into(mImagen);
 
@@ -81,8 +82,7 @@ public class PeliculasAdapter extends RecyclerView.Adapter<PeliculasAdapter.Peli
 
         @Override
         public void onClick(View v) {
-            mListener.onClickItem(mPelicula);
+            mListener.onClickItem(mSeries);
         }
     }
 }
-

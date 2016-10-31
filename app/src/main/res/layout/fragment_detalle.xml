@@ -7,14 +7,15 @@
     >
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="128dp"
+        android:layout_height="190dp"
         android:src="@drawable/sully"
         android:id="@+id/fragment_detalle_imagenId"
         android:layout_marginLeft="20dp"
         android:layout_marginBottom="20dp"
         android:layout_marginRight="15dp"
         android:layout_marginTop="80dp"
+
         />
     <TextView
         android:layout_width="wrap_content"

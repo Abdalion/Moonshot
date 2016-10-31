@@ -22,7 +22,8 @@ import retrofit2.http.QueryMap;
 
 public interface TmdbService {
     String BASE_URL = "https://api.themoviedb.org/3/";
-    String IMAGE_URL = "http://image.tmdb.org/t/p/w154";
+    String IMAGE_URL_W154 = "http://image.tmdb.org/t/p/w154";
+    String IMAGE_URL_W185 = "http://image.tmdb.org/t/p/w185";
     String API_KEY = "f705c06489826188c47e25f982e97f17";
 
     @GET("movie/{movie_id}")
@@ -37,15 +38,15 @@ public interface TmdbService {
     @GET("genre/{genre_id}/movies")
     Call<ListadoPeliculas> getPeliculasPorGenero(@Path("genre_id") Integer genero);
 
-//    @GET("tv/{tv_id}")
-//    Call<Serie> getSerie(@Path("tv_id") Integer id);
-//
-//    @GET("tv/popular")
-//    Call<List<Serie>> getSeriesPopulares(@QueryMap Map<String, String> opciones);
-//
-//    @GET("tv/top_rated")
-//    Call<List<Serie>> getSeriesMejorRankeadas(@QueryMap Map<String, String> opciones);
-//
-//    @GET("discover/tv")
-//    Call<List<Serie>> getSeriesPorGenero(@Query("with_genres") Integer genero);
+    @GET("tv/{tv_id}")
+    Call<Serie> getSerie(@Path("tv_id") Integer id);
+
+    @GET("tv/popular")
+    Call<List<Serie>> getSeriesPopulares(@QueryMap Map<String, String> opciones);
+
+    @GET("tv/top_rated")
+    Call<List<Serie>> getSeriesMejorRankeadas(@QueryMap Map<String, String> opciones);
+
+    @GET("discover/tv")
+    Call<List<Serie>> getSeriesPorGenero(@Query("with_genres") Integer genero);
 }
