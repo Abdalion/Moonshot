@@ -9,23 +9,19 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import a1.t1mo.mobjav.a816.myapplication.R;
 import a1.t1mo.mobjav.a816.myapplication.controller.PeliculaController;
+import a1.t1mo.mobjav.a816.myapplication.model.GeneroPelicula;
 import a1.t1mo.mobjav.a816.myapplication.model.Pelicula;
 
 public class PeliculaFragment extends Fragment{
     private Escuchable escuchable;
     private RecyclerView recyclerView;
-    private ArrayList<Pelicula> listaDePeliculas;
 
-    public static PeliculaFragment getPeliculaFragment(String genero) {
+    public static PeliculaFragment getPeliculaFragment(Integer genero) {
         Bundle bundle = new Bundle();
-        bundle.putString("genero", genero);
+        bundle.putInt("genero", genero);
         PeliculaFragment fragment = new PeliculaFragment();
         fragment.setArguments(bundle);
         return fragment;
@@ -35,21 +31,26 @@ public class PeliculaFragment extends Fragment{
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         escuchable = (Escuchable) activity;
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        String genero = getArguments().getString("genero");
+
+        final PeliculasAdapter peliculasAdapter = new PeliculasAdapter();
         final PeliculaController peliculaController = new PeliculaController();
-        listaDePeliculas = peliculaController.getGenero(getContext(), genero);
+
+        Integer genero = getArguments().getInt("genero");
+        if (genero == GeneroPelicula.TODAS.id) {
+            peliculaController.getPeliculasPopulares(peliculasAdapter);
+        } else {
+            peliculaController.getPeliculasPorGenero(genero, peliculasAdapter);
+        }
 
         final View view = inflater.inflate(R.layout.fragment_pelicula, container, false);
         recyclerView = (RecyclerView) view.findViewById(R.id.rv_grillaDePeliculas);
         recyclerView.addItemDecoration(new SpacesItemDecoration(4));
         recyclerView.setHasFixedSize(true);
-        final PeliculasAdapter peliculasAdapter = new PeliculasAdapter(listaDePeliculas);
         peliculasAdapter.setListener(escuchable);
         recyclerView.setAdapter(peliculasAdapter);
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 3));

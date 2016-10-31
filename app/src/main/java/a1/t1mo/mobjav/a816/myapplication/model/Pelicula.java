@@ -1,6 +1,9 @@
 package a1.t1mo.mobjav.a816.myapplication.model;
 
-import java.util.Date;
+import com.google.gson.annotations.SerializedName;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * MoonShot App
@@ -11,25 +14,78 @@ import java.util.Date;
  */
 
 public class Pelicula {
-    private String mImdbId;
-    private String mTitulo;
-    private String mDirector;
-    private String mActores;
-    private Date mFechaDeEstreno;
-    private String mTrama;
-    private Float mImdbRating;
-    private String mLenguaje;
-    private String mGeneros;
-    private Integer mImagenId;
-    private String mDuracion;
-    private String mAsset;
 
-    public String getAsset() {
-        return mAsset;
+    @SerializedName("adult")
+    private Boolean mAdultos;
+    @SerializedName("backdrop_path")
+    private String mBackdropPath;
+    @SerializedName("genres")
+    private List<Genre> genres = new ArrayList<Genre>();
+    @SerializedName("homepage")
+    private String mHomepage;
+    @SerializedName("id")
+    private Integer mId;
+    @SerializedName("imdb_id")
+    private String mImdbId;
+    @SerializedName("original_language")
+    private String mLenguage;
+    @SerializedName("overview")
+    private String mResumen;
+    @SerializedName("popularity")
+    private Double mPopularidad;
+    @SerializedName("poster_path")
+    private String mPosterPath;
+    @SerializedName("release_date")
+    private String mFechaDeEstreno;
+    @SerializedName("runtime")
+    private Integer mDuracion;
+    @SerializedName("tagline")
+    private String mTagline;
+    @SerializedName("title")
+    private String mTitulo;
+    @SerializedName("vote_average")
+    private Double mPuntajePromedio;
+    @SerializedName("vote_count")
+    private Integer mTotalVotos;
+
+    public Boolean getAdultos() {
+        return mAdultos;
     }
 
-    public void setAsset(String asset) {
-        mAsset = asset;
+    public void setAdultos(Boolean adultos) {
+        mAdultos = adultos;
+    }
+
+    public String getBackdropPath() {
+        return mBackdropPath;
+    }
+
+    public void setBackdropPath(String backdropPath) {
+        mBackdropPath = backdropPath;
+    }
+
+    public List<Genre> getGenres() {
+        return genres;
+    }
+
+    public void setGenres(List<Genre> genres) {
+        this.genres = genres;
+    }
+
+    public String getHomepage() {
+        return mHomepage;
+    }
+
+    public void setHomepage(String homepage) {
+        mHomepage = homepage;
+    }
+
+    public Integer getId() {
+        return mId;
+    }
+
+    public void setId(Integer id) {
+        mId = id;
     }
 
     public String getImdbId() {
@@ -40,6 +96,62 @@ public class Pelicula {
         mImdbId = imdbId;
     }
 
+    public String getLenguage() {
+        return mLenguage;
+    }
+
+    public void setLenguage(String lenguage) {
+        mLenguage = lenguage;
+    }
+
+    public String getResumen() {
+        return mResumen;
+    }
+
+    public void setResumen(String resumen) {
+        mResumen = resumen;
+    }
+
+    public Double getPopularidad() {
+        return mPopularidad;
+    }
+
+    public void setPopularidad(Double popularidad) {
+        mPopularidad = popularidad;
+    }
+
+    public String getPosterPath() {
+        return mPosterPath;
+    }
+
+    public void setPosterPath(String posterPath) {
+        mPosterPath = posterPath;
+    }
+
+    public String getFechaDeEstreno() {
+        return mFechaDeEstreno;
+    }
+
+    public void setFechaDeEstreno(String fechaDeEstreno) {
+        mFechaDeEstreno = fechaDeEstreno;
+    }
+
+    public Integer getDuracion() {
+        return mDuracion;
+    }
+
+    public void setDuracion(Integer duracion) {
+        mDuracion = duracion;
+    }
+
+    public String getTagline() {
+        return mTagline;
+    }
+
+    public void setTagline(String tagline) {
+        mTagline = tagline;
+    }
+
     public String getTitulo() {
         return mTitulo;
     }
@@ -48,75 +160,19 @@ public class Pelicula {
         mTitulo = titulo;
     }
 
-    public String getDirector() {
-        return mDirector;
+    public Double getPuntajePromedio() {
+        return mPuntajePromedio;
     }
 
-    public void setDirector(String director) {
-        mDirector = director;
+    public void setPuntajePromedio(Double puntajePromedio) {
+        mPuntajePromedio = puntajePromedio;
     }
 
-    public String getActores() {
-        return mActores;
+    public Integer getTotalVotos() {
+        return mTotalVotos;
     }
 
-    public void setActores(String actores) {
-        mActores = actores;
-    }
-
-    public String getTrama() {
-        return mTrama;
-    }
-
-    public Date getFechaDeEstreno() {
-        return mFechaDeEstreno;
-    }
-
-    public void setFechaDeEstreno(Date fechaDeEstreno) {
-        mFechaDeEstreno = fechaDeEstreno;
-    }
-
-    public void setTrama(String trama) {
-        mTrama = trama;
-    }
-
-    public Float getImdbRating() {
-        return mImdbRating;
-    }
-
-    public void setImdbRating(Float imdbRating) {
-        mImdbRating = imdbRating;
-    }
-
-    public String getLenguaje() {
-        return mLenguaje;
-    }
-
-    public void setLenguaje(String lenguaje) {
-        mLenguaje = lenguaje;
-    }
-
-    public String getGeneros() {
-        return mGeneros;
-    }
-
-    public void setGeneros(String generos) {
-        mGeneros = generos;
-    }
-
-    public Integer getImagenId() {
-        return mImagenId;
-    }
-
-    public void setImagenId(Integer imagenId) {
-        mImagenId = imagenId;
-    }
-
-    public String getDuracion() {
-        return mDuracion;
-    }
-
-    public void setDuracion(String mDuracion) {
-        this.mDuracion = mDuracion;
+    public void setTotalVotos(Integer totalVotos) {
+        mTotalVotos = totalVotos;
     }
 }

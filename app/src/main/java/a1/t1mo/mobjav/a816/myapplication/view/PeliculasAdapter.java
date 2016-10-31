@@ -6,10 +6,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.List;
 
 import a1.t1mo.mobjav.a816.myapplication.R;
+import a1.t1mo.mobjav.a816.myapplication.data.services.TmdbService;
 import a1.t1mo.mobjav.a816.myapplication.model.Pelicula;
+import a1.t1mo.mobjav.a816.myapplication.utils.Listener;
 
 /**
  * MoonShot App
@@ -19,13 +23,11 @@ import a1.t1mo.mobjav.a816.myapplication.model.Pelicula;
  * Archivo creado por Juan Pablo on 25/10/2016.
  */
 
-public class PeliculasAdapter extends RecyclerView.Adapter<PeliculasAdapter.PeliculaHolder> {
+public class PeliculasAdapter extends RecyclerView.Adapter<PeliculasAdapter.PeliculaHolder>
+        implements Listener<List<Pelicula>> {
+
     private List<Pelicula> mPeliculas;
     private PeliculaFragment.Escuchable mListener;
-
-    public PeliculasAdapter(List<Pelicula> peliculas) {
-        mPeliculas = peliculas;
-    }
 
     public void setListener(PeliculaFragment.Escuchable listener) {
         this.mListener = listener;
@@ -45,7 +47,13 @@ public class PeliculasAdapter extends RecyclerView.Adapter<PeliculasAdapter.Peli
 
     @Override
     public int getItemCount() {
-        return mPeliculas.size();
+        return mPeliculas == null ? 0 : mPeliculas.size();
+    }
+
+    @Override
+    public void done(List<Pelicula> peliculas) {
+        mPeliculas = peliculas;
+        notifyDataSetChanged();
     }
 
 
@@ -63,7 +71,10 @@ public class PeliculasAdapter extends RecyclerView.Adapter<PeliculasAdapter.Peli
 
         private void bindPelicula(Pelicula pelicula) {
             mPelicula = pelicula;
-            mImagen.setImageResource(mPelicula.getImagenId());
+            Glide.with(mImagen.getContext())
+                    .load(TmdbService.IMAGE_URL + pelicula.getPosterPath())
+                    .fitCenter()
+                    .into(mImagen);
         }
 
         @Override

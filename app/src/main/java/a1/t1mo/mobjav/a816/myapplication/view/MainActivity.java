@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import a1.t1mo.mobjav.a816.myapplication.R;
+import a1.t1mo.mobjav.a816.myapplication.model.GeneroPelicula;
 import a1.t1mo.mobjav.a816.myapplication.model.Pelicula;
 
 /**
@@ -34,7 +35,7 @@ public class MainActivity extends AppCompatActivity implements PeliculaFragment.
         NavigationView navigationView = (NavigationView) findViewById(R.id.main_navigationView);
         navigationView.setCheckedItem(R.id.menu_opcion_todas);
         fragmentManager = getSupportFragmentManager();
-        PeliculaFragment peliculaFragment = PeliculaFragment.getPeliculaFragment("todas");
+        PeliculaFragment peliculaFragment = PeliculaFragment.getPeliculaFragment(GeneroPelicula.TODAS.id);
         fragmentManager.beginTransaction().replace(R.id.main_contenedorDeFragment, peliculaFragment).commit();
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -58,25 +59,25 @@ public class MainActivity extends AppCompatActivity implements PeliculaFragment.
 
     private void onSelectItem(MenuItem item) {
         if(item.getItemId() == R.id.menu_opcion_todas) {
-            PeliculaFragment peliculaFragment = PeliculaFragment.getPeliculaFragment("Todas");
+            PeliculaFragment peliculaFragment = PeliculaFragment.getPeliculaFragment(GeneroPelicula.TODAS.id);
             fragmentManager.beginTransaction().replace(R.id.main_contenedorDeFragment, peliculaFragment).commit();
 
             Toast.makeText(MainActivity.this, "Se cargaron todas las peliculas", Toast.LENGTH_SHORT).show();
         }
         else if(item.getItemId() == R.id.menu_opcion_drama) {
-            PeliculaFragment peliculaFragment = PeliculaFragment.getPeliculaFragment("Drama");
+            PeliculaFragment peliculaFragment = PeliculaFragment.getPeliculaFragment(GeneroPelicula.DRAMA.id);
             fragmentManager.beginTransaction().replace(R.id.main_contenedorDeFragment, peliculaFragment).commit();
 
             Toast.makeText(MainActivity.this, "Se cargaron las peliculas de drama", Toast.LENGTH_SHORT).show();
         }
         else if(item.getItemId() == R.id.menu_opcion_thriller) {
-            PeliculaFragment peliculaFragment = PeliculaFragment.getPeliculaFragment("Thriller");
+            PeliculaFragment peliculaFragment = PeliculaFragment.getPeliculaFragment(GeneroPelicula.THRILLER.id);
             fragmentManager.beginTransaction().replace(R.id.main_contenedorDeFragment, peliculaFragment).commit();
 
             Toast.makeText(MainActivity.this, "Se cargaron las peliculas de thriller", Toast.LENGTH_SHORT).show();
         }
         else if(item.getItemId() == R.id.menu_opcion_accion) {
-            PeliculaFragment peliculaFragment = PeliculaFragment.getPeliculaFragment("Accion");
+            PeliculaFragment peliculaFragment = PeliculaFragment.getPeliculaFragment(GeneroPelicula.ACTION.id);
             fragmentManager.beginTransaction().replace(R.id.main_contenedorDeFragment, peliculaFragment).commit();
 
             Toast.makeText(MainActivity.this, "Se cargaron las peliculas de accion", Toast.LENGTH_SHORT).show();
@@ -85,15 +86,14 @@ public class MainActivity extends AppCompatActivity implements PeliculaFragment.
 
     @Override
     public void onClickItem(Pelicula pelicula) {
-        DetalleFragment detalleFragment = new DetalleFragment();
-        Bundle bundle = new Bundle();
-
-        bundle.putString("assets", pelicula.getAsset());
-        // Hardcoding is hard
-        bundle.putString("generos", pelicula.getGeneros());
-        bundle.putInt("imgIds", pelicula.getImagenId());
-        detalleFragment.setArguments(bundle);
-
-        fragmentManager.beginTransaction().replace(R.id.main_contenedorDeFragment, detalleFragment).addToBackStack("back").commit();
+//        DetalleFragment detalleFragment = new DetalleFragment();
+//        Bundle bundle = new Bundle();
+//
+//        bundle.putString("assets", pelicula.getAsset());
+//        bundle.putString("generos", pelicula.getGeneros());
+//        bundle.putInt("imgIds", pelicula.getImagenId());
+//        detalleFragment.setArguments(bundle);
+//
+//        fragmentManager.beginTransaction().replace(R.id.main_contenedorDeFragment, detalleFragment).addToBackStack("back").commit();
     }
 }
