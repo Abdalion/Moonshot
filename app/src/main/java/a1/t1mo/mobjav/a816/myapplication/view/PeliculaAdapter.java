@@ -23,11 +23,14 @@ import a1.t1mo.mobjav.a816.myapplication.utils.Listener;
  * Archivo creado por Juan Pablo on 25/10/2016.
  */
 
-public class PeliculaAdapter extends RecyclerView.Adapter<PeliculaAdapter.PeliculaHolder>
-        implements Listener<List<Pelicula>> {
+public class PeliculaAdapter extends RecyclerView.Adapter<PeliculaAdapter.PeliculaHolder> {
 
     private List<Pelicula> mPeliculas;
     private PeliculaFragment.Escuchable mListener;
+
+    public PeliculaAdapter(List<Pelicula> peliculas) {
+        mPeliculas = peliculas;
+    }
 
     public void setListener(PeliculaFragment.Escuchable listener) {
         this.mListener = listener;
@@ -47,13 +50,7 @@ public class PeliculaAdapter extends RecyclerView.Adapter<PeliculaAdapter.Pelicu
 
     @Override
     public int getItemCount() {
-        return mPeliculas == null ? 0 : mPeliculas.size();
-    }
-
-    @Override
-    public void done(List<Pelicula> peliculas) {
-        mPeliculas = peliculas;
-        notifyDataSetChanged();
+        return mPeliculas.size();
     }
 
 

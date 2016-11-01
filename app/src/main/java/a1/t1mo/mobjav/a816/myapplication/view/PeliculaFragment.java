@@ -38,16 +38,7 @@ public class PeliculaFragment extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        final PeliculaAdapter peliculaAdapter = new PeliculaAdapter();
-        final PeliculaController peliculaController = new PeliculaController();
-
-        Integer genero = getArguments().getInt("genero");
-        if (genero == GeneroPelicula.TODAS.id) {
-            peliculaController.getPeliculasPopulares(peliculaAdapter);
-        } else {
-            peliculaController.getPeliculasPorGenero(genero, peliculaAdapter);
-        }
-
+        final PeliculaAdapter peliculaAdapter = new PeliculaAdapter(mPeliculas);
         final View view = inflater.inflate(R.layout.fragment_pelicula, container, false);
         recyclerView = (RecyclerView) view.findViewById(R.id.rv_grillaDePeliculas);
         recyclerView.addItemDecoration(new SpacesItemDecoration(4));
