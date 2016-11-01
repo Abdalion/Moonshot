@@ -11,9 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import a1.t1mo.mobjav.a816.myapplication.R;
-import a1.t1mo.mobjav.a816.myapplication.controller.PeliculaController;
-import a1.t1mo.mobjav.a816.myapplication.model.GeneroPelicula;
-import a1.t1mo.mobjav.a816.myapplication.model.Pelicula;
+import a1.t1mo.mobjav.a816.myapplication.controller.SerieController;
+import a1.t1mo.mobjav.a816.myapplication.model.GeneroSerie;
 import a1.t1mo.mobjav.a816.myapplication.model.Serie;
 
 public class SerieFragment extends Fragment{
@@ -39,17 +38,17 @@ public class SerieFragment extends Fragment{
                              Bundle savedInstanceState) {
 
         final SerieAdapter serieAdapter = new SerieAdapter();
-        final PeliculaController peliculaController = new PeliculaController();
+        final SerieController SerieController = new SerieController();
 
         Integer genero = getArguments().getInt("genero");
-        if (genero == GeneroPelicula.TODAS.id) {
-            peliculaController.getSeriePopulares(serieAdapter);
+        if (genero == GeneroSerie.TODAS.id) {
+            SerieController.getSeriesPopulares(serieAdapter);
         } else {
-            peliculaController.getSeriePorGenero(genero, serieAdapter);
+            SerieController.getSeriesPorGenero(genero, serieAdapter);
         }
 
-        final View view = inflater.inflate(R.layout.fragment_pelicula, container, false);
-        recyclerView = (RecyclerView) view.findViewById(R.id.rv_grillaDeSerie);
+        final View view = inflater.inflate(R.layout.fragment_serie, container, false);
+        recyclerView = (RecyclerView) view.findViewById(R.id.rv_grillaDeSeries);
         recyclerView.addItemDecoration(new SpacesItemDecoration(4));
         recyclerView.setHasFixedSize(true);
         serieAdapter.setListener(escuchable);
@@ -62,7 +61,7 @@ public class SerieFragment extends Fragment{
         @Override
         public void onClick(View view) {
             int posicion = recyclerView.getChildAdapterPosition(view);
-            Pelicula peliculaClickeada = listaDeSerie.get(posicion);
+            Serie peliculaClickeada = listaDeSerie.get(posicion);
             escuchable.onClickItem(peliculaClickeada);
 
         }
@@ -95,4 +94,5 @@ public class SerieFragment extends Fragment{
         }
     }
 }
+
 
