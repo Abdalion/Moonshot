@@ -10,20 +10,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.List;
+
 import a1.t1mo.mobjav.a816.myapplication.R;
 import a1.t1mo.mobjav.a816.myapplication.controller.PeliculaController;
 import a1.t1mo.mobjav.a816.myapplication.model.GeneroPelicula;
 import a1.t1mo.mobjav.a816.myapplication.model.Pelicula;
 
 public class PeliculaFragment extends Fragment{
+    private List<Pelicula> mPeliculas;
     private Escuchable escuchable;
     private RecyclerView recyclerView;
 
-    public static PeliculaFragment getPeliculaFragment(Integer genero) {
-        Bundle bundle = new Bundle();
-        bundle.putInt("genero", genero);
+    public static PeliculaFragment getPeliculaFragment(List<Pelicula> peliculas) {
         PeliculaFragment fragment = new PeliculaFragment();
-        fragment.setArguments(bundle);
+        fragment.mPeliculas = peliculas;
         return fragment;
     }
 

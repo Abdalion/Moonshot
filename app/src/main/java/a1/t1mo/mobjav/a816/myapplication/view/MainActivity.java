@@ -12,9 +12,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import java.util.List;
+
 import a1.t1mo.mobjav.a816.myapplication.R;
+import a1.t1mo.mobjav.a816.myapplication.controller.PeliculaController;
 import a1.t1mo.mobjav.a816.myapplication.model.GeneroPelicula;
+import a1.t1mo.mobjav.a816.myapplication.model.ListadoPeliculas;
 import a1.t1mo.mobjav.a816.myapplication.model.Pelicula;
+import a1.t1mo.mobjav.a816.myapplication.utils.Listener;
 
 /**
  * MoonShot App
@@ -23,8 +28,11 @@ import a1.t1mo.mobjav.a816.myapplication.model.Pelicula;
  * Turno Tarde
  */
 
-public class MainActivity extends AppCompatActivity implements PeliculaFragment.Escuchable {
+public class MainActivity extends AppCompatActivity
+        implements PeliculaFragment.Escuchable, Listener<List<Pelicula>> {
+
     FragmentManager fragmentManager;
+    PeliculaController mPeliculaController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,20 +40,15 @@ public class MainActivity extends AppCompatActivity implements PeliculaFragment.
         setContentView(R.layout.activity_main);
 
         fragmentManager = getSupportFragmentManager();
+        mPeliculaController = new PeliculaController();
+        mPeliculaController.getPeliculasPopulares(this);
 
         FragmentAdapterViewPager fragmentAdapter = new FragmentAdapterViewPager(fragmentManager);
-
         ViewPager viewPager = (ViewPager)findViewById(R.id.activity_main_pager);
-
         viewPager.setAdapter(fragmentAdapter);
-
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.main_navigationView);
         navigationView.setCheckedItem(R.id.menu_opcion_todas);
-        fragmentManager = getSupportFragmentManager();
-        PeliculaFragment peliculaFragment = PeliculaFragment.getPeliculaFragment(GeneroPelicula.TODAS.id);
-        fragmentManager.beginTransaction().replace(R.id.main_contenedorDeFragment, peliculaFragment).commit();
-
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem item) {
@@ -67,27 +70,19 @@ public class MainActivity extends AppCompatActivity implements PeliculaFragment.
 
     private void onSelectItem(MenuItem item) {
         if(item.getItemId() == R.id.menu_opcion_todas) {
-            PeliculaFragment peliculaFragment = PeliculaFragment.getPeliculaFragment(GeneroPelicula.TODAS.id);
-            fragmentManager.beginTransaction().replace(R.id.main_contenedorDeFragment, peliculaFragment).commit();
-
+            mPeliculaController.getPeliculasPopulares(this);
             Toast.makeText(MainActivity.this, "Se cargaron todas las peliculas", Toast.LENGTH_SHORT).show();
         }
         else if(item.getItemId() == R.id.menu_opcion_drama) {
-            PeliculaFragment peliculaFragment = PeliculaFragment.getPeliculaFragment(GeneroPelicula.DRAMA.id);
-            fragmentManager.beginTransaction().replace(R.id.main_contenedorDeFragment, peliculaFragment).commit();
-
+            mPeliculaController.getPeliculasPorGenero(GeneroPelicula.DRAMA.id, this);
             Toast.makeText(MainActivity.this, "Se cargaron las peliculas de drama", Toast.LENGTH_SHORT).show();
         }
         else if(item.getItemId() == R.id.menu_opcion_thriller) {
-            PeliculaFragment peliculaFragment = PeliculaFragment.getPeliculaFragment(GeneroPelicula.THRILLER.id);
-            fragmentManager.beginTransaction().replace(R.id.main_contenedorDeFragment, peliculaFragment).commit();
-
+            mPeliculaController.getPeliculasPorGenero(GeneroPelicula.THRILLER.id, this);
             Toast.makeText(MainActivity.this, "Se cargaron las peliculas de thriller", Toast.LENGTH_SHORT).show();
         }
         else if(item.getItemId() == R.id.menu_opcion_accion) {
-            PeliculaFragment peliculaFragment = PeliculaFragment.getPeliculaFragment(GeneroPelicula.ACTION.id);
-            fragmentManager.beginTransaction().replace(R.id.main_contenedorDeFragment, peliculaFragment).commit();
-
+            mPeliculaController.getPeliculasPorGenero(GeneroPelicula.ACTION.id, this);
             Toast.makeText(MainActivity.this, "Se cargaron las peliculas de accion", Toast.LENGTH_SHORT).show();
         }
     }
@@ -95,7 +90,12 @@ public class MainActivity extends AppCompatActivity implements PeliculaFragment.
     @Override
     public void onClickItem(Pelicula pelicula) {
         DetalleFragment detalleFragment = DetalleFragment.getDetalleFragment(pelicula);
-
         fragmentManager.beginTransaction().replace(R.id.main_contenedorDeFragment, detalleFragment).addToBackStack("back").commit();
+    }
+
+    @Override
+    public void done(List<Pelicula> peliculas) {
+        PeliculaFragment peliculaFragment = PeliculaFragment.getPeliculaFragment(peliculas);
+        fragmentManager.beginTransaction().replace(R.id.main_contenedorDeFragment, peliculaFragment).commit();
     }
 }

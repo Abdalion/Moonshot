@@ -12,6 +12,7 @@ import a1.t1mo.mobjav.a816.myapplication.model.GeneroSerie;
 /**
  * Created by dh-mob-tt on 31/10/16.
  */
+
 public class FragmentAdapterViewPager extends FragmentStatePagerAdapter {
 
     ArrayList<Fragment> listaDeFragments;
@@ -20,11 +21,8 @@ public class FragmentAdapterViewPager extends FragmentStatePagerAdapter {
         super(fm);
         listaDeFragments = new ArrayList<>();
 
-
         listaDeFragments.add(PeliculaFragment.getPeliculaFragment(GeneroPelicula.TODAS.id));
         listaDeFragments.add(SerieFragment.getSerieFragment(GeneroSerie.TODAS.id));
-
-
 
     }
 

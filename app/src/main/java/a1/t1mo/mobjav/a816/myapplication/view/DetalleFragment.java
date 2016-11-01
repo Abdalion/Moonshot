@@ -28,21 +28,15 @@ public class DetalleFragment extends Fragment {
         return detalleFragment;
     }
 
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_detalle, container, false);
 
-
 //        Bundle bundle = getArguments();
 
-//
-//
-//
-        TextView textViewNombre =  (TextView) view.findViewById(R.id.fragment_detalle_titulo);
+        TextView textViewNombre = (TextView) view.findViewById(R.id.fragment_detalle_titulo);
         textViewNombre.setText(pelicula.getTitulo());
 //
 //        SimpleDateFormat df = new SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH);
@@ -54,15 +48,13 @@ public class DetalleFragment extends Fragment {
 //
 //        TextView textViewGenre =  (TextView) view.findViewById(R.id.fragment_detalle_genero);
 //        textViewGenre.setText(pelicula.getGeneros());
-        ImageView imageViewImagenId =  (ImageView) view.findViewById(R.id.fragment_detalle_imagenId);
 
-        Glide.with(getContext())
-        .load(TmdbService.IMAGE_URL_W185 + pelicula.getPosterPath())
-                .fitCenter()
-                .into(imageViewImagenId);
-
-
-
+        ImageView imageViewImagenId = (ImageView) view.findViewById(R.id.fragment_detalle_imagenId);
+        Glide
+            .with(getContext())
+            .load(TmdbService.IMAGE_URL_W185 + pelicula.getPosterPath())
+            .fitCenter()
+            .into(imageViewImagenId);
 
 //
 //        TextView textViewLenguaje =  (TextView) view.findViewById(R.id.fragment_detalle_lenguaje);
