@@ -27,7 +27,7 @@ import a1.t1mo.mobjav.a816.myapplication.utils.Listener;
 public class SerieAdapter extends RecyclerView.Adapter<SerieAdapter.SerieHolder>
         implements Listener<List<Serie>> {
 
-    private List<Serie> mSeries;
+    private List<Serie> mSerie;
     private SerieFragment.Escuchable mListener;
 
     public void setListener(SerieFragment.Escuchable listener) {
@@ -37,23 +37,23 @@ public class SerieAdapter extends RecyclerView.Adapter<SerieAdapter.SerieHolder>
     @Override
     public SerieHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        View view = layoutInflater.inflate(R., parent, false);
+        View view = layoutInflater.inflate(R.layout.item_serie, parent, false);
         return new SerieHolder(view);
     }
 
     @Override
     public void onBindViewHolder(SerieHolder holder, int position) {
-        holder.bindSerie(mSeries.get(position));
+        holder.bindSerie(mSerie.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return mSeries == null ? 0 : mSeries.size();
+        return mSerie == null ? 0 : mSerie.size();
     }
 
     @Override
     public void done(List<Serie> series) {
-        mSeries = series;
+        mSerie = series;
         notifyDataSetChanged();
     }
 
@@ -67,7 +67,7 @@ public class SerieAdapter extends RecyclerView.Adapter<SerieAdapter.SerieHolder>
         public SerieHolder(View itemView) {
             super(itemView);
             itemView.setOnClickListener(this);
-            mImagen = (ImageView) itemView.findViewById(R.id.img_pelicula);
+            mImagen = (ImageView) itemView.findViewById(R.id.img_serie);
         }
 
         private void bindSerie(Serie serie) {
@@ -82,7 +82,7 @@ public class SerieAdapter extends RecyclerView.Adapter<SerieAdapter.SerieHolder>
 
         @Override
         public void onClick(View v) {
-            mListener.onClickItem(mSeries);
+            mListener.onClickItem(mSerie);
         }
     }
 }
