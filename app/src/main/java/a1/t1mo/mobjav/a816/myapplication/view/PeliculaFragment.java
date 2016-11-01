@@ -37,22 +37,22 @@ public class PeliculaFragment extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        final PeliculasAdapter peliculasAdapter = new PeliculasAdapter();
+        final PeliculaAdapter peliculaAdapter = new PeliculaAdapter();
         final PeliculaController peliculaController = new PeliculaController();
 
         Integer genero = getArguments().getInt("genero");
         if (genero == GeneroPelicula.TODAS.id) {
-            peliculaController.getPeliculasPopulares(peliculasAdapter);
+            peliculaController.getPeliculasPopulares(peliculaAdapter);
         } else {
-            peliculaController.getPeliculasPorGenero(genero, peliculasAdapter);
+            peliculaController.getPeliculasPorGenero(genero, peliculaAdapter);
         }
 
         final View view = inflater.inflate(R.layout.fragment_pelicula, container, false);
         recyclerView = (RecyclerView) view.findViewById(R.id.rv_grillaDePeliculas);
         recyclerView.addItemDecoration(new SpacesItemDecoration(4));
         recyclerView.setHasFixedSize(true);
-        peliculasAdapter.setListener(escuchable);
-        recyclerView.setAdapter(peliculasAdapter);
+        peliculaAdapter.setListener(escuchable);
+        recyclerView.setAdapter(peliculaAdapter);
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
         return view;
     }

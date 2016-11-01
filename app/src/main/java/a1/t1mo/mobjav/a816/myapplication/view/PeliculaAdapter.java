@@ -23,7 +23,7 @@ import a1.t1mo.mobjav.a816.myapplication.utils.Listener;
  * Archivo creado por Juan Pablo on 25/10/2016.
  */
 
-public class PeliculasAdapter extends RecyclerView.Adapter<PeliculasAdapter.PeliculaHolder>
+public class PeliculaAdapter extends RecyclerView.Adapter<PeliculaAdapter.PeliculaHolder>
         implements Listener<List<Pelicula>> {
 
     private List<Pelicula> mPeliculas;
