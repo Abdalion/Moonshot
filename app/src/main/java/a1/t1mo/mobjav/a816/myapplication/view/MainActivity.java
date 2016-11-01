@@ -94,13 +94,7 @@ public class MainActivity extends AppCompatActivity implements PeliculaFragment.
 
     @Override
     public void onClickItem(Pelicula pelicula) {
-        DetalleFragment detalleFragment = new DetalleFragment();
-        Bundle bundle = new Bundle();
-
-        bundle.putString("titulo", pelicula.getTitulo());
-        bundle.putString("imagen", pelicula.getPosterPath());
-
-        detalleFragment.setArguments(bundle);
+        DetalleFragment detalleFragment = DetalleFragment.getDetalleFragment(pelicula);
 
         fragmentManager.beginTransaction().replace(R.id.main_contenedorDeFragment, detalleFragment).addToBackStack("back").commit();
     }

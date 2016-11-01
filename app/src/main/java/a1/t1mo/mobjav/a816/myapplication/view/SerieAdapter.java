@@ -37,7 +37,7 @@ public class SerieAdapter extends RecyclerView.Adapter<SerieAdapter.SerieHolder>
     @Override
     public SerieHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        View view = layoutInflater.inflate(R.layout.item_serie, parent, false);
+        View view = layoutInflater.inflate(R., parent, false);
         return new SerieHolder(view);
     }
 

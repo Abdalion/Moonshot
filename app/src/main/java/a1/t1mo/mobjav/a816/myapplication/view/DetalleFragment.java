@@ -12,12 +12,23 @@ import com.bumptech.glide.Glide;
 
 import a1.t1mo.mobjav.a816.myapplication.R;
 import a1.t1mo.mobjav.a816.myapplication.data.services.TmdbService;
+import a1.t1mo.mobjav.a816.myapplication.model.Pelicula;
 
 public class DetalleFragment extends Fragment {
+
+    private Pelicula pelicula;
 
     public DetalleFragment() {
         // Required empty public constructor
     }
+
+    public static DetalleFragment getDetalleFragment(Pelicula unaPelicula) {
+        DetalleFragment detalleFragment = new DetalleFragment();
+        detalleFragment.pelicula = unaPelicula;
+        return detalleFragment;
+    }
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -26,14 +37,13 @@ public class DetalleFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_detalle, container, false);
 
 
-        Bundle bundle = getArguments();
-
+//        Bundle bundle = getArguments();
 
 //
 //
 //
         TextView textViewNombre =  (TextView) view.findViewById(R.id.fragment_detalle_titulo);
-        textViewNombre.setText(bundle.getString("titulo"));
+        textViewNombre.setText(pelicula.getTitulo());
 //
 //        SimpleDateFormat df = new SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH);
 //        TextView textView = (TextView) view.findViewById(R.id.fragment_detalle_fechaDeEstreno);
@@ -47,7 +57,7 @@ public class DetalleFragment extends Fragment {
         ImageView imageViewImagenId =  (ImageView) view.findViewById(R.id.fragment_detalle_imagenId);
 
         Glide.with(getContext())
-        .load(TmdbService.IMAGE_URL_W185 + bundle.getString("imagen"))
+        .load(TmdbService.IMAGE_URL_W185 + pelicula.getPosterPath())
                 .fitCenter()
                 .into(imageViewImagenId);
 
