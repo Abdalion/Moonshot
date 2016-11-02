@@ -13,16 +13,17 @@ import a1.t1mo.mobjav.a816.myapplication.model.GeneroSerie;
  * Created by dh-mob-tt on 31/10/16.
  */
 
-public class FragmentAdapterViewPager extends FragmentStatePagerAdapter {
+public class AdapterViewPagerFragment extends FragmentStatePagerAdapter {
 
+    private Integer categoryID;
     ArrayList<Fragment> listaDeFragments;
 
-    public FragmentAdapterViewPager(FragmentManager fm) {
+    public AdapterViewPagerFragment(FragmentManager fm) {
         super(fm);
         listaDeFragments = new ArrayList<>();
 
-//        listaDeFragments.add(PeliculaFragment.getPeliculaFragment(GeneroPelicula.TODAS.id));
-//        listaDeFragments.add(SerieFragment.getSerieFragment(GeneroSerie.TODAS.id));
+        listaDeFragments.add(PeliculaFragment.obtenerFragment(categoryID));
+        listaDeFragments.add(PeliculaFragment.obtenerFragment(categoryID));
 
     }
 
@@ -34,5 +35,9 @@ public class FragmentAdapterViewPager extends FragmentStatePagerAdapter {
     @Override
     public int getCount() {
         return listaDeFragments.size();
+    }
+
+    public void changeCategory(Integer id) {
+        categoryID = id;
     }
 }
