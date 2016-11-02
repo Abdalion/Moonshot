@@ -17,48 +17,42 @@ import java.util.List;
 public class Serie {
 
     @SerializedName("backdrop_path")
-    public String backdropPath;
+    public String mBackDropPath;
     @SerializedName("first_air_date")
-    public String firstAirDate;
+    public String mFechaDeEstreno;
     @SerializedName("genres")
-    public List<Genre> generos = new ArrayList<Genre>();
+    public List<Genre> mGeneros = new ArrayList<Genre>();
     @SerializedName("homepage")
-    public String homepage;
+    public String mHomepage;
     @SerializedName("id")
-    public Integer id;
-    @SerializedName("in_production")
-    public Boolean inProduction;
+    public Integer mId;
     @SerializedName("languages")
-    public List<String> languages = new ArrayList<String>();
+    public List<String> mLenguajes = new ArrayList<String>();
     @SerializedName("last_air_date")
-    public String lastAirDate;
+    public String mFechaDeUltimoCapitulo;
     @SerializedName("name")
-    public String name;
+    public String mNombre;
     @SerializedName("number_of_episodes")
-    public Integer numberOfEpisodes;
+    public Integer mNumeroDeEpisodios;
     @SerializedName("number_of_seasons")
-    public Integer numberOfSeasons;
+    public Integer getmNumeroDeTemporadas;
     @SerializedName("origin_country")
-    public List<String> originCountry = new ArrayList<String>();
+    public List<String> mPaisesDeOrigen = new ArrayList<String>();
     @SerializedName("original_language")
-    public String originalLanguage;
-    @SerializedName("original_name")
-    public String originalName;
+    public String mLenguaje;
     @SerializedName("overview")
-    public String overview;
+    public String mResumen;
     @SerializedName("popularity")
-    public Double popularity;
+    public Double mPopularidad;
     @SerializedName("poster_path")
-    public String posterPath;
+    public String mPosterPath;
     @SerializedName("seasons")
-    public List<Season> seasons = new ArrayList<Season>();
+    public List<Season> mTemporadas = new ArrayList<Season>();
     @SerializedName("status")
-    public String status;
-    @SerializedName("type")
-    public String type;
+    public String mStatus;
     @SerializedName("vote_average")
-    public Double voteAverage;
+    public Double mPuntajePromedio;
     @SerializedName("vote_count")
-    public Integer voteCount;
+    public Integer mTotalVotos;
 
 }

@@ -20,7 +20,7 @@ public class Pelicula {
     @SerializedName("backdrop_path")
     private String mBackdropPath;
     @SerializedName("genres")
-    private List<Genre> genres = new ArrayList<Genre>();
+    private List<Genre> mGeneros = new ArrayList<Genre>();
     @SerializedName("homepage")
     private String mHomepage;
     @SerializedName("id")
@@ -28,7 +28,7 @@ public class Pelicula {
     @SerializedName("imdb_id")
     private String mImdbId;
     @SerializedName("original_language")
-    private String mLenguage;
+    private String mLenguaje;
     @SerializedName("overview")
     private String mResumen;
     @SerializedName("popularity")
@@ -64,12 +64,12 @@ public class Pelicula {
         mBackdropPath = backdropPath;
     }
 
-    public List<Genre> getGenres() {
-        return genres;
+    public List<Genre> getGeneros() {
+        return mGeneros;
     }
 
-    public void setGenres(List<Genre> genres) {
-        this.genres = genres;
+    public void setGeneros(List<Genre> genres) {
+        this.mGeneros = genres;
     }
 
     public String getHomepage() {
@@ -96,12 +96,12 @@ public class Pelicula {
         mImdbId = imdbId;
     }
 
-    public String getLenguage() {
-        return mLenguage;
+    public String getLenguaje() {
+        return mLenguaje;
     }
 
-    public void setLenguage(String lenguage) {
-        mLenguage = lenguage;
+    public void setLenguaje(String lenguage) {
+        mLenguaje = lenguage;
     }
 
     public String getResumen() {

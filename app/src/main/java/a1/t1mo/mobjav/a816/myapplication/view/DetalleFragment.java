@@ -38,14 +38,13 @@ public class DetalleFragment extends Fragment {
 
         TextView textViewNombre = (TextView) view.findViewById(R.id.fragment_detalle_titulo);
         textViewNombre.setText(pelicula.getTitulo());
-//
-//        SimpleDateFormat df = new SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH);
-//        TextView textView = (TextView) view.findViewById(R.id.fragment_detalle_fechaDeEstreno);
-//        textView.setText(df.format(pelicula.getFechaDeEstreno()));
-//
+
+        TextView textView = (TextView) view.findViewById(R.id.fragment_detalle_fechaDeEstreno);
+        textView.setText(pelicula.getFechaDeEstreno());
+
 //        TextView textViewDuracion =  (TextView) view.findViewById(R.id.fragment_detalle_duracion);
-//        textViewDuracion.setText(pelicula.getDuracion());
-//
+//        textViewDuracion.setText(pelicula.getDuracion().toString());
+
 //        TextView textViewGenre =  (TextView) view.findViewById(R.id.fragment_detalle_genero);
 //        textViewGenre.setText(pelicula.getGeneros());
 
@@ -56,20 +55,12 @@ public class DetalleFragment extends Fragment {
             .fitCenter()
             .into(imageViewImagenId);
 
-//
-//        TextView textViewLenguaje =  (TextView) view.findViewById(R.id.fragment_detalle_lenguaje);
-//        textViewLenguaje.setText(pelicula.getLenguaje());
-//
-//        TextView textViewDirector =  (TextView) view.findViewById(R.id.fragment_detalle_director);
-//        textViewDirector.setText(pelicula.getDirector());
-//
-//        TextView textViewActores =  (TextView) view.findViewById(R.id.fragment_detalle_actores);
-//        textViewActores.setText(pelicula.getActores());
-//
-//        TextView textViewTrama =  (TextView) view.findViewById(R.id.fragment_detalle_trama);
-//        textViewTrama.setText(pelicula.getTrama());
-//
-//        return view;
+        TextView textViewLenguaje = (TextView) view.findViewById(R.id.fragment_detalle_lenguaje);
+        textViewLenguaje.setText(pelicula.getLenguaje());
+
+        TextView textViewTrama =  (TextView) view.findViewById(R.id.fragment_detalle_trama);
+        textViewTrama.setText(pelicula.getTagline());
+
         return view;
     }
 
