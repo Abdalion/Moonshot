@@ -16,17 +16,12 @@ import a1.t1mo.mobjav.a816.myapplication.R;
 import a1.t1mo.mobjav.a816.myapplication.controller.PeliculaController;
 import a1.t1mo.mobjav.a816.myapplication.model.GeneroPelicula;
 import a1.t1mo.mobjav.a816.myapplication.model.Pelicula;
+import a1.t1mo.mobjav.a816.myapplication.utils.Listener;
 
-public class PeliculaFragment extends Fragment{
-    private List<Pelicula> mPeliculas;
+public class PeliculaFragment extends Fragment {
     private Escuchable escuchable;
     private RecyclerView recyclerView;
-
-    public static PeliculaFragment getPeliculaFragment(List<Pelicula> peliculas) {
-        PeliculaFragment fragment = new PeliculaFragment();
-        fragment.mPeliculas = peliculas;
-        return fragment;
-    }
+    public static String ARGUMENT_GENERO = "Genero de Peliculas";
 
     @Override
     public void onAttach(Activity activity) {
@@ -34,12 +29,21 @@ public class PeliculaFragment extends Fragment{
         escuchable = (Escuchable) activity;
     }
 
+    public static PeliculaFragment obtenerFragment(Integer genero) {
+        Bundle bundle = new Bundle();
+        bundle.putInt(ARGUMENT_GENERO, genero);
+        PeliculaFragment fragment = new PeliculaFragment();
+        fragment.setArguments(bundle);
+        return fragment;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        final PeliculaAdapter peliculaAdapter = new PeliculaAdapter(mPeliculas);
-        final View view = inflater.inflate(R.layout.fragment_pelicula, container, false);
+        Bundle bundle = getArguments();
+        PeliculaAdapter peliculaAdapter = new PeliculaAdapter(bundle.getInt(ARGUMENT_GENERO));
+        View view = inflater.inflate(R.layout.fragment_pelicula, container, false);
         recyclerView = (RecyclerView) view.findViewById(R.id.rv_grillaDePeliculas);
         recyclerView.addItemDecoration(new SpacesItemDecoration(4));
         recyclerView.setHasFixedSize(true);

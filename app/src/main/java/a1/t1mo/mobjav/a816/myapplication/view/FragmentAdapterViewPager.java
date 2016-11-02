@@ -21,8 +21,8 @@ public class FragmentAdapterViewPager extends FragmentStatePagerAdapter {
         super(fm);
         listaDeFragments = new ArrayList<>();
 
-        listaDeFragments.add(PeliculaFragment.getPeliculaFragment(GeneroPelicula.TODAS.id));
-        listaDeFragments.add(SerieFragment.getSerieFragment(GeneroSerie.TODAS.id));
+//        listaDeFragments.add(PeliculaFragment.getPeliculaFragment(GeneroPelicula.TODAS.id));
+//        listaDeFragments.add(SerieFragment.getSerieFragment(GeneroSerie.TODAS.id));
 
     }
 

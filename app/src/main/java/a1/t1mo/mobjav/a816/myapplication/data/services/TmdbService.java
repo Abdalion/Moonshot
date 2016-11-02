@@ -30,10 +30,10 @@ public interface TmdbService {
     Call<Pelicula> getPelicula(@Path("movie_id") Integer id);
 
     @GET("movie/popular")
-    Call<ListadoPeliculas> getPeliculasPopulares(@QueryMap Map<String, String> opciones);
+    Call<ListadoPeliculas> getPeliculasPopulares();
 
     @GET("movie/top_rated")
-    Call<ListadoPeliculas> getPeliculasMejorRankeadas(@QueryMap Map<String, String> opciones);
+    Call<ListadoPeliculas> getPeliculasMejorRankeadas();
 
     @GET("genre/{genre_id}/movies")
     Call<ListadoPeliculas> getPeliculasPorGenero(@Path("genre_id") Integer genero);
@@ -42,10 +42,10 @@ public interface TmdbService {
     Call<Serie> getSerie(@Path("tv_id") Integer id);
 
     @GET("tv/popular")
-    Call<List<Serie>> getSeriesPopulares(@QueryMap Map<String, String> opciones);
+    Call<List<Serie>> getSeriesPopulares();
 
     @GET("tv/top_rated")
-    Call<List<Serie>> getSeriesMejorRankeadas(@QueryMap Map<String, String> opciones);
+    Call<List<Serie>> getSeriesMejorRankeadas();
 
     @GET("discover/tv")
     Call<List<Serie>> getSeriesPorGenero(@Query("with_genres") Integer genero);

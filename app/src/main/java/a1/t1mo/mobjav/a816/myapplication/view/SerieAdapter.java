@@ -71,12 +71,12 @@ public class SerieAdapter extends RecyclerView.Adapter<SerieAdapter.SerieHolder>
         }
 
         private void bindSerie(Serie serie) {
-            mSerie = serie;
-            Glide
-                .with(mImagen.getContext())
-                .load(TmdbService.IMAGE_URL_W154 + serie.getPosterPath())
-                .fitCenter()
-                .into(mImagen);
+//            mSerie = serie;
+//            Glide
+//                .with(mImagen.getContext())
+//                .load(TmdbService.IMAGE_URL_W154 + serie.getPosterPath())
+//                .fitCenter()
+//                .into(mImagen);
         }
 
         @Override

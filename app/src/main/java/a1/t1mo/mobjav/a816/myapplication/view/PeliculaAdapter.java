@@ -11,7 +11,9 @@ import com.bumptech.glide.Glide;
 import java.util.List;
 
 import a1.t1mo.mobjav.a816.myapplication.R;
+import a1.t1mo.mobjav.a816.myapplication.controller.PeliculaController;
 import a1.t1mo.mobjav.a816.myapplication.data.services.TmdbService;
+import a1.t1mo.mobjav.a816.myapplication.model.GeneroPelicula;
 import a1.t1mo.mobjav.a816.myapplication.model.Pelicula;
 import a1.t1mo.mobjav.a816.myapplication.utils.Listener;
 
@@ -23,13 +25,20 @@ import a1.t1mo.mobjav.a816.myapplication.utils.Listener;
  * Archivo creado por Juan Pablo on 25/10/2016.
  */
 
-public class PeliculaAdapter extends RecyclerView.Adapter<PeliculaAdapter.PeliculaHolder> {
+public class PeliculaAdapter extends RecyclerView.Adapter<PeliculaAdapter.PeliculaHolder>
+        implements Listener<List<Pelicula>>{
 
     private List<Pelicula> mPeliculas;
+    private PeliculaController mPeliculaController;
     private PeliculaFragment.Escuchable mListener;
 
-    public PeliculaAdapter(List<Pelicula> peliculas) {
-        mPeliculas = peliculas;
+    public PeliculaAdapter(Integer genero) {
+        mPeliculaController = new PeliculaController();
+        if (genero.equals(GeneroPelicula.TODAS.id)) {
+            mPeliculaController.getPeliculasPopulares(this);
+        } else {
+            mPeliculaController.getPeliculasPorGenero(genero, this);
+        }
     }
 
     public void setListener(PeliculaFragment.Escuchable listener) {
@@ -45,12 +54,20 @@ public class PeliculaAdapter extends RecyclerView.Adapter<PeliculaAdapter.Pelicu
 
     @Override
     public void onBindViewHolder(PeliculaHolder holder, int position) {
-        holder.bindPelicula(mPeliculas.get(position));
+        if (mPeliculas != null && !mPeliculas.isEmpty()) {
+            holder.bindPelicula(mPeliculas.get(position));
+        }
     }
 
     @Override
     public int getItemCount() {
-        return mPeliculas.size();
+        return mPeliculas == null ? 0 : mPeliculas.size();
+    }
+
+    @Override
+    public void done(List<Pelicula> peliculas) {
+        mPeliculas = peliculas;
+        notifyDataSetChanged();
     }
 
 
@@ -68,12 +85,11 @@ public class PeliculaAdapter extends RecyclerView.Adapter<PeliculaAdapter.Pelicu
 
         private void bindPelicula(Pelicula pelicula) {
             mPelicula = pelicula;
-            Glide.with(mImagen.getContext())
-
-                    .load(TmdbService.IMAGE_URL_W154 + pelicula.getPosterPath())
-                    .fitCenter()
-                    .into(mImagen);
-
+            Glide
+                .with(mImagen.getContext())
+                .load(TmdbService.IMAGE_URL_W154 + pelicula.getPosterPath())
+                .fitCenter()
+                .into(mImagen);
         }
 
         @Override

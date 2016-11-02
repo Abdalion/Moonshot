@@ -7,9 +7,8 @@
     >
 
     <ImageView
-        android:layout_width="128dp"
-        android:layout_height="190dp"
-        android:src="@drawable/sully"
+        android:layout_width="@dimen/poster_width_large"
+        android:layout_height="@dimen/poster_height_large"
         android:id="@+id/fragment_detalle_imagenId"
         android:layout_marginLeft="20dp"
         android:layout_marginBottom="20dp"

@@ -54,7 +54,7 @@ public class PeliculaDAO {
     }
 
     public void getPeliculasPopulares(final Listener<List<Pelicula>> listener) {
-        mTmdbService.getPeliculasPopulares(null).enqueue(new Callback<ListadoPeliculas>() {
+        mTmdbService.getPeliculasPopulares().enqueue(new Callback<ListadoPeliculas>() {
             @Override
             public void onResponse(Call<ListadoPeliculas> call, Response<ListadoPeliculas> response) {
                 if (response.isSuccessful()) {

@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/colorPalabras2"
-    tools:context="a1.t1mo.mobjav.a816.myapplication.view.MainActivity"
-    android:id="@+id/main_drawerLayout">
+                                        xmlns:tools="http://schemas.android.com/tools"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        xmlns:app="http://schemas.android.com/apk/res-auto"
+                                        android:background="@color/colorPalabras2"
+                                        tools:context="a1.t1mo.mobjav.a816.myapplication.view.MainActivity"
+                                        android:id="@+id/main_drawerLayout">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -41,27 +41,15 @@
 
         </LinearLayout>
 
-        <android.support.v4.view.ViewPager
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="10"
-            android:id="@+id/activity_main_pager">
-
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/main_contenedorDeFragment"
-                >
-            </FrameLayout>
-
-        </android.support.v4.view.ViewPager>
-
-
+            android:id="@+id/main_contenedorDeFragment"
+            android:layout_weight="10">
+        </FrameLayout>
 
     </LinearLayout>
-
-
-
+    
     <android.support.design.widget.NavigationView
         app:itemTextColor="@color/colorAccent"
         android:layout_width="wrap_content"

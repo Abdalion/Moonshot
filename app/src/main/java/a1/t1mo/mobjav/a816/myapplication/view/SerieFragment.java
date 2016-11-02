@@ -41,11 +41,11 @@ public class SerieFragment extends Fragment{
         final SerieController SerieController = new SerieController();
 
         Integer genero = getArguments().getInt("genero");
-        if (genero == GeneroSerie.TODAS.id) {
-            SerieController.getSeriesPopulares(serieAdapter);
-        } else {
-            SerieController.getSeriesPorGenero(genero, serieAdapter);
-        }
+//        if (genero == GeneroSerie.TODAS.id) {
+//            SerieController.getSeriesPopulares(serieAdapter);
+//        } else {
+//            SerieController.getSeriesPorGenero(genero, serieAdapter);
+//        }
 
         final View view = inflater.inflate(R.layout.fragment_serie, container, false);
         recyclerView = (RecyclerView) view.findViewById(R.id.rv_grillaDeSeries);

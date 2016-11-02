@@ -28,24 +28,18 @@ import a1.t1mo.mobjav.a816.myapplication.utils.Listener;
  * Turno Tarde
  */
 
-public class MainActivity extends AppCompatActivity
-        implements PeliculaFragment.Escuchable, Listener<List<Pelicula>> {
-
+public class MainActivity extends AppCompatActivity implements PeliculaFragment.Escuchable {
     FragmentManager fragmentManager;
-    PeliculaController mPeliculaController;
+    PeliculaFragment mPeliculaFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        fragmentManager = getSupportFragmentManager();
-        mPeliculaController = new PeliculaController();
-        mPeliculaController.getPeliculasPopulares(this);
-
-        FragmentAdapterViewPager fragmentAdapter = new FragmentAdapterViewPager(fragmentManager);
-        ViewPager viewPager = (ViewPager)findViewById(R.id.activity_main_pager);
-        viewPager.setAdapter(fragmentAdapter);
+//        FragmentAdapterViewPager fragmentAdapter = new FragmentAdapterViewPager(fragmentManager);
+//        ViewPager viewPager = (ViewPager)findViewById(R.id.activity_main_pager);
+//        viewPager.setAdapter(fragmentAdapter);
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.main_navigationView);
         navigationView.setCheckedItem(R.id.menu_opcion_todas);
@@ -65,24 +59,27 @@ public class MainActivity extends AppCompatActivity
                 drawer.openDrawer(Gravity.LEFT);
             }
         });
-    }
 
+        fragmentManager = getSupportFragmentManager();
+        mPeliculaFragment = new PeliculaFragment();
+        crearFragmentPeliculas(GeneroPelicula.TODAS.id);
+    }
 
     private void onSelectItem(MenuItem item) {
         if(item.getItemId() == R.id.menu_opcion_todas) {
-            mPeliculaController.getPeliculasPopulares(this);
+            crearFragmentPeliculas(GeneroPelicula.TODAS.id);
             Toast.makeText(MainActivity.this, "Se cargaron todas las peliculas", Toast.LENGTH_SHORT).show();
         }
         else if(item.getItemId() == R.id.menu_opcion_drama) {
-            mPeliculaController.getPeliculasPorGenero(GeneroPelicula.DRAMA.id, this);
+            crearFragmentPeliculas(GeneroPelicula.DRAMA.id);
             Toast.makeText(MainActivity.this, "Se cargaron las peliculas de drama", Toast.LENGTH_SHORT).show();
         }
         else if(item.getItemId() == R.id.menu_opcion_thriller) {
-            mPeliculaController.getPeliculasPorGenero(GeneroPelicula.THRILLER.id, this);
+            crearFragmentPeliculas(GeneroPelicula.THRILLER.id);
             Toast.makeText(MainActivity.this, "Se cargaron las peliculas de thriller", Toast.LENGTH_SHORT).show();
         }
         else if(item.getItemId() == R.id.menu_opcion_accion) {
-            mPeliculaController.getPeliculasPorGenero(GeneroPelicula.ACTION.id, this);
+            crearFragmentPeliculas(GeneroPelicula.ACTION.id);
             Toast.makeText(MainActivity.this, "Se cargaron las peliculas de accion", Toast.LENGTH_SHORT).show();
         }
     }
@@ -90,12 +87,18 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onClickItem(Pelicula pelicula) {
         DetalleFragment detalleFragment = DetalleFragment.getDetalleFragment(pelicula);
-        fragmentManager.beginTransaction().replace(R.id.main_contenedorDeFragment, detalleFragment).addToBackStack("back").commit();
+        fragmentManager
+                .beginTransaction()
+                .replace(R.id.main_contenedorDeFragment, detalleFragment)
+                .addToBackStack("back")
+                .commit();
     }
 
-    @Override
-    public void done(List<Pelicula> peliculas) {
-        PeliculaFragment peliculaFragment = PeliculaFragment.getPeliculaFragment(peliculas);
-        fragmentManager.beginTransaction().replace(R.id.main_contenedorDeFragment, peliculaFragment).commit();
+    public void crearFragmentPeliculas(Integer genero) {
+        PeliculaFragment peliculaFragment = PeliculaFragment.obtenerFragment(genero);
+        fragmentManager
+                .beginTransaction()
+                .replace(R.id.main_contenedorDeFragment, peliculaFragment)
+                .commit();
     }
 }
