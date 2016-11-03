@@ -59,7 +59,7 @@ public class DetalleFragment extends Fragment {
         textViewLenguaje.setText(pelicula.getLenguaje());
 
         TextView textViewTrama =  (TextView) view.findViewById(R.id.fragment_detalle_trama);
-        textViewTrama.setText(pelicula.getTagline());
+        textViewTrama.setText(pelicula.getResumen());
 
         return view;
     }

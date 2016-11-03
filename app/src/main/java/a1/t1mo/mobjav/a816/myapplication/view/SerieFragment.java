@@ -17,7 +17,7 @@ import a1.t1mo.mobjav.a816.myapplication.model.Pelicula;
 import a1.t1mo.mobjav.a816.myapplication.model.Serie;
 
 public class SerieFragment extends Fragment{
-    private PeliculaFragment.Escuchable escuchable;
+    private Escuchable escuchable;
     private RecyclerView recyclerView;
     public static final String ARGUMENT_GENERO = "Genero de Series";
 
@@ -32,7 +32,7 @@ public class SerieFragment extends Fragment{
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        escuchable = (PeliculaFragment.Escuchable) activity;
+        escuchable = (Escuchable) activity;
     }
 
     @Override
@@ -49,6 +49,10 @@ public class SerieFragment extends Fragment{
         recyclerView.setAdapter(serieAdapter);
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
         return view;
+    }
+
+    public interface Escuchable {
+        void onClickItem(Serie serie);
     }
 
     public class SpacesItemDecoration extends RecyclerView.ItemDecoration {

@@ -16,6 +16,7 @@ import a1.t1mo.mobjav.a816.myapplication.R;
 import a1.t1mo.mobjav.a816.myapplication.model.GeneroPelicula;
 import a1.t1mo.mobjav.a816.myapplication.model.GeneroSerie;
 import a1.t1mo.mobjav.a816.myapplication.model.Pelicula;
+import a1.t1mo.mobjav.a816.myapplication.model.Serie;
 
 /**
  * MoonShot App
@@ -24,7 +25,8 @@ import a1.t1mo.mobjav.a816.myapplication.model.Pelicula;
  * Turno Tarde
  */
 
-public class MainActivity extends AppCompatActivity implements PeliculaFragment.Escuchable {
+public class MainActivity extends AppCompatActivity
+        implements PeliculaFragment.Escuchable, SerieFragment.Escuchable {
     FragmentManager fragmentManager;
     AdapterViewPagerFragment adapter;
     ViewPager viewPager;
@@ -109,6 +111,16 @@ public class MainActivity extends AppCompatActivity implements PeliculaFragment.
         fragmentManager
                 .beginTransaction()
                 .replace(R.id.main_contenedorDeFragment, detalleFragment)
+                .addToBackStack("back")
+                .commit();
+    }
+
+    @Override
+    public void onClickItem(Serie serie) {
+        DetalleSerie detalleSerie = DetalleSerie.getDetalleSerie(serie);
+        fragmentManager
+                .beginTransaction()
+                .replace(R.id.main_contenedorDeFragment, detalleSerie)
                 .addToBackStack("back")
                 .commit();
     }

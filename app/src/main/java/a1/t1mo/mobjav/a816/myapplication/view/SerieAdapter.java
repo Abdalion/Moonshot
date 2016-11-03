@@ -31,7 +31,7 @@ public class SerieAdapter extends RecyclerView.Adapter<SerieAdapter.SerieHolder>
 
     private List<Serie> mSeries;
     private SerieController mSerieController;
-    private PeliculaFragment.Escuchable mListener;
+    private SerieFragment.Escuchable mListener;
 
     public SerieAdapter(Integer genero) {
         mSerieController = new SerieController();
@@ -42,7 +42,7 @@ public class SerieAdapter extends RecyclerView.Adapter<SerieAdapter.SerieHolder>
         }
     }
 
-    public void setListener(PeliculaFragment.Escuchable listener) {
+    public void setListener(SerieFragment.Escuchable listener) {
         this.mListener = listener;
     }
 
@@ -95,7 +95,7 @@ public class SerieAdapter extends RecyclerView.Adapter<SerieAdapter.SerieHolder>
 
         @Override
         public void onClick(View v) {
-//            mListener.onClickItem(mSerie);
+            mListener.onClickItem(mSerie);
         }
     }
 //
