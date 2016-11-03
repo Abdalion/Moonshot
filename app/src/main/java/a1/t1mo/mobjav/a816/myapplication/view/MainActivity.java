@@ -41,7 +41,6 @@ public class MainActivity extends AppCompatActivity implements PeliculaFragment.
         setContentView(R.layout.activity_main);
 
         fragmentManager = getSupportFragmentManager();
-
         viewPagerSetup();
         navigationViewSetup();
         drawerButtonListener();
@@ -51,6 +50,7 @@ public class MainActivity extends AppCompatActivity implements PeliculaFragment.
     private void navigationViewSetup() {
         NavigationView navigationView = (NavigationView) findViewById(R.id.main_navigationView);
         navigationView.setCheckedItem(R.id.menu_opcion_todas);
+
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem item) {
@@ -75,8 +75,10 @@ public class MainActivity extends AppCompatActivity implements PeliculaFragment.
                 if(position == 0) {
                     generoManager.setPeliculaOSerie("PELICULA");
                 }
-                else
+                else {
                     generoManager.setPeliculaOSerie("SERIE");
+                }
+                Toast.makeText(MainActivity.this, generoManager.getPeliculaOSerie(), Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -114,10 +116,6 @@ public class MainActivity extends AppCompatActivity implements PeliculaFragment.
             adapter.changeCategory(GeneroPelicula.ACTION.id);
         }
         adapter.notifyDataSetChanged();
-    }
-
-    private void onSwipe() {
-
     }
 
 //        if(item.getItemId() == R.id.menu_opcion_todas) {
