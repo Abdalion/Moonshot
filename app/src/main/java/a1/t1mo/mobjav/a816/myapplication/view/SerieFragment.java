@@ -13,15 +13,17 @@ import android.view.ViewGroup;
 import a1.t1mo.mobjav.a816.myapplication.R;
 import a1.t1mo.mobjav.a816.myapplication.controller.SerieController;
 import a1.t1mo.mobjav.a816.myapplication.model.GeneroSerie;
+import a1.t1mo.mobjav.a816.myapplication.model.Pelicula;
 import a1.t1mo.mobjav.a816.myapplication.model.Serie;
 
 public class SerieFragment extends Fragment{
-    private Escuchable escuchable;
+    private PeliculaFragment.Escuchable escuchable;
     private RecyclerView recyclerView;
+    public static final String ARGUMENT_GENERO = "Genero de Series";
 
-    public static SerieFragment getSerieFragment (Integer genero) {
+    public static SerieFragment obtenerFragment(Integer genero) {
         Bundle bundle = new Bundle();
-        bundle.putInt("genero", genero);
+        bundle.putInt(ARGUMENT_GENERO, genero);
         SerieFragment fragment = new SerieFragment();
         fragment.setArguments(bundle);
         return fragment;
@@ -30,45 +32,23 @@ public class SerieFragment extends Fragment{
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        escuchable = (Escuchable) activity;
+        escuchable = (PeliculaFragment.Escuchable) activity;
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        final SerieAdapter serieAdapter = new SerieAdapter();
-        final SerieController SerieController = new SerieController();
-
-        Integer genero = getArguments().getInt("genero");
-//        if (genero == GeneroSerie.TODAS.id) {
-//            SerieController.getSeriesPopulares(serieAdapter);
-//        } else {
-//            SerieController.getSeriesPorGenero(genero, serieAdapter);
-//        }
-
-        final View view = inflater.inflate(R.layout.fragment_serie, container, false);
-        recyclerView = (RecyclerView) view.findViewById(R.id.rv_grillaDeSeries);
+        Bundle bundle = getArguments();
+        SerieAdapter serieAdapter = new SerieAdapter(bundle.getInt(ARGUMENT_GENERO));
+        View view = inflater.inflate(R.layout.fragment_pelicula, container, false);
+        recyclerView = (RecyclerView) view.findViewById(R.id.rv_grillaDePeliculas);
         recyclerView.addItemDecoration(new SpacesItemDecoration(4));
         recyclerView.setHasFixedSize(true);
         serieAdapter.setListener(escuchable);
         recyclerView.setAdapter(serieAdapter);
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
         return view;
-    }
-
-/*    private class ListenerRecetas implements View.OnClickListener{
-        @Override
-        public void onClick(View view) {
-            int posicion = recyclerView.getChildAdapterPosition(view);
-            Serie peliculaClickeada = listaDeSerie.get(posicion);
-            escuchable.onClickItem(peliculaClickeada);
-
-        }
-    }*/
-
-    public interface Escuchable {
-        void onClickItem(Serie serie);
     }
 
     public class SpacesItemDecoration extends RecyclerView.ItemDecoration {

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import a1.t1mo.mobjav.a816.myapplication.model.ListadoPeliculas;
+import a1.t1mo.mobjav.a816.myapplication.model.ListadoSeries;
 import a1.t1mo.mobjav.a816.myapplication.model.Pelicula;
 import a1.t1mo.mobjav.a816.myapplication.model.Serie;
 import retrofit2.Call;
@@ -42,11 +43,11 @@ public interface TmdbService {
     Call<Serie> getSerie(@Path("tv_id") Integer id);
 
     @GET("tv/popular")
-    Call<List<Serie>> getSeriesPopulares();
+    Call<ListadoSeries> getSeriesPopulares();
 
     @GET("tv/top_rated")
-    Call<List<Serie>> getSeriesMejorRankeadas();
+    Call<ListadoSeries> getSeriesMejorRankeadas();
 
     @GET("discover/tv")
-    Call<List<Serie>> getSeriesPorGenero(@Query("with_genres") Integer genero);
+    Call<ListadoSeries> getSeriesPorGenero(@Query("with_genres") Integer genero);
 }

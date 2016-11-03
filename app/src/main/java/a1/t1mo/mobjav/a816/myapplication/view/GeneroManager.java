@@ -61,23 +61,35 @@ public class GeneroManager {
 
     public static void onNavigationGenreClick(Integer itemID, Context context, AdapterViewPagerFragment adapter) {
         //Esto se puede hacer con un foreach mapeando los generos a los de xml
-        if(PELICULA_O_SERIE == "PELICULA") {
-            switch (itemID) {
-                case R.id.menu_peliculas_opcion_todas: adapter.changeCategory(GeneroPelicula.TODAS.id, null);
-                    break;
-                case R.id.menu_peliculas_opcion_accion: adapter.changeCategory(GeneroPelicula.ACTION.id, null);
-                    break;
-                //TODO: COMPLETAR CON LA ESTRUCTURA DE ARRIBA CON LOS DEMAS GENEROS PELICULA.
-            }
+
+        Integer generoPelicula = 0;
+        Integer generoSerie = 0;
+        switch (itemID) {
+            case R.id.menu_peliculas_opcion_todas:
+                generoPelicula = GeneroPelicula.TODAS.id;
+                break;
+            case R.id.menu_peliculas_opcion_accion:
+                generoPelicula = GeneroPelicula.ACTION.id;
+                break;
+            case R.id.menu_peliculas_opcion_drama:
+                generoPelicula = GeneroPelicula.DRAMA.id;
+                break;
+            case R.id.menu_peliculas_opcion_thriller:
+                generoPelicula = GeneroPelicula.THRILLER.id;
+                break;
+            case R.id.menu_series_opcion_todas:
+                generoSerie = GeneroSerie.TODAS.id;
+                break;
+            case R.id.menu_series_opcion_comedia:
+                generoSerie = GeneroSerie.COMEDY.id;
+                break;
+            case R.id.menu_series_opcion_crimen:
+                generoSerie = GeneroSerie.CRIME.id;
+                break;
+            case R.id.menu_series_opcion_drama:
+                generoSerie = GeneroSerie.DRAMA.id;
+                break;
         }
-        else if(PELICULA_O_SERIE == "SERIE") {
-            switch (itemID) {
-                case R.id.menu_peliculas_opcion_todas: adapter.changeCategory(null,GeneroSerie.TODAS.id);
-                    break;
-                case R.id.menu_peliculas_opcion_accion: adapter.changeCategory(null, GeneroSerie.ACTION_ADVENTURE.id);
-                    break;
-                //TODO: COMPLETAR CON LA ESTRUCTURA DE ARRIBA CON LOS DEMAS GENEROS SERIE.
-            }
-        }
+        adapter.changeCategory(generoPelicula, generoSerie);
     }
 }

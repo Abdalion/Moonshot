@@ -8,13 +8,13 @@
         </item>
 
         <item
-            android:id="@+id/menu_series_opcion_thriller"
-            android:title="Thriller">
+            android:id="@+id/menu_series_opcion_crimen"
+            android:title="Crimen">
         </item>
 
         <item
-            android:id="@+id/menu_series_opcion_accion"
-            android:title="Accion">
+            android:id="@+id/menu_series_opcion_comedia"
+            android:title="Comedia">
         </item>
 
         <item

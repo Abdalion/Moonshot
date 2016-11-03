@@ -21,13 +21,7 @@ import a1.t1mo.mobjav.a816.myapplication.utils.Listener;
 public class PeliculaFragment extends Fragment {
     private Escuchable escuchable;
     private RecyclerView recyclerView;
-    public static String ARGUMENT_GENERO = "Genero de Peliculas";
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        escuchable = (Escuchable) activity;
-    }
+    public static final String ARGUMENT_GENERO = "Genero de Peliculas";
 
     public static PeliculaFragment obtenerFragment(Integer genero) {
         Bundle bundle = new Bundle();
@@ -35,6 +29,12 @@ public class PeliculaFragment extends Fragment {
         PeliculaFragment fragment = new PeliculaFragment();
         fragment.setArguments(bundle);
         return fragment;
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        escuchable = (Escuchable) activity;
     }
 
     @Override

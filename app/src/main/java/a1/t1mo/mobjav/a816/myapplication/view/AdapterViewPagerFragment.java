@@ -18,7 +18,7 @@ public class AdapterViewPagerFragment extends FragmentStatePagerAdapter {
 
     private Integer categoryIDFragmentPeliculas;
     private Integer categoryIDFragmentSeries;
-    ArrayList<Fragment> listaDeFragments;
+    private ArrayList<Fragment> listaDeFragments;
     private Fragment fragmentaA;
     private Fragment fragmentaB;
 
@@ -31,10 +31,10 @@ public class AdapterViewPagerFragment extends FragmentStatePagerAdapter {
     }
 
     public void changeCategory(Integer idPeliculas, Integer idSeries) {
-        if(categoryIDFragmentPeliculas != null) {
+        if(categoryIDFragmentPeliculas != 0) {
             categoryIDFragmentPeliculas = idPeliculas;
         }
-        if(categoryIDFragmentSeries != null) {
+        if(categoryIDFragmentSeries != 0) {
             categoryIDFragmentSeries = idSeries;
         }
 
@@ -46,7 +46,7 @@ public class AdapterViewPagerFragment extends FragmentStatePagerAdapter {
         Log.d("DEBUGGER", "LLEGADO A UPDATE FRAGMENTS");
         listaDeFragments.clear();
         fragmentaA = PeliculaFragment.obtenerFragment(categoryIDFragmentPeliculas);
-        fragmentaB = PeliculaFragment.obtenerFragment(categoryIDFragmentSeries);
+        fragmentaB = SerieFragment.obtenerFragment(categoryIDFragmentSeries);
         //todo: Reemplazar el fragmentB por SerieFragment.obtenerFragment
         listaDeFragments.add(fragmentaA);
         listaDeFragments.add(fragmentaB);

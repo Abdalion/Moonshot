@@ -18,6 +18,7 @@ import java.util.List;
 import a1.t1mo.mobjav.a816.myapplication.R;
 import a1.t1mo.mobjav.a816.myapplication.controller.PeliculaController;
 import a1.t1mo.mobjav.a816.myapplication.model.GeneroPelicula;
+import a1.t1mo.mobjav.a816.myapplication.model.GeneroSerie;
 import a1.t1mo.mobjav.a816.myapplication.model.ListadoPeliculas;
 import a1.t1mo.mobjav.a816.myapplication.model.Pelicula;
 import a1.t1mo.mobjav.a816.myapplication.utils.Listener;
@@ -45,12 +46,11 @@ public class MainActivity extends AppCompatActivity implements PeliculaFragment.
         navigationViewSetup();
         viewPagerSetup();
         drawerButtonListener();
-
     }
 
     private void navigationViewSetup() {
         navigationView = (NavigationView) findViewById(R.id.main_navigationView);
-        navigationView.setCheckedItem(R.id.menu_opcion_todas);
+        navigationView.setCheckedItem(R.id.menu_peliculas_opcion_todas);
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity implements PeliculaFragment.
         adapter = new AdapterViewPagerFragment(fragmentManager);
         viewPager = (ViewPager) findViewById(R.id.main_viewPager);
         viewPager.setAdapter(adapter);
-        adapter.changeCategory(GeneroPelicula.TODAS.id, null);
+        adapter.changeCategory(GeneroPelicula.TODAS.id, GeneroSerie.TODAS.id);
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {

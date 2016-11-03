@@ -55,4 +55,155 @@ public class Serie {
     @SerializedName("vote_count")
     public Integer mTotalVotos;
 
+    public String getBackDropPath() {
+        return mBackDropPath;
+    }
+
+    public void setBackDropPath(String backDropPath) {
+        mBackDropPath = backDropPath;
+    }
+
+    public String getFechaDeEstreno() {
+        return mFechaDeEstreno;
+    }
+
+    public void setFechaDeEstreno(String fechaDeEstreno) {
+        mFechaDeEstreno = fechaDeEstreno;
+    }
+
+    public List<Genre> getGeneros() {
+        return mGeneros;
+    }
+
+    public void setGeneros(List<Genre> generos) {
+        mGeneros = generos;
+    }
+
+    public String getHomepage() {
+        return mHomepage;
+    }
+
+    public void setHomepage(String homepage) {
+        mHomepage = homepage;
+    }
+
+    public Integer getId() {
+        return mId;
+    }
+
+    public void setId(Integer id) {
+        mId = id;
+    }
+
+    public List<String> getLenguajes() {
+        return mLenguajes;
+    }
+
+    public void setLenguajes(List<String> lenguajes) {
+        mLenguajes = lenguajes;
+    }
+
+    public String getFechaDeUltimoCapitulo() {
+        return mFechaDeUltimoCapitulo;
+    }
+
+    public void setFechaDeUltimoCapitulo(String fechaDeUltimoCapitulo) {
+        mFechaDeUltimoCapitulo = fechaDeUltimoCapitulo;
+    }
+
+    public String getNombre() {
+        return mNombre;
+    }
+
+    public void setNombre(String nombre) {
+        mNombre = nombre;
+    }
+
+    public Integer getNumeroDeEpisodios() {
+        return mNumeroDeEpisodios;
+    }
+
+    public void setNumeroDeEpisodios(Integer numeroDeEpisodios) {
+        mNumeroDeEpisodios = numeroDeEpisodios;
+    }
+
+    public Integer getGetmNumeroDeTemporadas() {
+        return getmNumeroDeTemporadas;
+    }
+
+    public void setGetmNumeroDeTemporadas(Integer getmNumeroDeTemporadas) {
+        this.getmNumeroDeTemporadas = getmNumeroDeTemporadas;
+    }
+
+    public List<String> getPaisesDeOrigen() {
+        return mPaisesDeOrigen;
+    }
+
+    public void setPaisesDeOrigen(List<String> paisesDeOrigen) {
+        mPaisesDeOrigen = paisesDeOrigen;
+    }
+
+    public String getLenguaje() {
+        return mLenguaje;
+    }
+
+    public void setLenguaje(String lenguaje) {
+        mLenguaje = lenguaje;
+    }
+
+    public String getResumen() {
+        return mResumen;
+    }
+
+    public void setResumen(String resumen) {
+        mResumen = resumen;
+    }
+
+    public Double getPopularidad() {
+        return mPopularidad;
+    }
+
+    public void setPopularidad(Double popularidad) {
+        mPopularidad = popularidad;
+    }
+
+    public String getPosterPath() {
+        return mPosterPath;
+    }
+
+    public void setPosterPath(String posterPath) {
+        mPosterPath = posterPath;
+    }
+
+    public List<Season> getTemporadas() {
+        return mTemporadas;
+    }
+
+    public void setTemporadas(List<Season> temporadas) {
+        mTemporadas = temporadas;
+    }
+
+    public String getStatus() {
+        return mStatus;
+    }
+
+    public void setStatus(String status) {
+        mStatus = status;
+    }
+
+    public Double getPuntajePromedio() {
+        return mPuntajePromedio;
+    }
+
+    public void setPuntajePromedio(Double puntajePromedio) {
+        mPuntajePromedio = puntajePromedio;
+    }
+
+    public Integer getTotalVotos() {
+        return mTotalVotos;
+    }
+
+    public void setTotalVotos(Integer totalVotos) {
+        mTotalVotos = totalVotos;
+    }
 }
