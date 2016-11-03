@@ -1,5 +1,9 @@
 package a1.t1mo.mobjav.a816.myapplication.view;
 
+import android.support.design.widget.NavigationView;
+
+import a1.t1mo.mobjav.a816.myapplication.R;
+
 /**
  * Created by Egon on 02/11/2016.
  */
@@ -11,8 +15,6 @@ public class GeneroManager {
 
     private GeneroManager() {}
 
-
-
     public static GeneroManager getGeneroManager() {
         if(instancia == null) {
             instancia = new GeneroManager();
@@ -21,7 +23,7 @@ public class GeneroManager {
         return instancia;
     }
 
-    public String getPeliculaOSerie () {
+    public static String getPeliculaOSerie () {
         return PELICULA_O_SERIE;
     }
 
@@ -30,7 +32,17 @@ public class GeneroManager {
     }
 
 
+    public static void updateNavigationMenu(NavigationView navigationView) {
+        navigationView.getMenu().clear();
+        if(getPeliculaOSerie() == "PELICULA") {
+            navigationView.inflateMenu(R.menu.menu_navigation_peliculas);
+        }
+        else {
+            navigationView.inflateMenu(R.menu.menu_navigation_series);
+        }
+    }
 
+    public static void onNavigationGenreClick(Integer item) {
 
-
+    }
 }

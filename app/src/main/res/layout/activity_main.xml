@@ -63,7 +63,7 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        app:menu="@menu/menu_navigation"
+        app:menu="@menu/menu_navigation_peliculas"
         android:backgroundTint="@color/colorPalabras2"
         android:id="@+id/main_navigationView">
 

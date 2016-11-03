@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/menu_peliculas_opcion_todas"
+            android:title="Todas">
+        </item>
+
+        <item
+            android:id="@+id/menu_peliculas_opcion_thriller"
+            android:title="Thriller">
+        </item>
+
+        <item
+            android:id="@+id/menu_peliculas_opcion_accion"
+            android:title="Accion">
+        </item>
+
+        <item
+            android:id="@+id/menu_peliculas_opcion_drama"
+            android:title="Drama">
+        </item>
+
+        <!--todo: Completar los generos que faltan con la misma estructura de arriba y avisar a
+        egon que los agregue a GeneroManager-->
+
+    </group>
+</menu>

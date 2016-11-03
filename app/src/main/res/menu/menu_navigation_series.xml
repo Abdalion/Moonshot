@@ -3,23 +3,27 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/menu_opcion_todas"
+            android:id="@+id/menu_series_opcion_todas"
             android:title="Todas">
         </item>
 
         <item
-            android:id="@+id/menu_opcion_thriller"
+            android:id="@+id/menu_series_opcion_thriller"
             android:title="Thriller">
         </item>
 
         <item
-            android:id="@+id/menu_opcion_accion"
+            android:id="@+id/menu_series_opcion_accion"
             android:title="Accion">
         </item>
 
         <item
-            android:id="@+id/menu_opcion_drama"
+            android:id="@+id/menu_series_opcion_drama"
             android:title="Drama">
         </item>
+
+        <!--todo: Completar los generos que faltan con la misma estructura de arriba y avisar a
+        egon que los agregue a GeneroManager-->
+
     </group>
 </menu>

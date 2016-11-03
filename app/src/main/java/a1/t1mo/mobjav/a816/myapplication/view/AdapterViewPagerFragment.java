@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 import a1.t1mo.mobjav.a816.myapplication.model.GeneroPelicula;
 import a1.t1mo.mobjav.a816.myapplication.model.GeneroSerie;
+import a1.t1mo.mobjav.a816.myapplication.model.Pelicula;
 
 /**
  * Created by dh-mob-tt on 31/10/16.
@@ -17,7 +18,8 @@ import a1.t1mo.mobjav.a816.myapplication.model.GeneroSerie;
 
 public class AdapterViewPagerFragment extends FragmentStatePagerAdapter {
 
-    private Integer categoryID;
+    private Integer categoryIDFragmentA;
+    private Integer categoryIDFragmentB;
     ArrayList<Fragment> listaDeFragments;
     private Fragment fragmentaA;
     private Fragment fragmentaB;
@@ -25,12 +27,19 @@ public class AdapterViewPagerFragment extends FragmentStatePagerAdapter {
     public AdapterViewPagerFragment(FragmentManager fm) {
         super(fm);
         listaDeFragments = new ArrayList<>();
-        categoryID = GeneroPelicula.TODAS.id;
+        categoryIDFragmentA = GeneroPelicula.TODAS.id;
+        categoryIDFragmentB = GeneroSerie.TODAS.id;
         updateFragments();
     }
 
-    public void changeCategory(Integer id) {
-        categoryID = id;
+    public void changeCategory(Integer idA, Integer idB) {
+        if(categoryIDFragmentA != null) {
+            categoryIDFragmentA = idA;
+        }
+        if(categoryIDFragmentB != null) {
+            categoryIDFragmentB = idB;
+        }
+
         updateFragments();
         Log.d("DEBUGGER", "LLEGADO A CHANGE CATEGORY");
     }
@@ -38,8 +47,9 @@ public class AdapterViewPagerFragment extends FragmentStatePagerAdapter {
     private void updateFragments() {
         Log.d("DEBUGGER", "LLEGADO A UPDATE FRAGMENTS");
         listaDeFragments.clear();
-        fragmentaA = PeliculaFragment.obtenerFragment(categoryID);
-        fragmentaB = PeliculaFragment.obtenerFragment(categoryID);
+        fragmentaA = PeliculaFragment.obtenerFragment(categoryIDFragmentA);
+        fragmentaB = PeliculaFragment.obtenerFragment(categoryIDFragmentB);
+        //todo: Reemplazar el fragmentB por SerieFragment.obtenerFragment
         listaDeFragments.add(fragmentaA);
         listaDeFragments.add(fragmentaB);
         notifyDataSetChanged();
