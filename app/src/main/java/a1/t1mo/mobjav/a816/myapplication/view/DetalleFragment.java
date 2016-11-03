@@ -41,9 +41,9 @@ public class DetalleFragment extends Fragment {
 
         TextView textView = (TextView) view.findViewById(R.id.fragment_detalle_fechaDeEstreno);
         textView.setText(pelicula.getFechaDeEstreno());
-
+//
 //        TextView textViewDuracion =  (TextView) view.findViewById(R.id.fragment_detalle_duracion);
-//        textViewDuracion.setText(pelicula.getDuracion().toString());
+//        textViewDuracion.setText(Integer.toString(pelicula.getDuracion()));
 
 //        TextView textViewGenre =  (TextView) view.findViewById(R.id.fragment_detalle_genero);
 //        textViewGenre.setText(pelicula.getGeneros());
@@ -51,7 +51,7 @@ public class DetalleFragment extends Fragment {
         ImageView imageViewImagenId = (ImageView) view.findViewById(R.id.fragment_detalle_imagenId);
         Glide
             .with(getContext())
-            .load(TmdbService.IMAGE_URL_W185 + pelicula.getPosterPath())
+            .load(TmdbService.IMAGE_URL_W300 + pelicula.getBackdropPath())
             .fitCenter()
             .into(imageViewImagenId);
 
@@ -60,6 +60,9 @@ public class DetalleFragment extends Fragment {
 
         TextView textViewTrama =  (TextView) view.findViewById(R.id.fragment_detalle_trama);
         textViewTrama.setText(pelicula.getResumen());
+
+//        TextView textViewHomePage =  (TextView) view.findViewById(R.id.fragment_detalle_homepage);
+//        textViewHomePage.setText(pelicula.getImdbId());
 
         return view;
     }

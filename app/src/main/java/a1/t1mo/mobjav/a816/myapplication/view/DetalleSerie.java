@@ -49,7 +49,7 @@ public class DetalleSerie extends Fragment {
         ImageView imageViewImagenId = (ImageView) view.findViewById(R.id.fragment_detalle_imagenId);
         Glide
                 .with(getContext())
-                .load(TmdbService.IMAGE_URL_W185 + mSerie.getPosterPath())
+                .load(TmdbService.IMAGE_URL_W185 + mSerie.getBackDropPath())
                 .fitCenter()
                 .into(imageViewImagenId);
 

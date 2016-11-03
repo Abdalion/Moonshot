@@ -1,151 +1,143 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="a1.t1mo.mobjav.a816.myapplication.view.DetalleFragment"
-    android:background="@color/colorPalabras2"
-    >
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="a1.t1mo.mobjav.a816.myapplication.view.DetalleFragment"
+        android:background="@color/colorPalabras2"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        >
 
-    <ImageView
-        android:layout_width="@dimen/poster_width_large"
-        android:layout_height="@dimen/poster_height_large"
-        android:id="@+id/fragment_detalle_imagenId"
-        android:layout_marginLeft="20dp"
-        android:layout_marginBottom="20dp"
-        android:layout_marginRight="15dp"
-        android:layout_marginTop="80dp"
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Titulo"
+            android:textColor="@color/colorPalabras3"
+            android:textSize="26dp"
+            android:textStyle="bold"
+            android:layout_marginTop="20dp"
+            android:id="@+id/fragment_detalle_titulo"/>
 
-        />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Titulo"
-        android:textColor="@color/colorPalabras3"
-        android:textSize="26dp"
-        android:layout_marginLeft="20dp"
-        android:textStyle="bold"
-        android:layout_marginTop="20dp"
-        android:id="@+id/fragment_detalle_titulo"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/fragment_detalle_imagenId"
-        android:id="@+id/fragment_detalle_genero"
-        android:layout_marginTop="77dp"
-        android:text="Short, Action"
-        android:textSize="13dp"
-        android:textStyle="bold"
-        android:textColor="@color/colorPalabras3"
-        />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/fragment_detalle_duracion"
-        android:layout_below="@+id/fragment_detalle_genero"
-        android:layout_toRightOf="@+id/fragment_detalle_pais"
-        android:text="167 min"
-        android:textSize="13dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"
-        android:layout_marginLeft="20dp"
-        android:textColor="@color/colorPalabras3"
-        android:textStyle="bold"
-        />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/fragment_detalle_imagenId"
-        android:layout_below="@id/fragment_detalle_pais"
-        android:id="@+id/fragment_detalle_lenguaje"
-        android:text="English"
-        android:textSize="13dp"
-        android:textColor="@color/colorPalabras3"
-        android:textStyle="bold"
-        />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/fragment_detalle_genero"
-        android:layout_toRightOf="@+id/fragment_detalle_imagenId"
-        android:id="@+id/fragment_detalle_pais"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"
-        android:text="USA"
-        android:textSize="13dp"
-        android:textColor="@color/colorPalabras3"
-        android:textStyle="bold"
-        />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Fecha de estreno:"
-        android:layout_below="@+id/fragment_detalle_lenguaje"
-        android:layout_toRightOf="@+id/fragment_detalle_imagenId"
-        android:textSize="13dp"
-        android:layout_marginTop="10dp"
-        android:textStyle="bold"
-        android:textColor="@color/colorPalabras3"
-        android:id="@+id/fechaDeEstrenoText"
-        />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/fechaDeEstrenoText"
-        android:layout_toRightOf="@id/fragment_detalle_imagenId"
-        android:id="@+id/fragment_detalle_fechaDeEstreno"
-        android:layout_marginLeft="5dp"
-        android:paddingTop="0.5dp"
-        android:text="01 Jan 2001"
-        android:textSize="11dp"
-        android:textColor="@color/colorPalabras3"
-
-        />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Protagonizada por:"
-        android:layout_below="@+id/fragment_detalle_fechaDeEstreno"
-        android:layout_toRightOf="@+id/fragment_detalle_imagenId"
-        android:textSize="13dp"
-        android:layout_marginTop="4dp"
-        android:textStyle="bold"
-        android:textColor="@color/colorPalabras3"
-        android:id="@+id/protagonizadaPorText"
-        />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Jason Statham"
-        android:layout_below="@+id/protagonizadaPorText"
-        android:layout_toRightOf="@+id/fragment_detalle_imagenId"
-        android:layout_marginLeft="5dp"
-        android:paddingTop="1dp"
-        android:textSize="11dp"
-        android:textColor="@color/colorPalabras3"
-        android:id="@+id/fragment_detalle_actores"
-
-        />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/fragment_detalle_imagenId"
+            android:layout_below="@id/fragment_detalle_titulo"
+            />
 
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_below="@+id/fragment_detalle_imagenId"
-        android:textSize="11dp"
-        android:id="@+id/fragment_detalle_trama"
-        android:textColor="@color/colorPalabras3"
-        android:layout_centerHorizontal="true"
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/fragment_detalle_genero"
+            android:layout_below="@id/fragment_detalle_imagenId"
+            android:layout_marginTop="10dp"
+            android:text="Short, Action"
+            android:textSize="13dp"
+            android:textStyle="bold"
+            android:textColor="@color/colorPalabras3"
+            />
 
-        />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/fragment_detalle_duracion"
+            android:layout_below="@+id/fragment_detalle_genero"
+            android:layout_toRightOf="@+id/fragment_detalle_pais"
+            android:text="167 min"
+            android:textSize="13dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="20dp"
+            android:textColor="@color/colorPalabras3"
+            android:textStyle="bold"
+            />
 
-</RelativeLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/fragment_detalle_genero"
+            android:layout_toRightOf="@id/fragment_detalle_duracion"
+            android:id="@+id/fragment_detalle_lenguaje"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="20dp"
+            android:text="English"
+            android:textSize="13dp"
+            android:textColor="@color/colorPalabras3"
+            android:textStyle="bold"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/fragment_detalle_genero"
+
+            android:id="@+id/fragment_detalle_pais"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:text="USA"
+            android:textSize="13dp"
+            android:textColor="@color/colorPalabras3"
+            android:textStyle="bold"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Fecha de estreno:"
+            android:layout_below="@+id/fragment_detalle_lenguaje"
+
+            android:textSize="13dp"
+            android:layout_marginTop="8dp"
+            android:textStyle="bold"
+            android:textColor="@color/colorPalabras3"
+            android:id="@+id/fechaDeEstrenoText"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/fechaDeEstrenoText"
+
+            android:id="@+id/fragment_detalle_fechaDeEstreno"
+            android:layout_marginLeft="5dp"
+            android:paddingTop="0.5dp"
+            android:text="01 Jan 2001"
+            android:textSize="11dp"
+            android:textColor="@color/colorPalabras3"
+
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Resumen:"
+            android:layout_below="@+id/fragment_detalle_fechaDeEstreno"
+
+            android:textSize="13dp"
+            android:layout_marginTop="7dp"
+            android:textStyle="bold"
+            android:textColor="@color/colorPalabras3"
+            android:id="@+id/protagonizadaPorText"
+            />
+
+        <ScrollView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/protagonizadaPorText"
+           >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15dp"
+            android:id="@+id/fragment_detalle_trama"
+            android:textColor="@color/colorPalabras3"
+
+            android:text="grogormogromgormogmroffffffffffffffffffffffffff"
+
+            />
+        </ScrollView>
+
+    </RelativeLayout>
+

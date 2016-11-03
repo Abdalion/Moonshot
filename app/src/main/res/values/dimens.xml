@@ -2,8 +2,8 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
-    <dimen name="poster_width_small">154dp</dimen>
-    <dimen name="poster_height_small">231dp</dimen>
+    <dimen name="poster_width_small">164dp</dimen>
+    <dimen name="poster_height_small">178dp</dimen>
     <dimen name="poster_width_large">185dp</dimen>
     <dimen name="poster_height_large">278dp</dimen>
 </resources>

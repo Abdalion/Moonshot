@@ -93,6 +93,8 @@ public class SerieAdapter extends RecyclerView.Adapter<SerieAdapter.SerieHolder>
                 .into(mImagen);
         }
 
+
+
         @Override
         public void onClick(View v) {
             mListener.onClickItem(mSerie);
