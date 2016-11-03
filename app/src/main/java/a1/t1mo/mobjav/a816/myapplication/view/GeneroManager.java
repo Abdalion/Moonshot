@@ -18,7 +18,6 @@ import a1.t1mo.mobjav.a816.myapplication.model.GeneroSerie;
 
 public class GeneroManager {
     public static String PELICULA_O_SERIE;
-
     private static GeneroManager instancia = null;
     private static ArrayList<Integer> generos_peliculas_id;
     private static ArrayList<Integer> generos_series_id;
@@ -40,7 +39,7 @@ public class GeneroManager {
         return instancia;
     }
 
-    public static String getPeliculaOSerie () {
+    public String getPeliculaOSerie () {
         return PELICULA_O_SERIE;
     }
 
@@ -49,7 +48,7 @@ public class GeneroManager {
     }
 
 
-    public static void updateNavigationMenu(NavigationView navigationView) {
+    public void updateNavigationMenu(NavigationView navigationView) {
         navigationView.getMenu().clear();
         if(getPeliculaOSerie() == "PELICULA") {
             navigationView.inflateMenu(R.menu.menu_navigation_peliculas);
@@ -59,7 +58,7 @@ public class GeneroManager {
         }
     }
 
-    public static void onNavigationGenreClick(Integer itemID, Context context, AdapterViewPagerFragment adapter) {
+    public void onNavigationGenreClick(Integer itemID, AdapterViewPagerFragment adapter) {
         //Esto se puede hacer con un foreach mapeando los generos a los de xml
 
         Integer generoPelicula = 0;

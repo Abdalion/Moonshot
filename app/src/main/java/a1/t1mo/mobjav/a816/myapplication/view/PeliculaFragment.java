@@ -53,16 +53,6 @@ public class PeliculaFragment extends Fragment {
         return view;
     }
 
-/*    private class ListenerRecetas implements View.OnClickListener{
-        @Override
-        public void onClick(View view) {
-            int posicion = recyclerView.getChildAdapterPosition(view);
-            Pelicula peliculaClickeada = listaDePeliculas.get(posicion);
-            escuchable.onClickItem(peliculaClickeada);
-
-        }
-    }*/
-
     public interface Escuchable {
         void onClickItem(Pelicula pelicula);
     }

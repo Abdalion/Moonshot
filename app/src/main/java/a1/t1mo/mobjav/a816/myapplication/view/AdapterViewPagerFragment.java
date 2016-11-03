@@ -47,7 +47,6 @@ public class AdapterViewPagerFragment extends FragmentStatePagerAdapter {
         listaDeFragments.clear();
         fragmentaA = PeliculaFragment.obtenerFragment(categoryIDFragmentPeliculas);
         fragmentaB = SerieFragment.obtenerFragment(categoryIDFragmentSeries);
-        //todo: Reemplazar el fragmentB por SerieFragment.obtenerFragment
         listaDeFragments.add(fragmentaA);
         listaDeFragments.add(fragmentaB);
         notifyDataSetChanged();

@@ -1,5 +1,8 @@
 package a1.t1mo.mobjav.a816.myapplication.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
@@ -14,7 +17,7 @@ import java.util.List;
  */
 
 
-public class Serie {
+public class Serie implements Parcelable {
 
     @SerializedName("backdrop_path")
     public String mBackDropPath;
@@ -35,7 +38,7 @@ public class Serie {
     @SerializedName("number_of_episodes")
     public Integer mNumeroDeEpisodios;
     @SerializedName("number_of_seasons")
-    public Integer getmNumeroDeTemporadas;
+    public Integer mNumeroDeTemporadas;
     @SerializedName("origin_country")
     public List<String> mPaisesDeOrigen = new ArrayList<String>();
     @SerializedName("original_language")
@@ -127,12 +130,12 @@ public class Serie {
         mNumeroDeEpisodios = numeroDeEpisodios;
     }
 
-    public Integer getGetmNumeroDeTemporadas() {
-        return getmNumeroDeTemporadas;
+    public Integer getNumeroDeTemporadas() {
+        return mNumeroDeTemporadas;
     }
 
-    public void setGetmNumeroDeTemporadas(Integer getmNumeroDeTemporadas) {
-        this.getmNumeroDeTemporadas = getmNumeroDeTemporadas;
+    public void setNumeroDeTemporadas(Integer numeroDeTemporadas) {
+        this.mNumeroDeTemporadas = numeroDeTemporadas;
     }
 
     public List<String> getPaisesDeOrigen() {
@@ -206,4 +209,71 @@ public class Serie {
     public void setTotalVotos(Integer totalVotos) {
         mTotalVotos = totalVotos;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.mBackDropPath);
+        dest.writeString(this.mFechaDeEstreno);
+        dest.writeList(this.mGeneros);
+        dest.writeString(this.mHomepage);
+        dest.writeValue(this.mId);
+        dest.writeStringList(this.mLenguajes);
+        dest.writeString(this.mFechaDeUltimoCapitulo);
+        dest.writeString(this.mNombre);
+        dest.writeValue(this.mNumeroDeEpisodios);
+        dest.writeValue(this.mNumeroDeTemporadas);
+        dest.writeStringList(this.mPaisesDeOrigen);
+        dest.writeString(this.mLenguaje);
+        dest.writeString(this.mResumen);
+        dest.writeValue(this.mPopularidad);
+        dest.writeString(this.mPosterPath);
+        dest.writeList(this.mTemporadas);
+        dest.writeString(this.mStatus);
+        dest.writeValue(this.mPuntajePromedio);
+        dest.writeValue(this.mTotalVotos);
+    }
+
+    public Serie() {
+    }
+
+    protected Serie(Parcel in) {
+        this.mBackDropPath = in.readString();
+        this.mFechaDeEstreno = in.readString();
+        this.mGeneros = new ArrayList<Genre>();
+        in.readList(this.mGeneros, Genre.class.getClassLoader());
+        this.mHomepage = in.readString();
+        this.mId = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.mLenguajes = in.createStringArrayList();
+        this.mFechaDeUltimoCapitulo = in.readString();
+        this.mNombre = in.readString();
+        this.mNumeroDeEpisodios = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.mNumeroDeTemporadas = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.mPaisesDeOrigen = in.createStringArrayList();
+        this.mLenguaje = in.readString();
+        this.mResumen = in.readString();
+        this.mPopularidad = (Double) in.readValue(Double.class.getClassLoader());
+        this.mPosterPath = in.readString();
+        this.mTemporadas = new ArrayList<Season>();
+        in.readList(this.mTemporadas, Season.class.getClassLoader());
+        this.mStatus = in.readString();
+        this.mPuntajePromedio = (Double) in.readValue(Double.class.getClassLoader());
+        this.mTotalVotos = (Integer) in.readValue(Integer.class.getClassLoader());
+    }
+
+    public static final Parcelable.Creator<Serie> CREATOR = new Parcelable.Creator<Serie>() {
+        @Override
+        public Serie createFromParcel(Parcel source) {
+            return new Serie(source);
+        }
+
+        @Override
+        public Serie[] newArray(int size) {
+            return new Serie[size];
+        }
+    };
 }

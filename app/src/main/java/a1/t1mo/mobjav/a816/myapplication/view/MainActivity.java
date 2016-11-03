@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity implements PeliculaFragment.
                     generoManager.setPeliculaOSerie("SERIE");
                 }
 
-                GeneroManager.updateNavigationMenu(navigationView);
+                generoManager.updateNavigationMenu(navigationView);
                 Toast.makeText(MainActivity.this, generoManager.getPeliculaOSerie(), Toast.LENGTH_SHORT).show();
             }
 
@@ -104,32 +104,11 @@ public class MainActivity extends AppCompatActivity implements PeliculaFragment.
     }
 
     private void onSelectItem(MenuItem item) {
-
         GeneroManager generoManager = GeneroManager.getGeneroManager();
-        generoManager.getPeliculaOSerie();
-
-        generoManager.onNavigationGenreClick(item.getItemId(), MainActivity.this, adapter);
-
+        generoManager.onNavigationGenreClick(item.getItemId(), adapter);
         adapter.notifyDataSetChanged();
     }
 
-//        if(item.getItemId() == R.id.menu_opcion_todas) {
-//            crearFragmentPeliculas(GeneroPelicula.TODAS.id);
-//            Toast.makeText(MainActivity.this, "Se cargaron todas las peliculas", Toast.LENGTH_SHORT).show();
-//        }
-//        else if(item.getItemId() == R.id.menu_opcion_drama) {
-//            crearFragmentPeliculas(GeneroPelicula.DRAMA.id);
-//            Toast.makeText(MainActivity.this, "Se cargaron las peliculas de drama", Toast.LENGTH_SHORT).show();
-//        }
-//        else if(item.getItemId() == R.id.menu_opcion_thriller) {
-//            crearFragmentPeliculas(GeneroPelicula.THRILLER.id);
-//            Toast.makeText(MainActivity.this, "Se cargaron las peliculas de thriller", Toast.LENGTH_SHORT).show();
-//        }
-//        else if(item.getItemId() == R.id.menu_opcion_accion) {
-//            crearFragmentPeliculas(GeneroPelicula.ACTION.id);
-//            Toast.makeText(MainActivity.this, "Se cargaron las peliculas de accion", Toast.LENGTH_SHORT).show();
-//        }
-//    }
 
     @Override
     public void onClickItem(Pelicula pelicula) {
