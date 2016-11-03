@@ -31,10 +31,10 @@ public class AdapterViewPagerFragment extends FragmentStatePagerAdapter {
     }
 
     public void changeCategory(Integer idPeliculas, Integer idSeries) {
-        if(categoryIDFragmentPeliculas != 0) {
+        if(idPeliculas != 0) {
             categoryIDFragmentPeliculas = idPeliculas;
         }
-        if(categoryIDFragmentSeries != 0) {
+        if(idSeries != 0) {
             categoryIDFragmentSeries = idSeries;
         }
 
@@ -51,8 +51,6 @@ public class AdapterViewPagerFragment extends FragmentStatePagerAdapter {
         listaDeFragments.add(fragmentaB);
         notifyDataSetChanged();
     }
-
-
 
     @Override
     public Fragment getItem(int position) {

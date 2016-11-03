@@ -6,23 +6,16 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import java.util.List;
-
 import a1.t1mo.mobjav.a816.myapplication.R;
-import a1.t1mo.mobjav.a816.myapplication.controller.PeliculaController;
 import a1.t1mo.mobjav.a816.myapplication.model.GeneroPelicula;
 import a1.t1mo.mobjav.a816.myapplication.model.GeneroSerie;
-import a1.t1mo.mobjav.a816.myapplication.model.ListadoPeliculas;
 import a1.t1mo.mobjav.a816.myapplication.model.Pelicula;
-import a1.t1mo.mobjav.a816.myapplication.utils.Listener;
-import retrofit2.http.GET;
 
 /**
  * MoonShot App

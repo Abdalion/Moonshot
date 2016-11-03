@@ -35,7 +35,7 @@ public class SerieAdapter extends RecyclerView.Adapter<SerieAdapter.SerieHolder>
 
     public SerieAdapter(Integer genero) {
         mSerieController = new SerieController();
-        if (genero.equals(GeneroSerie.TODAS.id)) {
+        if (genero == GeneroSerie.TODAS.id) {
             mSerieController.getSeriesPopulares(this);
         } else {
             mSerieController.getSeriesPorGenero(genero, this);
@@ -98,4 +98,8 @@ public class SerieAdapter extends RecyclerView.Adapter<SerieAdapter.SerieHolder>
 //            mListener.onClickItem(mSerie);
         }
     }
+//
+//    public interface Escuchable {
+//        void onClickItem(Serie serie);
+//    }
 }

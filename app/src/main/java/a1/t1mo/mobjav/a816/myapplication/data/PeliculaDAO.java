@@ -29,14 +29,15 @@ public class PeliculaDAO {
         mTmdbService = ServiceFactory.getTmdbService();
     }
 
-    public void getPelicula(Integer id, final Listener<Pelicula> listener) {
+    public void getPelicula(final Integer id, final Listener<Pelicula> listener) {
         mTmdbService.getPelicula(id).enqueue(new Callback<Pelicula>() {
             @Override
             public void onResponse(Call<Pelicula> call, Response<Pelicula> response) {
                 if (response.isSuccessful()) {
                     listener.done(response.body());
                 } else {
-                    Log.e(TAG, "El servidor respondio con el codigo " + response.code());
+                    Log.e(TAG, "El servidor respondio con el codigo " + response.code() +
+                            " Llamando a getPelicula(" + id + ")");
                 }
             }
 
@@ -54,7 +55,8 @@ public class PeliculaDAO {
                 if (response.isSuccessful()) {
                     listener.done(response.body().getPeliculas());
                 } else {
-                    Log.e(TAG, "El servidor respondio con el codigo " + response.code());
+                    Log.e(TAG, "El servidor respondio con el codigo " + response.code() +
+                            " Llamando a getPeliculasPopulares()");
                 }
             }
 
@@ -65,14 +67,15 @@ public class PeliculaDAO {
         });
     }
 
-    public void getPeliculasPorGenero(Integer id, final Listener<List<Pelicula>> listener) {
+    public void getPeliculasPorGenero(final Integer id, final Listener<List<Pelicula>> listener) {
         mTmdbService.getPeliculasPorGenero(id).enqueue(new Callback<ListadoPeliculas>() {
             @Override
             public void onResponse(Call<ListadoPeliculas> call, Response<ListadoPeliculas> response) {
                 if (response.isSuccessful()) {
                     listener.done(response.body().getPeliculas());
                 } else {
-                    Log.e(TAG, "El servidor respondio con el codigo " + response.code());
+                    Log.e(TAG, "El servidor respondio con el codigo " + response.code() +
+                            " Llamando a getPeliculasPorGenero(" + id + ")");
                 }
             }
 

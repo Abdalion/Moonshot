@@ -19,8 +19,6 @@ import a1.t1mo.mobjav.a816.myapplication.model.GeneroSerie;
 public class GeneroManager {
     public static String PELICULA_O_SERIE;
     private static GeneroManager instancia = null;
-    private static ArrayList<Integer> generos_peliculas_id;
-    private static ArrayList<Integer> generos_series_id;
 
     private GeneroManager() {
         cargarListasDeGeneros();

@@ -34,7 +34,7 @@ public class PeliculaAdapter extends RecyclerView.Adapter<PeliculaAdapter.Pelicu
 
     public PeliculaAdapter(Integer genero) {
         mPeliculaController = new PeliculaController();
-        if (genero.equals(GeneroPelicula.TODAS.id)) {
+        if (genero == GeneroPelicula.TODAS.id) {
             mPeliculaController.getPeliculasPopulares(this);
         } else {
             mPeliculaController.getPeliculasPorGenero(genero, this);
