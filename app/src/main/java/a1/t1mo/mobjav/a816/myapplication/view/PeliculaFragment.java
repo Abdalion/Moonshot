@@ -79,5 +79,8 @@ public class PeliculaFragment extends Fragment {
             }
         }
     }
+    public CharSequence getTitulo(){
+        return "Peliculas";
+    }
 }
 

@@ -77,6 +77,10 @@ public class SerieFragment extends Fragment{
             }
         }
     }
+
+    public CharSequence getTitulo(){
+        return "Series";
+    }
 }
 
 
