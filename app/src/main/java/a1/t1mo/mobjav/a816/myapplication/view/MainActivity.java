@@ -6,6 +6,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,6 +21,7 @@ import a1.t1mo.mobjav.a816.myapplication.model.GeneroPelicula;
 import a1.t1mo.mobjav.a816.myapplication.model.ListadoPeliculas;
 import a1.t1mo.mobjav.a816.myapplication.model.Pelicula;
 import a1.t1mo.mobjav.a816.myapplication.utils.Listener;
+import retrofit2.http.GET;
 
 /**
  * MoonShot App
@@ -31,6 +33,7 @@ import a1.t1mo.mobjav.a816.myapplication.utils.Listener;
 public class MainActivity extends AppCompatActivity implements PeliculaFragment.Escuchable {
     FragmentManager fragmentManager;
     AdapterViewPagerFragment adapter;
+    ViewPager viewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,15 +42,13 @@ public class MainActivity extends AppCompatActivity implements PeliculaFragment.
 
         fragmentManager = getSupportFragmentManager();
 
-//        AdapterViewPagerFragment fragmentAdapter = new AdapterViewPagerFragment(fragmentManager);
-//        ViewPager viewPager = (ViewPager)findViewById(R.id.activity_main_pager);
-//        viewPager.setAdapter(fragmentAdapter);
+        viewPagerSetup();
+        navigationViewSetup();
+        drawerButtonListener();
 
-        adapter = new AdapterViewPagerFragment(fragmentManager);
-        ViewPager viewPager = (ViewPager) findViewById(R.id.main_viewPager);
-        viewPager.setAdapter(adapter);
-        adapter.changeCategory(GeneroPelicula.TODAS.id);
+    }
 
+    private void navigationViewSetup() {
         NavigationView navigationView = (NavigationView) findViewById(R.id.main_navigationView);
         navigationView.setCheckedItem(R.id.menu_opcion_todas);
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -57,7 +58,35 @@ public class MainActivity extends AppCompatActivity implements PeliculaFragment.
                 return true;
             }
         });
+    }
 
+    private void viewPagerSetup() {
+        adapter = new AdapterViewPagerFragment(fragmentManager);
+        viewPager = (ViewPager) findViewById(R.id.main_viewPager);
+        viewPager.setAdapter(adapter);
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                GeneroManager generoManager = GeneroManager.getGeneroManager();
+                if(position == 0) {
+                    generoManager.setPeliculaOSerie("PELICULA");
+                }
+                else
+                    generoManager.setPeliculaOSerie("SERIE");
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+            }
+        });
+        adapter.changeCategory(GeneroPelicula.TODAS.id);
+    }
+
+    private void drawerButtonListener() {
         Button button = (Button) findViewById(R.id.main_botonDrawer);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,16 +96,30 @@ public class MainActivity extends AppCompatActivity implements PeliculaFragment.
             }
         });
 
-
     }
 
     private void onSelectItem(MenuItem item) {
-        Toast.makeText(MainActivity.this, "Seleccionado objeto", Toast.LENGTH_SHORT).show();
-        if(item.getItemId() == R.id.menu_opcion_accion) {
+
+        GeneroManager generoManager = GeneroManager.getGeneroManager();
+        generoManager.getPeliculaOSerie();
+
+        if(item.getItemId() == R.id.menu_opcion_todas) {
+            Toast.makeText(MainActivity.this, "Todas las peliculas", Toast.LENGTH_SHORT).show();
+            Log.d("DEBUGGER", "LLEGADO A SELECCIONAR TODAS");
+            adapter.changeCategory(GeneroPelicula.TODAS.id);
+        }
+        else if(item.getItemId() == R.id.menu_opcion_accion) {
+            Toast.makeText(MainActivity.this, "Peliculas de accion", Toast.LENGTH_SHORT).show();
+            Log.d("DEBUGGER", "LLEGADO A SELECCIONAR ACCION");
             adapter.changeCategory(GeneroPelicula.ACTION.id);
         }
+        adapter.notifyDataSetChanged();
+    }
+
+    private void onSwipe() {
 
     }
+
 //        if(item.getItemId() == R.id.menu_opcion_todas) {
 //            crearFragmentPeliculas(GeneroPelicula.TODAS.id);
 //            Toast.makeText(MainActivity.this, "Se cargaron todas las peliculas", Toast.LENGTH_SHORT).show();
