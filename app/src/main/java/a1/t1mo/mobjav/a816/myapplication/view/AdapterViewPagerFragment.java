@@ -4,13 +4,11 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.util.Log;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
 import a1.t1mo.mobjav.a816.myapplication.model.GeneroPelicula;
 import a1.t1mo.mobjav.a816.myapplication.model.GeneroSerie;
-import a1.t1mo.mobjav.a816.myapplication.model.Pelicula;
 
 /**
  * Created by dh-mob-tt on 31/10/16.
@@ -18,8 +16,8 @@ import a1.t1mo.mobjav.a816.myapplication.model.Pelicula;
 
 public class AdapterViewPagerFragment extends FragmentStatePagerAdapter {
 
-    private Integer categoryIDFragmentA;
-    private Integer categoryIDFragmentB;
+    private Integer categoryIDFragmentPeliculas;
+    private Integer categoryIDFragmentSeries;
     ArrayList<Fragment> listaDeFragments;
     private Fragment fragmentaA;
     private Fragment fragmentaB;
@@ -27,17 +25,17 @@ public class AdapterViewPagerFragment extends FragmentStatePagerAdapter {
     public AdapterViewPagerFragment(FragmentManager fm) {
         super(fm);
         listaDeFragments = new ArrayList<>();
-        categoryIDFragmentA = GeneroPelicula.TODAS.id;
-        categoryIDFragmentB = GeneroSerie.TODAS.id;
+        categoryIDFragmentPeliculas = GeneroPelicula.TODAS.id;
+        categoryIDFragmentSeries = GeneroSerie.TODAS.id;
         updateFragments();
     }
 
-    public void changeCategory(Integer idA, Integer idB) {
-        if(categoryIDFragmentA != null) {
-            categoryIDFragmentA = idA;
+    public void changeCategory(Integer idPeliculas, Integer idSeries) {
+        if(categoryIDFragmentPeliculas != null) {
+            categoryIDFragmentPeliculas = idPeliculas;
         }
-        if(categoryIDFragmentB != null) {
-            categoryIDFragmentB = idB;
+        if(categoryIDFragmentSeries != null) {
+            categoryIDFragmentSeries = idSeries;
         }
 
         updateFragments();
@@ -47,8 +45,8 @@ public class AdapterViewPagerFragment extends FragmentStatePagerAdapter {
     private void updateFragments() {
         Log.d("DEBUGGER", "LLEGADO A UPDATE FRAGMENTS");
         listaDeFragments.clear();
-        fragmentaA = PeliculaFragment.obtenerFragment(categoryIDFragmentA);
-        fragmentaB = PeliculaFragment.obtenerFragment(categoryIDFragmentB);
+        fragmentaA = PeliculaFragment.obtenerFragment(categoryIDFragmentPeliculas);
+        fragmentaB = PeliculaFragment.obtenerFragment(categoryIDFragmentSeries);
         //todo: Reemplazar el fragmentB por SerieFragment.obtenerFragment
         listaDeFragments.add(fragmentaA);
         listaDeFragments.add(fragmentaB);

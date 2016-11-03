@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity implements PeliculaFragment.
         adapter = new AdapterViewPagerFragment(fragmentManager);
         viewPager = (ViewPager) findViewById(R.id.main_viewPager);
         viewPager.setAdapter(adapter);
-        adapter.changeCategory(GeneroPelicula.TODAS.id);
+        adapter.changeCategory(GeneroPelicula.TODAS.id, null);
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -108,7 +108,7 @@ public class MainActivity extends AppCompatActivity implements PeliculaFragment.
         GeneroManager generoManager = GeneroManager.getGeneroManager();
         generoManager.getPeliculaOSerie();
 
-        generoManager.onNavigationGenreClick(item.getItemId());
+        generoManager.onNavigationGenreClick(item.getItemId(), MainActivity.this, adapter);
 
         adapter.notifyDataSetChanged();
     }
