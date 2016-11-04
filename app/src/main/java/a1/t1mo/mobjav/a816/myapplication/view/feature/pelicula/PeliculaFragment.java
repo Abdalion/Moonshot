@@ -1,4 +1,4 @@
-package a1.t1mo.mobjav.a816.myapplication.view;
+package a1.t1mo.mobjav.a816.myapplication.view.feature.pelicula;
 
 import android.app.Activity;
 import android.graphics.Rect;
@@ -10,15 +10,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.List;
-
 import a1.t1mo.mobjav.a816.myapplication.R;
-import a1.t1mo.mobjav.a816.myapplication.controller.PeliculaController;
-import a1.t1mo.mobjav.a816.myapplication.model.GeneroPelicula;
-import a1.t1mo.mobjav.a816.myapplication.model.Pelicula;
-import a1.t1mo.mobjav.a816.myapplication.utils.Listener;
+import a1.t1mo.mobjav.a816.myapplication.model.pelicula.Pelicula;
+import a1.t1mo.mobjav.a816.myapplication.view.feature.Feature;
 
-public class PeliculaFragment extends Fragment {
+public class PeliculaFragment extends Fragment implements Feature{
     private Escuchable escuchable;
     private RecyclerView recyclerView;
     public static final String ARGUMENT_GENERO = "Genero de Peliculas";

@@ -13,10 +13,14 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import a1.t1mo.mobjav.a816.myapplication.R;
-import a1.t1mo.mobjav.a816.myapplication.model.GeneroPelicula;
-import a1.t1mo.mobjav.a816.myapplication.model.GeneroSerie;
-import a1.t1mo.mobjav.a816.myapplication.model.Pelicula;
-import a1.t1mo.mobjav.a816.myapplication.model.Serie;
+import a1.t1mo.mobjav.a816.myapplication.model.pelicula.GeneroPelicula;
+import a1.t1mo.mobjav.a816.myapplication.model.serie.GeneroSerie;
+import a1.t1mo.mobjav.a816.myapplication.model.pelicula.Pelicula;
+import a1.t1mo.mobjav.a816.myapplication.model.serie.Serie;
+import a1.t1mo.mobjav.a816.myapplication.view.feature.pelicula.DetalleFragment;
+import a1.t1mo.mobjav.a816.myapplication.view.feature.pelicula.PeliculaFragment;
+import a1.t1mo.mobjav.a816.myapplication.view.feature.serie.DetalleSerie;
+import a1.t1mo.mobjav.a816.myapplication.view.feature.serie.SerieFragment;
 
 /**
  * MoonShot App

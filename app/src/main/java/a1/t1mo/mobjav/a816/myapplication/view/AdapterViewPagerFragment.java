@@ -7,8 +7,10 @@ import android.util.Log;
 
 import java.util.ArrayList;
 
-import a1.t1mo.mobjav.a816.myapplication.model.GeneroPelicula;
-import a1.t1mo.mobjav.a816.myapplication.model.GeneroSerie;
+import a1.t1mo.mobjav.a816.myapplication.model.pelicula.GeneroPelicula;
+import a1.t1mo.mobjav.a816.myapplication.model.serie.GeneroSerie;
+import a1.t1mo.mobjav.a816.myapplication.view.feature.pelicula.PeliculaFragment;
+import a1.t1mo.mobjav.a816.myapplication.view.feature.serie.SerieFragment;
 
 /**
  * Created by dh-mob-tt on 31/10/16.

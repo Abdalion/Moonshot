@@ -1,17 +1,13 @@
 package a1.t1mo.mobjav.a816.myapplication.data.services;
 
-import java.util.List;
-import java.util.Map;
-
-import a1.t1mo.mobjav.a816.myapplication.model.ListadoPeliculas;
-import a1.t1mo.mobjav.a816.myapplication.model.ListadoSeries;
-import a1.t1mo.mobjav.a816.myapplication.model.Pelicula;
-import a1.t1mo.mobjav.a816.myapplication.model.Serie;
+import a1.t1mo.mobjav.a816.myapplication.model.pelicula.ListadoPeliculas;
+import a1.t1mo.mobjav.a816.myapplication.model.serie.ListadoSeries;
+import a1.t1mo.mobjav.a816.myapplication.model.pelicula.Pelicula;
+import a1.t1mo.mobjav.a816.myapplication.model.serie.Serie;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
-import retrofit2.http.QueryMap;
 
 /**
  * MoonShot App

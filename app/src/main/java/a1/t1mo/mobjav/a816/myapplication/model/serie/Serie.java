@@ -1,4 +1,4 @@
-package a1.t1mo.mobjav.a816.myapplication.model;
+package a1.t1mo.mobjav.a816.myapplication.model.serie;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -7,6 +7,8 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import a1.t1mo.mobjav.a816.myapplication.model.Genre;
 
 /**
  * MoonShot App

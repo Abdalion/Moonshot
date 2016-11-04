@@ -1,4 +1,4 @@
-package a1.t1mo.mobjav.a816.myapplication.view;
+package a1.t1mo.mobjav.a816.myapplication.view.feature.serie;
 
 import android.app.Activity;
 import android.graphics.Rect;
@@ -11,12 +11,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import a1.t1mo.mobjav.a816.myapplication.R;
-import a1.t1mo.mobjav.a816.myapplication.controller.SerieController;
-import a1.t1mo.mobjav.a816.myapplication.model.GeneroSerie;
-import a1.t1mo.mobjav.a816.myapplication.model.Pelicula;
-import a1.t1mo.mobjav.a816.myapplication.model.Serie;
+import a1.t1mo.mobjav.a816.myapplication.model.serie.Serie;
+import a1.t1mo.mobjav.a816.myapplication.view.feature.Feature;
 
-public class SerieFragment extends Fragment{
+public class SerieFragment extends Fragment implements Feature {
     private Escuchable escuchable;
     private RecyclerView recyclerView;
     public static final String ARGUMENT_GENERO = "Genero de Series";

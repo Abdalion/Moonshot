@@ -1,4 +1,4 @@
-package a1.t1mo.mobjav.a816.myapplication.model;
+package a1.t1mo.mobjav.a816.myapplication.model.serie;
 
 import com.google.gson.annotations.SerializedName;
 

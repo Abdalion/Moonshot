@@ -1,4 +1,4 @@
-package a1.t1mo.mobjav.a816.myapplication.view;
+package a1.t1mo.mobjav.a816.myapplication.view.feature.serie;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,9 +13,8 @@ import java.util.List;
 import a1.t1mo.mobjav.a816.myapplication.R;
 import a1.t1mo.mobjav.a816.myapplication.controller.SerieController;
 import a1.t1mo.mobjav.a816.myapplication.data.services.TmdbService;
-import a1.t1mo.mobjav.a816.myapplication.model.GeneroSerie;
-import a1.t1mo.mobjav.a816.myapplication.model.Pelicula;
-import a1.t1mo.mobjav.a816.myapplication.model.Serie;
+import a1.t1mo.mobjav.a816.myapplication.model.serie.GeneroSerie;
+import a1.t1mo.mobjav.a816.myapplication.model.serie.Serie;
 import a1.t1mo.mobjav.a816.myapplication.utils.Listener;
 
 /**

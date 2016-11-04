@@ -1,4 +1,4 @@
-package a1.t1mo.mobjav.a816.myapplication.model;
+package a1.t1mo.mobjav.a816.myapplication.model.pelicula;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -10,19 +10,20 @@ import java.util.List;
  * Proyecto Integrador
  * Curso de Desarrollo Mobile Android
  * Turno Tarde
- * Archivo creado por Juan Pablo on 03/11/2016.
+ * Archivo creado por Juan Pablo on 31/10/2016.
  */
 
-public class ListadoSeries {
+public class ListadoPeliculas {
 
     @SerializedName("page")
     private Integer mPagina;
     @SerializedName("results")
-    private List<Serie> mSeries = new ArrayList<Serie>();
+    private List<Pelicula> mPeliculas = new ArrayList<Pelicula>();
     @SerializedName("total_results")
-    private Integer mTotalSeries;
+    private Integer mTotalPeliculas;
 
     public Integer getTotalPaginas() {
+
         return mTotalPaginas;
     }
 
@@ -30,20 +31,20 @@ public class ListadoSeries {
         mTotalPaginas = totalPaginas;
     }
 
-    public Integer getTotalSeries() {
-        return mTotalSeries;
+    public Integer getTotalPeliculas() {
+        return mTotalPeliculas;
     }
 
-    public void setTotalSeries(Integer totalSeries) {
-        mTotalSeries = totalSeries;
+    public void setTotalPeliculas(Integer totalPeliculas) {
+        mTotalPeliculas = totalPeliculas;
     }
 
-    public List<Serie> getSeries() {
-        return mSeries;
+    public List<Pelicula> getPeliculas() {
+        return mPeliculas;
     }
 
-    public void setSeries(List<Serie> series) {
-        mSeries = series;
+    public void setPeliculas(List<Pelicula> peliculas) {
+        mPeliculas = peliculas;
     }
 
     public Integer getPagina() {

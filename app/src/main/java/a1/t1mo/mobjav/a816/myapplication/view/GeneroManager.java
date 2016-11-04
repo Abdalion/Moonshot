@@ -1,16 +1,10 @@
 package a1.t1mo.mobjav.a816.myapplication.view;
 
-import android.content.Context;
-import android.support.annotation.IntegerRes;
 import android.support.design.widget.NavigationView;
-import android.util.Log;
-import android.widget.Toast;
-
-import java.util.ArrayList;
 
 import a1.t1mo.mobjav.a816.myapplication.R;
-import a1.t1mo.mobjav.a816.myapplication.model.GeneroPelicula;
-import a1.t1mo.mobjav.a816.myapplication.model.GeneroSerie;
+import a1.t1mo.mobjav.a816.myapplication.model.pelicula.GeneroPelicula;
+import a1.t1mo.mobjav.a816.myapplication.model.serie.GeneroSerie;
 
 /**
  * Created by Egon on 02/11/2016.
