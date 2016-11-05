@@ -55,11 +55,6 @@ public class AdapterViewPagerFragment extends FragmentStatePagerAdapter {
     }
 
 
-
-    public CharSequence getPageTitle(int position){
-        return this.listaDeFragments.get(position).getTitulo();
-    }
-
     @Override
     public Fragment getItem(int position) {
         return listaDeFragments.get(position);

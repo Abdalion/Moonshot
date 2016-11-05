@@ -42,9 +42,10 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
 
         fragmentManager = getSupportFragmentManager();
+
         navigationViewSetup();
+
         viewPagerSetup();
-        drawerButtonListener();
     }
 
     private void navigationViewSetup() {
@@ -61,44 +62,12 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void viewPagerSetup() {
-        adapter = new AdapterViewPagerFragment(fragmentManager);
-        viewPager = (ViewPager) findViewById(R.id.main_viewPager);
-        viewPager.setAdapter(adapter);
-        adapter.changeCategory(GeneroPelicula.TODAS.id, GeneroSerie.TODAS.id);
-        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                GeneroManager generoManager = GeneroManager.getGeneroManager();
-                if(position == 0) {
-                    generoManager.setPeliculaOSerie("PELICULA");
-                }
-                else {
-                    generoManager.setPeliculaOSerie("SERIE");
-                }
-
-                generoManager.updateNavigationMenu(navigationView);
-                Toast.makeText(MainActivity.this, generoManager.getPeliculaOSerie(), Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-            }
-        });
-    }
-
-    private void drawerButtonListener() {
-        Button button = (Button) findViewById(R.id.main_botonDrawer);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.main_drawerLayout);
-                drawer.openDrawer(Gravity.LEFT);
-            }
-        });
+        ViewPagerFragment viewPagerFragment = new ViewPagerFragment();
+        fragmentManager
+                .beginTransaction()
+                .replace(R.id.main_contenedorDeFragment, viewPagerFragment)
+                .addToBackStack("back")
+                .commit();
 
     }
 
@@ -128,12 +97,4 @@ public class MainActivity extends AppCompatActivity
                 .addToBackStack("back")
                 .commit();
     }
-
-//    public void crearFragmentPeliculas(Integer genero) {
-//        PeliculaFragment peliculaFragment = PeliculaFragment.obtenerFragment(genero);
-//        fragmentManager
-//                .beginTransaction()
-//                .replace(R.id.main_contenedorDeFragment, peliculaFragment)
-//                .commit();
-//    }
 }
