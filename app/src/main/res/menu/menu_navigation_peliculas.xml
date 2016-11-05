@@ -8,13 +8,28 @@
         </item>
 
         <item
-            android:id="@+id/menu_peliculas_opcion_thriller"
-            android:title="Thriller">
+            android:id="@+id/menu_peliculas_opcion_accion"
+            android:title="Accion">
         </item>
 
         <item
-            android:id="@+id/menu_peliculas_opcion_accion"
-            android:title="Accion">
+            android:id="@+id/menu_peliculas_opcion_aventura"
+            android:title="Aventura">
+        </item>
+
+        <item
+            android:id="@+id/menu_peliculas_opcion_scifi"
+            android:title="Ciencia Ficcion">
+        </item>
+
+        <item
+            android:id="@+id/menu_peliculas_opcion_comedia"
+            android:title="Comedia">
+        </item>
+
+        <item
+            android:id="@+id/menu_peliculas_opcion_crimen"
+            android:title="Crimen">
         </item>
 
         <item
@@ -22,8 +37,20 @@
             android:title="Drama">
         </item>
 
-        <!--todo: Completar los generos que faltan con la misma estructura de arriba y avisar a
-        egon que los agregue a GeneroManager-->
+        <item
+            android:id="@+id/menu_peliculas_opcion_horror"
+            android:title="Horror">
+        </item>
+
+        <item
+            android:id="@+id/menu_peliculas_opcion_romance"
+            android:title="Romance">
+        </item>
+
+        <item
+            android:id="@+id/menu_peliculas_opcion_thriller"
+            android:title="Thriller">
+        </item>
 
     </group>
 </menu>

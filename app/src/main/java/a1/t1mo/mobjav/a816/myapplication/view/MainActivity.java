@@ -35,6 +35,9 @@ public class MainActivity extends AppCompatActivity
     AdapterViewPagerFragment adapter;
     ViewPager viewPager;
     NavigationView navigationView;
+    PaginaActual mPaginaActual;
+
+    protected enum PaginaActual {PELICULAS, SERIES}
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +45,7 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
 
         fragmentManager = getSupportFragmentManager();
+        mPaginaActual = PaginaActual.PELICULAS;
         navigationViewSetup();
         viewPagerSetup();
         drawerButtonListener();
@@ -54,7 +58,7 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem item) {
-                onSelectItem(item);
+                adapter.cambiarGenero(mPaginaActual, item.getItemId());
                 return true;
             }
         });
@@ -72,16 +76,14 @@ public class MainActivity extends AppCompatActivity
 
             @Override
             public void onPageSelected(int position) {
-                GeneroManager generoManager = GeneroManager.getGeneroManager();
-                if(position == 0) {
-                    generoManager.setPeliculaOSerie("PELICULA");
+                navigationView.getMenu().clear();
+                if (position == 0) {
+                    navigationView.inflateMenu(R.menu.menu_navigation_peliculas);
+                    mPaginaActual = PaginaActual.PELICULAS;
+                } else {
+                    navigationView.inflateMenu(R.menu.menu_navigation_series);
+                    mPaginaActual = PaginaActual.SERIES;
                 }
-                else {
-                    generoManager.setPeliculaOSerie("SERIE");
-                }
-
-                generoManager.updateNavigationMenu(navigationView);
-                Toast.makeText(MainActivity.this, generoManager.getPeliculaOSerie(), Toast.LENGTH_SHORT).show();
             }
 
             @Override
