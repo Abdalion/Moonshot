@@ -33,7 +33,6 @@ public class MainActivity extends AppCompatActivity
         implements PeliculaFragment.Escuchable, SerieFragment.Escuchable {
     FragmentManager fragmentManager;
     AdapterViewPagerFragment adapter;
-    ViewPager viewPager;
     NavigationView navigationView;
     PaginaActual mPaginaActual;
 
@@ -48,7 +47,6 @@ public class MainActivity extends AppCompatActivity
         mPaginaActual = PaginaActual.PELICULAS;
         navigationViewSetup();
         viewPagerSetup();
-        drawerButtonListener();
     }
 
     private void navigationViewSetup() {
@@ -65,51 +63,14 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void viewPagerSetup() {
-        adapter = new AdapterViewPagerFragment(fragmentManager);
-        viewPager = (ViewPager) findViewById(R.id.main_viewPager);
-        viewPager.setAdapter(adapter);
-        adapter.changeCategory(GeneroPelicula.TODAS.id, GeneroSerie.TODAS.id);
-        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                navigationView.getMenu().clear();
-                if (position == 0) {
-                    navigationView.inflateMenu(R.menu.menu_navigation_peliculas);
-                    mPaginaActual = PaginaActual.PELICULAS;
-                } else {
-                    navigationView.inflateMenu(R.menu.menu_navigation_series);
-                    mPaginaActual = PaginaActual.SERIES;
-                }
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-            }
-        });
-    }
-
-    private void drawerButtonListener() {
-        Button button = (Button) findViewById(R.id.main_botonDrawer);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.main_drawerLayout);
-                drawer.openDrawer(Gravity.LEFT);
-            }
-        });
+        ViewPagerFragment viewPagerFragment = new ViewPagerFragment();
+        fragmentManager
+                .beginTransaction()
+                .replace(R.id.main_contenedorDeFragment, viewPagerFragment)
+                .addToBackStack("back")
+                .commit();
 
     }
-
-    private void onSelectItem(MenuItem item) {
-        GeneroManager generoManager = GeneroManager.getGeneroManager();
-        generoManager.onNavigationGenreClick(item.getItemId(), adapter);
-        adapter.notifyDataSetChanged();
-    }
-
 
     @Override
     public void onClickItem(Pelicula pelicula) {
@@ -130,12 +91,4 @@ public class MainActivity extends AppCompatActivity
                 .addToBackStack("back")
                 .commit();
     }
-
-//    public void crearFragmentPeliculas(Integer genero) {
-//        PeliculaFragment peliculaFragment = PeliculaFragment.obtenerFragment(genero);
-//        fragmentManager
-//                .beginTransaction()
-//                .replace(R.id.main_contenedorDeFragment, peliculaFragment)
-//                .commit();
-//    }
 }

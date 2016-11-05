@@ -14,7 +14,7 @@ import a1.t1mo.mobjav.a816.myapplication.R;
 import a1.t1mo.mobjav.a816.myapplication.model.pelicula.Pelicula;
 import a1.t1mo.mobjav.a816.myapplication.view.feature.Feature;
 
-public class PeliculaFragment extends Fragment implements Feature{
+public class PeliculaFragment extends Fragment implements Feature {
     private Escuchable escuchable;
     private RecyclerView recyclerView;
     public static final String ARGUMENT_GENERO = "Genero de Peliculas";
