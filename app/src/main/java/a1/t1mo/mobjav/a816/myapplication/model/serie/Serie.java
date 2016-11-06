@@ -8,6 +8,7 @@ import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 import java.util.List;
 
+import a1.t1mo.mobjav.a816.myapplication.model.Feature;
 import a1.t1mo.mobjav.a816.myapplication.model.Genre;
 
 /**
@@ -19,7 +20,7 @@ import a1.t1mo.mobjav.a816.myapplication.model.Genre;
  */
 
 
-public class Serie implements Parcelable {
+public class Serie implements Feature, Parcelable {
 
     @SerializedName("backdrop_path")
     public String mBackDropPath;

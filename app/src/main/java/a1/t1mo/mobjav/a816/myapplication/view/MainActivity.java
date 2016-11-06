@@ -2,25 +2,18 @@ package a1.t1mo.mobjav.a816.myapplication.view;
 
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.view.ViewPager;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-import android.widget.Toast;
 
 import a1.t1mo.mobjav.a816.myapplication.R;
-import a1.t1mo.mobjav.a816.myapplication.model.pelicula.GeneroPelicula;
-import a1.t1mo.mobjav.a816.myapplication.model.serie.GeneroSerie;
+import a1.t1mo.mobjav.a816.myapplication.model.Feature;
 import a1.t1mo.mobjav.a816.myapplication.model.pelicula.Pelicula;
 import a1.t1mo.mobjav.a816.myapplication.model.serie.Serie;
-import a1.t1mo.mobjav.a816.myapplication.view.feature.pelicula.DetalleFragment;
-import a1.t1mo.mobjav.a816.myapplication.view.feature.pelicula.PeliculaFragment;
+import a1.t1mo.mobjav.a816.myapplication.view.feature.DetalleFeature;
+import a1.t1mo.mobjav.a816.myapplication.view.feature.FeatureFragment;
+import a1.t1mo.mobjav.a816.myapplication.view.feature.pelicula.DetallePelicula;
 import a1.t1mo.mobjav.a816.myapplication.view.feature.serie.DetalleSerie;
-import a1.t1mo.mobjav.a816.myapplication.view.feature.serie.SerieFragment;
 
 /**
  * MoonShot App
@@ -29,8 +22,7 @@ import a1.t1mo.mobjav.a816.myapplication.view.feature.serie.SerieFragment;
  * Turno Tarde
  */
 
-public class MainActivity extends AppCompatActivity
-        implements PeliculaFragment.Escuchable, SerieFragment.Escuchable {
+public class MainActivity extends AppCompatActivity implements FeatureFragment.Escuchable {
     FragmentManager fragmentManager;
     AdapterViewPagerFragment adapter;
     NavigationView navigationView;
@@ -73,21 +65,16 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void onClickItem(Pelicula pelicula) {
-        DetalleFragment detalleFragment = DetalleFragment.getDetalleFragment(pelicula);
+    public void onClickItem(Feature feature) {
+        DetalleFeature detalle;
+        if (feature instanceof Pelicula) {
+            detalle = DetallePelicula.getDetalleFragment((Pelicula) feature);
+        } else {
+            detalle = DetalleSerie.getDetalleSerie((Serie) feature);
+        }
         fragmentManager
                 .beginTransaction()
-                .replace(R.id.main_contenedorDeFragment, detalleFragment)
-                .addToBackStack("back")
-                .commit();
-    }
-
-    @Override
-    public void onClickItem(Serie serie) {
-        DetalleSerie detalleSerie = DetalleSerie.getDetalleSerie(serie);
-        fragmentManager
-                .beginTransaction()
-                .replace(R.id.main_contenedorDeFragment, detalleSerie)
+                .replace(R.id.main_contenedorDeFragment, detalle)
                 .addToBackStack("back")
                 .commit();
     }

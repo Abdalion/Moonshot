@@ -10,8 +10,7 @@ import java.util.List;
 
 import a1.t1mo.mobjav.a816.myapplication.R;
 import a1.t1mo.mobjav.a816.myapplication.model.Genre;
-import a1.t1mo.mobjav.a816.myapplication.model.pelicula.GeneroPelicula;
-import a1.t1mo.mobjav.a816.myapplication.model.serie.GeneroSerie;
+import a1.t1mo.mobjav.a816.myapplication.view.feature.FeatureFragment;
 import a1.t1mo.mobjav.a816.myapplication.view.feature.pelicula.PeliculaFragment;
 import a1.t1mo.mobjav.a816.myapplication.view.feature.serie.SerieFragment;
 
@@ -23,9 +22,9 @@ public class AdapterViewPagerFragment extends FragmentStatePagerAdapter {
 
     private Integer mGeneroPeliculas;
     private Integer mGeneroSeries;
-    private List<Fragment> mListaDeFragments;
-    private Fragment mPeliculaFragment;
-    private Fragment mSerieFragment;
+    private List<FeatureFragment> mListaDeFragments;
+    private PeliculaFragment mPeliculaFragment;
+    private SerieFragment mSerieFragment;
 
     public AdapterViewPagerFragment(FragmentManager fm) {
         super(fm);

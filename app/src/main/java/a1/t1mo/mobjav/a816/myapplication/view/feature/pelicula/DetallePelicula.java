@@ -1,7 +1,6 @@
 package a1.t1mo.mobjav.a816.myapplication.view.feature.pelicula;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,19 +12,20 @@ import com.bumptech.glide.Glide;
 import a1.t1mo.mobjav.a816.myapplication.R;
 import a1.t1mo.mobjav.a816.myapplication.data.services.TmdbService;
 import a1.t1mo.mobjav.a816.myapplication.model.pelicula.Pelicula;
+import a1.t1mo.mobjav.a816.myapplication.view.feature.DetalleFeature;
 
-public class DetalleFragment extends Fragment {
+public class DetallePelicula extends DetalleFeature{
 
     private Pelicula pelicula;
 
-    public DetalleFragment() {
+    public DetallePelicula() {
         // Required empty public constructor
     }
 
-    public static DetalleFragment getDetalleFragment(Pelicula unaPelicula) {
-        DetalleFragment detalleFragment = new DetalleFragment();
-        detalleFragment.pelicula = unaPelicula;
-        return detalleFragment;
+    public static DetallePelicula getDetalleFragment(Pelicula unaPelicula) {
+        DetallePelicula detallePelicula = new DetallePelicula();
+        detallePelicula.pelicula = unaPelicula;
+        return detallePelicula;
     }
 
     @Override

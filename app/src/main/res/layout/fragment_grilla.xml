@@ -1,6 +1,6 @@
 <android.support.v7.widget.RecyclerView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/rv_grillaDePeliculas"
+    android:id="@+id/rv_grilla"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:clipToPadding="false"

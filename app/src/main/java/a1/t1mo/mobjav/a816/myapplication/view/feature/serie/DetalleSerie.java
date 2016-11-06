@@ -1,7 +1,6 @@
 package a1.t1mo.mobjav.a816.myapplication.view.feature.serie;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,8 +12,9 @@ import com.bumptech.glide.Glide;
 import a1.t1mo.mobjav.a816.myapplication.R;
 import a1.t1mo.mobjav.a816.myapplication.data.services.TmdbService;
 import a1.t1mo.mobjav.a816.myapplication.model.serie.Serie;
+import a1.t1mo.mobjav.a816.myapplication.view.feature.DetalleFeature;
 
-public class DetalleSerie extends Fragment {
+public class DetalleSerie extends DetalleFeature {
     private Serie mSerie;
 
     public DetalleSerie() {

@@ -81,6 +81,6 @@ public class GeneroManager {
                 generoSerie = GeneroSerie.DRAMA.id;
                 break;
         }
-        adapter.changeCategory(generoPelicula, generoSerie);
+        //adapter.changeCategory(generoPelicula, generoSerie);
     }
 }
