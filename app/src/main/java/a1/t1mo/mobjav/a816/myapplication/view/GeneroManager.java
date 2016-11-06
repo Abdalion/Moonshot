@@ -15,14 +15,7 @@ public class GeneroManager {
     private static GeneroManager instancia = null;
 
     private GeneroManager() {
-        cargarListasDeGeneros();
     }
-
-    private void cargarListasDeGeneros() {
-        //todo: este metodo. LAS ID A CARGAR SON TIPO R.id.menu_opcion_todas
-    }
-
-
     public static GeneroManager getGeneroManager() {
         if(instancia == null) {
             instancia = new GeneroManager();

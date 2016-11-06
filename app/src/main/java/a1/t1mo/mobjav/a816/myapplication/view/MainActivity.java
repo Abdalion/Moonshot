@@ -22,7 +22,7 @@ import a1.t1mo.mobjav.a816.myapplication.view.feature.serie.DetalleSerie;
  * Turno Tarde
  */
 
-public class MainActivity extends AppCompatActivity implements FeatureFragment.Escuchable {
+public class MainActivity extends AppCompatActivity implements FeatureFragment.Escuchable, ViewPagerFragment.CallBackCambioGenero {
     FragmentManager fragmentManager;
     AdapterViewPagerFragment adapter;
     NavigationView navigationView;
@@ -56,17 +56,19 @@ public class MainActivity extends AppCompatActivity implements FeatureFragment.E
 
     private void viewPagerSetup() {
         ViewPagerFragment viewPagerFragment = new ViewPagerFragment();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("paginaActual", mPaginaActual);
+        viewPagerFragment.setArguments(bundle);
         fragmentManager
                 .beginTransaction()
                 .replace(R.id.main_contenedorDeFragment, viewPagerFragment)
                 .addToBackStack("back")
                 .commit();
-
     }
 
     @Override
     public void onClickItem(Feature feature) {
-        DetalleFeature detalle;
+/*        DetalleFeature detalle;
         if (feature instanceof Pelicula) {
             detalle = DetallePelicula.getDetalleFragment((Pelicula) feature);
         } else {
@@ -76,6 +78,15 @@ public class MainActivity extends AppCompatActivity implements FeatureFragment.E
                 .beginTransaction()
                 .replace(R.id.main_contenedorDeFragment, detalle)
                 .addToBackStack("back")
-                .commit();
+                .commit();*/
+    }
+
+    public void callBackCambioGenero() {
+        if(mPaginaActual.equals(PaginaActual.PELICULAS)) {
+            mPaginaActual = PaginaActual.SERIES;
+        }
+        else {
+            mPaginaActual = PaginaActual.PELICULAS;
+        }
     }
 }

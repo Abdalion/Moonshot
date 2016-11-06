@@ -1,6 +1,7 @@
 package a1.t1mo.mobjav.a816.myapplication.view;
 
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -20,6 +21,19 @@ import a1.t1mo.mobjav.a816.myapplication.model.serie.GeneroSerie;
  */
 public class ViewPagerFragment extends Fragment {
 
+    MainActivity mainActivity;
+    Bundle bundle = getArguments();
+    MainActivity.PaginaActual paginaActual = (MainActivity.PaginaActual) bundle.getSerializable("paginaActual");
+
+    public interface CallBackCambioGenero {
+        public void callBackCambioGenero();
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        mainActivity = (MainActivity) activity;
+    }
 
     public ViewPagerFragment() {
         // Required empty public constructor
@@ -33,7 +47,7 @@ public class ViewPagerFragment extends Fragment {
         AdapterViewPagerFragment adapter = new AdapterViewPagerFragment(fragmentManager);
         ViewPager viewPager = (ViewPager) view.findViewById(R.id.viewPager);
         viewPager.setAdapter(adapter);
-        adapter.changeCategory(GeneroPelicula.TODAS.id, GeneroSerie.TODAS.id);
+        adapter.cambiarGenero(paginaActual, GeneroPelicula.TODAS.id);
 
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -42,15 +56,7 @@ public class ViewPagerFragment extends Fragment {
 
             @Override
             public void onPageSelected(int position) {
-                GeneroManager generoManager = GeneroManager.getGeneroManager();
-                if(position == 0) {
-                    generoManager.setPeliculaOSerie("PELICULA");
-                }
-                else {
-                    generoManager.setPeliculaOSerie("SERIE");
-                }
-                generoManager.updateNavigationMenu(navigationView);
-                Toast.makeText(getContext(), generoManager.getPeliculaOSerie(), Toast.LENGTH_SHORT).show();
+                mainActivity.callBackCambioGenero();
             }
 
             @Override
