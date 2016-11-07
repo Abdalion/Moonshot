@@ -34,8 +34,8 @@ public class AdapterViewPagerFragment extends FragmentStatePagerAdapter {
         updateFragments();
     }
 
-    public void cambiarGenero(MainActivity.PaginaActual paginaActual, int genero) {
-        if (paginaActual == MainActivity.PaginaActual.PELICULAS) {
+    public void cambiarGenero(ViewPagerFragment.PaginaActual pagina, int genero) {
+        if (pagina == ViewPagerFragment.PaginaActual.PELICULAS) {
             mGeneroPeliculas = genero;
         } else {
             mGeneroSeries = genero;
@@ -44,7 +44,6 @@ public class AdapterViewPagerFragment extends FragmentStatePagerAdapter {
     }
 
     private void updateFragments() {
-        Log.d("DEBUGGER", "LLEGADO A UPDATE FRAGMENTS");
         mListaDeFragments.clear();
         mPeliculaFragment = PeliculaFragment.obtenerFragment(mGeneroPeliculas);
         mSerieFragment = SerieFragment.obtenerFragment(mGeneroSeries);

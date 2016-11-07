@@ -19,15 +19,12 @@ import a1.t1mo.mobjav.a816.myapplication.model.serie.GeneroSerie;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ViewPagerFragment extends Fragment {
-
+public class ViewPagerFragment extends Fragment implements MainActivity.CallBackCambioGenero {
     MainActivity mainActivity;
-    Bundle bundle = getArguments();
-    MainActivity.PaginaActual paginaActual = (MainActivity.PaginaActual) bundle.getSerializable("paginaActual");
+    PaginaActual paginaActual;
+    AdapterViewPagerFragment adapter;
 
-    public interface CallBackCambioGenero {
-        public void callBackCambioGenero();
-    }
+    public enum PaginaActual {PELICULAS, SERIES}
 
     @Override
     public void onAttach(Activity activity) {
@@ -42,12 +39,12 @@ public class ViewPagerFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        paginaActual = PaginaActual.PELICULAS;
         View view = inflater.inflate(R.layout.fragment_view_pager, container, false);
         FragmentManager fragmentManager = getChildFragmentManager();
-        AdapterViewPagerFragment adapter = new AdapterViewPagerFragment(fragmentManager);
+        adapter = new AdapterViewPagerFragment(fragmentManager);
         ViewPager viewPager = (ViewPager) view.findViewById(R.id.viewPager);
         viewPager.setAdapter(adapter);
-        adapter.cambiarGenero(paginaActual, GeneroPelicula.TODAS.id);
 
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -56,7 +53,8 @@ public class ViewPagerFragment extends Fragment {
 
             @Override
             public void onPageSelected(int position) {
-                mainActivity.callBackCambioGenero();
+                paginaActual = (paginaActual == PaginaActual.PELICULAS) ? PaginaActual.SERIES : PaginaActual.PELICULAS;
+                mainActivity.onCambioDePagina(paginaActual);
             }
 
             @Override
@@ -66,4 +64,8 @@ public class ViewPagerFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void callBackCambioGenero(int id) {
+        adapter.cambiarGenero(paginaActual, id);
+    }
 }

@@ -13,6 +13,7 @@ import java.util.List;
 import a1.t1mo.mobjav.a816.myapplication.R;
 import a1.t1mo.mobjav.a816.myapplication.controller.PeliculaController;
 import a1.t1mo.mobjav.a816.myapplication.data.services.TmdbService;
+import a1.t1mo.mobjav.a816.myapplication.model.Genre;
 import a1.t1mo.mobjav.a816.myapplication.model.pelicula.GeneroPelicula;
 import a1.t1mo.mobjav.a816.myapplication.model.pelicula.Pelicula;
 import a1.t1mo.mobjav.a816.myapplication.utils.Listener;
@@ -34,10 +35,10 @@ public class PeliculaAdapter extends RecyclerView.Adapter<PeliculaAdapter.Pelicu
 
     public PeliculaAdapter(Integer genero) {
         mPeliculaController = new PeliculaController();
-        if (genero == GeneroPelicula.TODAS.id) {
+        if (genero == Genre.PELICULA_ID.get(R.id.menu_peliculas_opcion_todas)) {
             mPeliculaController.getPeliculasPopulares(this);
         } else {
-            mPeliculaController.getPeliculasPorGenero(genero, this);
+            mPeliculaController.getPeliculasPorGenero(Genre.PELICULA_ID.get(genero), this);
         }
     }
 

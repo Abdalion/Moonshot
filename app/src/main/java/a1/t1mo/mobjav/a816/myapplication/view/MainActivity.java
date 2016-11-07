@@ -10,6 +10,7 @@ import a1.t1mo.mobjav.a816.myapplication.R;
 import a1.t1mo.mobjav.a816.myapplication.model.Feature;
 import a1.t1mo.mobjav.a816.myapplication.model.pelicula.Pelicula;
 import a1.t1mo.mobjav.a816.myapplication.model.serie.Serie;
+import a1.t1mo.mobjav.a816.myapplication.utils.CambioDePagina;
 import a1.t1mo.mobjav.a816.myapplication.view.feature.DetalleFeature;
 import a1.t1mo.mobjav.a816.myapplication.view.feature.FeatureFragment;
 import a1.t1mo.mobjav.a816.myapplication.view.feature.pelicula.DetallePelicula;
@@ -22,13 +23,11 @@ import a1.t1mo.mobjav.a816.myapplication.view.feature.serie.DetalleSerie;
  * Turno Tarde
  */
 
-public class MainActivity extends AppCompatActivity implements FeatureFragment.Escuchable, ViewPagerFragment.CallBackCambioGenero {
+public class MainActivity extends AppCompatActivity
+        implements FeatureFragment.Escuchable, CambioDePagina {
     FragmentManager fragmentManager;
-    AdapterViewPagerFragment adapter;
     NavigationView navigationView;
-    PaginaActual mPaginaActual;
-
-    protected enum PaginaActual {PELICULAS, SERIES}
+    ViewPagerFragment viewPagerFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +35,6 @@ public class MainActivity extends AppCompatActivity implements FeatureFragment.E
         setContentView(R.layout.activity_main);
 
         fragmentManager = getSupportFragmentManager();
-        mPaginaActual = PaginaActual.PELICULAS;
         navigationViewSetup();
         viewPagerSetup();
     }
@@ -48,17 +46,14 @@ public class MainActivity extends AppCompatActivity implements FeatureFragment.E
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem item) {
-                adapter.cambiarGenero(mPaginaActual, item.getItemId());
+                viewPagerFragment.callBackCambioGenero(item.getItemId());
                 return true;
             }
         });
     }
 
     private void viewPagerSetup() {
-        ViewPagerFragment viewPagerFragment = new ViewPagerFragment();
-        Bundle bundle = new Bundle();
-        bundle.putSerializable("paginaActual", mPaginaActual);
-        viewPagerFragment.setArguments(bundle);
+        viewPagerFragment = new ViewPagerFragment();
         fragmentManager
                 .beginTransaction()
                 .replace(R.id.main_contenedorDeFragment, viewPagerFragment)
@@ -81,12 +76,18 @@ public class MainActivity extends AppCompatActivity implements FeatureFragment.E
                 .commit();*/
     }
 
-    public void callBackCambioGenero() {
-        if(mPaginaActual.equals(PaginaActual.PELICULAS)) {
-            mPaginaActual = PaginaActual.SERIES;
+    @Override
+    public void onCambioDePagina(ViewPagerFragment.PaginaActual pagina) {
+        navigationView.getMenu().clear();
+        if(pagina == ViewPagerFragment.PaginaActual.PELICULAS) {
+            navigationView.inflateMenu(R.menu.menu_navigation_peliculas);
         }
         else {
-            mPaginaActual = PaginaActual.PELICULAS;
+            navigationView.inflateMenu(R.menu.menu_navigation_series);
         }
+    }
+
+    public interface CallBackCambioGenero {
+        public void callBackCambioGenero(int id);
     }
 }

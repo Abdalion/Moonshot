@@ -13,6 +13,7 @@ import java.util.List;
 import a1.t1mo.mobjav.a816.myapplication.R;
 import a1.t1mo.mobjav.a816.myapplication.controller.SerieController;
 import a1.t1mo.mobjav.a816.myapplication.data.services.TmdbService;
+import a1.t1mo.mobjav.a816.myapplication.model.Genre;
 import a1.t1mo.mobjav.a816.myapplication.model.serie.GeneroSerie;
 import a1.t1mo.mobjav.a816.myapplication.model.serie.Serie;
 import a1.t1mo.mobjav.a816.myapplication.utils.Listener;
@@ -34,10 +35,10 @@ public class SerieAdapter extends RecyclerView.Adapter<SerieAdapter.SerieHolder>
 
     public SerieAdapter(Integer genero) {
         mSerieController = new SerieController();
-        if (genero == GeneroSerie.TODAS.id) {
+        if (genero == Genre.SERIE_ID.get(R.id.menu_series_opcion_todas)) {
             mSerieController.getSeriesPopulares(this);
         } else {
-            mSerieController.getSeriesPorGenero(genero, this);
+            mSerieController.getSeriesPorGenero(Genre.SERIE_ID.get(genero), this);
         }
     }
 
@@ -99,8 +100,4 @@ public class SerieAdapter extends RecyclerView.Adapter<SerieAdapter.SerieHolder>
             mListener.onClickItem(mSerie);
         }
     }
-//
-//    public interface Escuchable {
-//        void onClickItem(Serie serie);
-//    }
 }
