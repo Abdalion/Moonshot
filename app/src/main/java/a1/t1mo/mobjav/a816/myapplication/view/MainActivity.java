@@ -2,8 +2,12 @@ package a1.t1mo.mobjav.a816.myapplication.view;
 
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import a1.t1mo.mobjav.a816.myapplication.R;
@@ -28,16 +32,39 @@ public class MainActivity extends AppCompatActivity
     FragmentManager fragmentManager;
     NavigationView navigationView;
     ViewPagerFragment viewPagerFragment;
+    Toolbar toolbar;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.main_drawerLayout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.setDrawerListener(toggle);
+        toggle.syncState();
+
+
+
         fragmentManager = getSupportFragmentManager();
         navigationViewSetup();
         viewPagerSetup();
     }
+
+    public void onBackPressed() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.main_drawerLayout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
+        
 
     private void navigationViewSetup() {
         navigationView = (NavigationView) findViewById(R.id.main_navigationView);
@@ -47,7 +74,12 @@ public class MainActivity extends AppCompatActivity
             @Override
             public boolean onNavigationItemSelected(MenuItem item) {
                 viewPagerFragment.callBackCambioGenero(item.getItemId());
+
+                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.main_drawerLayout);
+                drawer.closeDrawer(GravityCompat.START);
                 return true;
+
+
             }
         });
     }
@@ -75,6 +107,8 @@ public class MainActivity extends AppCompatActivity
                 .addToBackStack("back")
                 .commit();*/
     }
+
+
 
     @Override
     public void onCambioDePagina(ViewPagerFragment.PaginaActual pagina) {
