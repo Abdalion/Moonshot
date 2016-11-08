@@ -33,4 +33,16 @@ public class PeliculaController {
     public void getPeliculasPorGenero(Integer id, Listener<List<Pelicula>> listener) {
         mPeliculaDAO.getPeliculasPorGenero(id, listener);
     }
+
+    public void agregarAFavoritos(Integer id) {
+
+    }
+
+    public void quitarDeFavoritos(Integer id) {
+
+    }
+
+    public void getFavoritos() {
+
+    }
 }
