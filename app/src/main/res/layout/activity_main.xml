@@ -48,7 +48,9 @@
         app:menu="@menu/menu_navigation_peliculas"
         android:backgroundTint="@color/colorPalabras3"
         android:id="@+id/main_navigationView"
+        app:headerLayout="@layout/imagen_nav"
         >
+
     </android.support.design.widget.NavigationView>
 
 </android.support.v4.widget.DrawerLayout>

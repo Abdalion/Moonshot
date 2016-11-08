@@ -3,14 +3,9 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:title="Generos de peliculas"
-            android:titleCondensed=""
-            android:id="@+id/menu_peliculas_opcion_titulo">
-        </item>
-
-        <item
             android:id="@+id/menu_peliculas_opcion_todas"
-            android:title="Todas">
+            android:title="Todas"
+            android:icon="@drawable/peliculas">
         </item>
 
         <item
