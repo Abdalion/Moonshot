@@ -48,6 +48,9 @@ public class PeliculaDAO {
     }
 
     public void getPelicula(final Integer id, final Listener<Pelicula> listener) {
+        if (isPersisted(id)) {
+            listener.done(sRealm.);
+        }
         sTmdbService.getPelicula(id).enqueue(new Callback<Pelicula>() {
             @Override
             public void onResponse(Call<Pelicula> call, Response<Pelicula> response) {
