@@ -8,6 +8,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
 
 import a1.t1mo.mobjav.a816.myapplication.R;
@@ -114,6 +115,7 @@ public class MainActivity extends AppCompatActivity
     public void onCambioDePagina(ViewPagerFragment.PaginaActual pagina) {
         navigationView.getMenu().clear();
         if(pagina == ViewPagerFragment.PaginaActual.PELICULAS) {
+            MenuItem menuItem = (MenuItem) findViewById(R.id.menu_peliculas_opcion_titulo);
             navigationView.inflateMenu(R.menu.menu_navigation_peliculas);
         }
         else {

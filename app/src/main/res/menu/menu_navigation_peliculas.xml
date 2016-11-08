@@ -3,53 +3,68 @@
 
     <group android:checkableBehavior="single">
         <item
+            android:title="Generos de peliculas"
+            android:titleCondensed=""
+            android:id="@+id/menu_peliculas_opcion_titulo">
+        </item>
+
+        <item
             android:id="@+id/menu_peliculas_opcion_todas"
             android:title="Todas">
         </item>
 
         <item
             android:id="@+id/menu_peliculas_opcion_accion"
-            android:title="Accion">
+            android:title="Accion"
+            android:icon="@drawable/action">
         </item>
 
         <item
             android:id="@+id/menu_peliculas_opcion_aventura"
-            android:title="Aventura">
+            android:title="Aventura"
+            android:icon="@drawable/adventure">
         </item>
 
         <item
             android:id="@+id/menu_peliculas_opcion_scifi"
-            android:title="Ciencia Ficcion">
+            android:title="Ciencia Ficcion"
+            android:icon="@drawable/scifi">
         </item>
 
         <item
             android:id="@+id/menu_peliculas_opcion_comedia"
-            android:title="Comedia">
+            android:title="Comedia"
+            android:icon="@drawable/comedy">
         </item>
 
         <item
             android:id="@+id/menu_peliculas_opcion_crimen"
-            android:title="Crimen">
+            android:title="Crimen"
+            android:icon="@drawable/crime">
         </item>
 
         <item
             android:id="@+id/menu_peliculas_opcion_drama"
-            android:title="Drama">
+            android:title="Drama"
+            android:icon="@drawable/drama">
         </item>
 
         <item
             android:id="@+id/menu_peliculas_opcion_horror"
-            android:title="Horror">
+            android:title="Horror"
+            android:icon="@drawable/horror">
         </item>
 
         <item
             android:id="@+id/menu_peliculas_opcion_romance"
-            android:title="Romance">
+            android:title="Romance"
+            android:icon="@drawable/romance">
         </item>
 
         <item
             android:id="@+id/menu_peliculas_opcion_thriller"
-            android:title="Thriller">
+            android:title="Thriller"
+            android:icon="@drawable/thriller">
         </item>
 
     </group>
