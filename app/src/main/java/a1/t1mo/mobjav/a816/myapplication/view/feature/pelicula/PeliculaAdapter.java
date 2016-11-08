@@ -4,6 +4,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.ScaleAnimation;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -32,6 +35,7 @@ public class PeliculaAdapter extends RecyclerView.Adapter<PeliculaAdapter.Pelicu
     private List<Pelicula> mPeliculas;
     private PeliculaController mPeliculaController;
     private PeliculaFragment.Escuchable mListener;
+    private final static int FADE_DURATION = 300;
 
     public PeliculaAdapter(Integer genero) {
         mPeliculaController = new PeliculaController();
@@ -57,7 +61,15 @@ public class PeliculaAdapter extends RecyclerView.Adapter<PeliculaAdapter.Pelicu
     public void onBindViewHolder(PeliculaHolder holder, int position) {
         if (mPeliculas != null && !mPeliculas.isEmpty()) {
             holder.bindPelicula(mPeliculas.get(position));
+            setScaleAnimation(holder.itemView);
         }
+
+    }
+    //SI LAS PELIS TARDAN MUCHO EN CARGAR ESTO SE SACA.
+    private void setScaleAnimation(View view) {
+        ScaleAnimation anim = new ScaleAnimation(0.0f, 1.0f, 0.0f, 1.0f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+        anim.setDuration(FADE_DURATION);
+        view.startAnimation(anim);
     }
 
     @Override
