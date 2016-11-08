@@ -50,8 +50,6 @@ public class MainActivity extends AppCompatActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-
-
         fragmentManager = getSupportFragmentManager();
         navigationViewSetup();
         viewPagerSetup();
@@ -115,7 +113,6 @@ public class MainActivity extends AppCompatActivity
     public void onCambioDePagina(ViewPagerFragment.PaginaActual pagina) {
         navigationView.getMenu().clear();
         if(pagina == ViewPagerFragment.PaginaActual.PELICULAS) {
-            MenuItem menuItem = (MenuItem) findViewById(R.id.menu_peliculas_opcion_titulo);
             navigationView.inflateMenu(R.menu.menu_navigation_peliculas);
         }
         else {
