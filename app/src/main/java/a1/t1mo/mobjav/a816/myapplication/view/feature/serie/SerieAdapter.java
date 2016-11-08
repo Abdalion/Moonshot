@@ -4,6 +4,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.ScaleAnimation;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -32,6 +34,7 @@ public class SerieAdapter extends RecyclerView.Adapter<SerieAdapter.SerieHolder>
     private List<Serie> mSeries;
     private SerieController mSerieController;
     private SerieFragment.Escuchable mListener;
+    private final static int FADE_DURATION = 300;
 
     public SerieAdapter(Integer genero) {
         mSerieController = new SerieController();
@@ -57,7 +60,14 @@ public class SerieAdapter extends RecyclerView.Adapter<SerieAdapter.SerieHolder>
     public void onBindViewHolder(SerieHolder holder, int position) {
         if (mSeries != null && !mSeries.isEmpty()) {
             holder.bindSerie(mSeries.get(position));
+            setScaleAnimation(holder.itemView);
         }
+    }
+
+    private void setScaleAnimation(View view) {
+        ScaleAnimation anim = new ScaleAnimation(0.0f, 1.0f, 0.0f, 1.0f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+        anim.setDuration(FADE_DURATION);
+        view.startAnimation(anim);
     }
 
     @Override
