@@ -4,6 +4,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.ScaleAnimation;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -13,6 +16,7 @@ import java.util.List;
 import a1.t1mo.mobjav.a816.myapplication.R;
 import a1.t1mo.mobjav.a816.myapplication.controller.PeliculaController;
 import a1.t1mo.mobjav.a816.myapplication.data.services.TmdbService;
+import a1.t1mo.mobjav.a816.myapplication.model.Genre;
 import a1.t1mo.mobjav.a816.myapplication.model.pelicula.GeneroPelicula;
 import a1.t1mo.mobjav.a816.myapplication.model.pelicula.Pelicula;
 import a1.t1mo.mobjav.a816.myapplication.utils.Listener;
@@ -31,13 +35,14 @@ public class PeliculaAdapter extends RecyclerView.Adapter<PeliculaAdapter.Pelicu
     private List<Pelicula> mPeliculas;
     private PeliculaController mPeliculaController;
     private PeliculaFragment.Escuchable mListener;
+    private final static int FADE_DURATION = 300;
 
     public PeliculaAdapter(Integer genero) {
         mPeliculaController = new PeliculaController();
-        if (genero == GeneroPelicula.TODAS.id) {
+        if (genero == Genre.PELICULA_ID.get(R.id.menu_peliculas_opcion_todas)) {
             mPeliculaController.getPeliculasPopulares(this);
         } else {
-            mPeliculaController.getPeliculasPorGenero(genero, this);
+            mPeliculaController.getPeliculasPorGenero(Genre.PELICULA_ID.get(genero), this);
         }
     }
 
@@ -56,7 +61,15 @@ public class PeliculaAdapter extends RecyclerView.Adapter<PeliculaAdapter.Pelicu
     public void onBindViewHolder(PeliculaHolder holder, int position) {
         if (mPeliculas != null && !mPeliculas.isEmpty()) {
             holder.bindPelicula(mPeliculas.get(position));
+            setScaleAnimation(holder.itemView);
         }
+
+    }
+    //SI LAS PELIS TARDAN MUCHO EN CARGAR ESTO SE SACA.
+    private void setScaleAnimation(View view) {
+        ScaleAnimation anim = new ScaleAnimation(0.0f, 1.0f, 0.0f, 1.0f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+        anim.setDuration(FADE_DURATION);
+        view.startAnimation(anim);
     }
 
     @Override

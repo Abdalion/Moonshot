@@ -4,6 +4,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.ScaleAnimation;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -13,6 +15,7 @@ import java.util.List;
 import a1.t1mo.mobjav.a816.myapplication.R;
 import a1.t1mo.mobjav.a816.myapplication.controller.SerieController;
 import a1.t1mo.mobjav.a816.myapplication.data.services.TmdbService;
+import a1.t1mo.mobjav.a816.myapplication.model.Genre;
 import a1.t1mo.mobjav.a816.myapplication.model.serie.GeneroSerie;
 import a1.t1mo.mobjav.a816.myapplication.model.serie.Serie;
 import a1.t1mo.mobjav.a816.myapplication.utils.Listener;
@@ -31,13 +34,14 @@ public class SerieAdapter extends RecyclerView.Adapter<SerieAdapter.SerieHolder>
     private List<Serie> mSeries;
     private SerieController mSerieController;
     private SerieFragment.Escuchable mListener;
+    private final static int FADE_DURATION = 300;
 
     public SerieAdapter(Integer genero) {
         mSerieController = new SerieController();
-        if (genero == GeneroSerie.TODAS.id) {
+        if (genero == Genre.SERIE_ID.get(R.id.menu_series_opcion_todas)) {
             mSerieController.getSeriesPopulares(this);
         } else {
-            mSerieController.getSeriesPorGenero(genero, this);
+            mSerieController.getSeriesPorGenero(Genre.SERIE_ID.get(genero), this);
         }
     }
 
@@ -56,7 +60,14 @@ public class SerieAdapter extends RecyclerView.Adapter<SerieAdapter.SerieHolder>
     public void onBindViewHolder(SerieHolder holder, int position) {
         if (mSeries != null && !mSeries.isEmpty()) {
             holder.bindSerie(mSeries.get(position));
+            setScaleAnimation(holder.itemView);
         }
+    }
+
+    private void setScaleAnimation(View view) {
+        ScaleAnimation anim = new ScaleAnimation(0.0f, 1.0f, 0.0f, 1.0f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+        anim.setDuration(FADE_DURATION);
+        view.startAnimation(anim);
     }
 
     @Override
@@ -99,8 +110,4 @@ public class SerieAdapter extends RecyclerView.Adapter<SerieAdapter.SerieHolder>
             mListener.onClickItem(mSerie);
         }
     }
-//
-//    public interface Escuchable {
-//        void onClickItem(Serie serie);
-//    }
 }
