@@ -37,6 +37,10 @@ public class PeliculaAdapter extends RecyclerView.Adapter<PeliculaAdapter.Pelicu
     private PeliculaFragment.Escuchable mListener;
     private final static int FADE_DURATION = 300;
 
+    public PeliculaAdapter() {
+
+    }
+
     public PeliculaAdapter(Integer genero) {
         mPeliculaController = new PeliculaController();
         if (genero == Genre.PELICULA_ID.get(R.id.menu_peliculas_opcion_todas)) {

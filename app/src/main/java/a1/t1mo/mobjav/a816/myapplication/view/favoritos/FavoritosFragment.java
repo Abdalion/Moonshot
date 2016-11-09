@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 
 import a1.t1mo.mobjav.a816.myapplication.R;
 import a1.t1mo.mobjav.a816.myapplication.view.feature.FeatureFragment;
-import a1.t1mo.mobjav.a816.myapplication.view.feature.pelicula.PeliculaAdapter;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -29,12 +28,12 @@ public class FavoritosFragment extends FeatureFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         Bundle bundle = getArguments();
-        FavoritosAdapter peliculaAdapter = new FavoritosAdapter(bundle.getInt(ARGUMENT_GENERO));
+        FavoritosAdapter favoritosAdapter = new FavoritosAdapter(bundle.getInt(ARGUMENT_GENERO));
         View view = inflater.inflate(R.layout.fragment_grilla, container, false);
         recyclerView = (RecyclerView) view.findViewById(R.id.rv_grilla);
         recyclerView.addItemDecoration(new SpacesItemDecoration(4));
         recyclerView.setHasFixedSize(true);
-        peliculaAdapter.setListener(escuchable);
+        favoritosAdapter.setListener(escuchable);
         recyclerView.setAdapter(peliculaAdapter);
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
         return view;
