@@ -2,11 +2,13 @@ package a1.t1mo.mobjav.a816.myapplication.model.pelicula;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import a1.t1mo.mobjav.a816.myapplication.model.Feature;
 import a1.t1mo.mobjav.a816.myapplication.model.Genre;
+import io.realm.RealmList;
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
 /**
  * MoonShot App
@@ -16,166 +18,177 @@ import a1.t1mo.mobjav.a816.myapplication.model.Genre;
  * Archivo creado por Juan Pablo on 22/10/2016.
  */
 
-public class Pelicula implements Feature {
+public class Pelicula extends RealmObject implements Feature {
+    @PrimaryKey
+    @SerializedName("id")
+    private Integer id;
 
     @SerializedName("adult")
-    private Boolean mAdultos;
+    private boolean adultos;
     @SerializedName("backdrop_path")
-    private String mBackdropPath;
+    private String backdropPath;
     @SerializedName("genres")
-    private List<Genre> mGeneros = new ArrayList<Genre>();
+    private RealmList<Genre> generos;
     @SerializedName("homepage")
-    private String mHomepage;
-    @SerializedName("id")
-    private Integer mId;
+    private String homepage;
     @SerializedName("imdb_id")
-    private String mImdbId;
+    private String imdbId;
     @SerializedName("original_language")
-    private String mLenguaje;
+    private String lenguaje;
     @SerializedName("overview")
-    private String mResumen;
+    private String resumen;
     @SerializedName("popularity")
-    private Double mPopularidad;
+    private Double popularidad;
     @SerializedName("poster_path")
-    private String mPosterPath;
+    private String posterPath;
     @SerializedName("release_date")
-    private String mFechaDeEstreno;
+    private String fechaDeEstreno;
     @SerializedName("runtime")
-    private Integer mDuracion;
+    private Integer duracion;
     @SerializedName("tagline")
-    private String mTagline;
+    private String tagline;
     @SerializedName("title")
-    private String mTitulo;
+    private String titulo;
     @SerializedName("vote_average")
-    private Double mPuntajePromedio;
+    private Double puntajePromedio;
     @SerializedName("vote_count")
-    private Integer mTotalVotos;
+    private Integer totalVotos;
 
-    public Boolean getAdultos() {
-        return mAdultos;
+    private boolean favorito;
+
+    public boolean getAdultos() {
+        return adultos;
     }
 
-    public void setAdultos(Boolean adultos) {
-        mAdultos = adultos;
+    public void setAdultos(boolean adultos) {
+        this.adultos = adultos;
     }
 
     public String getBackdropPath() {
-        return mBackdropPath;
+        return backdropPath;
     }
 
     public void setBackdropPath(String backdropPath) {
-        mBackdropPath = backdropPath;
+        this.backdropPath = backdropPath;
     }
 
     public List<Genre> getGeneros() {
-        return mGeneros;
+        return generos;
     }
 
-    public void setGeneros(List<Genre> genres) {
-        this.mGeneros = genres;
+    public void setGeneros(RealmList<Genre> genres) {
+        this.generos = genres;
     }
 
     public String getHomepage() {
-        return mHomepage;
+        return homepage;
     }
 
     public void setHomepage(String homepage) {
-        mHomepage = homepage;
+        this.homepage = homepage;
     }
 
     public Integer getId() {
-        return mId;
+        return id;
     }
 
     public void setId(Integer id) {
-        mId = id;
+        this.id = id;
     }
 
     public String getImdbId() {
-        return mImdbId;
+        return imdbId;
     }
 
     public void setImdbId(String imdbId) {
-        mImdbId = imdbId;
+        this.imdbId = imdbId;
     }
 
     public String getLenguaje() {
-        return mLenguaje;
+        return lenguaje;
     }
 
     public void setLenguaje(String lenguage) {
-        mLenguaje = lenguage;
+        lenguaje = lenguage;
     }
 
     public String getResumen() {
-        return mResumen;
+        return resumen;
     }
 
     public void setResumen(String resumen) {
-        mResumen = resumen;
+        this.resumen = resumen;
     }
 
     public Double getPopularidad() {
-        return mPopularidad;
+        return popularidad;
     }
 
     public void setPopularidad(Double popularidad) {
-        mPopularidad = popularidad;
+        this.popularidad = popularidad;
     }
 
     public String getPosterPath() {
-        return mPosterPath;
+        return posterPath;
     }
 
     public void setPosterPath(String posterPath) {
-        mPosterPath = posterPath;
+        this.posterPath = posterPath;
     }
 
     public String getFechaDeEstreno() {
-        return mFechaDeEstreno;
+        return fechaDeEstreno;
     }
 
     public void setFechaDeEstreno(String fechaDeEstreno) {
-        mFechaDeEstreno = fechaDeEstreno;
+        this.fechaDeEstreno = fechaDeEstreno;
     }
 
     public Integer getDuracion() {
-        return mDuracion;
+        return duracion;
     }
 
     public void setDuracion(Integer duracion) {
-        mDuracion = duracion;
+        this.duracion = duracion;
     }
 
     public String getTagline() {
-        return mTagline;
+        return tagline;
     }
 
     public void setTagline(String tagline) {
-        mTagline = tagline;
+        this.tagline = tagline;
     }
 
     public String getTitulo() {
-        return mTitulo;
+        return titulo;
     }
 
     public void setTitulo(String titulo) {
-        mTitulo = titulo;
+        this.titulo = titulo;
     }
 
     public Double getPuntajePromedio() {
-        return mPuntajePromedio;
+        return puntajePromedio;
     }
 
     public void setPuntajePromedio(Double puntajePromedio) {
-        mPuntajePromedio = puntajePromedio;
+        this.puntajePromedio = puntajePromedio;
     }
 
     public Integer getTotalVotos() {
-        return mTotalVotos;
+        return totalVotos;
     }
 
     public void setTotalVotos(Integer totalVotos) {
-        mTotalVotos = totalVotos;
+        this.totalVotos = totalVotos;
+    }
+
+    public boolean getFavorito() {
+        return favorito;
+    }
+
+    public void setFavorito(boolean favorito) {
+        this.favorito = favorito;
     }
 }

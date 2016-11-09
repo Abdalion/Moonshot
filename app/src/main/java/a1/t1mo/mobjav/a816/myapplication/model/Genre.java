@@ -8,6 +8,8 @@ import com.google.gson.annotations.SerializedName;
 import java.util.Map;
 
 import a1.t1mo.mobjav.a816.myapplication.R;
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
 /**
  * MoonShot App
@@ -20,8 +22,9 @@ import a1.t1mo.mobjav.a816.myapplication.R;
 /**
  * Clase utilizada para deserializar los JSON
  */
-public class Genre {
+public class Genre extends RealmObject {
 
+    @PrimaryKey
     @SerializedName("id")
     @Expose
     public Integer id;
@@ -62,4 +65,21 @@ public class Genre {
         diccionarioSerie.put(R.id.menu_series_opcion_reality, 10764);
         return diccionarioSerie;
     }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
 }

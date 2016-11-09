@@ -10,13 +10,14 @@ public class FavoritosAdapter {
     private SerieController serieController;
 
 
-    public FavoritosFragment(Integer genero) {
+    public FavoritosFragment getFavoritos(Integer genero) {
         peliculaController = new PeliculaController();
-        if (genero == 0) {
-            peliculaController.getFavoritos();
-        } else {
-            serieController.getFavoritos();
-        }
+//        if (genero == 0) {
+//            peliculaController.getFavoritos();
+//        } else {
+//            serieController.getFavoritos();
+//        }
+        return null;
     }
 
 }

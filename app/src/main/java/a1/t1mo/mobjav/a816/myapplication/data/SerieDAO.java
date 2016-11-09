@@ -9,6 +9,8 @@ import a1.t1mo.mobjav.a816.myapplication.data.services.TmdbService;
 import a1.t1mo.mobjav.a816.myapplication.model.serie.ListadoSeries;
 import a1.t1mo.mobjav.a816.myapplication.model.serie.Serie;
 import a1.t1mo.mobjav.a816.myapplication.utils.Listener;
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -24,9 +26,25 @@ import retrofit2.Response;
 public class SerieDAO {
     private static final String TAG = SerieDAO.class.getSimpleName();
     private TmdbService mTmdbService;
+    private static Realm sRealm;
+    private static SerieDAO sInstance;
 
     public SerieDAO() {
         mTmdbService = ServiceFactory.getTmdbService();
+        RealmConfiguration config = new RealmConfiguration
+                .Builder()
+                .name("series.realm")
+                .build();
+        sRealm = Realm.getInstance(config);
+    }
+
+    public static SerieDAO getDAO() {
+        sInstance = new SerieDAO();
+        return sInstance;
+    }
+
+    public static void closeRealm() {
+        if (sRealm != null) sRealm.close();
     }
 
     public void getSerie(Integer id, final Listener<Serie> listener) {

@@ -2,8 +2,8 @@ package a1.t1mo.mobjav.a816.myapplication.model.pelicula;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.util.ArrayList;
-import java.util.List;
+import io.realm.RealmList;
+import io.realm.RealmObject;
 
 /**
  * MoonShot App
@@ -13,49 +13,50 @@ import java.util.List;
  * Archivo creado por Juan Pablo on 31/10/2016.
  */
 
-public class ListadoPeliculas {
+public class ListadoPeliculas extends RealmObject {
 
     @SerializedName("page")
-    private Integer mPagina;
+    private Integer pagina;
     @SerializedName("results")
-    private List<Pelicula> mPeliculas = new ArrayList<Pelicula>();
+    private RealmList<Pelicula> peliculas;
     @SerializedName("total_results")
-    private Integer mTotalPeliculas;
+    private Integer totalPeliculas;
+    @SerializedName("total_pages")
+    private Integer totalPaginas;
 
     public Integer getTotalPaginas() {
 
-        return mTotalPaginas;
+        return totalPaginas;
     }
 
     public void setTotalPaginas(Integer totalPaginas) {
-        mTotalPaginas = totalPaginas;
+        this.totalPaginas = totalPaginas;
     }
 
     public Integer getTotalPeliculas() {
-        return mTotalPeliculas;
+        return totalPeliculas;
     }
 
     public void setTotalPeliculas(Integer totalPeliculas) {
-        mTotalPeliculas = totalPeliculas;
+        this.totalPeliculas = totalPeliculas;
     }
 
-    public List<Pelicula> getPeliculas() {
-        return mPeliculas;
+    public RealmList<Pelicula> getPeliculas() {
+        return peliculas;
     }
 
-    public void setPeliculas(List<Pelicula> peliculas) {
-        mPeliculas = peliculas;
+    public void setPeliculas(RealmList<Pelicula> peliculas) {
+        this.peliculas = peliculas;
     }
 
     public Integer getPagina() {
-        return mPagina;
+        return pagina;
     }
 
     public void setPagina(Integer pagina) {
-        mPagina = pagina;
+        this.pagina = pagina;
     }
 
-    @SerializedName("total_pages")
-    private Integer mTotalPaginas;
+
 
 }

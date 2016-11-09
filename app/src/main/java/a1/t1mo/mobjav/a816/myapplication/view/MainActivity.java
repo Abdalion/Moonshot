@@ -11,7 +11,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import a1.t1mo.mobjav.a816.myapplication.R;
+import a1.t1mo.mobjav.a816.myapplication.data.PeliculaDAO;
+import a1.t1mo.mobjav.a816.myapplication.data.SerieDAO;
 import a1.t1mo.mobjav.a816.myapplication.model.Feature;
+import a1.t1mo.mobjav.a816.myapplication.model.serie.Serie;
 import a1.t1mo.mobjav.a816.myapplication.utils.CambioDePagina;
 import a1.t1mo.mobjav.a816.myapplication.view.feature.FeatureFragment;
 
@@ -100,8 +103,6 @@ public class MainActivity extends AppCompatActivity
                 .commit();*/
     }
 
-
-
     @Override
     public void onCambioDePagina(ViewPagerFragment.PaginaActual pagina) {
         navigationView.getMenu().clear();
@@ -114,6 +115,13 @@ public class MainActivity extends AppCompatActivity
     }
 
     public interface CallBackCambioGenero {
-        public void callBackCambioGenero(int id);
+        void callBackCambioGenero(int id);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        PeliculaDAO.closeRealm();
+        SerieDAO.closeRealm();
     }
 }

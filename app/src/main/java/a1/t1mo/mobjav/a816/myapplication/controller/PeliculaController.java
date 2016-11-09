@@ -1,6 +1,5 @@
 package a1.t1mo.mobjav.a816.myapplication.controller;
 
-
 import java.util.List;
 
 import a1.t1mo.mobjav.a816.myapplication.model.pelicula.Pelicula;
@@ -19,15 +18,19 @@ public class PeliculaController {
     private PeliculaDAO mPeliculaDAO;
 
     public PeliculaController() {
-        mPeliculaDAO = new PeliculaDAO();
+        mPeliculaDAO = PeliculaDAO.getDAO();
     }
 
     public void getPelicula(Integer id, Listener<Pelicula> listener) {
-        mPeliculaDAO.getPelicula(id, listener);
+        if (mPeliculaDAO.isPersisted(id)) {
+            listener.done(mPeliculaDAO.getPeliculaDeRealm(id));
+        } else {
+            mPeliculaDAO.getPeliculaDeTmdb(id, listener);
+        }
     }
 
     public void getPeliculasPopulares(Listener<List<Pelicula>> listener) {
-        mPeliculaDAO.getPeliculasPopulares(listener);
+        mPeliculaDAO.getPeliculasPopularesDeTmdb(listener);
     }
 
     public void getPeliculasPorGenero(Integer id, Listener<List<Pelicula>> listener) {
@@ -42,7 +45,7 @@ public class PeliculaController {
 
     }
 
-    public void getFavoritos() {
-
+    public List<Pelicula> getFavoritos() {
+        return null;
     }
 }

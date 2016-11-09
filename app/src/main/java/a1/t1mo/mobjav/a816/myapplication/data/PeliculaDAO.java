@@ -1,16 +1,20 @@
 package a1.t1mo.mobjav.a816.myapplication.data;
 
+import android.app.PendingIntent;
 import android.util.Log;
 
 import java.util.List;
 
 import a1.t1mo.mobjav.a816.myapplication.data.services.ServiceFactory;
 import a1.t1mo.mobjav.a816.myapplication.data.services.TmdbService;
+import a1.t1mo.mobjav.a816.myapplication.model.Genre;
 import a1.t1mo.mobjav.a816.myapplication.model.pelicula.ListadoPeliculas;
 import a1.t1mo.mobjav.a816.myapplication.model.pelicula.Pelicula;
 import a1.t1mo.mobjav.a816.myapplication.utils.Listener;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
+import io.realm.RealmList;
+import io.realm.Sort;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -35,7 +39,7 @@ public class PeliculaDAO {
                 .Builder()
                 .name("peliculas.realm")
                 .build();
-        sRealm.getInstance(config);
+        sRealm = Realm.getInstance(config);
     }
 
     public static PeliculaDAO getDAO() {
@@ -44,21 +48,23 @@ public class PeliculaDAO {
     }
 
     public static void closeRealm() {
-        sRealm.close();
+        if (sRealm != null) sRealm.close();
     }
 
-    public void getPelicula(final Integer id, final Listener<Pelicula> listener) {
-        if (isPersisted(id)) {
-            listener.done(sRealm.);
-        }
+    public Boolean isPersisted(Integer id) {
+        return sRealm.where(Pelicula.class).equalTo("id", id).count() == 0;
+    }
+
+    public void getPeliculaDeTmdb(final Integer id, final Listener<Pelicula> listener) {
         sTmdbService.getPelicula(id).enqueue(new Callback<Pelicula>() {
             @Override
             public void onResponse(Call<Pelicula> call, Response<Pelicula> response) {
                 if (response.isSuccessful()) {
+                    persistirEnRealm(response.body());
                     listener.done(response.body());
                 } else {
                     Log.e(TAG, "El servidor respondio con el codigo " + response.code() +
-                            " Llamando a getPelicula(" + id + ")");
+                            " Llamando a getPeliculaDeTmdb(" + id + ")");
                 }
             }
 
@@ -69,15 +75,16 @@ public class PeliculaDAO {
         });
     }
 
-    public void getPeliculasPopulares(final Listener<List<Pelicula>> listener) {
+    public void getPeliculasPopularesDeTmdb(final Listener<List<Pelicula>> listener) {
         sTmdbService.getPeliculasPopulares().enqueue(new Callback<ListadoPeliculas>() {
             @Override
             public void onResponse(Call<ListadoPeliculas> call, Response<ListadoPeliculas> response) {
                 if (response.isSuccessful()) {
+                    persistirEnRealm(response.body().getPeliculas());
                     listener.done(response.body().getPeliculas());
                 } else {
                     Log.e(TAG, "El servidor respondio con el codigo " + response.code() +
-                            " Llamando a getPeliculasPopulares()");
+                            " Llamando a getPeliculasPopularesDeTmdb()");
                 }
             }
 
@@ -93,6 +100,7 @@ public class PeliculaDAO {
             @Override
             public void onResponse(Call<ListadoPeliculas> call, Response<ListadoPeliculas> response) {
                 if (response.isSuccessful()) {
+                    persistirEnRealm(response.body().getPeliculas());
                     listener.done(response.body().getPeliculas());
                 } else {
                     Log.e(TAG, "El servidor respondio con el codigo " + response.code() +
@@ -103,6 +111,54 @@ public class PeliculaDAO {
             @Override
             public void onFailure(Call<ListadoPeliculas> call, Throwable t) {
                 Log.e(TAG, "No se pudo obtener la pelicula.");
+            }
+        });
+    }
+
+    public Pelicula getPeliculaDeRealm(Integer id) {
+        return sRealm.where(Pelicula.class).equalTo("id", id).findFirst();
+    }
+
+    public List<Pelicula> getPeliculasPopularesDeRealm() {
+        return sRealm.where(Pelicula.class).findAllSorted("popularidad", Sort.DESCENDING);
+    }
+
+    public List<Pelicula> getPeliculasPorGeneroDeRealm(Integer id) {
+        return sRealm
+                    .where(Pelicula.class)
+                    .equalTo("generos.id", id)
+                    .findAllSorted("popularidad", Sort.DESCENDING);
+    }
+
+    private void persistirEnRealm(final Pelicula pelicula) {
+        pelicula.setFavorito(false);
+        sRealm.executeTransaction(new Realm.Transaction() {
+                @Override
+                public void execute(Realm realm) {
+                    realm.copyToRealmOrUpdate(pelicula);
+                }
+        });
+    }
+
+    private void persistirEnRealm(final RealmList<Pelicula> peliculas) {
+        for (Pelicula pelicula : peliculas) {
+            pelicula.setFavorito(false);
+        }
+
+        sRealm.executeTransactionAsync(new Realm.Transaction() {
+            @Override
+            public void execute(Realm bgRealm) {
+                bgRealm.copyToRealmOrUpdate(peliculas);
+            }
+        }, new Realm.Transaction.OnSuccess() {
+            @Override
+            public void onSuccess() {
+                Log.d(TAG, "Se persistieron las peliculas correctamente.");
+            }
+        }, new Realm.Transaction.OnError() {
+            @Override
+            public void onError(Throwable error) {
+                Log.e(TAG, "Error al persistir las peliculas");
             }
         });
     }

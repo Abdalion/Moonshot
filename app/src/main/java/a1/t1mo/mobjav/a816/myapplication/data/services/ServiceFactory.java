@@ -1,7 +1,13 @@
 package a1.t1mo.mobjav.a816.myapplication.data.services;
 
+import com.google.gson.ExclusionStrategy;
+import com.google.gson.FieldAttributes;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import java.io.IOException;
 
+import io.realm.RealmObject;
 import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
@@ -19,6 +25,15 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ServiceFactory {
     public static TmdbService getTmdbService() {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(TmdbService.BASE_URL)
+                .client(getInterceptor())
+                .addConverterFactory(GsonConverterFactory.create(getGsonInstance()))
+                .build();
+        return retrofit.create(TmdbService.class);
+    }
+
+    private static OkHttpClient getInterceptor() {
         // Creamos un Interceptor para inyectar el query api_key=API_KEY en todos los requests
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
         httpClient.addInterceptor(new Interceptor() {
@@ -34,13 +49,24 @@ public class ServiceFactory {
                 return chain.proceed(request);
             }
         });
-
         OkHttpClient client = httpClient.build();
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(TmdbService.BASE_URL)
-                .client(client)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        return retrofit.create(TmdbService.class);
+        return client;
+    }
+
+    private static Gson getGsonInstance() {
+        Gson gson = new GsonBuilder()
+                .setExclusionStrategies(new ExclusionStrategy() {
+                    @Override
+                    public boolean shouldSkipField(FieldAttributes f) {
+                        return f.getDeclaringClass().equals(RealmObject.class);
+                    }
+
+                    @Override
+                    public boolean shouldSkipClass(Class<?> clazz) {
+                        return false;
+                    }
+                })
+                .create();
+        return gson;
     }
 }
