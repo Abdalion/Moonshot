@@ -48,7 +48,7 @@ public class DetalleSerie extends DetalleFeature {
         ImageView imageViewImagenId = (ImageView) view.findViewById(R.id.fragment_detalle_imagenId);
         Glide
                 .with(getContext())
-                .load(TmdbService.IMAGE_URL_W185 + mSerie.getBackDropPath())
+                .load(TmdbService.IMAGE_URL_W185 + mSerie.getBackdropPath())
                 .fitCenter()
                 .into(imageViewImagenId);
 

@@ -1,5 +1,6 @@
 package a1.t1mo.mobjav.a816.myapplication.view.feature.serie;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,8 +37,8 @@ public class SerieAdapter extends RecyclerView.Adapter<SerieAdapter.SerieHolder>
     private SerieFragment.Escuchable mListener;
     private final static int FADE_DURATION = 300;
 
-    public SerieAdapter(Integer genero) {
-        mSerieController = new SerieController();
+    public SerieAdapter(Context context, Integer genero) {
+        mSerieController = new SerieController(context);
         if (genero == Genre.SERIE_ID.get(R.id.menu_series_opcion_todas)) {
             mSerieController.getSeriesPopulares(this);
         } else {

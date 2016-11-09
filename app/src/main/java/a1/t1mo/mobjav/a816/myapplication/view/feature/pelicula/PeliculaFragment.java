@@ -34,7 +34,7 @@ public class PeliculaFragment extends FeatureFragment {
                              Bundle savedInstanceState) {
 
         Bundle bundle = getArguments();
-        PeliculaAdapter peliculaAdapter = new PeliculaAdapter(bundle.getInt(ARGUMENT_GENERO));
+        PeliculaAdapter peliculaAdapter = new PeliculaAdapter(getContext(), bundle.getInt(ARGUMENT_GENERO));
         View view = inflater.inflate(R.layout.fragment_grilla, container, false);
         recyclerView = (RecyclerView) view.findViewById(R.id.rv_grilla);
         recyclerView.addItemDecoration(new SpacesItemDecoration(4));

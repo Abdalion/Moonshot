@@ -1,15 +1,14 @@
 package a1.t1mo.mobjav.a816.myapplication.model.serie;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import com.google.gson.annotations.SerializedName;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import a1.t1mo.mobjav.a816.myapplication.model.Feature;
 import a1.t1mo.mobjav.a816.myapplication.model.Genre;
+import a1.t1mo.mobjav.a816.myapplication.model.RealmString;
+import io.realm.RealmList;
+import io.realm.RealmObject;
 
 /**
  * MoonShot App
@@ -20,263 +19,206 @@ import a1.t1mo.mobjav.a816.myapplication.model.Genre;
  */
 
 
-public class Serie implements Feature, Parcelable {
+public class Serie extends RealmObject implements Feature {
 
     @SerializedName("backdrop_path")
-    public String mBackDropPath;
+    public String backdropPath;
     @SerializedName("first_air_date")
-    public String mFechaDeEstreno;
+    public String fechaDeEstreno;
     @SerializedName("genres")
-    public List<Genre> mGeneros = new ArrayList<Genre>();
+    public RealmList<Genre> generos;
     @SerializedName("homepage")
-    public String mHomepage;
+    public String homepage;
     @SerializedName("id")
-    public Integer mId;
+    public Integer id;
     @SerializedName("languages")
-    public List<String> mLenguajes = new ArrayList<String>();
+    public RealmList<RealmString> lenguajes;
     @SerializedName("last_air_date")
-    public String mFechaDeUltimoCapitulo;
+    public String fechaDeUltimoCapitulo;
     @SerializedName("name")
-    public String mNombre;
+    public String nombre;
     @SerializedName("number_of_episodes")
-    public Integer mNumeroDeEpisodios;
+    public Integer numeroDeEpisodios;
     @SerializedName("number_of_seasons")
-    public Integer mNumeroDeTemporadas;
+    public Integer numeroDeTemporadas;
     @SerializedName("origin_country")
-    public List<String> mPaisesDeOrigen = new ArrayList<String>();
+    public RealmList<RealmString> paisesDeOrigen;
     @SerializedName("original_language")
-    public String mLenguaje;
+    public String lenguaje;
     @SerializedName("overview")
-    public String mResumen;
+    public String resumen;
     @SerializedName("popularity")
-    public Double mPopularidad;
+    public Double popularidad;
     @SerializedName("poster_path")
-    public String mPosterPath;
+    public String posterPath;
     @SerializedName("seasons")
-    public List<Season> mTemporadas = new ArrayList<Season>();
+    public RealmList<Season> temporadas;
     @SerializedName("status")
-    public String mStatus;
+    public String status;
     @SerializedName("vote_average")
-    public Double mPuntajePromedio;
+    public Double puntajePromedio;
     @SerializedName("vote_count")
-    public Integer mTotalVotos;
+    public Integer totalDeVotos;
 
-    public String getBackDropPath() {
-        return mBackDropPath;
+    public boolean favorito;
+
+    public String getBackdropPath() {
+        return backdropPath;
     }
 
-    public void setBackDropPath(String backDropPath) {
-        mBackDropPath = backDropPath;
+    public void setBackdropPath(String backdropPath) {
+        this.backdropPath = backdropPath;
     }
 
     public String getFechaDeEstreno() {
-        return mFechaDeEstreno;
+        return fechaDeEstreno;
     }
 
     public void setFechaDeEstreno(String fechaDeEstreno) {
-        mFechaDeEstreno = fechaDeEstreno;
+        this.fechaDeEstreno = fechaDeEstreno;
     }
 
     public List<Genre> getGeneros() {
-        return mGeneros;
+        return generos;
     }
 
-    public void setGeneros(List<Genre> generos) {
-        mGeneros = generos;
+    public void setGeneros(RealmList<Genre> generos) {
+        this.generos = generos;
     }
 
     public String getHomepage() {
-        return mHomepage;
+        return homepage;
     }
 
     public void setHomepage(String homepage) {
-        mHomepage = homepage;
+        this.homepage = homepage;
     }
 
     public Integer getId() {
-        return mId;
+        return id;
     }
 
     public void setId(Integer id) {
-        mId = id;
+        this.id = id;
     }
 
-    public List<String> getLenguajes() {
-        return mLenguajes;
+    public List<RealmString> getLenguajes() {
+        return lenguajes;
     }
 
-    public void setLenguajes(List<String> lenguajes) {
-        mLenguajes = lenguajes;
+    public void setLenguajes(RealmList<RealmString> lenguajes) {
+        this.lenguajes = lenguajes;
     }
 
     public String getFechaDeUltimoCapitulo() {
-        return mFechaDeUltimoCapitulo;
+        return fechaDeUltimoCapitulo;
     }
 
     public void setFechaDeUltimoCapitulo(String fechaDeUltimoCapitulo) {
-        mFechaDeUltimoCapitulo = fechaDeUltimoCapitulo;
+        this.fechaDeUltimoCapitulo = fechaDeUltimoCapitulo;
     }
 
     public String getNombre() {
-        return mNombre;
+        return nombre;
     }
 
     public void setNombre(String nombre) {
-        mNombre = nombre;
+        this.nombre = nombre;
     }
 
     public Integer getNumeroDeEpisodios() {
-        return mNumeroDeEpisodios;
+        return numeroDeEpisodios;
     }
 
     public void setNumeroDeEpisodios(Integer numeroDeEpisodios) {
-        mNumeroDeEpisodios = numeroDeEpisodios;
+        this.numeroDeEpisodios = numeroDeEpisodios;
     }
 
     public Integer getNumeroDeTemporadas() {
-        return mNumeroDeTemporadas;
+        return numeroDeTemporadas;
     }
 
     public void setNumeroDeTemporadas(Integer numeroDeTemporadas) {
-        this.mNumeroDeTemporadas = numeroDeTemporadas;
+        this.numeroDeTemporadas = numeroDeTemporadas;
     }
 
-    public List<String> getPaisesDeOrigen() {
-        return mPaisesDeOrigen;
+    public List<RealmString> getPaisesDeOrigen() {
+        return paisesDeOrigen;
     }
 
-    public void setPaisesDeOrigen(List<String> paisesDeOrigen) {
-        mPaisesDeOrigen = paisesDeOrigen;
+    public void setPaisesDeOrigen(RealmList<RealmString> paisesDeOrigen) {
+        this.paisesDeOrigen = paisesDeOrigen;
     }
 
     public String getLenguaje() {
-        return mLenguaje;
+        return lenguaje;
     }
 
     public void setLenguaje(String lenguaje) {
-        mLenguaje = lenguaje;
+        this.lenguaje = lenguaje;
     }
 
     public String getResumen() {
-        return mResumen;
+        return resumen;
     }
 
     public void setResumen(String resumen) {
-        mResumen = resumen;
+        this.resumen = resumen;
     }
 
     public Double getPopularidad() {
-        return mPopularidad;
+        return popularidad;
     }
 
     public void setPopularidad(Double popularidad) {
-        mPopularidad = popularidad;
+        this.popularidad = popularidad;
     }
 
     public String getPosterPath() {
-        return mPosterPath;
+        return posterPath;
     }
 
     public void setPosterPath(String posterPath) {
-        mPosterPath = posterPath;
+        this.posterPath = posterPath;
     }
 
     public List<Season> getTemporadas() {
-        return mTemporadas;
+        return temporadas;
     }
 
-    public void setTemporadas(List<Season> temporadas) {
-        mTemporadas = temporadas;
+    public void setTemporadas(RealmList<Season> temporadas) {
+        this.temporadas = temporadas;
     }
 
     public String getStatus() {
-        return mStatus;
+        return status;
     }
 
     public void setStatus(String status) {
-        mStatus = status;
+        this.status = status;
     }
 
     public Double getPuntajePromedio() {
-        return mPuntajePromedio;
+        return puntajePromedio;
     }
 
     public void setPuntajePromedio(Double puntajePromedio) {
-        mPuntajePromedio = puntajePromedio;
+        this.puntajePromedio = puntajePromedio;
     }
 
-    public Integer getTotalVotos() {
-        return mTotalVotos;
+    public Integer getTotalDeVotos() {
+        return totalDeVotos;
     }
 
-    public void setTotalVotos(Integer totalVotos) {
-        mTotalVotos = totalVotos;
+    public void setTotalDeVotos(Integer totalDeVotos) {
+        this.totalDeVotos = totalDeVotos;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
+    public boolean isFavorito() {
+        return favorito;
     }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.mBackDropPath);
-        dest.writeString(this.mFechaDeEstreno);
-        dest.writeList(this.mGeneros);
-        dest.writeString(this.mHomepage);
-        dest.writeValue(this.mId);
-        dest.writeStringList(this.mLenguajes);
-        dest.writeString(this.mFechaDeUltimoCapitulo);
-        dest.writeString(this.mNombre);
-        dest.writeValue(this.mNumeroDeEpisodios);
-        dest.writeValue(this.mNumeroDeTemporadas);
-        dest.writeStringList(this.mPaisesDeOrigen);
-        dest.writeString(this.mLenguaje);
-        dest.writeString(this.mResumen);
-        dest.writeValue(this.mPopularidad);
-        dest.writeString(this.mPosterPath);
-        dest.writeList(this.mTemporadas);
-        dest.writeString(this.mStatus);
-        dest.writeValue(this.mPuntajePromedio);
-        dest.writeValue(this.mTotalVotos);
+    public void setFavorito(boolean favorito) {
+        this.favorito = favorito;
     }
-
-    public Serie() {
-    }
-
-    protected Serie(Parcel in) {
-        this.mBackDropPath = in.readString();
-        this.mFechaDeEstreno = in.readString();
-        this.mGeneros = new ArrayList<Genre>();
-        in.readList(this.mGeneros, Genre.class.getClassLoader());
-        this.mHomepage = in.readString();
-        this.mId = (Integer) in.readValue(Integer.class.getClassLoader());
-        this.mLenguajes = in.createStringArrayList();
-        this.mFechaDeUltimoCapitulo = in.readString();
-        this.mNombre = in.readString();
-        this.mNumeroDeEpisodios = (Integer) in.readValue(Integer.class.getClassLoader());
-        this.mNumeroDeTemporadas = (Integer) in.readValue(Integer.class.getClassLoader());
-        this.mPaisesDeOrigen = in.createStringArrayList();
-        this.mLenguaje = in.readString();
-        this.mResumen = in.readString();
-        this.mPopularidad = (Double) in.readValue(Double.class.getClassLoader());
-        this.mPosterPath = in.readString();
-        this.mTemporadas = new ArrayList<Season>();
-        in.readList(this.mTemporadas, Season.class.getClassLoader());
-        this.mStatus = in.readString();
-        this.mPuntajePromedio = (Double) in.readValue(Double.class.getClassLoader());
-        this.mTotalVotos = (Integer) in.readValue(Integer.class.getClassLoader());
-    }
-
-    public static final Parcelable.Creator<Serie> CREATOR = new Parcelable.Creator<Serie>() {
-        @Override
-        public Serie createFromParcel(Parcel source) {
-            return new Serie(source);
-        }
-
-        @Override
-        public Serie[] newArray(int size) {
-            return new Serie[size];
-        }
-    };
 }

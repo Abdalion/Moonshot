@@ -1,13 +1,11 @@
 package a1.t1mo.mobjav.a816.myapplication.data;
 
-import android.app.PendingIntent;
 import android.util.Log;
 
 import java.util.List;
 
 import a1.t1mo.mobjav.a816.myapplication.data.services.ServiceFactory;
 import a1.t1mo.mobjav.a816.myapplication.data.services.TmdbService;
-import a1.t1mo.mobjav.a816.myapplication.model.Genre;
 import a1.t1mo.mobjav.a816.myapplication.model.pelicula.ListadoPeliculas;
 import a1.t1mo.mobjav.a816.myapplication.model.pelicula.Pelicula;
 import a1.t1mo.mobjav.a816.myapplication.utils.Listener;
@@ -38,6 +36,7 @@ public class PeliculaDAO {
         RealmConfiguration config = new RealmConfiguration
                 .Builder()
                 .name("peliculas.realm")
+                .deleteRealmIfMigrationNeeded()
                 .build();
         sRealm = Realm.getInstance(config);
     }
@@ -90,12 +89,12 @@ public class PeliculaDAO {
 
             @Override
             public void onFailure(Call<ListadoPeliculas> call, Throwable t) {
-                Log.e(TAG, "No se pudo obtener la pelicula.");
+                Log.e(TAG, "No se pudo obtener la lista de peliculas populares.");
             }
         });
     }
 
-    public void getPeliculasPorGenero(final Integer id, final Listener<List<Pelicula>> listener) {
+    public void getPeliculasPorGeneroDeTmdb(final Integer id, final Listener<List<Pelicula>> listener) {
         sTmdbService.getPeliculasPorGenero(id).enqueue(new Callback<ListadoPeliculas>() {
             @Override
             public void onResponse(Call<ListadoPeliculas> call, Response<ListadoPeliculas> response) {
@@ -104,13 +103,13 @@ public class PeliculaDAO {
                     listener.done(response.body().getPeliculas());
                 } else {
                     Log.e(TAG, "El servidor respondio con el codigo " + response.code() +
-                            " Llamando a getPeliculasPorGenero(" + id + ")");
+                            " Llamando a getPeliculasPorGeneroDeTmdb(" + id + ")");
                 }
             }
 
             @Override
             public void onFailure(Call<ListadoPeliculas> call, Throwable t) {
-                Log.e(TAG, "No se pudo obtener la pelicula.");
+                Log.e(TAG, "No se pudo obtener la lista de peliculas por genero.");
             }
         });
     }
@@ -161,5 +160,29 @@ public class PeliculaDAO {
                 Log.e(TAG, "Error al persistir las peliculas");
             }
         });
+    }
+
+    public void agregarAFavoritos(final Integer id) {
+        sRealm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                Pelicula pelicula = realm.where(Pelicula.class).equalTo("id", id).findFirst();
+                if (pelicula != null) pelicula.setFavorito(true);
+            }
+        });
+    }
+
+    public void quitarDeFavoritos(final Integer id) {
+        sRealm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                Pelicula pelicula = realm.where(Pelicula.class).equalTo("id", id).findFirst();
+                if (pelicula != null) pelicula.setFavorito(false);
+            }
+        });
+    }
+
+    public List<Pelicula> getFavoritos() {
+        return sRealm.where(Pelicula.class).equalTo("favorito", true).findAll();
     }
 }

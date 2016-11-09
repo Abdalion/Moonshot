@@ -1,5 +1,7 @@
 package a1.t1mo.mobjav.a816.myapplication.controller;
 
+import android.content.Context;
+
 import java.util.List;
 
 import a1.t1mo.mobjav.a816.myapplication.model.pelicula.Pelicula;
@@ -14,11 +16,13 @@ import a1.t1mo.mobjav.a816.myapplication.utils.Listener;
  * Archivo creado por Juan Pablo on 22/10/2016.
  */
 
-public class PeliculaController {
+public class PeliculaController extends Controller {
     private PeliculaDAO mPeliculaDAO;
+    private Context mContext;
 
-    public PeliculaController() {
+    public PeliculaController(Context context) {
         mPeliculaDAO = PeliculaDAO.getDAO();
+        mContext = context;
     }
 
     public void getPelicula(Integer id, Listener<Pelicula> listener) {
@@ -30,22 +34,30 @@ public class PeliculaController {
     }
 
     public void getPeliculasPopulares(Listener<List<Pelicula>> listener) {
-        mPeliculaDAO.getPeliculasPopularesDeTmdb(listener);
+        if (hasConnectivity(mContext)) {
+            mPeliculaDAO.getPeliculasPopularesDeTmdb(listener);
+        } else {
+            listener.done(mPeliculaDAO.getPeliculasPopularesDeRealm());
+        }
     }
 
     public void getPeliculasPorGenero(Integer id, Listener<List<Pelicula>> listener) {
-        mPeliculaDAO.getPeliculasPorGenero(id, listener);
+        if (hasConnectivity(mContext)) {
+            mPeliculaDAO.getPeliculasPorGeneroDeTmdb(id, listener);
+        } else {
+            listener.done(mPeliculaDAO.getPeliculasPorGeneroDeRealm(id));
+        }
     }
 
-    public void agregarAFavoritos(Integer id) {
-
+    public void agregarAFavoritos(final Integer id) {
+        mPeliculaDAO.agregarAFavoritos(id);
     }
 
-    public void quitarDeFavoritos(Integer id) {
-
+    public void quitarDeFavoritos(final Integer id) {
+        mPeliculaDAO.quitarDeFavoritos(id);
     }
 
     public List<Pelicula> getFavoritos() {
-        return null;
+        return mPeliculaDAO.getFavoritos();
     }
 }

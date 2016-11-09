@@ -1,5 +1,6 @@
 package a1.t1mo.mobjav.a816.myapplication.view.feature.pelicula;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,8 +38,8 @@ public class PeliculaAdapter extends RecyclerView.Adapter<PeliculaAdapter.Pelicu
     private PeliculaFragment.Escuchable mListener;
     private final static int FADE_DURATION = 300;
 
-    public PeliculaAdapter(Integer genero) {
-        mPeliculaController = new PeliculaController();
+    public PeliculaAdapter(Context context, Integer genero) {
+        mPeliculaController = new PeliculaController(context);
         if (genero == Genre.PELICULA_ID.get(R.id.menu_peliculas_opcion_todas)) {
             mPeliculaController.getPeliculasPopulares(this);
         } else {

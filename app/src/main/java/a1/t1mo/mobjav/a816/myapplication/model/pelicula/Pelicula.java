@@ -184,7 +184,7 @@ public class Pelicula extends RealmObject implements Feature {
         this.totalVotos = totalVotos;
     }
 
-    public boolean getFavorito() {
+    public boolean isFavorito() {
         return favorito;
     }
 
