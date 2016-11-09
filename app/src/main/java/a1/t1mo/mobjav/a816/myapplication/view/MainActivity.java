@@ -8,18 +8,12 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
 
 import a1.t1mo.mobjav.a816.myapplication.R;
 import a1.t1mo.mobjav.a816.myapplication.model.Feature;
-import a1.t1mo.mobjav.a816.myapplication.model.pelicula.Pelicula;
-import a1.t1mo.mobjav.a816.myapplication.model.serie.Serie;
 import a1.t1mo.mobjav.a816.myapplication.utils.CambioDePagina;
-import a1.t1mo.mobjav.a816.myapplication.view.feature.DetalleFeature;
 import a1.t1mo.mobjav.a816.myapplication.view.feature.FeatureFragment;
-import a1.t1mo.mobjav.a816.myapplication.view.feature.pelicula.DetallePelicula;
-import a1.t1mo.mobjav.a816.myapplication.view.feature.serie.DetalleSerie;
 
 /**
  * MoonShot App
@@ -30,11 +24,10 @@ import a1.t1mo.mobjav.a816.myapplication.view.feature.serie.DetalleSerie;
 
 public class MainActivity extends AppCompatActivity
         implements FeatureFragment.Escuchable, CambioDePagina {
-    FragmentManager fragmentManager;
-    NavigationView navigationView;
-    ViewPagerFragment viewPagerFragment;
-    Toolbar toolbar;
-
+    private FragmentManager fragmentManager;
+    private NavigationView navigationView;
+    private ViewPagerFragment viewPagerFragment;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,8 +42,6 @@ public class MainActivity extends AppCompatActivity
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
-
-
 
         fragmentManager = getSupportFragmentManager();
         navigationViewSetup();
@@ -115,7 +106,6 @@ public class MainActivity extends AppCompatActivity
     public void onCambioDePagina(ViewPagerFragment.PaginaActual pagina) {
         navigationView.getMenu().clear();
         if(pagina == ViewPagerFragment.PaginaActual.PELICULAS) {
-            MenuItem menuItem = (MenuItem) findViewById(R.id.menu_peliculas_opcion_titulo);
             navigationView.inflateMenu(R.menu.menu_navigation_peliculas);
         }
         else {

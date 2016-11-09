@@ -9,6 +9,8 @@ import a1.t1mo.mobjav.a816.myapplication.data.services.TmdbService;
 import a1.t1mo.mobjav.a816.myapplication.model.pelicula.ListadoPeliculas;
 import a1.t1mo.mobjav.a816.myapplication.model.pelicula.Pelicula;
 import a1.t1mo.mobjav.a816.myapplication.utils.Listener;
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -23,14 +25,33 @@ import retrofit2.Response;
 
 public class PeliculaDAO {
     private static final String TAG = PeliculaDAO.class.getSimpleName();
-    private TmdbService mTmdbService;
+    private static TmdbService sTmdbService;
+    private static Realm sRealm;
+    private static PeliculaDAO sInstance;
 
-    public PeliculaDAO() {
-        mTmdbService = ServiceFactory.getTmdbService();
+    private PeliculaDAO() {
+        sTmdbService = ServiceFactory.getTmdbService();
+        RealmConfiguration config = new RealmConfiguration
+                .Builder()
+                .name("peliculas.realm")
+                .build();
+        sRealm.getInstance(config);
+    }
+
+    public static PeliculaDAO getDAO() {
+        sInstance = new PeliculaDAO();
+        return sInstance;
+    }
+
+    public static void closeRealm() {
+        sRealm.close();
     }
 
     public void getPelicula(final Integer id, final Listener<Pelicula> listener) {
-        mTmdbService.getPelicula(id).enqueue(new Callback<Pelicula>() {
+        if (isPersisted(id)) {
+            listener.done(sRealm.);
+        }
+        sTmdbService.getPelicula(id).enqueue(new Callback<Pelicula>() {
             @Override
             public void onResponse(Call<Pelicula> call, Response<Pelicula> response) {
                 if (response.isSuccessful()) {
@@ -49,7 +70,7 @@ public class PeliculaDAO {
     }
 
     public void getPeliculasPopulares(final Listener<List<Pelicula>> listener) {
-        mTmdbService.getPeliculasPopulares().enqueue(new Callback<ListadoPeliculas>() {
+        sTmdbService.getPeliculasPopulares().enqueue(new Callback<ListadoPeliculas>() {
             @Override
             public void onResponse(Call<ListadoPeliculas> call, Response<ListadoPeliculas> response) {
                 if (response.isSuccessful()) {
@@ -68,7 +89,7 @@ public class PeliculaDAO {
     }
 
     public void getPeliculasPorGenero(final Integer id, final Listener<List<Pelicula>> listener) {
-        mTmdbService.getPeliculasPorGenero(id).enqueue(new Callback<ListadoPeliculas>() {
+        sTmdbService.getPeliculasPorGenero(id).enqueue(new Callback<ListadoPeliculas>() {
             @Override
             public void onResponse(Call<ListadoPeliculas> call, Response<ListadoPeliculas> response) {
                 if (response.isSuccessful()) {
