@@ -41,8 +41,7 @@ public class AdapterViewPagerFragment extends FragmentStatePagerAdapter {
             mGeneroPeliculas = genero;
         } else if(pagina == ViewPagerFragment.PaginaActual.SERIES){
             mGeneroSeries = genero;
-        }
-        else {
+        } else {
             mTipoFavoritos = genero;
         }
         updateFragments();

@@ -2,6 +2,7 @@ package a1.t1mo.mobjav.a816.myapplication.view.favoritos;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,9 +38,11 @@ public class FavoritosAdapter extends RecyclerView.Adapter<FavoritosAdapter.Favo
         if (genero == 0) {
             mPeliculaController = new PeliculaController(context);
             mFeaturesList = mPeliculaController.getFavoritos();
+            Log.d("Favoritos Adapter", "Cargue " + mFeaturesList.size() + " peliculas favoritas ");
         } else {
             mSerieController = new SerieController(context);
             mFeaturesList = mSerieController.getFavoritos();
+            Log.d("Favoritos Adapter", "Cargue " + mFeaturesList.size() + " series favoritas ");
         }
     }
 
