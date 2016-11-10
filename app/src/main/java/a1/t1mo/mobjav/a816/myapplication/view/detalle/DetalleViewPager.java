@@ -1,44 +1,36 @@
-package a1.t1mo.mobjav.a816.myapplication.view;
+package a1.t1mo.mobjav.a816.myapplication.view.detalle;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import a1.t1mo.mobjav.a816.myapplication.R;
-import a1.t1mo.mobjav.a816.myapplication.model.pelicula.GeneroPelicula;
-import a1.t1mo.mobjav.a816.myapplication.model.serie.GeneroSerie;
+import a1.t1mo.mobjav.a816.myapplication.view.AdapterViewPagerFragment;
+import a1.t1mo.mobjav.a816.myapplication.view.ViewPagerFragment;
 
 /**
- * A simple {@link Fragment} subclass.
+ * MoonShot App
+ * Proyecto Integrador
+ * Curso de Desarrollo Mobile Android
+ * Turno Tarde
+ * Archivo creado por Juan Pablo on 09/11/2016.
  */
-public class ViewPagerFragment extends Fragment implements MainActivity.CallBackCambioGenero {
-    MainActivity mainActivity;
-    PaginaActual paginaActual;
-    AdapterViewPagerFragment adapter;
 
-    public enum PaginaActual {PELICULAS, SERIES, FAVORITOS}
+public class DetalleViewPager extends Fragment {
+    private DetalleAdapter mAdapter;
 
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        mainActivity = (MainActivity) activity;
-    }
-
-    public ViewPagerFragment() {
+    public DetalleViewPager() {
         // Required empty public constructor
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        paginaActual = PaginaActual.PELICULAS;
+        paginaActual = ViewPagerFragment.PaginaActual.PELICULAS;
         View view = inflater.inflate(R.layout.fragment_view_pager, container, false);
         FragmentManager fragmentManager = getChildFragmentManager();
         adapter = new AdapterViewPagerFragment(fragmentManager);
@@ -52,14 +44,7 @@ public class ViewPagerFragment extends Fragment implements MainActivity.CallBack
 
             @Override
             public void onPageSelected(int position) {
-                if(position == 0)
-                    paginaActual = PaginaActual.PELICULAS;
-                else if(position == 1)
-                    paginaActual = PaginaActual.SERIES;
-                else if(position == 2)
-                    paginaActual = PaginaActual.FAVORITOS;
-
-                mainActivity.onCambioDePagina(paginaActual);
+                paginaActual = (paginaActual == ViewPagerFragment.PaginaActual.PELICULAS) ? ViewPagerFragment.PaginaActual.SERIES : ViewPagerFragment.PaginaActual.PELICULAS;
             }
 
             @Override
@@ -67,10 +52,5 @@ public class ViewPagerFragment extends Fragment implements MainActivity.CallBack
             }
         });
         return view;
-    }
-
-    @Override
-    public void callBackCambioGenero(int id) {
-        adapter.cambiarGenero(paginaActual, id);
     }
 }

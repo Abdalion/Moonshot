@@ -1,12 +1,12 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="a1.t1mo.mobjav.a816.myapplication.view.feature.pelicula.DetallePelicula"
-    android:background="@color/colorPalabras2"
-    android:paddingLeft="20dp"
-    android:paddingRight="20dp">
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="a1.t1mo.mobjav.a816.myapplication.view.detalle.DetallePelicula"
+        android:background="@color/colorPalabras2"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        >
 
         <TextView
             android:layout_width="wrap_content"
