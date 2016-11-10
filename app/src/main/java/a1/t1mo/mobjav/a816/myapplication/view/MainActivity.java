@@ -10,6 +10,8 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
+import java.util.List;
+
 import a1.t1mo.mobjav.a816.myapplication.R;
 import a1.t1mo.mobjav.a816.myapplication.data.PeliculaDAO;
 import a1.t1mo.mobjav.a816.myapplication.data.SerieDAO;
@@ -92,9 +94,9 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void onClickItem(Feature feature) {
+    public void onClickItem(int position, List<? extends Feature> features) {
         DetalleFeature detalle;
-        if (feature instanceof Pelicula) {
+        if (features.get(position) instanceof Pelicula) {
             detalle = DetallePelicula.getDetalleFragment((Pelicula) feature);
         } else {
             detalle = DetalleSerie.getDetalleSerie((Serie) feature);

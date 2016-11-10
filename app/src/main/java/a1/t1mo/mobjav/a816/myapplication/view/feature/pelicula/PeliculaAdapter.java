@@ -17,6 +17,7 @@ import java.util.List;
 import a1.t1mo.mobjav.a816.myapplication.R;
 import a1.t1mo.mobjav.a816.myapplication.controller.PeliculaController;
 import a1.t1mo.mobjav.a816.myapplication.data.services.TmdbService;
+import a1.t1mo.mobjav.a816.myapplication.model.Feature;
 import a1.t1mo.mobjav.a816.myapplication.model.Genre;
 import a1.t1mo.mobjav.a816.myapplication.model.pelicula.GeneroPelicula;
 import a1.t1mo.mobjav.a816.myapplication.model.pelicula.Pelicula;
@@ -88,7 +89,6 @@ public class PeliculaAdapter extends RecyclerView.Adapter<PeliculaAdapter.Pelicu
     public class PeliculaHolder extends RecyclerView.ViewHolder
             implements View.OnClickListener {
 
-        private Pelicula mPelicula;
         private ImageView mImagen;
 
         public PeliculaHolder(View itemView) {
@@ -98,7 +98,6 @@ public class PeliculaAdapter extends RecyclerView.Adapter<PeliculaAdapter.Pelicu
         }
 
         private void bindPelicula(Pelicula pelicula) {
-            mPelicula = pelicula;
             Glide
                 .with(mImagen.getContext())
                 .load(TmdbService.IMAGE_URL_W154 + pelicula.getPosterPath())
@@ -108,7 +107,7 @@ public class PeliculaAdapter extends RecyclerView.Adapter<PeliculaAdapter.Pelicu
 
         @Override
         public void onClick(View v) {
-            mListener.onClickItem(mPelicula);
+            mListener.onClickItem(getAdapterPosition(), mPeliculas);
         }
     }
 }

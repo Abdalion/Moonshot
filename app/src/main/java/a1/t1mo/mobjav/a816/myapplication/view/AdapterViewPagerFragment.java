@@ -20,7 +20,6 @@ import a1.t1mo.mobjav.a816.myapplication.view.feature.serie.SerieFragment;
  */
 
 public class AdapterViewPagerFragment extends FragmentStatePagerAdapter {
-
     private Integer mGeneroPeliculas;
     private Integer mGeneroSeries;
     private Integer mTipoFavoritos;
