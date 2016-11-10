@@ -10,6 +10,7 @@ import java.util.List;
 
 import a1.t1mo.mobjav.a816.myapplication.R;
 import a1.t1mo.mobjav.a816.myapplication.model.Genre;
+import a1.t1mo.mobjav.a816.myapplication.view.favoritos.FavoritosFragment;
 import a1.t1mo.mobjav.a816.myapplication.view.feature.FeatureFragment;
 import a1.t1mo.mobjav.a816.myapplication.view.feature.pelicula.PeliculaFragment;
 import a1.t1mo.mobjav.a816.myapplication.view.feature.serie.SerieFragment;
@@ -22,23 +23,29 @@ public class AdapterViewPagerFragment extends FragmentStatePagerAdapter {
 
     private Integer mGeneroPeliculas;
     private Integer mGeneroSeries;
+    private Integer mTipoFavoritos;
     private List<FeatureFragment> mListaDeFragments;
     private PeliculaFragment mPeliculaFragment;
     private SerieFragment mSerieFragment;
+    private FavoritosFragment mFavoritosFragment;
 
     public AdapterViewPagerFragment(FragmentManager fm) {
         super(fm);
         mListaDeFragments = new ArrayList<>();
         mGeneroPeliculas = Genre.PELICULA_ID.get(R.id.menu_peliculas_opcion_todas);
         mGeneroSeries = Genre.SERIE_ID.get(R.id.menu_series_opcion_todas);
+        mTipoFavoritos = 0;
         updateFragments();
     }
 
     public void cambiarGenero(ViewPagerFragment.PaginaActual pagina, int genero) {
         if (pagina == ViewPagerFragment.PaginaActual.PELICULAS) {
             mGeneroPeliculas = genero;
-        } else {
+        } else if(pagina == ViewPagerFragment.PaginaActual.SERIES){
             mGeneroSeries = genero;
+        }
+        else {
+            mTipoFavoritos = genero;
         }
         updateFragments();
     }
@@ -47,8 +54,10 @@ public class AdapterViewPagerFragment extends FragmentStatePagerAdapter {
         mListaDeFragments.clear();
         mPeliculaFragment = PeliculaFragment.obtenerFragment(mGeneroPeliculas);
         mSerieFragment = SerieFragment.obtenerFragment(mGeneroSeries);
+        mFavoritosFragment = FavoritosFragment.obtenerFragment(mTipoFavoritos);
         mListaDeFragments.add(mPeliculaFragment);
         mListaDeFragments.add(mSerieFragment);
+        mListaDeFragments.add(mFavoritosFragment);
         notifyDataSetChanged();
     }
 

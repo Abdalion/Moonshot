@@ -24,7 +24,7 @@ public class ViewPagerFragment extends Fragment implements MainActivity.CallBack
     PaginaActual paginaActual;
     AdapterViewPagerFragment adapter;
 
-    public enum PaginaActual {PELICULAS, SERIES}
+    public enum PaginaActual {PELICULAS, SERIES, FAVORITOS}
 
     @Override
     public void onAttach(Activity activity) {
@@ -53,7 +53,12 @@ public class ViewPagerFragment extends Fragment implements MainActivity.CallBack
 
             @Override
             public void onPageSelected(int position) {
-                paginaActual = (paginaActual == PaginaActual.PELICULAS) ? PaginaActual.SERIES : PaginaActual.PELICULAS;
+                if(position == 0)
+                    paginaActual = PaginaActual.PELICULAS;
+                else if(position == 1)
+                    paginaActual = PaginaActual.SERIES;
+                else if(position == 2)
+                    paginaActual = PaginaActual.FAVORITOS;
                 mainActivity.onCambioDePagina(paginaActual);
             }
 

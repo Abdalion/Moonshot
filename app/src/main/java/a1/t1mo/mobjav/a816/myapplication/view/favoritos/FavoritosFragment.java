@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import a1.t1mo.mobjav.a816.myapplication.R;
 import a1.t1mo.mobjav.a816.myapplication.view.feature.FeatureFragment;
@@ -28,13 +29,13 @@ public class FavoritosFragment extends FeatureFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         Bundle bundle = getArguments();
-        FavoritosAdapter favoritosAdapter = new FavoritosAdapter(bundle.getInt(ARGUMENT_GENERO));
+        FavoritosAdapter favoritosAdapter = new FavoritosAdapter(getContext(), bundle.getInt(ARGUMENT_GENERO));
         View view = inflater.inflate(R.layout.fragment_grilla, container, false);
         recyclerView = (RecyclerView) view.findViewById(R.id.rv_grilla);
         recyclerView.addItemDecoration(new SpacesItemDecoration(4));
         recyclerView.setHasFixedSize(true);
         favoritosAdapter.setListener(escuchable);
-        recyclerView.setAdapter(peliculaAdapter);
+        recyclerView.setAdapter(favoritosAdapter);
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
         return view;
     }
