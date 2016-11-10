@@ -4,9 +4,9 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="a1.t1mo.mobjav.a816.myapplication.view.detalle.DetallePelicula"
-    android:background="@color/colorPalabras2"
-    android:paddingLeft="20dp"
-    android:paddingRight="20dp">
+    android:background="@color/colorPalabras"
+
+    >
 
         <TextView
             android:layout_width="wrap_content"
@@ -18,44 +18,59 @@
             android:layout_marginTop="20dp"
             android:id="@+id/fragment_detalle_titulo"/>
 
-        <ImageView
+         <RatingBar
+           android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/fragment_detalle_titulo"
+            android:id="@+id/fragment_detalle_ratingBar"
+            android:isIndicator="true"
+            android:theme="@style/RatingBar"
+            style="?android:ratingBarStyleSmall"
+             android:numStars="10"
+             />
+
+
+
+    <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/fragment_detalle_imagenId"
-            android:layout_below="@id/fragment_detalle_titulo"/>
+            android:layout_below="@id/fragment_detalle_ratingBar"
+            android:layout_marginTop="10dp"
+        />
 
+
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/fragment_detalle_imagenId"
+        >
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/fragment_detalle_genero"
-            android:layout_below="@id/fragment_detalle_imagenId"
             android:layout_marginTop="10dp"
             android:text="Short, Action"
             android:textSize="13dp"
             android:textStyle="bold"
             android:textColor="@color/colorPalabras3"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/fragment_detalle_genero"
-        android:id="@+id/fragment_detalle_pais"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"
-        android:text="USA"
-        android:textSize="13dp"
-        android:textColor="@color/colorPalabras3"
-        android:textStyle="bold"
-        />
-    <com.like.LikeButton
-            app:icon_type="heart"
-            app:icon_size="30sp"
-            android:id="@+id/fav_button"
+        <TextView
+            android:layout_marginTop="5dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_margin="5sp"
-            android:layout_alignBaseline="@id/fragment_detalle_genero" />
+            android:layout_below="@id/fragment_detalle_genero"
+            android:id="@+id/fragment_detalle_pais"
+            android:text="USA"
+            android:textSize="13dp"
+            android:textColor="@color/colorPalabras3"
+            android:textStyle="bold"
+            />
+
+
 
     <TextView
             android:layout_width="wrap_content"
@@ -92,7 +107,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Fecha de estreno:"
-            android:layout_below="@id/fragment_detalle_lenguaje"
+            android:layout_below="@id/fragment_detalle_pais"
 
             android:textSize="13dp"
             android:layout_marginTop="8dp"
@@ -125,14 +140,10 @@
             android:layout_marginTop="7dp"
             android:textStyle="bold"
             android:textColor="@color/colorPalabras3"
-            android:id="@+id/protagonizadaPorText"
+            android:id="@+id/resumen"
             />
 
-        <ScrollView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/protagonizadaPorText"
-           >
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -140,9 +151,25 @@
             android:id="@+id/fragment_detalle_trama"
             android:textColor="@color/colorPalabras3"
             android:text="Una descripcion cualquiera"
+            android:layout_below="@+id/resumen"
 
             />
+
+        </RelativeLayout>
+
         </ScrollView>
+
+    <com.like.LikeButton
+        app:icon_type="heart"
+        app:icon_size="30sp"
+        android:id="@+id/fav_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/fragment_detalle_imagenId"
+        android:layout_margin="5sp"
+
+        />
 
     </RelativeLayout>
 

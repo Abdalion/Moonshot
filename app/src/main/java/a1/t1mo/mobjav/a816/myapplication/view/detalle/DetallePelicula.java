@@ -1,11 +1,15 @@
 package a1.t1mo.mobjav.a816.myapplication.view.detalle;
 
+import android.icu.text.UnicodeSetSpanner;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.like.LikeButton;
@@ -43,11 +47,16 @@ public class DetallePelicula extends DetalleFeature {
             @Override
             public void liked(LikeButton likeButton) {
                 mCallback.onLike(mPelicula.getId());
+                Snackbar.make(getView(), "Agregado A Favoritos", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
             }
 
             @Override
             public void unLiked(LikeButton likeButton) {
                 mCallback.onUnlike(mPelicula.getId());
+                Snackbar.make(getView(), "Eliminado De Favoritos", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+
             }
         });
 
@@ -56,10 +65,18 @@ public class DetallePelicula extends DetalleFeature {
 
         TextView textView = (TextView) view.findViewById(R.id.fragment_detalle_fechaDeEstreno);
         textView.setText(mPelicula.getFechaDeEstreno());
-//
-//        TextView textViewDuracion =  (TextView) view.findViewById(R.id.fragment_detalle_duracion);
-//        textViewDuracion.setText(Integer.toString(mPelicula.getDuracion()));
 
+        RatingBar ratingBar = (RatingBar) view.findViewById(R.id.fragment_detalle_ratingBar);
+        ratingBar.setRating(mPelicula.getPuntajePromedio().floatValue());
+
+
+        TextView textViewDuracion =  (TextView) view.findViewById(R.id.fragment_detalle_duracion);
+        if (mPelicula.getDuracion() == null){
+            textViewDuracion.setText("N/A");
+        }
+        else {
+            textViewDuracion.setText(Integer.toString(mPelicula.getDuracion()));
+        }
 //        TextView textViewGenre =  (TextView) view.findViewById(R.id.fragment_detalle_genero);
 //        textViewGenre.setText(mPelicula.getGeneros());
 
