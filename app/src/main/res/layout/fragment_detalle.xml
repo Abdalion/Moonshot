@@ -15,7 +15,6 @@
             android:textColor="@color/colorPalabras3"
             android:textSize="26dp"
             android:textStyle="bold"
-            android:layout_marginTop="20dp"
             android:id="@+id/fragment_detalle_titulo"/>
 
          <RatingBar
@@ -24,7 +23,7 @@
             android:layout_below="@id/fragment_detalle_titulo"
             android:id="@+id/fragment_detalle_ratingBar"
             android:isIndicator="true"
-            android:theme="@style/RatingBar"
+
             style="?android:ratingBarStyleSmall"
              android:numStars="10"
              />
