@@ -31,7 +31,7 @@ import a1.t1mo.mobjav.a816.myapplication.view.feature.FeatureFragment;
  */
 
 public class MainActivity extends AppCompatActivity
-        implements FeatureFragment.Escuchable, CambioDePagina {
+        implements FeatureFragment.Escuchable, CambioDePagina, DetalleFeature.LikedButton{
     private FragmentManager fragmentManager;
     private NavigationView navigationView;
     private ViewPagerFragment viewPagerFragment;
@@ -115,6 +115,16 @@ public class MainActivity extends AppCompatActivity
         else {
             navigationView.inflateMenu(R.menu.menu_navigation_series);
         }
+    }
+
+    @Override
+    public void onLike() {
+
+    }
+
+    @Override
+    public void onUnlike() {
+
     }
 
     public interface CallBackCambioGenero {

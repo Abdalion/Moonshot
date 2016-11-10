@@ -1,21 +1,33 @@
 package a1.t1mo.mobjav.a816.myapplication.view.detalle;
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.like.LikeButton;
+import com.like.OnLikeListener;
 
 import a1.t1mo.mobjav.a816.myapplication.R;
 import a1.t1mo.mobjav.a816.myapplication.data.services.TmdbService;
 import a1.t1mo.mobjav.a816.myapplication.model.pelicula.Pelicula;
+import a1.t1mo.mobjav.a816.myapplication.view.MainActivity;
 
 public class DetallePelicula extends DetalleFeature {
-
     private Pelicula pelicula;
+    private DetalleFeature.Likeable activity;
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        this.activity = (Likeable) activity;
+    }
 
     public DetallePelicula() {
         // Required empty public constructor
@@ -33,7 +45,18 @@ public class DetallePelicula extends DetalleFeature {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_detalle, container, false);
 
-//        Bundle bundle = getArguments();
+        LikeButton likeButton = (LikeButton) view.findViewById(R.id.fav_button);
+        likeButton.setOnLikeListener(new OnLikeListener() {
+            @Override
+            public void liked(LikeButton likeButton) {
+                activity.onLike();
+            }
+
+            @Override
+            public void unLiked(LikeButton likeButton) {
+                activity.onUnlike();
+            }
+        });
 
         TextView textViewNombre = (TextView) view.findViewById(R.id.fragment_detalle_titulo);
         textViewNombre.setText(pelicula.getTitulo());
