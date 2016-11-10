@@ -49,12 +49,12 @@ public class DetallePelicula extends DetalleFeature {
         likeButton.setOnLikeListener(new OnLikeListener() {
             @Override
             public void liked(LikeButton likeButton) {
-                activity.onLike();
+                activity.onLike(pelicula.getId());
             }
 
             @Override
             public void unLiked(LikeButton likeButton) {
-                activity.onUnlike();
+                activity.onUnlike(pelicula.getId());
             }
         });
 

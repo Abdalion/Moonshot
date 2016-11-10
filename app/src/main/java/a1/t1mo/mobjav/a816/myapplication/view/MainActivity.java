@@ -11,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import a1.t1mo.mobjav.a816.myapplication.R;
+import a1.t1mo.mobjav.a816.myapplication.controller.PeliculaController;
 import a1.t1mo.mobjav.a816.myapplication.data.PeliculaDAO;
 import a1.t1mo.mobjav.a816.myapplication.data.SerieDAO;
 import a1.t1mo.mobjav.a816.myapplication.model.Feature;
@@ -31,7 +32,7 @@ import a1.t1mo.mobjav.a816.myapplication.view.feature.FeatureFragment;
  */
 
 public class MainActivity extends AppCompatActivity
-        implements FeatureFragment.Escuchable, CambioDePagina, DetalleFeature.LikedButton{
+        implements FeatureFragment.Escuchable, CambioDePagina, DetalleFeature.Likeable{
     private FragmentManager fragmentManager;
     private NavigationView navigationView;
     private ViewPagerFragment viewPagerFragment;
@@ -117,13 +118,11 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    @Override
-    public void onLike() {
-
+    public void onLike(Integer featureID) {
+        
     }
 
-    @Override
-    public void onUnlike() {
+    public void onUnlike(Integer featureID) {
 
     }
 

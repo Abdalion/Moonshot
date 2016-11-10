@@ -13,8 +13,8 @@ import android.support.v4.app.Fragment;
 public abstract class DetalleFeature extends Fragment {
 
     public interface Likeable {
-        public void onLike();
-        public void onUnlike();
+        public void onLike(Integer featureID);
+        public void onUnlike(Integer featureID);
     }
 
 }
