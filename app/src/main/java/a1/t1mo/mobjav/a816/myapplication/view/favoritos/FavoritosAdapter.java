@@ -18,34 +18,33 @@ import a1.t1mo.mobjav.a816.myapplication.controller.PeliculaController;
 import a1.t1mo.mobjav.a816.myapplication.controller.SerieController;
 import a1.t1mo.mobjav.a816.myapplication.data.services.TmdbService;
 import a1.t1mo.mobjav.a816.myapplication.model.Feature;
+import a1.t1mo.mobjav.a816.myapplication.model.serie.Serie;
 import a1.t1mo.mobjav.a816.myapplication.utils.Listener;
+import a1.t1mo.mobjav.a816.myapplication.view.detalle.DetalleViewPager;
+import a1.t1mo.mobjav.a816.myapplication.view.feature.FeatureFragment;
+
+import static a1.t1mo.mobjav.a816.myapplication.view.detalle.DetalleViewPager.FAVORITOS_FLAG;
 
 
-public class FavoritosAdapter extends RecyclerView.Adapter<FavoritosAdapter.FavoritosHolder>
-        implements Listener<List<Feature>> {
+public class FavoritosAdapter extends RecyclerView.Adapter<FavoritosAdapter.FavoritosHolder> {
 
-    private List<Feature> mFeaturesList;
+    private List<? extends Feature> mFeaturesList;
     private PeliculaController mPeliculaController;
     private SerieController mSerieController;
-    private FavoritosFragment.Escuchable mListener;
+    private FeatureFragment.ListenerFeature mListener;
     private final static int FADE_DURATION = 300;
 
     public FavoritosAdapter(Context context, Integer genero) {
         if (genero == 0) {
             mPeliculaController = new PeliculaController(context);
-            mPeliculaController.getFavoritos();
+            mFeaturesList = mPeliculaController.getFavoritos();
         } else {
             mSerieController = new SerieController(context);
-            mSerieController.getFavoritos();
+            mFeaturesList = mSerieController.getFavoritos();
         }
     }
 
-    @Override
-    public void done(List<Feature> features) {
-        mFeaturesList = features;
-    }
-
-    public void setListener(FavoritosFragment.Escuchable listener) {
+    public void setListener(FeatureFragment.ListenerFeature listener) {
         this.mListener = listener;
     }
 
@@ -97,7 +96,8 @@ public class FavoritosAdapter extends RecyclerView.Adapter<FavoritosAdapter.Favo
 
         @Override
         public void onClick(View v) {
-            mListener.onClickItem(mFeature);
+            DetalleViewPager.Tipo tipo = mFeature instanceof Serie ? DetalleViewPager.Tipo.SERIE : DetalleViewPager.Tipo.PELICULA;
+            mListener.onClickFeature(getAdapterPosition(), FAVORITOS_FLAG, tipo);
         }
     }
 

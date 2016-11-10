@@ -129,6 +129,10 @@ public class PeliculaDAO {
                     .findAllSorted("popularidad", Sort.DESCENDING);
     }
 
+    public List<Pelicula> getFavoritos() {
+        return sRealm.where(Pelicula.class).equalTo("favorito", true).findAll();
+    }
+
     private void persistirEnRealm(final Pelicula pelicula) {
         pelicula.setFavorito(false);
         sRealm.executeTransaction(new Realm.Transaction() {
@@ -180,9 +184,5 @@ public class PeliculaDAO {
                 if (pelicula != null) pelicula.setFavorito(false);
             }
         });
-    }
-
-    public List<Pelicula> getFavoritos() {
-        return sRealm.where(Pelicula.class).equalTo("favorito", true).findAll();
     }
 }

@@ -4,6 +4,11 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
+import java.util.List;
+
+import a1.t1mo.mobjav.a816.myapplication.model.Feature;
+import a1.t1mo.mobjav.a816.myapplication.utils.Listener;
+
 
 /**
  * MoonShot App
@@ -20,4 +25,5 @@ public abstract class Controller {
         NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
         return activeNetwork != null && activeNetwork.isConnectedOrConnecting();
     }
+
 }

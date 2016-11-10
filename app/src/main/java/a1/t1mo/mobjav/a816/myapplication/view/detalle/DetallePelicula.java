@@ -1,14 +1,12 @@
 package a1.t1mo.mobjav.a816.myapplication.view.detalle;
 
 import android.app.Activity;
-import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.like.LikeButton;
@@ -17,25 +15,19 @@ import com.like.OnLikeListener;
 import a1.t1mo.mobjav.a816.myapplication.R;
 import a1.t1mo.mobjav.a816.myapplication.data.services.TmdbService;
 import a1.t1mo.mobjav.a816.myapplication.model.pelicula.Pelicula;
-import a1.t1mo.mobjav.a816.myapplication.view.MainActivity;
 
 public class DetallePelicula extends DetalleFeature {
-    private Pelicula pelicula;
-    private DetalleFeature.Likeable activity;
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        this.activity = (Likeable) activity;
-    }
+    private Pelicula mPelicula;
+    private DetalleFeature.Likeable mCallback;
 
     public DetallePelicula() {
         // Required empty public constructor
     }
 
-    public static DetallePelicula getDetalleFragment(Pelicula unaPelicula) {
+    public static DetallePelicula getDetallePelicula(Pelicula pelicula, DetalleFeature.Likeable cb) {
         DetallePelicula detallePelicula = new DetallePelicula();
-        detallePelicula.pelicula = unaPelicula;
+        detallePelicula.mPelicula = pelicula;
+        detallePelicula.mCallback = cb;
         return detallePelicula;
     }
 
@@ -45,54 +37,49 @@ public class DetallePelicula extends DetalleFeature {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_detalle, container, false);
         LikeButton likeButton = (LikeButton) view.findViewById(R.id.fav_button);
-        if(isFavorito()) {
+        if(mPelicula.isFavorito()) {
             likeButton.setLiked(true);
         }
         likeButton.setOnLikeListener(new OnLikeListener() {
             @Override
             public void liked(LikeButton likeButton) {
-                activity.onLike(pelicula.getId());
+                mCallback.onLike(mPelicula.getId());
             }
 
             @Override
             public void unLiked(LikeButton likeButton) {
-                activity.onUnlike(pelicula.getId());
+                mCallback.onUnlike(mPelicula.getId());
             }
         });
 
         TextView textViewNombre = (TextView) view.findViewById(R.id.fragment_detalle_titulo);
-        textViewNombre.setText(pelicula.getTitulo());
+        textViewNombre.setText(mPelicula.getTitulo());
 
         TextView textView = (TextView) view.findViewById(R.id.fragment_detalle_fechaDeEstreno);
-        textView.setText(pelicula.getFechaDeEstreno());
+        textView.setText(mPelicula.getFechaDeEstreno());
 //
 //        TextView textViewDuracion =  (TextView) view.findViewById(R.id.fragment_detalle_duracion);
-//        textViewDuracion.setText(Integer.toString(pelicula.getDuracion()));
+//        textViewDuracion.setText(Integer.toString(mPelicula.getDuracion()));
 
 //        TextView textViewGenre =  (TextView) view.findViewById(R.id.fragment_detalle_genero);
-//        textViewGenre.setText(pelicula.getGeneros());
+//        textViewGenre.setText(mPelicula.getGeneros());
 
         ImageView imageViewImagenId = (ImageView) view.findViewById(R.id.fragment_detalle_imagenId);
         Glide
             .with(getContext())
-            .load(TmdbService.IMAGE_URL_W300 + pelicula.getBackdropPath())
+            .load(TmdbService.IMAGE_URL_W300 + mPelicula.getBackdropPath())
             .fitCenter()
             .into(imageViewImagenId);
 
         TextView textViewLenguaje = (TextView) view.findViewById(R.id.fragment_detalle_lenguaje);
-        textViewLenguaje.setText(pelicula.getLenguaje());
+        textViewLenguaje.setText(mPelicula.getLenguaje());
 
         TextView textViewTrama =  (TextView) view.findViewById(R.id.fragment_detalle_trama);
-        textViewTrama.setText(pelicula.getResumen());
+        textViewTrama.setText(mPelicula.getResumen());
 
 //        TextView textViewHomePage =  (TextView) view.findViewById(R.id.fragment_detalle_homepage);
-//        textViewHomePage.setText(pelicula.getImdbId());
+//        textViewHomePage.setText(mPelicula.getImdbId());
 
         return view;
     }
-
-    private Boolean isFavorito() {
-        return pelicula.isFavorito();
-    }
-
 }

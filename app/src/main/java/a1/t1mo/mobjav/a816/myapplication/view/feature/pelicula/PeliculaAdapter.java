@@ -5,7 +5,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.ScaleAnimation;
 import android.widget.ImageView;
@@ -17,12 +16,12 @@ import java.util.List;
 import a1.t1mo.mobjav.a816.myapplication.R;
 import a1.t1mo.mobjav.a816.myapplication.controller.PeliculaController;
 import a1.t1mo.mobjav.a816.myapplication.data.services.TmdbService;
-import a1.t1mo.mobjav.a816.myapplication.model.Feature;
 import a1.t1mo.mobjav.a816.myapplication.model.Genre;
-import a1.t1mo.mobjav.a816.myapplication.model.pelicula.GeneroPelicula;
 import a1.t1mo.mobjav.a816.myapplication.model.pelicula.Pelicula;
 import a1.t1mo.mobjav.a816.myapplication.utils.Listener;
 import a1.t1mo.mobjav.a816.myapplication.view.detalle.DetalleFeature;
+import a1.t1mo.mobjav.a816.myapplication.view.detalle.DetalleViewPager;
+import a1.t1mo.mobjav.a816.myapplication.view.feature.FeatureFragment;
 
 /**
  * MoonShot App
@@ -33,15 +32,17 @@ import a1.t1mo.mobjav.a816.myapplication.view.detalle.DetalleFeature;
  */
 
 public class PeliculaAdapter extends RecyclerView.Adapter<PeliculaAdapter.PeliculaHolder>
-        implements Listener<List<Pelicula>>, DetalleFeature.Likeable{
+        implements Listener<List<Pelicula>> {
 
     private List<Pelicula> mPeliculas;
     private PeliculaController mPeliculaController;
-    private PeliculaFragment.Escuchable mListener;
+    private FeatureFragment.ListenerFeature mListener;
+    private Integer mGenero;
     private final static int FADE_DURATION = 300;
 
     public PeliculaAdapter(Context context, Integer genero) {
         mPeliculaController = new PeliculaController(context);
+        mGenero = genero;
         if (genero == Genre.PELICULA_ID.get(R.id.menu_peliculas_opcion_todas)) {
             mPeliculaController.getPeliculasPopulares(this);
         } else {
@@ -49,7 +50,7 @@ public class PeliculaAdapter extends RecyclerView.Adapter<PeliculaAdapter.Pelicu
         }
     }
 
-    public void setListener(PeliculaFragment.Escuchable listener) {
+    public void setListener(FeatureFragment.ListenerFeature listener) {
         this.mListener = listener;
     }
 
@@ -86,17 +87,6 @@ public class PeliculaAdapter extends RecyclerView.Adapter<PeliculaAdapter.Pelicu
         notifyDataSetChanged();
     }
 
-    @Override
-    public void onLike(Integer featureID) {
-        mPeliculaController.agregarAFavoritos(featureID);
-    }
-
-    @Override
-    public void onUnlike(Integer featureID) {
-        mPeliculaController.quitarDeFavoritos(featureID);
-    }
-
-
     public class PeliculaHolder extends RecyclerView.ViewHolder
             implements View.OnClickListener {
 
@@ -118,7 +108,7 @@ public class PeliculaAdapter extends RecyclerView.Adapter<PeliculaAdapter.Pelicu
 
         @Override
         public void onClick(View v) {
-            mListener.onClickItem(getAdapterPosition(), mPeliculas);
+            mListener.onClickFeature(getAdapterPosition(), mGenero, DetalleViewPager.Tipo.PELICULA);
         }
     }
 }

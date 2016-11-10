@@ -8,6 +8,7 @@ import android.view.View;
 import java.util.List;
 
 import a1.t1mo.mobjav.a816.myapplication.model.Feature;
+import a1.t1mo.mobjav.a816.myapplication.view.detalle.DetalleViewPager;
 
 /**
  * MoonShot App
@@ -17,14 +18,10 @@ import a1.t1mo.mobjav.a816.myapplication.model.Feature;
  * Archivo creado por Juan Pablo on 04/11/2016.
  */
 
-public abstract class FeatureFragment extends Fragment{
+public abstract class FeatureFragment extends Fragment {
     public static final String ARGUMENT_GENERO = "Genero";
 
     public abstract CharSequence getTitulo();
-
-    public interface Escuchable {
-        void onClickItem(int position, List<? extends Feature> features);
-    }
 
     public class SpacesItemDecoration extends RecyclerView.ItemDecoration {
         private int space;
@@ -47,5 +44,9 @@ public abstract class FeatureFragment extends Fragment{
                 outRect.top = 0;
             }
         }
+    }
+
+    public interface ListenerFeature {
+        void onClickFeature(Integer posicion, Integer genero, DetalleViewPager.Tipo tipo);
     }
 }

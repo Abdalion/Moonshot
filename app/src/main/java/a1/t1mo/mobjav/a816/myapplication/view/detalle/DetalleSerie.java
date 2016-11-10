@@ -1,5 +1,6 @@
 package a1.t1mo.mobjav.a816.myapplication.view.detalle;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +9,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.like.LikeButton;
+import com.like.OnLikeListener;
 
 import a1.t1mo.mobjav.a816.myapplication.R;
 import a1.t1mo.mobjav.a816.myapplication.data.services.TmdbService;
@@ -15,14 +18,16 @@ import a1.t1mo.mobjav.a816.myapplication.model.serie.Serie;
 
 public class DetalleSerie extends DetalleFeature {
     private Serie mSerie;
+    private DetalleFeature.Likeable mCallback;
 
     public DetalleSerie() {
         // Required empty public constructor
     }
 
-    public static DetalleSerie getDetalleSerie(Serie serie) {
+    public static DetalleSerie getDetalleSerie(Serie serie, DetalleFeature.Likeable cb) {
         DetalleSerie detalleSerie = new DetalleSerie();
         detalleSerie.mSerie = serie;
+        detalleSerie.mCallback = cb;
         return detalleSerie;
     }
 
@@ -31,6 +36,22 @@ public class DetalleSerie extends DetalleFeature {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_detalle, container, false);
+
+        LikeButton likeButton = (LikeButton) view.findViewById(R.id.fav_button);
+        if(mSerie.isFavorito()) {
+            likeButton.setLiked(true);
+        }
+        likeButton.setOnLikeListener(new OnLikeListener() {
+            @Override
+            public void liked(LikeButton likeButton) {
+                mCallback.onLike(mSerie.getId());
+            }
+
+            @Override
+            public void unLiked(LikeButton likeButton) {
+                mCallback.onUnlike(mSerie.getId());
+            }
+        });
 
         TextView textViewNombre = (TextView) view.findViewById(R.id.fragment_detalle_titulo);
         textViewNombre.setText(mSerie.getNombre());

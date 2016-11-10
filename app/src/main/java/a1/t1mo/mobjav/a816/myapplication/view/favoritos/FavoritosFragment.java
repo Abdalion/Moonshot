@@ -2,6 +2,7 @@ package a1.t1mo.mobjav.a816.myapplication.view.favoritos;
 
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
@@ -14,15 +15,20 @@ import android.widget.Toast;
 import a1.t1mo.mobjav.a816.myapplication.R;
 import a1.t1mo.mobjav.a816.myapplication.view.feature.FeatureFragment;
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class FavoritosFragment extends FeatureFragment {
     RecyclerView recyclerView;
-    Escuchable escuchable;
+    ListenerFeature mListenerFavoritos;
 
     public FavoritosFragment() {
         // Required empty public constructor
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof Activity){
+            mListenerFavoritos = (ListenerFeature) context;
+        }
     }
 
     @Override
@@ -34,7 +40,7 @@ public class FavoritosFragment extends FeatureFragment {
         recyclerView = (RecyclerView) view.findViewById(R.id.rv_grilla);
         recyclerView.addItemDecoration(new SpacesItemDecoration(4));
         recyclerView.setHasFixedSize(true);
-        favoritosAdapter.setListener(escuchable);
+        favoritosAdapter.setListener(mListenerFavoritos);
         recyclerView.setAdapter(favoritosAdapter);
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
         return view;
@@ -51,11 +57,5 @@ public class FavoritosFragment extends FeatureFragment {
     @Override
     public CharSequence getTitulo() {
         return "Favoritos";
-    }
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        escuchable = (Escuchable) activity;
     }
 }

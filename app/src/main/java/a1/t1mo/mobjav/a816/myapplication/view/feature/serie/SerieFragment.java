@@ -1,6 +1,7 @@
 package a1.t1mo.mobjav.a816.myapplication.view.feature.serie;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -9,11 +10,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import a1.t1mo.mobjav.a816.myapplication.R;
-import a1.t1mo.mobjav.a816.myapplication.model.serie.Serie;
 import a1.t1mo.mobjav.a816.myapplication.view.feature.FeatureFragment;
 
 public class SerieFragment extends FeatureFragment {
-    private Escuchable escuchable;
+    private ListenerFeature mListenerSerie;
     private RecyclerView recyclerView;
 
     public static SerieFragment obtenerFragment(Integer genero) {
@@ -25,9 +25,11 @@ public class SerieFragment extends FeatureFragment {
     }
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        escuchable = (Escuchable) activity;
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof Activity){
+            mListenerSerie = (ListenerFeature) context;
+        }
     }
 
     @Override
@@ -40,7 +42,7 @@ public class SerieFragment extends FeatureFragment {
         recyclerView = (RecyclerView) view.findViewById(R.id.rv_grilla);
         recyclerView.addItemDecoration(new SpacesItemDecoration(4));
         recyclerView.setHasFixedSize(true);
-        serieAdapter.setListener(escuchable);
+        serieAdapter.setListener(mListenerSerie);
         recyclerView.setAdapter(serieAdapter);
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
         return view;

@@ -1,6 +1,7 @@
 package a1.t1mo.mobjav.a816.myapplication.view.feature.pelicula;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -8,12 +9,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.List;
+
 import a1.t1mo.mobjav.a816.myapplication.R;
+import a1.t1mo.mobjav.a816.myapplication.model.Feature;
 import a1.t1mo.mobjav.a816.myapplication.view.feature.FeatureFragment;
 
 public class PeliculaFragment extends FeatureFragment {
-    private Escuchable escuchable;
     private RecyclerView recyclerView;
+    private ListenerFeature mListenerPelicula;
 
     public static PeliculaFragment obtenerFragment(Integer genero) {
         Bundle bundle = new Bundle();
@@ -24,9 +28,12 @@ public class PeliculaFragment extends FeatureFragment {
     }
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        escuchable = (Escuchable) activity;
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        if (context instanceof Activity){
+            mListenerPelicula = (ListenerFeature) context;
+        }
     }
 
     @Override
@@ -39,7 +46,7 @@ public class PeliculaFragment extends FeatureFragment {
         recyclerView = (RecyclerView) view.findViewById(R.id.rv_grilla);
         recyclerView.addItemDecoration(new SpacesItemDecoration(4));
         recyclerView.setHasFixedSize(true);
-        peliculaAdapter.setListener(escuchable);
+        peliculaAdapter.setListener(mListenerPelicula);
         recyclerView.setAdapter(peliculaAdapter);
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
         return view;
@@ -47,6 +54,10 @@ public class PeliculaFragment extends FeatureFragment {
 
     public CharSequence getTitulo(){
         return "Peliculas";
+    }
+
+    public interface ListenerPelicula {
+        void onClickPelicula(Integer posicion, Integer genero);
     }
 }
 

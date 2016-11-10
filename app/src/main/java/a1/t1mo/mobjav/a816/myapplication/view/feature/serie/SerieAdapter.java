@@ -17,10 +17,10 @@ import a1.t1mo.mobjav.a816.myapplication.R;
 import a1.t1mo.mobjav.a816.myapplication.controller.SerieController;
 import a1.t1mo.mobjav.a816.myapplication.data.services.TmdbService;
 import a1.t1mo.mobjav.a816.myapplication.model.Genre;
-import a1.t1mo.mobjav.a816.myapplication.model.serie.GeneroSerie;
 import a1.t1mo.mobjav.a816.myapplication.model.serie.Serie;
 import a1.t1mo.mobjav.a816.myapplication.utils.Listener;
-import a1.t1mo.mobjav.a816.myapplication.view.detalle.DetalleFeature;
+import a1.t1mo.mobjav.a816.myapplication.view.detalle.DetalleViewPager;
+import a1.t1mo.mobjav.a816.myapplication.view.feature.FeatureFragment;
 
 /**
  * MoonShot App
@@ -31,14 +31,16 @@ import a1.t1mo.mobjav.a816.myapplication.view.detalle.DetalleFeature;
  */
 
 public class SerieAdapter extends RecyclerView.Adapter<SerieAdapter.SerieHolder>
-        implements Listener<List<Serie>>, DetalleFeature.Likeable {
+        implements Listener<List<Serie>> {
 
     private List<Serie> mSeries;
     private SerieController mSerieController;
-    private SerieFragment.Escuchable mListener;
+    private FeatureFragment.ListenerFeature mListener;
+    private Integer mGenero;
     private final static int FADE_DURATION = 300;
 
     public SerieAdapter(Context context, Integer genero) {
+        mGenero = genero;
         mSerieController = new SerieController(context);
         if (genero == Genre.SERIE_ID.get(R.id.menu_series_opcion_todas)) {
             mSerieController.getSeriesPopulares(this);
@@ -47,7 +49,7 @@ public class SerieAdapter extends RecyclerView.Adapter<SerieAdapter.SerieHolder>
         }
     }
 
-    public void setListener(SerieFragment.Escuchable listener) {
+    public void setListener(FeatureFragment.ListenerFeature listener) {
         this.mListener = listener;
     }
 
@@ -83,17 +85,6 @@ public class SerieAdapter extends RecyclerView.Adapter<SerieAdapter.SerieHolder>
         notifyDataSetChanged();
     }
 
-    @Override
-    public void onLike(Integer featureID) {
-        mSerieController.agregarAFavoritos(featureID);
-    }
-
-    @Override
-    public void onUnlike(Integer featureID) {
-        mSerieController.quitarDeFavoritos(featureID);
-    }
-
-
     public class SerieHolder extends RecyclerView.ViewHolder
             implements View.OnClickListener {
 
@@ -115,11 +106,9 @@ public class SerieAdapter extends RecyclerView.Adapter<SerieAdapter.SerieHolder>
                 .into(mImagen);
         }
 
-
-
         @Override
         public void onClick(View v) {
-            mListener.onClickItem(mSerie);
+            mListener.onClickFeature(getAdapterPosition(), mGenero, DetalleViewPager.Tipo.SERIE);
         }
     }
 }
