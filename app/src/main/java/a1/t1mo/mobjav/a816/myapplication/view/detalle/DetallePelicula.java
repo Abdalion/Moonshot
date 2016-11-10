@@ -44,8 +44,10 @@ public class DetallePelicula extends DetalleFeature {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_detalle, container, false);
-
         LikeButton likeButton = (LikeButton) view.findViewById(R.id.fav_button);
+        if(isFavorito()) {
+            likeButton.setLiked(true);
+        }
         likeButton.setOnLikeListener(new OnLikeListener() {
             @Override
             public void liked(LikeButton likeButton) {
@@ -87,6 +89,10 @@ public class DetallePelicula extends DetalleFeature {
 //        textViewHomePage.setText(pelicula.getImdbId());
 
         return view;
+    }
+
+    private Boolean isFavorito() {
+        return pelicula.isFavorito();
     }
 
 }

@@ -119,7 +119,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void onLike(Integer featureID) {
-        
+
     }
 
     public void onUnlike(Integer featureID) {
