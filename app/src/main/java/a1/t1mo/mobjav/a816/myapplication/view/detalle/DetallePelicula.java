@@ -1,11 +1,14 @@
 package a1.t1mo.mobjav.a816.myapplication.view.detalle;
 
+import android.icu.text.UnicodeSetSpanner;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.like.LikeButton;
@@ -56,6 +59,11 @@ public class DetallePelicula extends DetalleFeature {
 
         TextView textView = (TextView) view.findViewById(R.id.fragment_detalle_fechaDeEstreno);
         textView.setText(mPelicula.getFechaDeEstreno());
+
+        RatingBar ratingBar = (RatingBar) view.findViewById(R.id.fragment_detalle_ratingBar);
+        ratingBar.setRating(mPelicula.getPuntajePromedio().floatValue());
+
+        Toast.makeText(getContext(), mPelicula.getPuntajePromedio()+"", Toast.LENGTH_SHORT).show();
 //
 //        TextView textViewDuracion =  (TextView) view.findViewById(R.id.fragment_detalle_duracion);
 //        textViewDuracion.setText(Integer.toString(mPelicula.getDuracion()));
