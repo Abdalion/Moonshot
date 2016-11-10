@@ -20,10 +20,8 @@ import a1.t1mo.mobjav.a816.myapplication.view.ViewPagerFragment;
  * Archivo creado por Juan Pablo on 09/11/2016.
  */
 
-public class DetalleViewPager extends Fragment implements MainActivity.CallBackCambioDeTipo{
+public class DetalleViewPager extends Fragment {
     private DetalleAdapter mAdapter;
-
-    public enum Tipo {PELICULAS, SERIES}
 
     public DetalleViewPager() {
         // Required empty public constructor
@@ -37,26 +35,6 @@ public class DetalleViewPager extends Fragment implements MainActivity.CallBackC
         mAdapter = new DetalleAdapter(fragmentManager);
         ViewPager viewPager = (ViewPager) view.findViewById(R.id.viewPager);
         viewPager.setAdapter(mAdapter);
-
-        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                paginaActual = (paginaActual == ViewPagerFragment.PaginaActual.PELICULAS) ? ViewPagerFragment.PaginaActual.SERIES : ViewPagerFragment.PaginaActual.PELICULAS;
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-            }
-        });
         return view;
-    }
-
-    @Override
-    public void cambioDeTipo(Tipo tipo) {
-        mAdapter.cambiarTipo(tipo);
     }
 }

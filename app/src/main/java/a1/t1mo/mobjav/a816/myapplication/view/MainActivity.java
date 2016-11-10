@@ -14,7 +14,12 @@ import a1.t1mo.mobjav.a816.myapplication.R;
 import a1.t1mo.mobjav.a816.myapplication.data.PeliculaDAO;
 import a1.t1mo.mobjav.a816.myapplication.data.SerieDAO;
 import a1.t1mo.mobjav.a816.myapplication.model.Feature;
+import a1.t1mo.mobjav.a816.myapplication.model.pelicula.Pelicula;
+import a1.t1mo.mobjav.a816.myapplication.model.serie.Serie;
 import a1.t1mo.mobjav.a816.myapplication.utils.CambioDePagina;
+import a1.t1mo.mobjav.a816.myapplication.view.detalle.DetalleFeature;
+import a1.t1mo.mobjav.a816.myapplication.view.detalle.DetallePelicula;
+import a1.t1mo.mobjav.a816.myapplication.view.detalle.DetalleSerie;
 import a1.t1mo.mobjav.a816.myapplication.view.detalle.DetalleViewPager;
 import a1.t1mo.mobjav.a816.myapplication.view.feature.FeatureFragment;
 
@@ -88,7 +93,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onClickItem(Feature feature) {
-/*        DetalleFeature detalle;
+        DetalleFeature detalle;
         if (feature instanceof Pelicula) {
             detalle = DetallePelicula.getDetalleFragment((Pelicula) feature);
         } else {
@@ -98,7 +103,7 @@ public class MainActivity extends AppCompatActivity
                 .beginTransaction()
                 .replace(R.id.main_contenedorDeFragment, detalle)
                 .addToBackStack("back")
-                .commit();*/
+                .commit();
     }
 
     @Override
@@ -115,11 +120,6 @@ public class MainActivity extends AppCompatActivity
     public interface CallBackCambioGenero {
         void callBackCambioGenero(int id);
     }
-
-    public interface CallBackCambioDeTipo {
-        void cambioDeTipo(DetalleViewPager.Tipo tipo);
-    }
-
 
     @Override
     protected void onDestroy() {

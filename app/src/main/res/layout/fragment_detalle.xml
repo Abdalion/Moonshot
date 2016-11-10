@@ -1,12 +1,12 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context="a1.t1mo.mobjav.a816.myapplication.view.detalle.DetallePelicula"
-        android:background="@color/colorPalabras2"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp"
-        >
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="a1.t1mo.mobjav.a816.myapplication.view.detalle.DetallePelicula"
+    android:background="@color/colorPalabras2"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp">
 
         <TextView
             android:layout_width="wrap_content"
@@ -22,9 +22,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/fragment_detalle_imagenId"
-            android:layout_below="@id/fragment_detalle_titulo"
-            />
-
+            android:layout_below="@id/fragment_detalle_titulo"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -35,15 +33,36 @@
             android:text="Short, Action"
             android:textSize="13dp"
             android:textStyle="bold"
-            android:textColor="@color/colorPalabras3"
-            />
+            android:textColor="@color/colorPalabras3"/>
 
-        <TextView
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/fragment_detalle_genero"
+        android:id="@+id/fragment_detalle_pais"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:text="USA"
+        android:textSize="13dp"
+        android:textColor="@color/colorPalabras3"
+        android:textStyle="bold"
+        />
+    <com.like.LikeButton
+            app:icon_type="heart"
+            app:icon_size="30sp"
+            android:id="@+id/fav_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_margin="5sp"
+            android:layout_alignBaseline="@id/fragment_detalle_genero" />
+
+    <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/fragment_detalle_duracion"
-            android:layout_below="@+id/fragment_detalle_genero"
-            android:layout_toRightOf="@+id/fragment_detalle_pais"
+            android:layout_below="@id/fragment_detalle_genero"
+            android:layout_toRightOf="@id/fragment_detalle_pais"
             android:text="167 min"
             android:textSize="13dp"
             android:layout_marginTop="5dp"
@@ -53,7 +72,7 @@
             android:textStyle="bold"
             />
 
-        <TextView
+    <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/fragment_detalle_genero"
@@ -68,25 +87,12 @@
             android:textStyle="bold"
             />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/fragment_detalle_genero"
-
-            android:id="@+id/fragment_detalle_pais"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            android:text="USA"
-            android:textSize="13dp"
-            android:textColor="@color/colorPalabras3"
-            android:textStyle="bold"
-            />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Fecha de estreno:"
-            android:layout_below="@+id/fragment_detalle_lenguaje"
+            android:layout_below="@id/fragment_detalle_lenguaje"
 
             android:textSize="13dp"
             android:layout_marginTop="8dp"
@@ -98,7 +104,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/fechaDeEstrenoText"
+            android:layout_below="@id/fechaDeEstrenoText"
 
             android:id="@+id/fragment_detalle_fechaDeEstreno"
             android:layout_marginLeft="5dp"
@@ -113,7 +119,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Resumen:"
-            android:layout_below="@+id/fragment_detalle_fechaDeEstreno"
+            android:layout_below="@id/fragment_detalle_fechaDeEstreno"
 
             android:textSize="13dp"
             android:layout_marginTop="7dp"
@@ -125,7 +131,7 @@
         <ScrollView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/protagonizadaPorText"
+            android:layout_below="@id/protagonizadaPorText"
            >
         <TextView
             android:layout_width="wrap_content"
@@ -133,8 +139,7 @@
             android:textSize="15dp"
             android:id="@+id/fragment_detalle_trama"
             android:textColor="@color/colorPalabras3"
-
-            android:text="grogormogromgormogmroffffffffffffffffffffffffff"
+            android:text="Una descripcion cualquiera"
 
             />
         </ScrollView>
