@@ -15,8 +15,7 @@
     <style name="RatingBar" parent="Theme.AppCompat">
         <item name="colorControlNormal">#ffffff</item>
         <item name="colorControlActivated">#ffffff</item>
-        <item name="android:stepSize">0.10</item>
-
+        <item name="android:colorActivatedHighlight">#ffffff</item>
 
     </style>
 

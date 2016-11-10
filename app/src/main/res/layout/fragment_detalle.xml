@@ -25,11 +25,9 @@
             android:id="@+id/fragment_detalle_ratingBar"
             android:isIndicator="true"
             android:theme="@style/RatingBar"
-             android:numStars="6"
-             android:scaleX="0.5"
-             android:scaleY="0.5"
-             android:transformPivotX="0dp"
-             android:transformPivotY="0dp"
+            style="?android:ratingBarStyleSmall"
+             android:numStars="10"
+
              />
 
 

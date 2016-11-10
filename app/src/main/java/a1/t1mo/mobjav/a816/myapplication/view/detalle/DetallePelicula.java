@@ -61,7 +61,9 @@ public class DetallePelicula extends DetalleFeature {
         textView.setText(mPelicula.getFechaDeEstreno());
 
         RatingBar ratingBar = (RatingBar) view.findViewById(R.id.fragment_detalle_ratingBar);
+        
         ratingBar.setRating(mPelicula.getPuntajePromedio().floatValue());
+
 
         Toast.makeText(getContext(), mPelicula.getPuntajePromedio()+"", Toast.LENGTH_SHORT).show();
 //
