@@ -83,8 +83,11 @@ public class MainActivity extends AppCompatActivity
         if(pagina == ViewPagerFragment.PaginaActual.PELICULAS) {
             navigationView.inflateMenu(R.menu.menu_navigation_peliculas);
         }
-        else {
+        else if(pagina == ViewPagerFragment.PaginaActual.FAVORITOS){
             navigationView.inflateMenu(R.menu.menu_navigation_series);
+        }
+        else {
+            navigationView.inflateMenu(R.menu.menu_navigation_favoritos);
         }
     }
 
