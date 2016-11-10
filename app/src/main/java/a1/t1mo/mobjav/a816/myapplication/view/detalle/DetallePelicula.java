@@ -2,6 +2,7 @@ package a1.t1mo.mobjav.a816.myapplication.view.detalle;
 
 import android.icu.text.UnicodeSetSpanner;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,11 +47,16 @@ public class DetallePelicula extends DetalleFeature {
             @Override
             public void liked(LikeButton likeButton) {
                 mCallback.onLike(mPelicula.getId());
+                Snackbar.make(getView(), "Agregado A Favoritos", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
             }
 
             @Override
             public void unLiked(LikeButton likeButton) {
                 mCallback.onUnlike(mPelicula.getId());
+                Snackbar.make(getView(), "Eliminado De Favoritos", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+
             }
         });
 
@@ -61,15 +67,16 @@ public class DetallePelicula extends DetalleFeature {
         textView.setText(mPelicula.getFechaDeEstreno());
 
         RatingBar ratingBar = (RatingBar) view.findViewById(R.id.fragment_detalle_ratingBar);
-        
         ratingBar.setRating(mPelicula.getPuntajePromedio().floatValue());
 
 
-        Toast.makeText(getContext(), mPelicula.getPuntajePromedio()+"", Toast.LENGTH_SHORT).show();
-//
-//        TextView textViewDuracion =  (TextView) view.findViewById(R.id.fragment_detalle_duracion);
-//        textViewDuracion.setText(Integer.toString(mPelicula.getDuracion()));
-
+        TextView textViewDuracion =  (TextView) view.findViewById(R.id.fragment_detalle_duracion);
+        if (mPelicula.getDuracion() == null){
+            textViewDuracion.setText("N/A");
+        }
+        else {
+            textViewDuracion.setText(Integer.toString(mPelicula.getDuracion()));
+        }
 //        TextView textViewGenre =  (TextView) view.findViewById(R.id.fragment_detalle_genero);
 //        textViewGenre.setText(mPelicula.getGeneros());
 
