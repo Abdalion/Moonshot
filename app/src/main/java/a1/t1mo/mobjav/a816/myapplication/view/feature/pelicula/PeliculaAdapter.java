@@ -22,6 +22,7 @@ import a1.t1mo.mobjav.a816.myapplication.model.Genre;
 import a1.t1mo.mobjav.a816.myapplication.model.pelicula.GeneroPelicula;
 import a1.t1mo.mobjav.a816.myapplication.model.pelicula.Pelicula;
 import a1.t1mo.mobjav.a816.myapplication.utils.Listener;
+import a1.t1mo.mobjav.a816.myapplication.view.detalle.DetalleFeature;
 
 /**
  * MoonShot App
@@ -32,7 +33,7 @@ import a1.t1mo.mobjav.a816.myapplication.utils.Listener;
  */
 
 public class PeliculaAdapter extends RecyclerView.Adapter<PeliculaAdapter.PeliculaHolder>
-        implements Listener<List<Pelicula>>{
+        implements Listener<List<Pelicula>>, DetalleFeature.Likeable{
 
     private List<Pelicula> mPeliculas;
     private PeliculaController mPeliculaController;
@@ -83,6 +84,16 @@ public class PeliculaAdapter extends RecyclerView.Adapter<PeliculaAdapter.Pelicu
     public void done(List<Pelicula> peliculas) {
         mPeliculas = peliculas;
         notifyDataSetChanged();
+    }
+
+    @Override
+    public void onLike(Integer featureID) {
+        mPeliculaController.agregarAFavoritos(featureID);
+    }
+
+    @Override
+    public void onUnlike(Integer featureID) {
+        mPeliculaController.quitarDeFavoritos(featureID);
     }
 
 

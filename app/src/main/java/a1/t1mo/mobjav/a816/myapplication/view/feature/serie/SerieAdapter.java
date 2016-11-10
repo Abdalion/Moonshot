@@ -20,6 +20,7 @@ import a1.t1mo.mobjav.a816.myapplication.model.Genre;
 import a1.t1mo.mobjav.a816.myapplication.model.serie.GeneroSerie;
 import a1.t1mo.mobjav.a816.myapplication.model.serie.Serie;
 import a1.t1mo.mobjav.a816.myapplication.utils.Listener;
+import a1.t1mo.mobjav.a816.myapplication.view.detalle.DetalleFeature;
 
 /**
  * MoonShot App
@@ -30,7 +31,7 @@ import a1.t1mo.mobjav.a816.myapplication.utils.Listener;
  */
 
 public class SerieAdapter extends RecyclerView.Adapter<SerieAdapter.SerieHolder>
-        implements Listener<List<Serie>> {
+        implements Listener<List<Serie>>, DetalleFeature.Likeable {
 
     private List<Serie> mSeries;
     private SerieController mSerieController;
@@ -80,6 +81,16 @@ public class SerieAdapter extends RecyclerView.Adapter<SerieAdapter.SerieHolder>
     public void done(List<Serie> series) {
         mSeries = series;
         notifyDataSetChanged();
+    }
+
+    @Override
+    public void onLike(Integer featureID) {
+        mSerieController.agregarAFavoritos(featureID);
+    }
+
+    @Override
+    public void onUnlike(Integer featureID) {
+        mSerieController.quitarDeFavoritos(featureID);
     }
 
 
