@@ -1,7 +1,6 @@
 package a1.t1mo.mobjav.a816.myapplication.view.detalle;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
