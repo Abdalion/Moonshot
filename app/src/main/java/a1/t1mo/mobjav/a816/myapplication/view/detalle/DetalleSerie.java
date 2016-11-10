@@ -1,4 +1,4 @@
-package a1.t1mo.mobjav.a816.myapplication.view.feature.pelicula;
+package a1.t1mo.mobjav.a816.myapplication.view.detalle;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,21 +11,19 @@ import com.bumptech.glide.Glide;
 
 import a1.t1mo.mobjav.a816.myapplication.R;
 import a1.t1mo.mobjav.a816.myapplication.data.services.TmdbService;
-import a1.t1mo.mobjav.a816.myapplication.model.pelicula.Pelicula;
-import a1.t1mo.mobjav.a816.myapplication.view.feature.DetalleFeature;
+import a1.t1mo.mobjav.a816.myapplication.model.serie.Serie;
 
-public class DetallePelicula extends DetalleFeature{
+public class DetalleSerie extends DetalleFeature {
+    private Serie mSerie;
 
-    private Pelicula pelicula;
-
-    public DetallePelicula() {
+    public DetalleSerie() {
         // Required empty public constructor
     }
 
-    public static DetallePelicula getDetalleFragment(Pelicula unaPelicula) {
-        DetallePelicula detallePelicula = new DetallePelicula();
-        detallePelicula.pelicula = unaPelicula;
-        return detallePelicula;
+    public static DetalleSerie getDetalleSerie(Serie serie) {
+        DetalleSerie detalleSerie = new DetalleSerie();
+        detalleSerie.mSerie = serie;
+        return detalleSerie;
     }
 
     @Override
@@ -34,35 +32,30 @@ public class DetallePelicula extends DetalleFeature{
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_detalle, container, false);
 
-//        Bundle bundle = getArguments();
-
         TextView textViewNombre = (TextView) view.findViewById(R.id.fragment_detalle_titulo);
-        textViewNombre.setText(pelicula.getTitulo());
+        textViewNombre.setText(mSerie.getNombre());
 
         TextView textView = (TextView) view.findViewById(R.id.fragment_detalle_fechaDeEstreno);
-        textView.setText(pelicula.getFechaDeEstreno());
-//
+        textView.setText(mSerie.getFechaDeEstreno());
+
 //        TextView textViewDuracion =  (TextView) view.findViewById(R.id.fragment_detalle_duracion);
-//        textViewDuracion.setText(Integer.toString(pelicula.getDuracion()));
+//        textViewDuracion.setText(mSerie.getDuracion().toString());
 
 //        TextView textViewGenre =  (TextView) view.findViewById(R.id.fragment_detalle_genero);
-//        textViewGenre.setText(pelicula.getGeneros());
+//        textViewGenre.setText(mSerie.getGeneros());
 
         ImageView imageViewImagenId = (ImageView) view.findViewById(R.id.fragment_detalle_imagenId);
         Glide
-            .with(getContext())
-            .load(TmdbService.IMAGE_URL_W300 + pelicula.getBackdropPath())
-            .fitCenter()
-            .into(imageViewImagenId);
+                .with(getContext())
+                .load(TmdbService.IMAGE_URL_W185 + mSerie.getBackdropPath())
+                .fitCenter()
+                .into(imageViewImagenId);
 
         TextView textViewLenguaje = (TextView) view.findViewById(R.id.fragment_detalle_lenguaje);
-        textViewLenguaje.setText(pelicula.getLenguaje());
+        textViewLenguaje.setText(mSerie.getLenguaje());
 
         TextView textViewTrama =  (TextView) view.findViewById(R.id.fragment_detalle_trama);
-        textViewTrama.setText(pelicula.getResumen());
-
-//        TextView textViewHomePage =  (TextView) view.findViewById(R.id.fragment_detalle_homepage);
-//        textViewHomePage.setText(pelicula.getImdbId());
+        textViewTrama.setText(mSerie.getResumen());
 
         return view;
     }

@@ -1,4 +1,4 @@
-package a1.t1mo.mobjav.a816.myapplication.view.feature;
+package a1.t1mo.mobjav.a816.myapplication.view.detalle;
 
 import android.support.v4.app.Fragment;
 
@@ -10,5 +10,5 @@ import android.support.v4.app.Fragment;
  * Archivo creado por Juan Pablo on 05/11/2016.
  */
 
-public abstract class DetalleFeature extends Fragment{
+public abstract class DetalleFeature extends Fragment {
 }
