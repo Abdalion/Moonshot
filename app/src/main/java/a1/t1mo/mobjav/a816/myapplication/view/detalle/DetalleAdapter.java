@@ -27,4 +27,8 @@ public class DetalleAdapter extends FragmentStatePagerAdapter {
     public int getCount() {
         return 0;
     }
+
+    public void cambiarTipo(DetalleViewPager.Tipo tipo) {
+
+    }
 }

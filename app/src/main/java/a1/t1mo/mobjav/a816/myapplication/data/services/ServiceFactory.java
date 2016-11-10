@@ -84,7 +84,7 @@ public final class ServiceFactory {
     }
 
     /**
-     * Deserializador para que no explote GSON al leer atributos de tipo List<String>
+     * Deserializador para que no explote GSON al leer atributos de Tipo List<String>
      */
     private static class RealmStringDeserializer implements
             JsonDeserializer<RealmList<RealmString>> {

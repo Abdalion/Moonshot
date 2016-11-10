@@ -14,8 +14,8 @@ import a1.t1mo.mobjav.a816.myapplication.R;
 import a1.t1mo.mobjav.a816.myapplication.data.PeliculaDAO;
 import a1.t1mo.mobjav.a816.myapplication.data.SerieDAO;
 import a1.t1mo.mobjav.a816.myapplication.model.Feature;
-import a1.t1mo.mobjav.a816.myapplication.model.serie.Serie;
 import a1.t1mo.mobjav.a816.myapplication.utils.CambioDePagina;
+import a1.t1mo.mobjav.a816.myapplication.view.detalle.DetalleViewPager;
 import a1.t1mo.mobjav.a816.myapplication.view.feature.FeatureFragment;
 
 /**
@@ -115,6 +115,11 @@ public class MainActivity extends AppCompatActivity
     public interface CallBackCambioGenero {
         void callBackCambioGenero(int id);
     }
+
+    public interface CallBackCambioDeTipo {
+        void cambioDeTipo(DetalleViewPager.Tipo tipo);
+    }
+
 
     @Override
     protected void onDestroy() {

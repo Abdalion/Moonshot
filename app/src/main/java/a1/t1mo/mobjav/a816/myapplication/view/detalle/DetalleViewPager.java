@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import a1.t1mo.mobjav.a816.myapplication.R;
-import a1.t1mo.mobjav.a816.myapplication.view.AdapterViewPagerFragment;
+import a1.t1mo.mobjav.a816.myapplication.view.MainActivity;
 import a1.t1mo.mobjav.a816.myapplication.view.ViewPagerFragment;
 
 /**
@@ -20,8 +20,10 @@ import a1.t1mo.mobjav.a816.myapplication.view.ViewPagerFragment;
  * Archivo creado por Juan Pablo on 09/11/2016.
  */
 
-public class DetalleViewPager extends Fragment {
+public class DetalleViewPager extends Fragment implements MainActivity.CallBackCambioDeTipo{
     private DetalleAdapter mAdapter;
+
+    public enum Tipo {PELICULAS, SERIES}
 
     public DetalleViewPager() {
         // Required empty public constructor
@@ -30,12 +32,11 @@ public class DetalleViewPager extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        paginaActual = ViewPagerFragment.PaginaActual.PELICULAS;
         View view = inflater.inflate(R.layout.fragment_view_pager, container, false);
         FragmentManager fragmentManager = getChildFragmentManager();
-        adapter = new AdapterViewPagerFragment(fragmentManager);
+        mAdapter = new DetalleAdapter(fragmentManager);
         ViewPager viewPager = (ViewPager) view.findViewById(R.id.viewPager);
-        viewPager.setAdapter(adapter);
+        viewPager.setAdapter(mAdapter);
 
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -52,5 +53,10 @@ public class DetalleViewPager extends Fragment {
             }
         });
         return view;
+    }
+
+    @Override
+    public void cambioDeTipo(Tipo tipo) {
+        mAdapter.cambiarTipo(tipo);
     }
 }

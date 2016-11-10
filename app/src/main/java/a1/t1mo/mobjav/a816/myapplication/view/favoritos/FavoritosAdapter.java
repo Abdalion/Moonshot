@@ -30,7 +30,6 @@ public class FavoritosAdapter extends RecyclerView.Adapter<FavoritosAdapter.Favo
     private FavoritosFragment.Escuchable mListener;
     private final static int FADE_DURATION = 300;
 
-
     public FavoritosAdapter(Context context, Integer genero) {
         if (genero == 0) {
             mPeliculaController = new PeliculaController(context);
