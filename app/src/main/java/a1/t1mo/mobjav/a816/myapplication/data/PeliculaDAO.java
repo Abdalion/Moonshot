@@ -2,6 +2,7 @@ package a1.t1mo.mobjav.a816.myapplication.data;
 
 import android.util.Log;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import a1.t1mo.mobjav.a816.myapplication.data.services.ServiceFactory;
@@ -12,6 +13,8 @@ import a1.t1mo.mobjav.a816.myapplication.utils.Listener;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import io.realm.RealmList;
+import io.realm.RealmObject;
+import io.realm.RealmResults;
 import io.realm.Sort;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -130,11 +133,12 @@ public class PeliculaDAO {
     }
 
     public List<Pelicula> getFavoritos() {
+        Log.d(TAG, "Volviendo de getFavoritos " + sRealm.where(Pelicula.class).equalTo("favorito", true).count());
         return sRealm.where(Pelicula.class).equalTo("favorito", true).findAll();
+
     }
 
     private void persistirEnRealm(final Pelicula pelicula) {
-        pelicula.setFavorito(false);
         sRealm.executeTransaction(new Realm.Transaction() {
                 @Override
                 public void execute(Realm realm) {
@@ -147,7 +151,16 @@ public class PeliculaDAO {
         sRealm.executeTransactionAsync(new Realm.Transaction() {
             @Override
             public void execute(Realm bgRealm) {
-                bgRealm.copyToRealmOrUpdate(peliculas);
+                RealmResults<Pelicula> persistidas = bgRealm.where(Pelicula.class).findAll();
+                List<Integer> ids = new ArrayList<>();
+                for (Pelicula pelicula : persistidas) {
+                    ids.add(pelicula.getId());
+                }
+                for (Pelicula pelicula : peliculas) {
+                    if (!ids.contains(pelicula.getId())) {
+                        bgRealm.copyToRealmOrUpdate(pelicula);
+                    }
+                }
             }
         }, new Realm.Transaction.OnSuccess() {
             @Override
@@ -167,7 +180,12 @@ public class PeliculaDAO {
             @Override
             public void execute(Realm realm) {
                 Pelicula pelicula = realm.where(Pelicula.class).equalTo("id", id).findFirst();
-                if (pelicula != null) pelicula.setFavorito(true);
+                if (pelicula != null) {
+                    pelicula.setFavorito(true);
+                    realm.copyToRealmOrUpdate(pelicula);
+                }
+                Log.d("db", realm.where(Pelicula.class).equalTo("favorito", true).findFirst().getTitulo());
+
                 if (pelicula.isFavorito()) {
                     Log.d(TAG, "La pelicula " + pelicula.getTitulo() + " fue agregada a favoritos");
                 }
@@ -180,7 +198,13 @@ public class PeliculaDAO {
             @Override
             public void execute(Realm realm) {
                 Pelicula pelicula = realm.where(Pelicula.class).equalTo("id", id).findFirst();
-                if (pelicula != null) pelicula.setFavorito(false);
+                if (pelicula != null) {
+                    pelicula.setFavorito(false);
+                    realm.copyToRealmOrUpdate(pelicula);
+                }
+                if (!pelicula.isFavorito()) {
+                    Log.d(TAG, "La pelicula " + pelicula.getTitulo() + " fue removida de favoritos");
+                }
             }
         });
     }

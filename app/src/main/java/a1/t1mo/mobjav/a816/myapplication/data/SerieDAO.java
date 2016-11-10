@@ -2,6 +2,7 @@ package a1.t1mo.mobjav.a816.myapplication.data;
 
 import android.util.Log;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import a1.t1mo.mobjav.a816.myapplication.data.services.ServiceFactory;
@@ -12,6 +13,7 @@ import a1.t1mo.mobjav.a816.myapplication.utils.Listener;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import io.realm.RealmList;
+import io.realm.RealmResults;
 import io.realm.Sort;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -143,7 +145,16 @@ public class SerieDAO {
         sRealm.executeTransactionAsync(new Realm.Transaction() {
             @Override
             public void execute(Realm bgRealm) {
-                bgRealm.copyToRealmOrUpdate(series);
+                RealmResults<Serie> persistidas = bgRealm.where(Serie.class).findAll();
+                List<Integer> ids = new ArrayList<>();
+                for (Serie serie : persistidas) {
+                    ids.add(serie.getId());
+                }
+                for (Serie serie : series) {
+                    if (!ids.contains(serie.getId())) {
+                        bgRealm.copyToRealmOrUpdate(serie);
+                    }
+                }
             }
         }, new Realm.Transaction.OnSuccess() {
             @Override
@@ -163,7 +174,10 @@ public class SerieDAO {
             @Override
             public void execute(Realm realm) {
                 Serie serie = realm.where(Serie.class).equalTo("id", id).findFirst();
-                if (serie != null) serie.setFavorito(true);
+                if (serie != null) {
+                    serie.setFavorito(true);
+                    realm.copyToRealmOrUpdate(serie);
+                }
             }
         });
     }
@@ -173,7 +187,10 @@ public class SerieDAO {
             @Override
             public void execute(Realm realm) {
                 Serie serie = realm.where(Serie.class).equalTo("id", id).findFirst();
-                if (serie != null) serie.setFavorito(false);
+                if (serie != null) {
+                    serie.setFavorito(false);
+                    realm.copyToRealmOrUpdate(serie);
+                }
             }
         });
     }
