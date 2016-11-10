@@ -1,6 +1,5 @@
 package a1.t1mo.mobjav.a816.myapplication.view.detalle;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;

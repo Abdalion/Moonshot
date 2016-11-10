@@ -88,7 +88,6 @@ public class SerieAdapter extends RecyclerView.Adapter<SerieAdapter.SerieHolder>
     public class SerieHolder extends RecyclerView.ViewHolder
             implements View.OnClickListener {
 
-        private Serie mSerie;
         private ImageView mImagen;
 
         public SerieHolder(View itemView) {
@@ -98,7 +97,6 @@ public class SerieAdapter extends RecyclerView.Adapter<SerieAdapter.SerieHolder>
         }
 
         private void bindSerie(Serie serie) {
-            mSerie = serie;
             Glide
                 .with(mImagen.getContext())
                 .load(TmdbService.IMAGE_URL_W154 + serie.getPosterPath())
@@ -108,7 +106,7 @@ public class SerieAdapter extends RecyclerView.Adapter<SerieAdapter.SerieHolder>
 
         @Override
         public void onClick(View v) {
-            mListener.onClickFeature(getAdapterPosition(), mGenero, DetalleViewPager.Tipo.SERIE);
+            mListener.onClickFeature(getLayoutPosition(), mGenero, DetalleViewPager.Tipo.SERIE);
         }
     }
 }

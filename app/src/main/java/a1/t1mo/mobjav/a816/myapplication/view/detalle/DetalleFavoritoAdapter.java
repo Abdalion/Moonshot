@@ -43,9 +43,9 @@ public class DetalleFavoritoAdapter extends FragmentStatePagerAdapter
     @Override
     public Fragment getItem(int position) {
         if (mTipo == DetalleViewPager.Tipo.PELICULA) {
-            return DetallePelicula.getDetallePelicula((Pelicula) mListaDeFavoritos.get(position), this);
+            return DetallePelicula.getDetallePelicula((Pelicula) (mListaDeFavoritos.get(position)), this);
         } else {
-            return DetalleSerie.getDetalleSerie((Serie) mListaDeFavoritos.get(position), this);
+            return DetalleSerie.getDetalleSerie((Serie) (mListaDeFavoritos.get(position)), this);
         }
     }
 

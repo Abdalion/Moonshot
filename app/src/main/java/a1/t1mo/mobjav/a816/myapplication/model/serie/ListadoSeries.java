@@ -2,9 +2,6 @@ package a1.t1mo.mobjav.a816.myapplication.model.serie;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.util.List;
-
-import io.realm.Realm;
 import io.realm.RealmList;
 import io.realm.RealmObject;
 

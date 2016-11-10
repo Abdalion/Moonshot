@@ -144,10 +144,6 @@ public class PeliculaDAO {
     }
 
     private void persistirEnRealm(final RealmList<Pelicula> peliculas) {
-        for (Pelicula pelicula : peliculas) {
-            pelicula.setFavorito(false);
-        }
-
         sRealm.executeTransactionAsync(new Realm.Transaction() {
             @Override
             public void execute(Realm bgRealm) {
@@ -172,6 +168,9 @@ public class PeliculaDAO {
             public void execute(Realm realm) {
                 Pelicula pelicula = realm.where(Pelicula.class).equalTo("id", id).findFirst();
                 if (pelicula != null) pelicula.setFavorito(true);
+                if (pelicula.isFavorito()) {
+                    Log.d(TAG, "La pelicula " + pelicula.getTitulo() + " fue agregada a favoritos");
+                }
             }
         });
     }

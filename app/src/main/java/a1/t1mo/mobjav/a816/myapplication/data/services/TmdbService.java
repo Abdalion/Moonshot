@@ -1,8 +1,8 @@
 package a1.t1mo.mobjav.a816.myapplication.data.services;
 
 import a1.t1mo.mobjav.a816.myapplication.model.pelicula.ListadoPeliculas;
-import a1.t1mo.mobjav.a816.myapplication.model.serie.ListadoSeries;
 import a1.t1mo.mobjav.a816.myapplication.model.pelicula.Pelicula;
+import a1.t1mo.mobjav.a816.myapplication.model.serie.ListadoSeries;
 import a1.t1mo.mobjav.a816.myapplication.model.serie.Serie;
 import retrofit2.Call;
 import retrofit2.http.GET;

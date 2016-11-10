@@ -9,10 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.List;
-
 import a1.t1mo.mobjav.a816.myapplication.R;
-import a1.t1mo.mobjav.a816.myapplication.model.Feature;
 import a1.t1mo.mobjav.a816.myapplication.view.feature.FeatureFragment;
 
 public class PeliculaFragment extends FeatureFragment {
@@ -54,10 +51,6 @@ public class PeliculaFragment extends FeatureFragment {
 
     public CharSequence getTitulo(){
         return "Peliculas";
-    }
-
-    public interface ListenerPelicula {
-        void onClickPelicula(Integer posicion, Integer genero);
     }
 }
 

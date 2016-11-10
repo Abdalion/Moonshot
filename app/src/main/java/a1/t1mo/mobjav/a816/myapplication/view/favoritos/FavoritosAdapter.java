@@ -1,8 +1,8 @@
 package a1.t1mo.mobjav.a816.myapplication.view.favoritos;
 
 import android.content.Context;
-import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -19,7 +19,6 @@ import a1.t1mo.mobjav.a816.myapplication.controller.SerieController;
 import a1.t1mo.mobjav.a816.myapplication.data.services.TmdbService;
 import a1.t1mo.mobjav.a816.myapplication.model.Feature;
 import a1.t1mo.mobjav.a816.myapplication.model.serie.Serie;
-import a1.t1mo.mobjav.a816.myapplication.utils.Listener;
 import a1.t1mo.mobjav.a816.myapplication.view.detalle.DetalleViewPager;
 import a1.t1mo.mobjav.a816.myapplication.view.feature.FeatureFragment;
 
@@ -50,7 +49,9 @@ public class FavoritosAdapter extends RecyclerView.Adapter<FavoritosAdapter.Favo
 
     @Override
     public FavoritosHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return null;
+        LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
+        View view = layoutInflater.inflate(R.layout.item_pelicula, parent, false);
+        return new FavoritosHolder(view);
     }
 
     @Override
@@ -59,7 +60,6 @@ public class FavoritosAdapter extends RecyclerView.Adapter<FavoritosAdapter.Favo
             holder.bindFeature(mFeaturesList.get(position));
             setScaleAnimation(holder.itemView);
         }
-
     }
 
     private void setScaleAnimation(View view) {
@@ -70,7 +70,7 @@ public class FavoritosAdapter extends RecyclerView.Adapter<FavoritosAdapter.Favo
 
     @Override
     public int getItemCount() {
-        return 0;
+        return mFeaturesList == null ? 0 : mFeaturesList.size();
     }
 
     public class FavoritosHolder extends RecyclerView.ViewHolder
@@ -97,7 +97,7 @@ public class FavoritosAdapter extends RecyclerView.Adapter<FavoritosAdapter.Favo
         @Override
         public void onClick(View v) {
             DetalleViewPager.Tipo tipo = mFeature instanceof Serie ? DetalleViewPager.Tipo.SERIE : DetalleViewPager.Tipo.PELICULA;
-            mListener.onClickFeature(getAdapterPosition(), FAVORITOS_FLAG, tipo);
+            mListener.onClickFeature(getLayoutPosition(), FAVORITOS_FLAG, tipo);
         }
     }
 

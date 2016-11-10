@@ -140,10 +140,6 @@ public class SerieDAO {
     }
 
     private void persistirEnRealm(final RealmList<Serie> series) {
-        for (Serie serie : series) {
-            serie.setFavorito(false);
-        }
-
         sRealm.executeTransactionAsync(new Realm.Transaction() {
             @Override
             public void execute(Realm bgRealm) {

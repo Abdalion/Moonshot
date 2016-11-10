@@ -54,7 +54,7 @@ public class Pelicula extends RealmObject implements Feature {
     @SerializedName("vote_count")
     private Integer totalVotos;
 
-    private boolean favorito;
+    private boolean favorito = false;
 
     public boolean getAdultos() {
         return adultos;

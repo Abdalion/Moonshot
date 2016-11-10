@@ -2,6 +2,7 @@ package a1.t1mo.mobjav.a816.myapplication.view.feature.pelicula;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +20,6 @@ import a1.t1mo.mobjav.a816.myapplication.data.services.TmdbService;
 import a1.t1mo.mobjav.a816.myapplication.model.Genre;
 import a1.t1mo.mobjav.a816.myapplication.model.pelicula.Pelicula;
 import a1.t1mo.mobjav.a816.myapplication.utils.Listener;
-import a1.t1mo.mobjav.a816.myapplication.view.detalle.DetalleFeature;
 import a1.t1mo.mobjav.a816.myapplication.view.detalle.DetalleViewPager;
 import a1.t1mo.mobjav.a816.myapplication.view.feature.FeatureFragment;
 
@@ -108,7 +108,8 @@ public class PeliculaAdapter extends RecyclerView.Adapter<PeliculaAdapter.Pelicu
 
         @Override
         public void onClick(View v) {
-            mListener.onClickFeature(getAdapterPosition(), mGenero, DetalleViewPager.Tipo.PELICULA);
+            Log.d("Pelicula Adapter", "Posicion " + getLayoutPosition());
+            mListener.onClickFeature(getLayoutPosition(), mGenero, DetalleViewPager.Tipo.PELICULA);
         }
     }
 }

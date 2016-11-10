@@ -60,7 +60,7 @@ public class Serie extends RealmObject implements Feature {
     @SerializedName("vote_count")
     public Integer totalDeVotos;
 
-    public boolean favorito;
+    public boolean favorito = false;
 
     public String getBackdropPath() {
         return backdropPath;

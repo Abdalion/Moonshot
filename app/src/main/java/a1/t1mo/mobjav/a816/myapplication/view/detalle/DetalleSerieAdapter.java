@@ -25,9 +25,12 @@ public class DetalleSerieAdapter extends FragmentStatePagerAdapter
         implements Listener<List<Serie>>, DetalleFeature.Likeable {
     private List<Serie> mListaDeSeries;
     private SerieController mSerieController;
+    private DetalleAdapterCallback mCallback;
 
-    public DetalleSerieAdapter(FragmentManager fm, Context ctx, Integer genero) {
+    public DetalleSerieAdapter(FragmentManager fm, DetalleAdapterCallback cb, Context ctx,
+                               Integer genero) {
         super(fm);
+        mCallback = cb;
         mSerieController = new SerieController(ctx);
         if (genero == Genre.PELICULA_ID.get(R.id.menu_series_opcion_todas)) {
             mSerieController.getSeriesPopulares(this);
@@ -50,6 +53,7 @@ public class DetalleSerieAdapter extends FragmentStatePagerAdapter
     public void done(List<Serie> series) {
         mListaDeSeries = series;
         notifyDataSetChanged();
+        mCallback.onFinish();
     }
 
     @Override

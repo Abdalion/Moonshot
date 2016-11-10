@@ -8,7 +8,6 @@ import java.util.List;
 import a1.t1mo.mobjav.a816.myapplication.data.SerieDAO;
 import a1.t1mo.mobjav.a816.myapplication.model.serie.Serie;
 import a1.t1mo.mobjav.a816.myapplication.utils.Listener;
-import io.realm.RealmList;
 
 
 public class SerieController extends Controller {
