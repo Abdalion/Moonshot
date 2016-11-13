@@ -47,14 +47,14 @@ public class DetallePelicula extends DetalleFeature {
             @Override
             public void liked(LikeButton likeButton) {
                 mCallback.onLike(mPelicula.getId());
-                Snackbar.make(getView(), "Agregado A Favoritos", Snackbar.LENGTH_LONG)
+                Snackbar.make(getView(), "Agregado a favoritos", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
 
             @Override
             public void unLiked(LikeButton likeButton) {
                 mCallback.onUnlike(mPelicula.getId());
-                Snackbar.make(getView(), "Eliminado De Favoritos", Snackbar.LENGTH_LONG)
+                Snackbar.make(getView(), "Eliminado de favoritos", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
 
             }

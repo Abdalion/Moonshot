@@ -3,4 +3,13 @@
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="title_activity_login">Sign in</string>
+    <string name="facebook_app_id">1036168859838314</string>
+
+    <!-- Strings related to login -->
+    <string name="login_successfull">Bienvenido!</string>
+    <string name="login_cancelled">Login cancelado</string>
+    <string name="login_error">Error al loguearse</string>
+
+
 </resources>
