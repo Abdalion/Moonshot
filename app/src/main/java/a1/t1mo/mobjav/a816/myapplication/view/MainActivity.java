@@ -131,7 +131,7 @@ public class MainActivity extends AppCompatActivity
     private void commitFragment(Fragment fm) {
         fragmentManager
                 .beginTransaction()
-                .replace(R.id.main_contenedorDeFragment, fm)
+                .add(R.id.main_contenedorDeFragment, fm)
                 .addToBackStack("back")
                 .commit();
     }
