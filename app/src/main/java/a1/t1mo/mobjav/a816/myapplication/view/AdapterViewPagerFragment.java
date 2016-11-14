@@ -32,7 +32,7 @@ public class AdapterViewPagerFragment extends FragmentStatePagerAdapter {
         mListaDeFragments = new ArrayList<>();
         mGeneroPeliculas = Genre.PELICULA_ID.get(R.id.menu_peliculas_opcion_todas);
         mGeneroSeries = Genre.SERIE_ID.get(R.id.menu_series_opcion_todas);
-        mTipoFavoritos = 0;
+        mTipoFavoritos = R.id.menu_favoritos_opcion_peliculas;
         updateFragments();
     }
 

@@ -55,9 +55,9 @@ public class ViewPagerFragment extends Fragment implements MainActivity.CallBack
                 if(position == 0)
                     paginaActual = PaginaActual.PELICULAS;
                 else if(position == 1)
-                    paginaActual = PaginaActual.FAVORITOS;
-                else if(position == 2)
                     paginaActual = PaginaActual.SERIES;
+                else if(position == 2)
+                    paginaActual = PaginaActual.FAVORITOS;
 
                 mainActivity.onCambioDePagina(paginaActual);
             }

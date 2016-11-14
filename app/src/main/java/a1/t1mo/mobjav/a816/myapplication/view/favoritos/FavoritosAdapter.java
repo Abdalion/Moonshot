@@ -19,6 +19,7 @@ import a1.t1mo.mobjav.a816.myapplication.controller.PeliculaController;
 import a1.t1mo.mobjav.a816.myapplication.controller.SerieController;
 import a1.t1mo.mobjav.a816.myapplication.data.services.TmdbService;
 import a1.t1mo.mobjav.a816.myapplication.model.Feature;
+import a1.t1mo.mobjav.a816.myapplication.model.Genre;
 import a1.t1mo.mobjav.a816.myapplication.model.serie.Serie;
 import a1.t1mo.mobjav.a816.myapplication.view.detalle.DetalleViewPager;
 import a1.t1mo.mobjav.a816.myapplication.view.feature.FeatureFragment;
@@ -35,7 +36,7 @@ public class FavoritosAdapter extends RecyclerView.Adapter<FavoritosAdapter.Favo
     private final static int FADE_DURATION = 300;
 
     public FavoritosAdapter(Context context, Integer genero) {
-        if (genero == 0) {
+        if (genero == R.id.menu_favoritos_opcion_peliculas) {
             mPeliculaController = new PeliculaController(context);
             mFeaturesList = mPeliculaController.getFavoritos();
             Log.d("Favoritos Adapter", "Cargue " + mFeaturesList.size() + " peliculas favoritas ");

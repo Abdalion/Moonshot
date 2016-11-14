@@ -36,6 +36,7 @@ public class Genre extends RealmObject {
     public static final Map<Integer, Integer> PELICULA_ID = crearDiccionarioPelicula();
     public static final Map<Integer, Integer> SERIE_ID = crearDiccionarioSerie();
 
+
     private static Map<Integer, Integer> crearDiccionarioPelicula() {
         Map<Integer, Integer> diccionarioPelicula = new ArrayMap<>(10);
         diccionarioPelicula.put(R.id.menu_peliculas_opcion_todas, -1);
@@ -65,6 +66,7 @@ public class Genre extends RealmObject {
         diccionarioSerie.put(R.id.menu_series_opcion_reality, 10764);
         return diccionarioSerie;
     }
+
 
     public Integer getId() {
         return id;
