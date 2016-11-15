@@ -1,6 +1,5 @@
 package a1.t1mo.mobjav.a816.myapplication.view.detalle;
 
-import android.icu.text.UnicodeSetSpanner;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.view.LayoutInflater;
@@ -9,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.like.LikeButton;

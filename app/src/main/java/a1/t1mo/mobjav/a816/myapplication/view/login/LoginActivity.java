@@ -1,9 +1,8 @@
 package a1.t1mo.mobjav.a816.myapplication.view.login;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
 import com.facebook.CallbackManager;
@@ -15,7 +14,6 @@ import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 
 import a1.t1mo.mobjav.a816.myapplication.R;
-import a1.t1mo.mobjav.a816.myapplication.view.MainActivity;
 
 public class LoginActivity extends AppCompatActivity {
     CallbackManager callbackManager;

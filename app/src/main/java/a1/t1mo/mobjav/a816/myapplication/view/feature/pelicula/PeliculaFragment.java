@@ -45,7 +45,15 @@ public class PeliculaFragment extends FeatureFragment {
         recyclerView.setHasFixedSize(true);
         peliculaAdapter.setListener(mListenerPelicula);
         recyclerView.setAdapter(peliculaAdapter);
-        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 3);
+        recyclerView.setLayoutManager(gridLayoutManager);
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+
+            }
+        });
         return view;
     }
 

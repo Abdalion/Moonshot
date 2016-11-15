@@ -1,19 +1,13 @@
 package a1.t1mo.mobjav.a816.myapplication.view.login.facebook;
 
-import android.net.sip.SipAudioCall;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Toast;
 
 import com.facebook.AccessToken;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
-import com.like.Utils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.ArrayList;
 
 import a1.t1mo.mobjav.a816.myapplication.utils.Listener;
 
