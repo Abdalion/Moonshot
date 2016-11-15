@@ -9,6 +9,7 @@ import a1.t1mo.mobjav.a816.myapplication.model.Genre;
 import a1.t1mo.mobjav.a816.myapplication.model.RealmString;
 import io.realm.RealmList;
 import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
 /**
  * MoonShot App
@@ -21,6 +22,9 @@ import io.realm.RealmObject;
 
 public class Serie extends RealmObject implements Feature {
 
+    @PrimaryKey
+    @SerializedName("id")
+    public Integer id;
     @SerializedName("backdrop_path")
     public String backdropPath;
     @SerializedName("first_air_date")
@@ -29,8 +33,6 @@ public class Serie extends RealmObject implements Feature {
     public RealmList<Genre> generos;
     @SerializedName("homepage")
     public String homepage;
-    @SerializedName("id")
-    public Integer id;
     @SerializedName("languages")
     public RealmList<RealmString> lenguajes;
     @SerializedName("last_air_date")
