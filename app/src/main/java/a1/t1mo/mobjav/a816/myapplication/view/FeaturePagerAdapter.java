@@ -18,7 +18,7 @@ import a1.t1mo.mobjav.a816.myapplication.view.feature.serie.SerieFragment;
  * Created by dh-mob-tt on 31/10/16.
  */
 
-public class AdapterViewPagerFragment extends FragmentStatePagerAdapter {
+public class FeaturePagerAdapter extends FragmentStatePagerAdapter {
     private Integer mGeneroPeliculas;
     private Integer mGeneroSeries;
     private Integer mTipoFavoritos;
@@ -27,7 +27,7 @@ public class AdapterViewPagerFragment extends FragmentStatePagerAdapter {
     private SerieFragment mSerieFragment;
     private FavoritosFragment mFavoritosFragment;
 
-    public AdapterViewPagerFragment(FragmentManager fm) {
+    public FeaturePagerAdapter(FragmentManager fm) {
         super(fm);
         mListaDeFragments = new ArrayList<>();
         mGeneroPeliculas = Genre.PELICULA_ID.get(R.id.menu_peliculas_opcion_todas);
@@ -36,10 +36,10 @@ public class AdapterViewPagerFragment extends FragmentStatePagerAdapter {
         updateFragments();
     }
 
-    public void cambiarGenero(ViewPagerFragment.PaginaActual pagina, int genero) {
-        if (pagina == ViewPagerFragment.PaginaActual.PELICULAS) {
+    public void cambiarGenero(FeaturePager.PaginaActual pagina, int genero) {
+        if (pagina == FeaturePager.PaginaActual.PELICULAS) {
             mGeneroPeliculas = genero;
-        } else if(pagina == ViewPagerFragment.PaginaActual.SERIES){
+        } else if(pagina == FeaturePager.PaginaActual.SERIES){
             mGeneroSeries = genero;
         } else {
             mTipoFavoritos = genero;

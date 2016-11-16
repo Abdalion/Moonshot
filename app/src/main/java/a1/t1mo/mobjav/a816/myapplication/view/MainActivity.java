@@ -15,11 +15,19 @@ import android.widget.Toast;
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
 
+import java.util.List;
+
 import a1.t1mo.mobjav.a816.myapplication.R;
+import a1.t1mo.mobjav.a816.myapplication.controller.PeliculaController;
+import a1.t1mo.mobjav.a816.myapplication.controller.SerieController;
 import a1.t1mo.mobjav.a816.myapplication.data.PeliculaDAO;
 import a1.t1mo.mobjav.a816.myapplication.data.SerieDAO;
+import a1.t1mo.mobjav.a816.myapplication.model.Feature;
+import a1.t1mo.mobjav.a816.myapplication.model.pelicula.Pelicula;
+import a1.t1mo.mobjav.a816.myapplication.model.serie.Serie;
 import a1.t1mo.mobjav.a816.myapplication.utils.CambioDePagina;
 import a1.t1mo.mobjav.a816.myapplication.utils.Listener;
+import a1.t1mo.mobjav.a816.myapplication.utils.Tipo;
 import a1.t1mo.mobjav.a816.myapplication.view.detalle.DetalleViewPager;
 import a1.t1mo.mobjav.a816.myapplication.view.feature.FeatureFragment;
 import a1.t1mo.mobjav.a816.myapplication.view.login.facebook.FacebookUtils;
@@ -35,22 +43,29 @@ public class MainActivity extends AppCompatActivity
         implements FeatureFragment.ListenerFeature, CambioDePagina, Listener<String> {
     private FragmentManager fragmentManager;
     private NavigationView navigationView;
-    private ViewPagerFragment viewPagerFragment;
-    private Toolbar toolbar;
+    private FeaturePager mFeaturePager;
+    private List<Pelicula> mPeliculas;
+    private List<Serie> mSeries;
+    private List<Feature> mFavoritos;
+    private Tipo mTipo;
+    private SerieController mSerieController;
+    private PeliculaController mPeliculaController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        FacebookSdk.sdkInitialize(getApplicationContext());
-        AppEventsLogger.activateApp(this);
         setContentView(R.layout.activity_main);
 
-        if(FacebookUtils.checkIfLogged()) {
-            FacebookUtils.requestUserInfo("name", this);;
+        mPeliculaController = new PeliculaController(this);
+        mSerieController = new SerieController(this);
+
+        FacebookSdk.sdkInitialize(getApplicationContext());
+        AppEventsLogger.activateApp(this);
+        if (FacebookUtils.checkIfLogged()) {
+            FacebookUtils.requestUserInfo("name", this);
         }
 
-
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.main_drawerLayout);
@@ -61,8 +76,8 @@ public class MainActivity extends AppCompatActivity
 
         fragmentManager = getSupportFragmentManager();
         navigationViewSetup();
-        viewPagerFragment = new ViewPagerFragment();
-        commitFragment(viewPagerFragment);
+        mFeaturePager = new FeaturePager();
+        commitFragment(mFeaturePager);
     }
 
     public void onBackPressed() {
@@ -81,8 +96,7 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem item) {
-                viewPagerFragment.callBackCambioGenero(item.getItemId());
-
+                getListaDeFeatures(item.getItemId());
                 DrawerLayout drawer = (DrawerLayout) findViewById(R.id.main_drawerLayout);
                 drawer.closeDrawer(GravityCompat.START);
                 return true;
@@ -90,12 +104,28 @@ public class MainActivity extends AppCompatActivity
         });
     }
 
+    private void getListaDeFeatures(int itemId) {
+        switch (mTipo) {
+            case PELICULAS:
+                mPeliculaController.getPeliculas(itemId, this);
+                break;
+            case SERIES:
+                mSerieController.getSeries(itemId, this);
+                break;
+            case FAVORITOS:
+                
+                mFeaturePager.redrawFragment();
+
+        }
+    }
+
     @Override
-    public void onCambioDePagina(ViewPagerFragment.PaginaActual pagina) {
+    public void onCambioDePagina(Tipo tipo) {
         navigationView.getMenu().clear();
-        if (pagina == ViewPagerFragment.PaginaActual.PELICULAS) {
+        mTipo = tipo;
+        if (tipo == Tipo.PELICULAS) {
             navigationView.inflateMenu(R.menu.menu_navigation_peliculas);
-        } else if (pagina == ViewPagerFragment.PaginaActual.SERIES) {
+        } else if (tipo == Tipo.SERIES) {
             navigationView.inflateMenu(R.menu.menu_navigation_series);
         } else {
             navigationView.inflateMenu(R.menu.menu_navigation_favoritos);
@@ -123,11 +153,23 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void done(String param) {
-        Toast.makeText(MainActivity.this, "Bienvenido "+ param, Toast.LENGTH_SHORT).show();
+        Toast.makeText(MainActivity.this, "Bienvenido " + param, Toast.LENGTH_SHORT).show();
     }
 
     public interface CallBackCambioGenero {
         void callBackCambioGenero(int id);
+    }
+
+    public List<Feature> getFavoritos() {
+        return mFavoritos;
+    }
+
+    public List<Serie> getSeries() {
+        return mSeries;
+    }
+
+    public List<Pelicula> getPeliculas() {
+        return mPeliculas;
     }
 
     @Override

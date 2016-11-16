@@ -4,7 +4,9 @@ import android.content.Context;
 
 import java.util.List;
 
+import a1.t1mo.mobjav.a816.myapplication.R;
 import a1.t1mo.mobjav.a816.myapplication.data.PeliculaDAO;
+import a1.t1mo.mobjav.a816.myapplication.model.Genre;
 import a1.t1mo.mobjav.a816.myapplication.model.pelicula.Pelicula;
 import a1.t1mo.mobjav.a816.myapplication.utils.Listener;
 
@@ -30,6 +32,14 @@ public class PeliculaController extends Controller {
             listener.done(mPeliculaDAO.getPeliculaDeRealm(id));
         } else {
             mPeliculaDAO.getPeliculaDeTmdb(id, listener);
+        }
+    }
+
+    public void getPeliculas(int id, Listener<List<Pelicula>> listener) {
+        if (id == Genre.PELICULA_ID.get(R.id.menu_peliculas_opcion_todas)) {
+            getPeliculasPopulares(listener);
+        } else {
+            getPeliculasPorGenero(Genre.PELICULA_ID.get(id), listener);
         }
     }
 
