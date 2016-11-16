@@ -35,7 +35,7 @@ public class PeliculaController extends Controller {
         }
     }
 
-    public void getPeliculas(int id, Listener<List<Pelicula>> listener) {
+    public void getPeliculas(int id, ListenerPeliculas listener) {
         if (id == Genre.PELICULA_ID.get(R.id.menu_peliculas_opcion_todas)) {
             getPeliculasPopulares(listener);
         } else {
@@ -43,7 +43,7 @@ public class PeliculaController extends Controller {
         }
     }
 
-    public void getPeliculasPopulares(Listener<List<Pelicula>> listener) {
+    public void getPeliculasPopulares(ListenerPeliculas listener) {
         if (hasConnectivity(mContext)) {
             mPeliculaDAO.getPeliculasPopularesDeTmdb(listener);
         } else {
@@ -51,7 +51,7 @@ public class PeliculaController extends Controller {
         }
     }
 
-    public void getPeliculasPorGenero(Integer id, Listener<List<Pelicula>> listener) {
+    public void getPeliculasPorGenero(Integer id, ListenerPeliculas listener) {
         if (hasConnectivity(mContext)) {
             mPeliculaDAO.getPeliculasPorGeneroDeTmdb(id, listener);
         } else {

@@ -5,9 +5,12 @@ import android.content.Context;
 
 import java.util.List;
 
+import a1.t1mo.mobjav.a816.myapplication.R;
 import a1.t1mo.mobjav.a816.myapplication.data.SerieDAO;
+import a1.t1mo.mobjav.a816.myapplication.model.Genre;
 import a1.t1mo.mobjav.a816.myapplication.model.serie.Serie;
 import a1.t1mo.mobjav.a816.myapplication.utils.Listener;
+import a1.t1mo.mobjav.a816.myapplication.view.MainActivity;
 
 
 public class SerieController extends Controller {
@@ -24,6 +27,14 @@ public class SerieController extends Controller {
             listener.done(mSerieDAO.getSerieDeRealm(id));
         } else {
             mSerieDAO.getSerieDeTmdb(id, listener);
+        }
+    }
+
+    public void getSeries(int id, Listener<List<Serie>> listener) {
+        if (id == Genre.SERIE_ID.get(R.id.menu_series_opcion_todas)) {
+            getSeriesPopulares(listener);
+        } else {
+            getSeriesPorGenero(Genre.SERIE_ID.get(id), listener);
         }
     }
 

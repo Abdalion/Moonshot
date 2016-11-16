@@ -40,13 +40,14 @@ import a1.t1mo.mobjav.a816.myapplication.view.login.facebook.FacebookUtils;
  */
 
 public class MainActivity extends AppCompatActivity
-        implements FeatureFragment.ListenerFeature, CambioDePagina, Listener<String> {
+        implements FeatureFragment.ListenerFeature, CambioDePagina,
+        Listener<List<? extends Feature>> {
     private FragmentManager fragmentManager;
     private NavigationView navigationView;
     private FeaturePager mFeaturePager;
     private List<Pelicula> mPeliculas;
     private List<Serie> mSeries;
-    private List<Feature> mFavoritos;
+    private List<? extends Feature> mFavoritos;
     private Tipo mTipo;
     private SerieController mSerieController;
     private PeliculaController mPeliculaController;
@@ -113,19 +114,23 @@ public class MainActivity extends AppCompatActivity
                 mSerieController.getSeries(itemId, this);
                 break;
             case FAVORITOS:
-                
-                mFeaturePager.redrawFragment();
-
+                if (itemId == R.id.menu_favoritos_opcion_peliculas) {
+                    mFavoritos = mPeliculaController.getFavoritos();
+                } else {
+                    mFavoritos = mSerieController.getFavoritos();
+                }
+                break;
         }
+        mFeaturePager.redrawFragment();
     }
 
     @Override
     public void onCambioDePagina(Tipo tipo) {
         navigationView.getMenu().clear();
         mTipo = tipo;
-        if (tipo == Tipo.PELICULAS) {
+        if (mTipo == Tipo.PELICULAS) {
             navigationView.inflateMenu(R.menu.menu_navigation_peliculas);
-        } else if (tipo == Tipo.SERIES) {
+        } else if (mTipo == Tipo.SERIES) {
             navigationView.inflateMenu(R.menu.menu_navigation_series);
         } else {
             navigationView.inflateMenu(R.menu.menu_navigation_favoritos);
@@ -152,15 +157,29 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void done(String param) {
-        Toast.makeText(MainActivity.this, "Bienvenido " + param, Toast.LENGTH_SHORT).show();
+    public void done(List<? extends Feature> featureList) {
+        switch (mTipo) {
+            case PELICULAS:
+                mPeliculas = (List<Pelicula>) featureList;
+                break;
+            case SERIES:
+                mSerieController.getSeries(itemId, this);
+                break;
+            case FAVORITOS:
+                if (itemId == R.id.menu_favoritos_opcion_peliculas) {
+                    mFavoritos = mPeliculaController.getFavoritos();
+                } else {
+                    mFavoritos = mSerieController.getFavoritos();
+                }
+                break;
+        }
     }
 
     public interface CallBackCambioGenero {
         void callBackCambioGenero(int id);
     }
 
-    public List<Feature> getFavoritos() {
+    public List<? extends Feature> getFavoritos() {
         return mFavoritos;
     }
 
