@@ -58,6 +58,9 @@ public class DetallePelicula extends DetalleFeature {
             }
         });
 
+        TextView textViewRating = (TextView) view.findViewById(R.id.fragment_detalle_tv_rating);
+        textViewRating.setText(mPelicula.getPuntajePromedio().toString());
+
         TextView textViewNombre = (TextView) view.findViewById(R.id.fragment_detalle_titulo);
         textViewNombre.setText(mPelicula.getTitulo());
 
