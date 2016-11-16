@@ -1,5 +1,6 @@
 package a1.t1mo.mobjav.a816.myapplication.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -22,6 +23,7 @@ import a1.t1mo.mobjav.a816.myapplication.utils.CambioDePagina;
 import a1.t1mo.mobjav.a816.myapplication.utils.Listener;
 import a1.t1mo.mobjav.a816.myapplication.view.detalle.DetalleViewPager;
 import a1.t1mo.mobjav.a816.myapplication.view.feature.FeatureFragment;
+import a1.t1mo.mobjav.a816.myapplication.view.login.LoginActivity;
 import a1.t1mo.mobjav.a816.myapplication.view.login.facebook.FacebookUtils;
 
 /**

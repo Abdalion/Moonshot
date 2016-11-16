@@ -1,60 +1,75 @@
 package a1.t1mo.mobjav.a816.myapplication.view.login;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import a1.t1mo.mobjav.a816.myapplication.R;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
-import com.facebook.appevents.AppEventsLogger;
+import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
-import com.facebook.login.widget.LoginButton;
 
-import a1.t1mo.mobjav.a816.myapplication.R;
+
+import java.util.Arrays;
 
 public class LoginActivity extends AppCompatActivity {
-    CallbackManager callbackManager;
+    CallbackManager mCallbackManager;
     private Boolean loggedState;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        FacebookSdk.sdkInitialize(getApplicationContext());
-        AppEventsLogger.activateApp(this);
-        setContentView(R.layout.activity_login);
+        FacebookSdk.sdkInitialize(this.getApplicationContext());
+        mCallbackManager = CallbackManager.Factory.create();
+        setContentView(R.layout.login_activity);
 
-        handleLogin();
+
+        Button facebookButton = (Button)findViewById(R.id.login_button_facebook);
+
+        facebookButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                LoginManager.getInstance().logInWithReadPermissions(LoginActivity.this, Arrays.asList("public_profile", "user_friends"));
+            }
+        });
+        LoginManager.getInstance().registerCallback(mCallbackManager,
+                new FacebookCallback<LoginResult>() {
+                    @Override
+                    public void onSuccess(LoginResult loginResult) {
+                        Log.d("Success", "Login");
+                        finish();
+
+                    }
+                    @Override
+                    public void onCancel() {
+                        Toast.makeText(LoginActivity.this, "Login Cancel", Toast.LENGTH_LONG).show();
+                        finish();
+                    }
+                    @Override
+                    public void onError(FacebookException exception) {
+                        Toast.makeText(LoginActivity.this, exception.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                });
+
+        initializeFacebook();
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        callbackManager.onActivityResult(requestCode, resultCode, data);
+        if (mCallbackManager.onActivityResult(requestCode, resultCode, data)) {
+            return;
+        }
     }
 
-    private void handleLogin() {
-        callbackManager = CallbackManager.Factory.create();
-        final LoginButton loginButton = (LoginButton) findViewById(R.id.login_button_facebook);
-        loginButton.setReadPermissions("email");
-        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
-            @Override
-            public void onSuccess(LoginResult loginResult) {
-                Toast.makeText(LoginActivity.this, R.string.login_successfull, Toast.LENGTH_SHORT).show();
-            }
+    private void initializeFacebook() {
 
-            @Override
-            public void onCancel() {
-                Toast.makeText(LoginActivity.this, R.string.login_cancelled, Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onError(FacebookException exception) {
-                Toast.makeText(LoginActivity.this, R.string.login_error, Toast.LENGTH_SHORT).show();
-            }
-        });
     }
-
 }
