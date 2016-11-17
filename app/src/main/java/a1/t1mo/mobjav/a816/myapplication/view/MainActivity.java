@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import java.util.List;
 import com.facebook.FacebookSdk;
@@ -32,6 +33,7 @@ import a1.t1mo.mobjav.a816.myapplication.model.pelicula.Pelicula;
 import a1.t1mo.mobjav.a816.myapplication.model.serie.Serie;
 import a1.t1mo.mobjav.a816.myapplication.utils.CambioDePagina;
 import a1.t1mo.mobjav.a816.myapplication.utils.FavChange;
+import a1.t1mo.mobjav.a816.myapplication.utils.Listener;
 import a1.t1mo.mobjav.a816.myapplication.utils.Tipo;
 import a1.t1mo.mobjav.a816.myapplication.view.detalle.DetallePager;
 import a1.t1mo.mobjav.a816.myapplication.view.feature.FeatureFragment;
@@ -61,6 +63,8 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        FacebookSdk.sdkInitialize(getApplicationContext());
+        AppEventsLogger.activateApp(this);
         setContentView(R.layout.activity_main);
 
         // Carga inicial de peliculas y series
@@ -69,11 +73,17 @@ public class MainActivity extends AppCompatActivity
         mFavoritos = mPeliculaController.getFavoritos();
         mSerieController = new SerieController(this);
         mSerieController.getSeriesPopulares(this);
+
         if(FacebookUtils.checkIfLogged()) {
-            FacebookUtils.requestUserInfo("name", this);;
+            FacebookUtils.requestUserInfo("name", new Listener<String>() {
+                @Override
+                public void done(String param) {
+                    Toast.makeText(MainActivity.this, "Welcome " + param, Toast.LENGTH_SHORT).show();
+                }
+            });;
         }
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.main_drawerLayout);
