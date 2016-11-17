@@ -15,6 +15,8 @@ import a1.t1mo.mobjav.a816.myapplication.utils.Tipo;
 public class FeaturePager extends Fragment {
     private MainActivity mainActivity;
     private FeaturePagerAdapter mAdapter;
+    private LayoutInflater mInflater;
+    private ViewGroup mContainer;
 
     @Override
     public void onAttach(Context context) {
@@ -31,7 +33,8 @@ public class FeaturePager extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_view_pager, container, false);
+
+        View view = inflater.inflate(R.layout.fragment_view_pager, mContainer, false);
         mAdapter = new FeaturePagerAdapter(getChildFragmentManager());
         ViewPager viewPager = (ViewPager) view.findViewById(R.id.viewPager);
         viewPager.setAdapter(mAdapter);
@@ -60,6 +63,7 @@ public class FeaturePager extends Fragment {
             public void onPageScrollStateChanged(int state) {
             }
         });
+
         return view;
     }
 

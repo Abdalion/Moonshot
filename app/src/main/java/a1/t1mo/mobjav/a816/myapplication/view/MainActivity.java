@@ -56,10 +56,26 @@ public class MainActivity extends AppCompatActivity
 
         // Carga inicial de peliculas y series
         mPeliculaController = new PeliculaController(this);
-        mPeliculaController.getPeliculasPopulares(this);
+        mPeliculaController.getPeliculasPopulares(new Controller.ListenerPeliculas() {
+            @Override
+            public void onFinish(List<Pelicula> peliculas) {
+                mPeliculas = peliculas;
+                if (mSeries != null) {
+                    startPager();
+                }
+            }
+        });
         mFavoritos = mPeliculaController.getFavoritos();
         mSerieController = new SerieController(this);
-        mSerieController.getSeriesPopulares(this);
+        mSerieController.getSeriesPopulares(new Controller.ListenerSeries() {
+            @Override
+            public void onDone(List<Serie> series) {
+                mSeries = series;
+                if (mPeliculas != null) {
+                    startPager();
+                }
+            }
+        });
 
 //        FacebookSdk.sdkInitialize(getApplicationContext());
 //        AppEventsLogger.activateApp(this);
@@ -77,6 +93,10 @@ public class MainActivity extends AppCompatActivity
         toggle.syncState();
 
         navigationViewSetup();
+
+    }
+
+    public void startPager() {
         mFeaturePager = new FeaturePager();
         commitFragment(mFeaturePager);
     }

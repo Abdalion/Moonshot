@@ -53,15 +53,19 @@ public class FeaturePagerAdapter extends FragmentStatePagerAdapter {
     }
 
     public void redrawFragment(Tipo tipo) {
+        int index = 0;
         switch (tipo) {
             case PELICULAS:
-                mArrayDeFragments[0].redraw();
+                index = 0;
                 break;
             case SERIES:
-                mArrayDeFragments[1].redraw();
+                index = 1;
                 break;
             case FAVORITOS:
-                mArrayDeFragments[2].redraw();
+                index = 2;
         }
+        mArrayDeFragments[index] = FeatureFragment.getFeatureFragment(tipo);
+        notifyDataSetChanged();
+        mArrayDeFragments[index].redraw();
     }
 }

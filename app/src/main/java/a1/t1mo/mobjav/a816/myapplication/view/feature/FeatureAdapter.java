@@ -44,7 +44,7 @@ public class FeatureAdapter extends RecyclerView.Adapter<FeatureAdapter.FeatureH
                 mFeatures = activity.getFavoritos();
                 break;
         }
-        Log.d("FeatureAdapter", "Tipo: " + tipo.titulo + " Cantidad cargada: " + mFeatures.size());
+        //Log.d("FeatureAdapter", "Tipo: " + tipo.titulo + " Cantidad cargada: " + mFeatures.size());
     }
 
     public void setListener(FeatureFragment.ListenerFeature listener) {
