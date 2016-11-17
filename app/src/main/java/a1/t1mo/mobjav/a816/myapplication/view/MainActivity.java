@@ -12,11 +12,13 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
+import com.facebook.login.LoginManager;
 
 import a1.t1mo.mobjav.a816.myapplication.R;
 import a1.t1mo.mobjav.a816.myapplication.data.PeliculaDAO;
@@ -93,11 +95,12 @@ public class MainActivity extends AppCompatActivity
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-
-        getMenuInflater().inflate(R.menu.menu_navigation_toolbar_opciones, menu);
-        if(FacebookUtils.checkIfLogged()) {
-            menu.findItem(R.id.guest).setIcon(R.drawable.config);
+        MenuInflater inflater = getMenuInflater();
+        if(!FacebookUtils.checkIfLogged()) {
+            inflater.inflate(R.menu.menu_navigation_toolbar_opciones, menu);
+        }
+        else if(FacebookUtils.checkIfLogged()) {
+            inflater.inflate(R.menu.menu_settings, menu);
         }
         return true;
     }
@@ -108,9 +111,15 @@ public class MainActivity extends AppCompatActivity
             if(!FacebookUtils.checkIfLogged()) {
                 startActivity(new Intent(this,LoginActivity.class));
             }
-            else{
-                Toast.makeText(MainActivity.this, "Deberia abrirse la config!", Toast.LENGTH_SHORT).show();
-            }
+        }
+        else if(id == R.id.menu_logout){
+            //ESTE LOGOUT ES SOLO DE FACEBOOK.
+            LoginManager.getInstance().logOut();
+            Toast.makeText(this, "Logged out!", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(this, MainActivity.class));
+        }
+        else if(id == R.id.menu_configuration) {
+            Toast.makeText(this, "Configuracion!", Toast.LENGTH_SHORT).show();
         }
 
         return super.onOptionsItemSelected(item);

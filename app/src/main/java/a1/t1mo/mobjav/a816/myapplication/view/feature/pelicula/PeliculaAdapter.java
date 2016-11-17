@@ -69,7 +69,7 @@ public class PeliculaAdapter extends RecyclerView.Adapter<PeliculaAdapter.Pelicu
         }
 
     }
-    //SI LAS PELIS TARDAN MUCHO EN CARGAR ESTO SE SACA.
+
     private void setScaleAnimation(View view) {
         ScaleAnimation anim = new ScaleAnimation(0.0f, 1.0f, 0.0f, 1.0f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
         anim.setDuration(FADE_DURATION);
@@ -83,6 +83,7 @@ public class PeliculaAdapter extends RecyclerView.Adapter<PeliculaAdapter.Pelicu
 
     @Override
     public void done(List<Pelicula> peliculas) {
+
         mPeliculas = peliculas;
         notifyDataSetChanged();
     }
