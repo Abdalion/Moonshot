@@ -4,11 +4,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import a1.t1mo.mobjav.a816.myapplication.R;
-import a1.t1mo.mobjav.a816.myapplication.model.Genre;
+import a1.t1mo.mobjav.a816.myapplication.utils.Tipo;
 import a1.t1mo.mobjav.a816.myapplication.view.favoritos.FavoritosFragment;
 import a1.t1mo.mobjav.a816.myapplication.view.feature.FeatureFragment;
 import a1.t1mo.mobjav.a816.myapplication.view.feature.pelicula.PeliculaFragment;
@@ -19,61 +15,47 @@ import a1.t1mo.mobjav.a816.myapplication.view.feature.serie.SerieFragment;
  */
 
 public class FeaturePagerAdapter extends FragmentStatePagerAdapter {
-    private Integer mGeneroPeliculas;
-    private Integer mGeneroSeries;
-    private Integer mTipoFavoritos;
-    private List<FeatureFragment> mListaDeFragments;
-    private PeliculaFragment mPeliculaFragment;
-    private SerieFragment mSerieFragment;
-    private FavoritosFragment mFavoritosFragment;
+    private FeatureFragment[] mListaDeFragments;
+    private MainActivity mMainActivity;
 
-    public FeaturePagerAdapter(FragmentManager fm) {
+    public FeaturePagerAdapter(FragmentManager fm, MainActivity activity) {
         super(fm);
-        mListaDeFragments = new ArrayList<>();
-        mGeneroPeliculas = Genre.PELICULA_ID.get(R.id.menu_peliculas_opcion_todas);
-        mGeneroSeries = Genre.SERIE_ID.get(R.id.menu_series_opcion_todas);
-        mTipoFavoritos = R.id.menu_favoritos_opcion_peliculas;
-        updateFragments();
-    }
-
-    public void cambiarGenero(FeaturePager.PaginaActual pagina, int genero) {
-        if (pagina == FeaturePager.PaginaActual.PELICULAS) {
-            mGeneroPeliculas = genero;
-        } else if(pagina == FeaturePager.PaginaActual.SERIES){
-            mGeneroSeries = genero;
-        } else {
-            mTipoFavoritos = genero;
-        }
-        updateFragments();
-    }
-
-    private void updateFragments() {
-        mListaDeFragments.clear();
-        mPeliculaFragment = PeliculaFragment.obtenerFragment(mGeneroPeliculas);
-        mSerieFragment = SerieFragment.obtenerFragment(mGeneroSeries);
-        mFavoritosFragment = FavoritosFragment.obtenerFragment(mTipoFavoritos);
-        mListaDeFragments.add(mPeliculaFragment);
-        mListaDeFragments.add(mSerieFragment);
-        mListaDeFragments.add(mFavoritosFragment);
-        notifyDataSetChanged();
+        mMainActivity = activity;
+        mListaDeFragments = new FeatureFragment[3];
+        mListaDeFragments[0] = FeatureFragment.getFeatureFragment(Tipo.PELICULAS);
+        mListaDeFragments[1] = FeatureFragment.getFeatureFragment(Tipo.SERIES);
+        mListaDeFragments[2] = FeatureFragment.getFeatureFragment(Tipo.FAVORITOS);
     }
 
     public CharSequence getPageTitle(int position){
-        return this.mListaDeFragments.get(position).getTitulo();
+        return mMainActivity.getTipo().titulo;
     }
 
     @Override
     public Fragment getItem(int position) {
-        return mListaDeFragments.get(position);
+        return mListaDeFragments[position];
     }
 
     @Override
     public int getCount() {
-        return mListaDeFragments.size();
+        return mListaDeFragments.length;
     }
 
     @Override
     public int getItemPosition(Object object) {
         return POSITION_NONE;
+    }
+
+    public void redrawFragment(Tipo tipo) {
+        switch (tipo) {
+            case PELICULAS:
+                mListaDeFragments[0].redraw();
+                break;
+            case SERIES:
+                mListaDeFragments[1].redraw();
+                break;
+            case FAVORITOS:
+                mListaDeFragments[2].redraw();
+        }
     }
 }

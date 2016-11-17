@@ -47,7 +47,7 @@ public class PeliculaController extends Controller {
         if (hasConnectivity(mContext)) {
             mPeliculaDAO.getPeliculasPopularesDeTmdb(listener);
         } else {
-            listener.done(mPeliculaDAO.getPeliculasPopularesDeRealm());
+            listener.onFinish(mPeliculaDAO.getPeliculasPopularesDeRealm());
         }
     }
 
@@ -55,7 +55,7 @@ public class PeliculaController extends Controller {
         if (hasConnectivity(mContext)) {
             mPeliculaDAO.getPeliculasPorGeneroDeTmdb(id, listener);
         } else {
-            listener.done(mPeliculaDAO.getPeliculasPorGeneroDeRealm(id));
+            listener.onFinish(mPeliculaDAO.getPeliculasPorGeneroDeRealm(id));
         }
     }
 

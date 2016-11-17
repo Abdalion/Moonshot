@@ -63,7 +63,7 @@ public class PeliculaDAO {
             public void onResponse(Call<Pelicula> call, Response<Pelicula> response) {
                 if (response.isSuccessful()) {
                     persistirEnRealm(response.body());
-                    listener.onFinish(response.body());
+                    listener.done(response.body());
                 } else {
                     Log.e(TAG, "El servidor respondio con el codigo " + response.code() +
                             " Llamando a getPeliculaDeTmdb(" + id + ")");
@@ -75,6 +75,10 @@ public class PeliculaDAO {
                 Log.e(TAG, "No se pudo obtener la pelicula.");
             }
         });
+    }
+
+    public Pelicula getPeliculaDeRealm(Integer id) {
+        return mRealm.where(Pelicula.class).equalTo("id", id).findFirst();
     }
 
     public void getPeliculasPopularesDeTmdb(final Controller.ListenerPeliculas listener) {
@@ -97,6 +101,10 @@ public class PeliculaDAO {
         });
     }
 
+    public List<Pelicula> getPeliculasPopularesDeRealm() {
+        return mRealm.where(Pelicula.class).findAllSorted("popularidad", Sort.DESCENDING);
+    }
+
     public void getPeliculasPorGeneroDeTmdb(final Integer id, final Controller.ListenerPeliculas listener) {
         sTmdbService.getPeliculasPorGenero(id).enqueue(new Callback<ListadoPeliculas>() {
             @Override
@@ -117,14 +125,6 @@ public class PeliculaDAO {
         });
     }
 
-    public Pelicula getPeliculaDeRealm(Integer id) {
-        return mRealm.where(Pelicula.class).equalTo("id", id).findFirst();
-    }
-
-    public List<Pelicula> getPeliculasPopularesDeRealm() {
-        return mRealm.where(Pelicula.class).findAllSorted("popularidad", Sort.DESCENDING);
-    }
-
     public List<Pelicula> getPeliculasPorGeneroDeRealm(Integer id) {
         return mRealm
                     .where(Pelicula.class)
@@ -133,7 +133,6 @@ public class PeliculaDAO {
     }
 
     public List<Pelicula> getFavoritos() {
-        Log.d(TAG, "Volviendo de getFavoritos " + mRealm.where(Pelicula.class).equalTo("favorito", true).count());
         return mRealm.where(Pelicula.class).equalTo("favorito", true).findAll();
 
     }

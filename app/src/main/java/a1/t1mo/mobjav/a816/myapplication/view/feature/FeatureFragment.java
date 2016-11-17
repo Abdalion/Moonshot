@@ -13,8 +13,7 @@ import android.view.ViewGroup;
 
 import a1.t1mo.mobjav.a816.myapplication.R;
 import a1.t1mo.mobjav.a816.myapplication.utils.Tipo;
-import a1.t1mo.mobjav.a816.myapplication.view.detalle.DetalleViewPager;
-import a1.t1mo.mobjav.a816.myapplication.view.feature.pelicula.PeliculaAdapter;
+import a1.t1mo.mobjav.a816.myapplication.view.MainActivity;
 
 /**
  * MoonShot App
@@ -25,16 +24,12 @@ import a1.t1mo.mobjav.a816.myapplication.view.feature.pelicula.PeliculaAdapter;
  */
 
 public class FeatureFragment extends Fragment {
-    private static final String ARGUMENT_GENERO = "Genero";
     private static final String ARGUMENT_TIPO = "Tipo";
-    ListenerFeature mListener;
-    RecyclerView mRecyclerView;
-    Tipo.Tipo mTipo;
-    Integer mGenero;
+    private MainActivity mMainActivity;
+    private FeatureAdapter mAdapter;
 
-    public static FeatureFragment obtenerFragment(Tipo.Tipo tipo, Integer genero) {
+    public static FeatureFragment getFeatureFragment(Tipo tipo) {
         Bundle bundle = new Bundle();
-        bundle.putInt(ARGUMENT_GENERO, genero);
         bundle.putSerializable(ARGUMENT_TIPO, tipo);
         FeatureFragment fragment = new FeatureFragment();
         fragment.setArguments(bundle);
@@ -49,7 +44,7 @@ public class FeatureFragment extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         if (context instanceof Activity) {
-            mListener = (ListenerFeature) context;
+            mMainActivity = (MainActivity) context;
         }
     }
 
@@ -58,29 +53,28 @@ public class FeatureFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         Bundle bundle = getArguments();
-        mGenero = bundle.getInt(ARGUMENT_GENERO);
-        mTipo = (Tipo.Tipo) bundle.getSerializable(ARGUMENT_TIPO);
-        PeliculaAdapter peliculaAdapter = new PeliculaAdapter(getContext()));
+        Tipo tipo = (Tipo) bundle.getSerializable(ARGUMENT_TIPO);
+        mAdapter = new FeatureAdapter(mMainActivity, tipo);
+        mAdapter.setListener(mMainActivity);
         View view = inflater.inflate(R.layout.fragment_grilla, container, false);
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.rv_grilla);
-        mRecyclerView.addItemDecoration(new SpacesItemDecoration(4));
-        mRecyclerView.setHasFixedSize(true);
-        peliculaAdapter.setListener(mListenerPelicula);
-        mRecyclerView.setAdapter(peliculaAdapter);
+        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.rv_grilla);
+        recyclerView.addItemDecoration(new SpacesItemDecoration(4));
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setAdapter(mAdapter);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 3);
-        mRecyclerView.setLayoutManager(gridLayoutManager);
-        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+        recyclerView.setLayoutManager(gridLayoutManager);
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
-            public void onScrolled(RecyclerView mRecyclerView, int dx, int dy) {
-                super.onScrolled(FeatureFragment.mRecyclerView, dx, dy);
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
 
             }
         });
         return view;
     }
 
-    public CharSequence getTitulo() {
-        return mTipo.titulo;
+    public void redraw() {
+        mAdapter.notifyDataSetChanged();
     }
 
     public class SpacesItemDecoration extends RecyclerView.ItemDecoration {
@@ -107,6 +101,6 @@ public class FeatureFragment extends Fragment {
     }
 
     public interface ListenerFeature {
-        void onClickFeature(Integer posicion, Integer genero, DetalleViewPager.Tipo tipo);
+        void onClickFeature(Integer posicion);
     }
 }

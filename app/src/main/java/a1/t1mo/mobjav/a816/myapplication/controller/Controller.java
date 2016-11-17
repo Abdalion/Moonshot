@@ -4,6 +4,8 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
+import java.util.List;
+
 import a1.t1mo.mobjav.a816.myapplication.model.pelicula.Pelicula;
 import a1.t1mo.mobjav.a816.myapplication.model.serie.Serie;
 import io.realm.RealmList;
@@ -26,10 +28,10 @@ public abstract class Controller {
     }
 
     public interface ListenerPeliculas {
-        RealmList<Pelicula> onFinish();
+        void onFinish(List<Pelicula> peliculas);
     }
 
     public interface ListenerSeries {
-        RealmList<Serie> onFinish();
+        void onDone(List<Serie> series);
     }
 }

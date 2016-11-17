@@ -13,9 +13,8 @@ import android.view.ViewGroup;
 import a1.t1mo.mobjav.a816.myapplication.R;
 import a1.t1mo.mobjav.a816.myapplication.utils.Tipo;
 
-public class FeaturePager extends Fragment implements MainActivity.CallBackCambioGenero {
+public class FeaturePager extends Fragment {
     private MainActivity mainActivity;
-    private Tipo mTipo;
     private FeaturePagerAdapter mAdapter;
 
     @Override
@@ -33,9 +32,8 @@ public class FeaturePager extends Fragment implements MainActivity.CallBackCambi
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        mTipo = Tipo.PELICULAS;
         View view = inflater.inflate(R.layout.fragment_view_pager, container, false);
-        mAdapter = new FeaturePagerAdapter(getChildFragmentManager());
+        mAdapter = new FeaturePagerAdapter(getChildFragmentManager(), mainActivity);
         ViewPager viewPager = (ViewPager) view.findViewById(R.id.viewPager);
         viewPager.setAdapter(mAdapter);
 
@@ -49,13 +47,14 @@ public class FeaturePager extends Fragment implements MainActivity.CallBackCambi
 
             @Override
             public void onPageSelected(int position) {
-                if(position == 0)
-                    mTipo = Tipo.PELICULAS;
-                else if(position == 1)
-                    mTipo = Tipo.SERIES;
-                else if(position == 2)
-                    mTipo = Tipo.FAVORITOS;
-                mainActivity.onCambioDePagina(mTipo);
+                Tipo tipo;
+                if (position == 0)
+                    tipo = Tipo.PELICULAS;
+                else if (position == 1)
+                    tipo = Tipo.SERIES;
+                else
+                    tipo = Tipo.FAVORITOS;
+                mainActivity.onCambioDePagina(tipo);
             }
 
             @Override
@@ -65,12 +64,7 @@ public class FeaturePager extends Fragment implements MainActivity.CallBackCambi
         return view;
     }
 
-    @Override
-    public void callBackCambioGenero(int id) {
-        mAdapter.cambiarGenero(paginaActual, id);
-    }
-
-    public void redrawFragment() {
-        mAdapter.notifyDataSetChanged();
+    public void redrawFragment(Tipo tipo) {
+        mAdapter.redrawFragment(tipo);
     }
 }
