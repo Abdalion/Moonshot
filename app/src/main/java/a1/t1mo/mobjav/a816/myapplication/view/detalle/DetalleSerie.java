@@ -59,6 +59,9 @@ public class DetalleSerie extends DetalleFeature {
             }
         });
 
+        TextView textViewRating = (TextView) view.findViewById(R.id.fragment_detalle_tv_rating);
+        textViewRating.setText(mSerie.getPuntajePromedio().toString());
+
         TextView textViewNombre = (TextView) view.findViewById(R.id.fragment_detalle_titulo);
         textViewNombre.setText(mSerie.getNombre());
 
