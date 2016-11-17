@@ -1,6 +1,5 @@
 package a1.t1mo.mobjav.a816.myapplication.view;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -20,7 +19,7 @@ public class FeaturePager extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof Activity) {
+        if (context instanceof MainActivity) {
             mainActivity = (MainActivity) context;
         }
     }
@@ -33,7 +32,7 @@ public class FeaturePager extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_view_pager, container, false);
-        mAdapter = new FeaturePagerAdapter(getChildFragmentManager(), mainActivity);
+        mAdapter = new FeaturePagerAdapter(getChildFragmentManager());
         ViewPager viewPager = (ViewPager) view.findViewById(R.id.viewPager);
         viewPager.setAdapter(mAdapter);
 

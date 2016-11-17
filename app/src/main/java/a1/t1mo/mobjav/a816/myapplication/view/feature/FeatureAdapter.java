@@ -1,6 +1,7 @@
 package a1.t1mo.mobjav.a816.myapplication.view.feature;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,6 +44,7 @@ public class FeatureAdapter extends RecyclerView.Adapter<FeatureAdapter.FeatureH
                 mFeatures = activity.getFavoritos();
                 break;
         }
+        Log.d("FeatureAdapter", "Tipo: " + tipo.titulo + " Cantidad cargada: " + mFeatures.size());
     }
 
     public void setListener(FeatureFragment.ListenerFeature listener) {
@@ -84,7 +86,7 @@ public class FeatureAdapter extends RecyclerView.Adapter<FeatureAdapter.FeatureH
         public FeatureHolder(View itemView) {
             super(itemView);
             itemView.setOnClickListener(this);
-            mImagen = (ImageView) itemView.findViewById(R.id.img_pelicula);
+            mImagen = (ImageView) itemView.findViewById(R.id.img_feature);
         }
 
         private void bindFeature(Feature feature) {

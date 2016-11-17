@@ -1,5 +1,6 @@
 package a1.t1mo.mobjav.a816.myapplication.view.detalle;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -8,7 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import a1.t1mo.mobjav.a816.myapplication.R;
-import a1.t1mo.mobjav.a816.myapplication.utils.Tipo;
+import a1.t1mo.mobjav.a816.myapplication.model.pelicula.Pelicula;
+import a1.t1mo.mobjav.a816.myapplication.view.MainActivity;
 
 /**
  * MoonShot App
@@ -19,12 +21,11 @@ import a1.t1mo.mobjav.a816.myapplication.utils.Tipo;
  */
 
 public class DetallePager extends Fragment {
-    public static final String ARGUMENT_TIPO = "Tipo";
+    private MainActivity mMainActivity;
     public static final String ARGUMENT_POSICION = "Posicion";
 
-    public static DetallePager getDetallePager(Tipo tipo, Integer posicion) {
+    public static DetallePager getDetallePager(Integer posicion) {
         Bundle bundle = new Bundle();
-        bundle.putSerializable(ARGUMENT_TIPO, tipo);
         bundle.putInt(ARGUMENT_POSICION, posicion);
         DetallePager pager = new DetallePager();
         pager.setArguments(bundle);
@@ -36,14 +37,38 @@ public class DetallePager extends Fragment {
     }
 
     @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof MainActivity) {
+            mMainActivity = (MainActivity) context;
+        }
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         Bundle bundle = getArguments();
         Integer posicion = bundle.getInt(ARGUMENT_POSICION);
-        Tipo tipo = (Tipo) bundle.getSerializable(ARGUMENT_TIPO);
         View view = inflater.inflate(R.layout.fragment_view_pager, container, false);
         ViewPager viewPager = (ViewPager) view.findViewById(R.id.viewPager);
-        viewPager.setAdapter(new DetallePagerAdapter(getChildFragmentManager(), tipo));
+        switch (mMainActivity.getTipo()) {
+            case PELICULAS:
+                viewPager.setAdapter(new DetallePeliculaAdapter(getChildFragmentManager(),
+                        mMainActivity.getPeliculas()));
+                break;
+            case SERIES:
+                viewPager.setAdapter(new DetalleSerieAdapter(getChildFragmentManager(),
+                        mMainActivity.getSeries()));
+                break;
+            case FAVORITOS:
+                if (mMainActivity.getFavoritos().get(0) instanceof Pelicula) { // BAD VOODOO
+                    viewPager.setAdapter(new DetallePeliculaAdapter(getChildFragmentManager(),
+                            mMainActivity.getPeliculas()));
+                } else {
+                    viewPager.setAdapter(new DetalleSerieAdapter(getChildFragmentManager(),
+                            mMainActivity.getSeries()));
+                }
+        }
         viewPager.setCurrentItem(posicion);
         return view;
     }

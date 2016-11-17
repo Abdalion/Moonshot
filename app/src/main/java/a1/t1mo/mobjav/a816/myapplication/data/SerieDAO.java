@@ -196,6 +196,19 @@ public class SerieDAO {
         });
     }
 
+    public void setFavorito(final int id, final boolean isFav) {
+        mRealm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                Serie serie = realm.where(Serie.class).equalTo("id", id).findFirst();
+                if (serie != null) {
+                    serie.setFavorito(isFav);
+                    realm.copyToRealmOrUpdate(serie);
+                }
+            }
+        });
+    }
+
     public List<Serie> getFavoritos() {
         return mRealm.where(Serie.class).equalTo("favorito", true).findAll();
     }

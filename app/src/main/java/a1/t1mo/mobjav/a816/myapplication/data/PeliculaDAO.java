@@ -207,4 +207,17 @@ public class PeliculaDAO {
             }
         });
     }
+
+    public void setFavorito(final Integer id, final boolean isFav) {
+        mRealm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                Pelicula pelicula = realm.where(Pelicula.class).equalTo("id", id).findFirst();
+                if (pelicula != null) {
+                    pelicula.setFavorito(isFav);
+                    realm.copyToRealmOrUpdate(pelicula);
+                }
+            }
+        });
+    }
 }

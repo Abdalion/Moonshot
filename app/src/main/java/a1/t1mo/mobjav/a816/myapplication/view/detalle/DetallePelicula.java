@@ -1,7 +1,9 @@
 package a1.t1mo.mobjav.a816.myapplication.view.detalle;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,20 +18,28 @@ import com.like.OnLikeListener;
 import a1.t1mo.mobjav.a816.myapplication.R;
 import a1.t1mo.mobjav.a816.myapplication.data.services.TmdbService;
 import a1.t1mo.mobjav.a816.myapplication.model.pelicula.Pelicula;
+import a1.t1mo.mobjav.a816.myapplication.utils.FavChange;
 
-public class DetallePelicula extends DetalleFeature {
+public class DetallePelicula extends Fragment {
     private Pelicula mPelicula;
-    private DetalleFeature.Likeable mCallback;
+    private FavChange mFavCallback;
+
+    public static DetallePelicula getDetalle(Pelicula pelicula) {
+        DetallePelicula detallePelicula = new DetallePelicula();
+        detallePelicula.mPelicula = pelicula;
+        return detallePelicula;
+    }
 
     public DetallePelicula() {
         // Required empty public constructor
     }
 
-    public static DetallePelicula getDetallePelicula(Pelicula pelicula, DetalleFeature.Likeable cb) {
-        DetallePelicula detallePelicula = new DetallePelicula();
-        detallePelicula.mPelicula = pelicula;
-        detallePelicula.mCallback = cb;
-        return detallePelicula;
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof FavChange) {
+            mFavCallback = (FavChange) context;
+        }
     }
 
     @Override
@@ -44,14 +54,14 @@ public class DetallePelicula extends DetalleFeature {
         likeButton.setOnLikeListener(new OnLikeListener() {
             @Override
             public void liked(LikeButton likeButton) {
-                mCallback.onLike(mPelicula.getId());
+                mFavCallback.onFavChange(mPelicula.getId(), true);
                 Snackbar.make(getView(), "Agregado a favoritos", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
 
             @Override
             public void unLiked(LikeButton likeButton) {
-                mCallback.onUnlike(mPelicula.getId());
+                mFavCallback.onFavChange(mPelicula.getId(), false);
                 Snackbar.make(getView(), "Eliminado de favoritos", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
 

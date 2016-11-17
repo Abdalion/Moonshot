@@ -12,30 +12,39 @@ import a1.t1mo.mobjav.a816.myapplication.view.feature.FeatureFragment;
  */
 
 public class FeaturePagerAdapter extends FragmentStatePagerAdapter {
-    private FeatureFragment[] mListaDeFragments;
-    private MainActivity mMainActivity;
+    private FeatureFragment[] mArrayDeFragments;
 
-    public FeaturePagerAdapter(FragmentManager fm, MainActivity activity) {
+    public FeaturePagerAdapter(FragmentManager fm) {
         super(fm);
-        mMainActivity = activity;
-        mListaDeFragments = new FeatureFragment[3];
-        mListaDeFragments[0] = FeatureFragment.getFeatureFragment(Tipo.PELICULAS);
-        mListaDeFragments[1] = FeatureFragment.getFeatureFragment(Tipo.SERIES);
-        mListaDeFragments[2] = FeatureFragment.getFeatureFragment(Tipo.FAVORITOS);
+        mArrayDeFragments = new FeatureFragment[3];
+        mArrayDeFragments[0] = FeatureFragment.getFeatureFragment(Tipo.PELICULAS);
+        mArrayDeFragments[1] = FeatureFragment.getFeatureFragment(Tipo.SERIES);
+        mArrayDeFragments[2] = FeatureFragment.getFeatureFragment(Tipo.FAVORITOS);
     }
 
-    public CharSequence getPageTitle(int position){
-        return mMainActivity.getTipo().titulo;
+    public CharSequence getPageTitle(int position) {
+        String titulo;
+        switch (position) {
+            case 0:
+                titulo = "Peliculas";
+                break;
+            case 1:
+                titulo = "Series";
+                break;
+            default:
+                titulo = "Favoritos";
+        }
+        return titulo;
     }
 
     @Override
     public Fragment getItem(int position) {
-        return mListaDeFragments[position];
+        return mArrayDeFragments[position];
     }
 
     @Override
     public int getCount() {
-        return mListaDeFragments.length;
+        return mArrayDeFragments.length;
     }
 
     @Override
@@ -46,13 +55,13 @@ public class FeaturePagerAdapter extends FragmentStatePagerAdapter {
     public void redrawFragment(Tipo tipo) {
         switch (tipo) {
             case PELICULAS:
-                mListaDeFragments[0].redraw();
+                mArrayDeFragments[0].redraw();
                 break;
             case SERIES:
-                mListaDeFragments[1].redraw();
+                mArrayDeFragments[1].redraw();
                 break;
             case FAVORITOS:
-                mListaDeFragments[2].redraw();
+                mArrayDeFragments[2].redraw();
         }
     }
 }

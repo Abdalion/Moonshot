@@ -36,7 +36,7 @@ public class PeliculaController extends Controller {
     }
 
     public void getPeliculas(int id, ListenerPeliculas listener) {
-        if (id == Genre.PELICULA_ID.get(R.id.menu_peliculas_opcion_todas)) {
+        if (id == R.id.menu_peliculas_opcion_todas) {
             getPeliculasPopulares(listener);
         } else {
             getPeliculasPorGenero(Genre.PELICULA_ID.get(id), listener);
@@ -65,6 +65,10 @@ public class PeliculaController extends Controller {
 
     public void quitarDeFavoritos(final Integer id) {
         mPeliculaDAO.quitarDeFavoritos(id);
+    }
+
+    public void setFavorito(final int id, final boolean isFav) {
+        mPeliculaDAO.setFavorito(id, isFav);
     }
 
     public List<Pelicula> getFavoritos() {

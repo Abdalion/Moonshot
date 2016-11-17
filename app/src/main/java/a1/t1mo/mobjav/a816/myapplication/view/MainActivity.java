@@ -9,6 +9,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 
 import java.util.List;
@@ -23,6 +24,7 @@ import a1.t1mo.mobjav.a816.myapplication.model.Feature;
 import a1.t1mo.mobjav.a816.myapplication.model.pelicula.Pelicula;
 import a1.t1mo.mobjav.a816.myapplication.model.serie.Serie;
 import a1.t1mo.mobjav.a816.myapplication.utils.CambioDePagina;
+import a1.t1mo.mobjav.a816.myapplication.utils.FavChange;
 import a1.t1mo.mobjav.a816.myapplication.utils.Tipo;
 import a1.t1mo.mobjav.a816.myapplication.view.detalle.DetallePager;
 import a1.t1mo.mobjav.a816.myapplication.view.feature.FeatureFragment;
@@ -35,7 +37,7 @@ import a1.t1mo.mobjav.a816.myapplication.view.feature.FeatureFragment;
  */
 
 public class MainActivity extends AppCompatActivity
-        implements FeatureFragment.ListenerFeature, CambioDePagina,
+        implements FeatureFragment.ListenerFeature, CambioDePagina, FavChange,
         Controller.ListenerSeries, Controller.ListenerPeliculas {
 
     private NavigationView navigationView;
@@ -43,7 +45,7 @@ public class MainActivity extends AppCompatActivity
     private List<Pelicula> mPeliculas;
     private List<Serie> mSeries;
     private List<? extends Feature> mFavoritos;
-    private Tipo mTipo;
+    private Tipo mTipo = Tipo.PELICULAS;
     private SerieController mSerieController;
     private PeliculaController mPeliculaController;
 
@@ -132,11 +134,12 @@ public class MainActivity extends AppCompatActivity
         } else {
             navigationView.inflateMenu(R.menu.menu_navigation_favoritos);
         }
+        Log.d("Main", "Cambio a pagina de " + mTipo.titulo);
     }
 
     @Override
     public void onClickFeature(Integer posicion) {
-        commitFragment(DetallePager.getDetallePager(mTipo, posicion));
+        commitFragment(DetallePager.getDetallePager(posicion));
     }
 
     private void commitFragment(Fragment fm) {
@@ -150,13 +153,24 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onFinish(List<Pelicula> peliculas) {
         mPeliculas = peliculas;
+        Log.d("Main", "Cargadas las peliculas. Cantidad = " + mPeliculas.size());
         mFeaturePager.redrawFragment(Tipo.PELICULAS);
     }
 
     @Override
     public void onDone(List<Serie> series) {
         mSeries = series;
+        Log.d("Main", "Cargadas las series. Cantidad = " + mSeries.size());
         mFeaturePager.redrawFragment(Tipo.SERIES);
+    }
+
+    @Override
+    public void onFavChange(int id, boolean isFav) {
+        if (mTipo == Tipo.PELICULAS) {
+            mPeliculaController.setFavorito(id, isFav);
+        } else {
+            mSerieController.setFavorito(id, isFav);
+        }
     }
 
     public Tipo getTipo() {

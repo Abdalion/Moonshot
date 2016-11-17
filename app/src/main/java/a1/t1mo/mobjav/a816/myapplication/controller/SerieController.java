@@ -30,7 +30,7 @@ public class SerieController extends Controller {
     }
 
     public void getSeries(int id, ListenerSeries listener) {
-        if (id == Genre.SERIE_ID.get(R.id.menu_series_opcion_todas)) {
+        if (id == R.id.menu_series_opcion_todas) {
             getSeriesPopulares(listener);
         } else {
             getSeriesPorGenero(Genre.SERIE_ID.get(id), listener);
@@ -59,6 +59,10 @@ public class SerieController extends Controller {
 
     public void quitarDeFavoritos(final Integer id) {
         mSerieDAO.quitarDeFavoritos(id);
+    }
+
+    public void setFavorito(final int id, final boolean isFav) {
+        mSerieDAO.setFavorito(id, isFav);
     }
 
     public List<Serie> getFavoritos() {

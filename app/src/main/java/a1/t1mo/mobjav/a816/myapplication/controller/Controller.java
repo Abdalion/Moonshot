@@ -8,7 +8,6 @@ import java.util.List;
 
 import a1.t1mo.mobjav.a816.myapplication.model.pelicula.Pelicula;
 import a1.t1mo.mobjav.a816.myapplication.model.serie.Serie;
-import io.realm.RealmList;
 
 
 /**
