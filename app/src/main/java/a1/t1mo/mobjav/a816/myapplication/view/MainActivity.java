@@ -48,11 +48,9 @@ public class MainActivity extends AppCompatActivity
         FacebookSdk.sdkInitialize(getApplicationContext());
         AppEventsLogger.activateApp(this);
         setContentView(R.layout.activity_main);
-
         if(FacebookUtils.checkIfLogged()) {
             FacebookUtils.requestUserInfo("name", this);;
         }
-
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -96,14 +94,23 @@ public class MainActivity extends AppCompatActivity
 
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
+
         getMenuInflater().inflate(R.menu.menu_navigation_toolbar_opciones, menu);
+        if(FacebookUtils.checkIfLogged()) {
+            menu.findItem(R.id.guest).setIcon(R.drawable.config);
+        }
         return true;
     }
 
     public boolean onOptionsItemSelected(MenuItem item){
         int id = item.getItemId();
         if (id == R.id.guest) {
-            startActivity(new Intent(this,LoginActivity.class));
+            if(!FacebookUtils.checkIfLogged()) {
+                startActivity(new Intent(this,LoginActivity.class));
+            }
+            else{
+                Toast.makeText(MainActivity.this, "Deberia abrirse la config!", Toast.LENGTH_SHORT).show();
+            }
         }
 
         return super.onOptionsItemSelected(item);

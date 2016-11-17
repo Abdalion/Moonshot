@@ -3,6 +3,8 @@ package a1.t1mo.mobjav.a816.myapplication.view.login;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import a1.t1mo.mobjav.a816.myapplication.R;
+import a1.t1mo.mobjav.a816.myapplication.view.MainActivity;
+
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -44,6 +46,7 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(LoginResult loginResult) {
                         Log.d("Success", "Login");
+                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
                         finish();
 
                     }
@@ -57,8 +60,6 @@ public class LoginActivity extends AppCompatActivity {
                         Toast.makeText(LoginActivity.this, exception.getMessage(), Toast.LENGTH_LONG).show();
                     }
                 });
-
-        initializeFacebook();
     }
 
     @Override
@@ -69,7 +70,4 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    private void initializeFacebook() {
-
-    }
 }
