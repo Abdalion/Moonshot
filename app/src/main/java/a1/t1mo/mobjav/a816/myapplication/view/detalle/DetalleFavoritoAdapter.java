@@ -26,12 +26,12 @@ public class DetalleFavoritoAdapter extends FragmentStatePagerAdapter
     private List<? extends Feature> mListaDeFavoritos;
     private PeliculaController mPeliculaController;
     private SerieController mSerieController;
-    private DetalleViewPager.Tipo mTipo;
+    private DetallePager.Tipo mTipo;
 
-    public DetalleFavoritoAdapter(FragmentManager fm, Context ctx, DetalleViewPager.Tipo tipo) {
+    public DetalleFavoritoAdapter(FragmentManager fm, Context ctx, DetallePager.Tipo tipo) {
         super(fm);
         mTipo = tipo;
-        if (mTipo == DetalleViewPager.Tipo.PELICULA) {
+        if (mTipo == DetallePager.Tipo.PELICULA) {
             mPeliculaController = new PeliculaController(ctx);
             mListaDeFavoritos = mPeliculaController.getFavoritos();
         } else {
@@ -42,7 +42,7 @@ public class DetalleFavoritoAdapter extends FragmentStatePagerAdapter
 
     @Override
     public Fragment getItem(int position) {
-        if (mTipo == DetalleViewPager.Tipo.PELICULA) {
+        if (mTipo == DetallePager.Tipo.PELICULA) {
             return DetallePelicula.getDetallePelicula((Pelicula) (mListaDeFavoritos.get(position)), this);
         } else {
             return DetalleSerie.getDetalleSerie((Serie) (mListaDeFavoritos.get(position)), this);
@@ -56,7 +56,7 @@ public class DetalleFavoritoAdapter extends FragmentStatePagerAdapter
 
     @Override
     public void onLike(Integer featureID) {
-        if (mTipo == DetalleViewPager.Tipo.PELICULA) {
+        if (mTipo == DetallePager.Tipo.PELICULA) {
             mPeliculaController.agregarAFavoritos(featureID);
         } else {
             mSerieController.agregarAFavoritos(featureID);
@@ -65,7 +65,7 @@ public class DetalleFavoritoAdapter extends FragmentStatePagerAdapter
 
     @Override
     public void onUnlike(Integer featureID) {
-        if (mTipo == DetalleViewPager.Tipo.PELICULA) {
+        if (mTipo == DetallePager.Tipo.PELICULA) {
             mPeliculaController.quitarDeFavoritos(featureID);
         } else {
             mSerieController.quitarDeFavoritos(featureID);

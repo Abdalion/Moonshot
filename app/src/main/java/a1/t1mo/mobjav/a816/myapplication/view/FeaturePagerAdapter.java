@@ -5,10 +5,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
 import a1.t1mo.mobjav.a816.myapplication.utils.Tipo;
-import a1.t1mo.mobjav.a816.myapplication.view.favoritos.FavoritosFragment;
 import a1.t1mo.mobjav.a816.myapplication.view.feature.FeatureFragment;
-import a1.t1mo.mobjav.a816.myapplication.view.feature.pelicula.PeliculaFragment;
-import a1.t1mo.mobjav.a816.myapplication.view.feature.serie.SerieFragment;
 
 /**
  * Created by dh-mob-tt on 31/10/16.

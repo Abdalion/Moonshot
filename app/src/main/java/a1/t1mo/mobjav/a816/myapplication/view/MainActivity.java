@@ -4,17 +4,12 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.widget.Toast;
-
-import com.facebook.FacebookSdk;
-import com.facebook.appevents.AppEventsLogger;
 
 import java.util.List;
 
@@ -28,11 +23,9 @@ import a1.t1mo.mobjav.a816.myapplication.model.Feature;
 import a1.t1mo.mobjav.a816.myapplication.model.pelicula.Pelicula;
 import a1.t1mo.mobjav.a816.myapplication.model.serie.Serie;
 import a1.t1mo.mobjav.a816.myapplication.utils.CambioDePagina;
-import a1.t1mo.mobjav.a816.myapplication.utils.Listener;
 import a1.t1mo.mobjav.a816.myapplication.utils.Tipo;
-import a1.t1mo.mobjav.a816.myapplication.view.detalle.DetalleViewPager;
+import a1.t1mo.mobjav.a816.myapplication.view.detalle.DetallePager;
 import a1.t1mo.mobjav.a816.myapplication.view.feature.FeatureFragment;
-import a1.t1mo.mobjav.a816.myapplication.view.login.facebook.FacebookUtils;
 
 /**
  * MoonShot App
@@ -124,6 +117,7 @@ public class MainActivity extends AppCompatActivity
                 } else {
                     mFavoritos = mSerieController.getFavoritos();
                 }
+                mFeaturePager.redrawFragment(Tipo.FAVORITOS);
         }
     }
 
@@ -142,13 +136,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onClickFeature(Integer posicion) {
-//        Bundle bundle = new Bundle();
-//        bundle.putSerializable(DetalleViewPager.ARGUMENT_TIPO, tipo);
-//        bundle.putInt(DetalleViewPager.ARGUMENT_POSICION, posicion);
-//        bundle.putInt(DetalleViewPager.ARGUMENT_GENERO, genero);
-//        DetalleViewPager detalle = new DetalleViewPager();
-//        detalle.setArguments(bundle);
-//        commitFragment(detalle);
+        commitFragment(DetallePager.getDetallePager(mTipo, posicion));
     }
 
     private void commitFragment(Fragment fm) {
