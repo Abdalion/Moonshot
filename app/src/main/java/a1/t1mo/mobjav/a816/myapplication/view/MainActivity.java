@@ -56,26 +56,10 @@ public class MainActivity extends AppCompatActivity
 
         // Carga inicial de peliculas y series
         mPeliculaController = new PeliculaController(this);
-        mPeliculaController.getPeliculasPopulares(new Controller.ListenerPeliculas() {
-            @Override
-            public void onFinish(List<Pelicula> peliculas) {
-                mPeliculas = peliculas;
-                if (mSeries != null) {
-                    startPager();
-                }
-            }
-        });
+        mPeliculaController.getPeliculasPopulares(this);
         mFavoritos = mPeliculaController.getFavoritos();
         mSerieController = new SerieController(this);
-        mSerieController.getSeriesPopulares(new Controller.ListenerSeries() {
-            @Override
-            public void onDone(List<Serie> series) {
-                mSeries = series;
-                if (mPeliculas != null) {
-                    startPager();
-                }
-            }
-        });
+        mSerieController.getSeriesPopulares(this);
 
 //        FacebookSdk.sdkInitialize(getApplicationContext());
 //        AppEventsLogger.activateApp(this);
@@ -91,16 +75,12 @@ public class MainActivity extends AppCompatActivity
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
-
+        mFeaturePager = new FeaturePager();
+        commitFragment(mFeaturePager);
         navigationViewSetup();
 
     }
-
-    public void startPager() {
-        mFeaturePager = new FeaturePager();
-        commitFragment(mFeaturePager);
-    }
-
+    
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.main_drawerLayout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
