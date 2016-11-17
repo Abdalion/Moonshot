@@ -2,13 +2,11 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-
-    >
+    android:layout_height="wrap_content">
 
     <ImageView
-        android:id="@+id/img_pelicula"
+        android:id="@+id/img_feature"
         android:layout_width="@dimen/poster_width_small"
-        android:layout_height="@dimen/poster_height_small" />
+        android:layout_height="@dimen/poster_height_small"/>
 
-    </RelativeLayout>
+</RelativeLayout>

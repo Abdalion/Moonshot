@@ -4,6 +4,11 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
+import java.util.List;
+
+import a1.t1mo.mobjav.a816.myapplication.model.pelicula.Pelicula;
+import a1.t1mo.mobjav.a816.myapplication.model.serie.Serie;
+
 
 /**
  * MoonShot App
@@ -21,4 +26,11 @@ public abstract class Controller {
         return activeNetwork != null && activeNetwork.isConnectedOrConnecting();
     }
 
+    public interface ListenerPeliculas {
+        void onFinish(List<Pelicula> peliculas);
+    }
+
+    public interface ListenerSeries {
+        void onDone(List<Serie> series);
+    }
 }

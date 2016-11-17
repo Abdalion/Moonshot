@@ -4,7 +4,9 @@ import android.content.Context;
 
 import java.util.List;
 
+import a1.t1mo.mobjav.a816.myapplication.R;
 import a1.t1mo.mobjav.a816.myapplication.data.PeliculaDAO;
+import a1.t1mo.mobjav.a816.myapplication.model.Genre;
 import a1.t1mo.mobjav.a816.myapplication.model.pelicula.Pelicula;
 import a1.t1mo.mobjav.a816.myapplication.utils.Listener;
 
@@ -33,19 +35,27 @@ public class PeliculaController extends Controller {
         }
     }
 
-    public void getPeliculasPopulares(Listener<List<Pelicula>> listener) {
-        if (hasConnectivity(mContext)) {
-            mPeliculaDAO.getPeliculasPopularesDeTmdb(listener);
+    public void getPeliculas(int id, ListenerPeliculas listener) {
+        if (id == R.id.menu_peliculas_opcion_todas) {
+            getPeliculasPopulares(listener);
         } else {
-            listener.done(mPeliculaDAO.getPeliculasPopularesDeRealm());
+            getPeliculasPorGenero(Genre.PELICULA_ID.get(id), listener);
         }
     }
 
-    public void getPeliculasPorGenero(Integer id, Listener<List<Pelicula>> listener) {
+    public void getPeliculasPopulares(ListenerPeliculas listener) {
+        if (hasConnectivity(mContext)) {
+            mPeliculaDAO.getPeliculasPopularesDeTmdb(listener);
+        } else {
+            listener.onFinish(mPeliculaDAO.getPeliculasPopularesDeRealm());
+        }
+    }
+
+    public void getPeliculasPorGenero(Integer id, ListenerPeliculas listener) {
         if (hasConnectivity(mContext)) {
             mPeliculaDAO.getPeliculasPorGeneroDeTmdb(id, listener);
         } else {
-            listener.done(mPeliculaDAO.getPeliculasPorGeneroDeRealm(id));
+            listener.onFinish(mPeliculaDAO.getPeliculasPorGeneroDeRealm(id));
         }
     }
 
@@ -55,6 +65,10 @@ public class PeliculaController extends Controller {
 
     public void quitarDeFavoritos(final Integer id) {
         mPeliculaDAO.quitarDeFavoritos(id);
+    }
+
+    public void setFavorito(final int id, final boolean isFav) {
+        mPeliculaDAO.setFavorito(id, isFav);
     }
 
     public List<Pelicula> getFavoritos() {

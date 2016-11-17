@@ -5,6 +5,7 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
+import a1.t1mo.mobjav.a816.myapplication.controller.Controller;
 import a1.t1mo.mobjav.a816.myapplication.data.services.ServiceFactory;
 import a1.t1mo.mobjav.a816.myapplication.data.services.TmdbService;
 import a1.t1mo.mobjav.a816.myapplication.model.serie.ListadoSeries;
@@ -30,7 +31,7 @@ import retrofit2.Response;
 public class SerieDAO {
     private static final String TAG = SerieDAO.class.getSimpleName();
     private static TmdbService sTmdbService;
-    private static Realm sRealm;
+    private Realm mRealm;
     private static SerieDAO sInstance;
 
     private SerieDAO() {
@@ -40,7 +41,7 @@ public class SerieDAO {
                 .name("series.realm")
                 .deleteRealmIfMigrationNeeded()
                 .build();
-        sRealm = Realm.getInstance(config);
+        mRealm = Realm.getInstance(config);
     }
 
     public static SerieDAO getDAO() {
@@ -49,11 +50,11 @@ public class SerieDAO {
     }
 
     public static void closeRealm() {
-        if (sRealm != null) sRealm.close();
+        if (sInstance.mRealm != null) sInstance.mRealm.close();
     }
 
     public Boolean isPersisted(Integer id) {
-        return sRealm.where(Serie.class).equalTo("id", id).count() == 0;
+        return mRealm.where(Serie.class).equalTo("id", id).count() == 0;
     }
 
     public void getSerieDeTmdb(final Integer id, final Listener<Serie> listener) {
@@ -76,13 +77,17 @@ public class SerieDAO {
         });
     }
 
-    public void getSeriesPopularesDeTmdb(final Listener<List<Serie>> listener) {
+    public Serie getSerieDeRealm(Integer id) {
+        return mRealm.where(Serie.class).equalTo("id", id).findFirst();
+    }
+
+    public void getSeriesPopularesDeTmdb(final Controller.ListenerSeries listener) {
         sTmdbService.getSeriesPopulares().enqueue(new Callback<ListadoSeries>() {
             @Override
             public void onResponse(Call<ListadoSeries> call, Response<ListadoSeries> response) {
                 if (response.isSuccessful()) {
                     persistirEnRealm(response.body().getSeries());
-                    listener.done(response.body().getSeries());
+                    listener.onDone(response.body().getSeries());
                 } else {
                     Log.e(TAG, "El servidor respondio con el codigo " + response.code() +
                             " Llamando a getSeriesPopularesDeTmdb()");
@@ -96,13 +101,17 @@ public class SerieDAO {
         });
     }
 
-    public void getSeriesPorGeneroDeTmdb(final Integer id, final Listener<List<Serie>> listener) {
+    public List<Serie> getSeriesPopularesDeRealm() {
+        return mRealm.where(Serie.class).findAllSorted("popularidad", Sort.DESCENDING);
+    }
+
+    public void getSeriesPorGeneroDeTmdb(final Integer id, final Controller.ListenerSeries listener) {
         sTmdbService.getSeriesPorGenero(id).enqueue(new Callback<ListadoSeries>() {
             @Override
             public void onResponse(Call<ListadoSeries> call, Response<ListadoSeries> response) {
                 if (response.isSuccessful()) {
                     persistirEnRealm(response.body().getSeries());
-                    listener.done(response.body().getSeries());
+                    listener.onDone(response.body().getSeries());
                 } else {
                     Log.e(TAG, "El servidor respondio con el codigo " + response.code() +
                             " Llamando a getSeriesPorGeneroDeTmdb(" + id + ")");
@@ -116,16 +125,8 @@ public class SerieDAO {
         });
     }
 
-    public Serie getSerieDeRealm(Integer id) {
-        return sRealm.where(Serie.class).equalTo("id", id).findFirst();
-    }
-
-    public List<Serie> getSeriesPopularesDeRealm() {
-        return sRealm.where(Serie.class).findAllSorted("popularidad", Sort.DESCENDING);
-    }
-
     public List<Serie> getSeriesPorGeneroDeRealm(Integer id) {
-        return sRealm
+        return mRealm
                 .where(Serie.class)
                 .equalTo("generos.id", id)
                 .findAllSorted("popularidad", Sort.DESCENDING);
@@ -133,7 +134,7 @@ public class SerieDAO {
 
     private void persistirEnRealm(final Serie serie) {
         serie.setFavorito(false);
-        sRealm.executeTransaction(new Realm.Transaction() {
+        mRealm.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
                 realm.copyToRealmOrUpdate(serie);
@@ -142,7 +143,7 @@ public class SerieDAO {
     }
 
     private void persistirEnRealm(final RealmList<Serie> series) {
-        sRealm.executeTransactionAsync(new Realm.Transaction() {
+        mRealm.executeTransactionAsync(new Realm.Transaction() {
             @Override
             public void execute(Realm bgRealm) {
                 RealmResults<Serie> persistidas = bgRealm.where(Serie.class).findAll();
@@ -170,7 +171,7 @@ public class SerieDAO {
     }
 
     public void agregarAFavoritos(final Integer id) {
-        sRealm.executeTransaction(new Realm.Transaction() {
+        mRealm.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
                 Serie serie = realm.where(Serie.class).equalTo("id", id).findFirst();
@@ -183,7 +184,7 @@ public class SerieDAO {
     }
 
     public void quitarDeFavoritos(final Integer id) {
-        sRealm.executeTransaction(new Realm.Transaction() {
+        mRealm.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
                 Serie serie = realm.where(Serie.class).equalTo("id", id).findFirst();
@@ -195,7 +196,20 @@ public class SerieDAO {
         });
     }
 
+    public void setFavorito(final int id, final boolean isFav) {
+        mRealm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                Serie serie = realm.where(Serie.class).equalTo("id", id).findFirst();
+                if (serie != null) {
+                    serie.setFavorito(isFav);
+                    realm.copyToRealmOrUpdate(serie);
+                }
+            }
+        });
+    }
+
     public List<Serie> getFavoritos() {
-        return sRealm.where(Serie.class).equalTo("favorito", true).findAll();
+        return mRealm.where(Serie.class).equalTo("favorito", true).findAll();
     }
 }

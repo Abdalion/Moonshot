@@ -1,7 +1,9 @@
 package a1.t1mo.mobjav.a816.myapplication.view.detalle;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,20 +18,28 @@ import com.like.OnLikeListener;
 import a1.t1mo.mobjav.a816.myapplication.R;
 import a1.t1mo.mobjav.a816.myapplication.data.services.TmdbService;
 import a1.t1mo.mobjav.a816.myapplication.model.serie.Serie;
+import a1.t1mo.mobjav.a816.myapplication.utils.FavChange;
 
-public class DetalleSerie extends DetalleFeature {
+public class DetalleSerie extends Fragment {
     private Serie mSerie;
-    private DetalleFeature.Likeable mCallback;
+    private FavChange mFavCallback;
 
     public DetalleSerie() {
         // Required empty public constructor
     }
 
-    public static DetalleSerie getDetalleSerie(Serie serie, DetalleFeature.Likeable cb) {
+    public static DetalleSerie getDetalle(Serie serie) {
         DetalleSerie detalleSerie = new DetalleSerie();
         detalleSerie.mSerie = serie;
-        detalleSerie.mCallback = cb;
         return detalleSerie;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof FavChange) {
+            mFavCallback = (FavChange) context;
+        }
     }
 
     @Override
@@ -45,7 +55,7 @@ public class DetalleSerie extends DetalleFeature {
         likeButton.setOnLikeListener(new OnLikeListener() {
             @Override
             public void liked(LikeButton likeButton) {
-                mCallback.onLike(mSerie.getId());
+                mFavCallback.onFavChange(mSerie.getId(), true);
                 Snackbar.make(getView(), "Agregado A Favoritos", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
 
@@ -53,7 +63,7 @@ public class DetalleSerie extends DetalleFeature {
 
             @Override
             public void unLiked(LikeButton likeButton) {
-                mCallback.onUnlike(mSerie.getId());
+                mFavCallback.onFavChange(mSerie.getId(), false);
                 Snackbar.make(getView(), "Eliminado De Favoritos", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
