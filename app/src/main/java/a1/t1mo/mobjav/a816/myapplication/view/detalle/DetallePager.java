@@ -1,5 +1,6 @@
 package a1.t1mo.mobjav.a816.myapplication.view.detalle;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,7 +11,10 @@ import android.view.ViewGroup;
 
 import a1.t1mo.mobjav.a816.myapplication.R;
 import a1.t1mo.mobjav.a816.myapplication.model.pelicula.Pelicula;
+import a1.t1mo.mobjav.a816.myapplication.utils.Tipo;
 import a1.t1mo.mobjav.a816.myapplication.view.MainActivity;
+
+import static a1.t1mo.mobjav.a816.myapplication.utils.Tipo.*;
 
 /**
  * MoonShot App
@@ -36,12 +40,11 @@ public class DetallePager extends Fragment {
         // Required empty public constructor
     }
 
+
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof MainActivity) {
-            mMainActivity = (MainActivity) context;
-        }
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        mMainActivity = (MainActivity) activity;
     }
 
     @Override
@@ -51,7 +54,26 @@ public class DetallePager extends Fragment {
         Integer posicion = bundle.getInt(ARGUMENT_POSICION);
         View view = inflater.inflate(R.layout.fragment_view_pager, container, false);
         ViewPager viewPager = (ViewPager) view.findViewById(R.id.viewPager);
-        switch (mMainActivity.getTipo()) {
+
+        if(mMainActivity.getTipo() == PELICULAS) {
+            viewPager.setAdapter(new DetallePeliculaAdapter(getChildFragmentManager(),
+                    mMainActivity.getPeliculas()));
+        }
+        else if(mMainActivity.getTipo() == SERIES) {
+            viewPager.setAdapter(new DetalleSerieAdapter(getChildFragmentManager(),
+                    mMainActivity.getSeries()));
+        }
+        else if(mMainActivity.getTipo() == FAVORITOS) {
+            if (mMainActivity.getFavoritos().get(0) instanceof Pelicula) { // BAD VOODOO
+                viewPager.setAdapter(new DetallePeliculaAdapter(getChildFragmentManager(),
+                        mMainActivity.getPeliculas()));
+            } else {
+                viewPager.setAdapter(new DetalleSerieAdapter(getChildFragmentManager(),
+                        mMainActivity.getSeries()));
+            }
+        }
+
+/*        switch (mMainActivity.getTipo()) {
             case PELICULAS:
                 viewPager.setAdapter(new DetallePeliculaAdapter(getChildFragmentManager(),
                         mMainActivity.getPeliculas()));
@@ -68,7 +90,7 @@ public class DetallePager extends Fragment {
                     viewPager.setAdapter(new DetalleSerieAdapter(getChildFragmentManager(),
                             mMainActivity.getSeries()));
                 }
-        }
+        }*/
         viewPager.setCurrentItem(posicion);
         return view;
     }
