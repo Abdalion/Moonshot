@@ -9,8 +9,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.List;
+
 import a1.t1mo.mobjav.a816.myapplication.R;
 import a1.t1mo.mobjav.a816.myapplication.model.pelicula.Pelicula;
+import a1.t1mo.mobjav.a816.myapplication.model.serie.Serie;
 import a1.t1mo.mobjav.a816.myapplication.utils.Tipo;
 import a1.t1mo.mobjav.a816.myapplication.view.MainActivity;
 
@@ -66,10 +69,10 @@ public class DetallePager extends Fragment {
         else if(mMainActivity.getTipo() == FAVORITOS) {
             if (mMainActivity.getFavoritos().get(0) instanceof Pelicula) { // BAD VOODOO
                 viewPager.setAdapter(new DetallePeliculaAdapter(getChildFragmentManager(),
-                        mMainActivity.getPeliculas()));
+                        (List<Pelicula>) mMainActivity.getFavoritos()));
             } else {
                 viewPager.setAdapter(new DetalleSerieAdapter(getChildFragmentManager(),
-                        mMainActivity.getSeries()));
+                        (List<Serie>) mMainActivity.getFavoritos()));
             }
         }
 
