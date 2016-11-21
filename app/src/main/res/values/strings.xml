@@ -6,6 +6,7 @@
     <string name="title_activity_login">Sign in</string>
     <string name="facebook_app_id">1036168859838314</string>
     <string name="configuration">Configuration</string>
+    <string name="updated">Updated</string>
 
 
     <!-- Strings related to login -->

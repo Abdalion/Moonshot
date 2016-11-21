@@ -5,11 +5,13 @@ import android.content.Context;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import a1.t1mo.mobjav.a816.myapplication.R;
 import a1.t1mo.mobjav.a816.myapplication.utils.Tipo;
@@ -27,6 +29,7 @@ public class FeatureFragment extends Fragment {
     private static final String ARGUMENT_TIPO = "Tipo";
     private MainActivity mMainActivity;
     private FeatureAdapter mAdapter;
+    private SwipeRefreshLayout swipeRefresh;
 
     public static FeatureFragment getFeatureFragment(Tipo tipo) {
         Bundle bundle = new Bundle();
@@ -58,6 +61,15 @@ public class FeatureFragment extends Fragment {
         mAdapter.setListener(mMainActivity);
         View view = inflater.inflate(R.layout.fragment_grilla, container, false);
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.rv_grilla);
+
+        swipeRefresh = (SwipeRefreshLayout) view.findViewById(R.id.grilla_swipe_refresh);
+        swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                updateFeatures();
+            }
+        });
+
         recyclerView.addItemDecoration(new SpacesItemDecoration(4));
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(mAdapter);
@@ -77,6 +89,12 @@ public class FeatureFragment extends Fragment {
         mAdapter.notifyDataSetChanged();
     }
 
+    private void updateFeatures(){
+        //todo: podemos hacer un metodo en main que updatee todo. (Osea meter lo que se hace onCreate actualmente, en un metodo y llamarlo desde aca)
+        Toast.makeText(getContext(), R.string.updated, Toast.LENGTH_SHORT).show();
+        swipeRefresh.setRefreshing(false);
+    }
+
     public class SpacesItemDecoration extends RecyclerView.ItemDecoration {
         private int space;
 
@@ -90,8 +108,6 @@ public class FeatureFragment extends Fragment {
             outRect.left = space;
             outRect.right = space;
             outRect.bottom = space;
-
-            // Add top margin only for the first item to avoid double space between items
             if (parent.getChildLayoutPosition(view) == 0) {
                 outRect.top = space;
             } else {
