@@ -55,8 +55,8 @@ public class DetallePager extends Fragment {
                              Bundle savedInstanceState) {
         Bundle bundle = getArguments();
         Integer posicion = bundle.getInt(ARGUMENT_POSICION);
-        View view = inflater.inflate(R.layout.fragment_view_pager, container, false);
-        ViewPager viewPager = (ViewPager) view.findViewById(R.id.viewPager);
+        View view = inflater.inflate(R.layout.view_pager_detalle, container, false);
+        ViewPager viewPager = (ViewPager) view.findViewById(R.id.viewPagerDetalle);
 
         if(mMainActivity.getTipo() == PELICULAS) {
             viewPager.setAdapter(new DetallePeliculaAdapter(getChildFragmentManager(),
