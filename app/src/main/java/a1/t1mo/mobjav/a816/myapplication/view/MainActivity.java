@@ -1,6 +1,5 @@
 package a1.t1mo.mobjav.a816.myapplication.view;
 
-import android.content.ClipData;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -16,16 +15,10 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
-
 import java.util.List;
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
 import com.facebook.login.LoginManager;
-
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
-
 import a1.t1mo.mobjav.a816.myapplication.R;
 import a1.t1mo.mobjav.a816.myapplication.controller.Controller;
 import a1.t1mo.mobjav.a816.myapplication.controller.PeliculaController;
@@ -54,8 +47,6 @@ import a1.t1mo.mobjav.a816.myapplication.view.login.facebook.FacebookUtils;
 public class MainActivity extends AppCompatActivity
         implements FeatureFragment.ListenerFeature, CambioDePagina, FavChange,
         Controller.ListenerSeries, Controller.ListenerPeliculas {
-
-    public static class ClickFavoriteEvent {}
 
     private NavigationView navigationView;
     private FeaturePager mFeaturePager;

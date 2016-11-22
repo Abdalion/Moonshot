@@ -8,11 +8,6 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
-
 import a1.t1mo.mobjav.a816.myapplication.R;
 import a1.t1mo.mobjav.a816.myapplication.utils.Tipo;
 
@@ -69,24 +64,6 @@ public class FeaturePager extends Fragment {
         });
 
         return view;
-    }
-
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onClickFavoriteEvent(MainActivity.ClickFavoriteEvent event) {
-        redrawFragment(Tipo.FAVORITOS);
-    };
-
-    @Override
-    public void onStart() {
-        super.onStart();
-
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        EventBus.getDefault().unregister(this);
     }
 
     public void redrawFragment(Tipo tipo) {
