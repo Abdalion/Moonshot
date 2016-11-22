@@ -99,7 +99,11 @@ public class MainActivity extends AppCompatActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
         mFeaturePager = new FeaturePager();
-        commitFragment(mFeaturePager);
+        getSupportFragmentManager()
+                .beginTransaction()
+                .add(R.id.main_contenedorDeFragment, mFeaturePager)
+                .addToBackStack("back")
+                .commit();
         navigationViewSetup();
 
     }
@@ -194,13 +198,9 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onClickFeature(Integer posicion) {
-        commitFragment(DetallePager.getDetallePager(posicion));
-    }
-
-    private void commitFragment(Fragment fm) {
         getSupportFragmentManager()
                 .beginTransaction()
-                .add(R.id.main_contenedorDeFragment, fm)
+                .replace(R.id.main_contenedorDeFragment, DetallePager.getDetallePager(posicion))
                 .addToBackStack("back")
                 .commit();
     }

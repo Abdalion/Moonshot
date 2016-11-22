@@ -87,7 +87,7 @@ public class PeliculaDAO {
             public void onResponse(Call<ListadoPeliculas> call, Response<ListadoPeliculas> response) {
                 if (response.isSuccessful()) {
                     persistirEnRealm(response.body().getPeliculas());
-                    listener.onFinish(response.body().getPeliculas());
+                    listener.onFinish(getPeliculasPopularesDeRealm());
                 } else {
                     Log.e(TAG, "El servidor respondio con el codigo " + response.code() +
                             " Llamando a getPeliculasPopularesDeTmdb()");
@@ -111,7 +111,7 @@ public class PeliculaDAO {
             public void onResponse(Call<ListadoPeliculas> call, Response<ListadoPeliculas> response) {
                 if (response.isSuccessful()) {
                     persistirEnRealm(response.body().getPeliculas());
-                    listener.onFinish(response.body().getPeliculas());
+                    listener.onFinish(getPeliculasPorGeneroDeRealm(id));
                 } else {
                     Log.e(TAG, "El servidor respondio con el codigo " + response.code() +
                             " Llamando a getPeliculasPorGeneroDeTmdb(" + id + ")");

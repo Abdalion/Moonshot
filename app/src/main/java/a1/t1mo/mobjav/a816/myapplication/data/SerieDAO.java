@@ -63,7 +63,7 @@ public class SerieDAO {
             public void onResponse(Call<Serie> call, Response<Serie> response) {
                 if (response.isSuccessful()) {
                     persistirEnRealm(response.body());
-                    listener.done(response.body());
+                    listener.done(getSerieDeRealm(id));
                 } else {
                     Log.e(TAG, "El servidor respondio con el codigo " + response.code() +
                             " Llamando a getSerieDeTmdb(" + id + ")");
@@ -87,7 +87,7 @@ public class SerieDAO {
             public void onResponse(Call<ListadoSeries> call, Response<ListadoSeries> response) {
                 if (response.isSuccessful()) {
                     persistirEnRealm(response.body().getSeries());
-                    listener.onDone(response.body().getSeries());
+                    listener.onDone(getSeriesPopularesDeRealm());
                 } else {
                     Log.e(TAG, "El servidor respondio con el codigo " + response.code() +
                             " Llamando a getSeriesPopularesDeTmdb()");
@@ -111,7 +111,7 @@ public class SerieDAO {
             public void onResponse(Call<ListadoSeries> call, Response<ListadoSeries> response) {
                 if (response.isSuccessful()) {
                     persistirEnRealm(response.body().getSeries());
-                    listener.onDone(response.body().getSeries());
+                    listener.onDone(getSeriesPorGeneroDeRealm(id));
                 } else {
                     Log.e(TAG, "El servidor respondio con el codigo " + response.code() +
                             " Llamando a getSeriesPorGeneroDeTmdb(" + id + ")");
