@@ -43,6 +43,10 @@ public class PeliculaController extends Controller {
         }
     }
 
+    public void getPeliculasPopularesDeTmdb(ListenerPeliculas listener) {
+        mPeliculaDAO.getPeliculasPopularesDeTmdb(listener);
+    }
+
     public void getPeliculasPopulares(ListenerPeliculas listener) {
         if (hasConnectivity(mContext)) {
             mPeliculaDAO.getPeliculasPopularesDeTmdb(listener);
@@ -73,5 +77,9 @@ public class PeliculaController extends Controller {
 
     public List<Pelicula> getFavoritos() {
         return mPeliculaDAO.getFavoritos();
+    }
+
+    public List<Pelicula> getPeliculasPopularesDeRealm() {
+        return mPeliculaDAO.getPeliculasPopularesDeRealm();
     }
 }

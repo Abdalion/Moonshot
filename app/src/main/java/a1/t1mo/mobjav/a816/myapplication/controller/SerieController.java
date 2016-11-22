@@ -8,6 +8,7 @@ import java.util.List;
 import a1.t1mo.mobjav.a816.myapplication.R;
 import a1.t1mo.mobjav.a816.myapplication.data.SerieDAO;
 import a1.t1mo.mobjav.a816.myapplication.model.Genre;
+import a1.t1mo.mobjav.a816.myapplication.model.serie.ListadoSeries;
 import a1.t1mo.mobjav.a816.myapplication.model.serie.Serie;
 import a1.t1mo.mobjav.a816.myapplication.utils.Listener;
 
@@ -43,6 +44,14 @@ public class SerieController extends Controller {
         } else {
             listener.onDone(mSerieDAO.getSeriesPopularesDeRealm());
         }
+    }
+
+    public void getSeriesPopularesDeTmdb(ListenerSeries listener) {
+        mSerieDAO.getSeriesPopularesDeTmdb(listener);
+    }
+
+    public List<Serie> getSeriesPopularesDeRealm() {
+        return mSerieDAO.getSeriesPopularesDeRealm();
     }
 
     public void getSeriesPorGenero(Integer id, ListenerSeries listener) {

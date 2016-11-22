@@ -7,6 +7,7 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -14,6 +15,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 import java.util.List;
 import com.facebook.FacebookSdk;
@@ -67,10 +69,10 @@ public class MainActivity extends AppCompatActivity
 
         // Carga inicial de peliculas y series
         mPeliculaController = new PeliculaController(this);
-        mPeliculaController.getPeliculasPopulares(this);
+        mPeliculas = mPeliculaController.getPeliculasPopularesDeRealm();
         mFavoritos = mPeliculaController.getFavoritos();
         mSerieController = new SerieController(this);
-        mSerieController.getSeriesPopulares(this);
+        mSeries = mSerieController.getSeriesPopularesDeRealm();
 
         if(FacebookUtils.checkIfLogged()) {
             FacebookUtils.requestUserInfo("name", new Listener<String>() {
@@ -217,6 +219,15 @@ public class MainActivity extends AppCompatActivity
         } else {
             mSerieController.setFavorito(id, isFav);
         }
+    }
+
+    public void downloadFeatures(SwipeRefreshLayout swipeRefresh){
+        if (mTipo == Tipo.PELICULAS) {
+            mPeliculaController.getPeliculasPopularesDeTmdb(this);
+        } else {
+            mSerieController.getSeriesPopularesDeTmdb(this);
+        }
+        swipeRefresh.setRefreshing(false);
     }
 
     public Tipo getTipo() {

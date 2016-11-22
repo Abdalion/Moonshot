@@ -66,7 +66,7 @@ public class FeatureFragment extends Fragment {
         swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                downloadFeatures();
+                mMainActivity.downloadFeatures(swipeRefresh);
             }
         });
 
@@ -87,12 +87,6 @@ public class FeatureFragment extends Fragment {
 
     public void redraw() {
         mAdapter.notifyDataSetChanged();
-    }
-
-    private void downloadFeatures(){
-        //todo: podemos hacer un metodo en main que updatee todo. (Osea meter lo que se hace onCreate actualmente, en un metodo y llamarlo desde aca)
-        Toast.makeText(getContext(), R.string.updated, Toast.LENGTH_SHORT).show();
-        swipeRefresh.setRefreshing(false);
     }
 
     public class SpacesItemDecoration extends RecyclerView.ItemDecoration {
