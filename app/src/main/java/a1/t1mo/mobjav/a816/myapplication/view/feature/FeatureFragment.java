@@ -66,7 +66,7 @@ public class FeatureFragment extends Fragment {
         swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                updateFeatures();
+                downloadFeatures();
             }
         });
 
@@ -89,7 +89,7 @@ public class FeatureFragment extends Fragment {
         mAdapter.notifyDataSetChanged();
     }
 
-    private void updateFeatures(){
+    private void downloadFeatures(){
         //todo: podemos hacer un metodo en main que updatee todo. (Osea meter lo que se hace onCreate actualmente, en un metodo y llamarlo desde aca)
         Toast.makeText(getContext(), R.string.updated, Toast.LENGTH_SHORT).show();
         swipeRefresh.setRefreshing(false);

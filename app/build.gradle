@@ -40,4 +40,5 @@ dependencies {
     compile 'com.github.jd-alexander:LikeButton:0.2.0'
     compile 'com.facebook.android:facebook-android-sdk:4.16.0'
     compile 'com.android.support:support-v4:25.0.0'
+    compile 'org.greenrobot:eventbus:3.0.0'
 }

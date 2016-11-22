@@ -22,6 +22,10 @@ import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
 import com.facebook.login.LoginManager;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import a1.t1mo.mobjav.a816.myapplication.R;
 import a1.t1mo.mobjav.a816.myapplication.controller.Controller;
 import a1.t1mo.mobjav.a816.myapplication.controller.PeliculaController;
@@ -51,6 +55,8 @@ public class MainActivity extends AppCompatActivity
         implements FeatureFragment.ListenerFeature, CambioDePagina, FavChange,
         Controller.ListenerSeries, Controller.ListenerPeliculas {
 
+    public static class ClickFavoriteEvent {}
+
     private NavigationView navigationView;
     private FeaturePager mFeaturePager;
     private List<Pelicula> mPeliculas;
@@ -59,6 +65,7 @@ public class MainActivity extends AppCompatActivity
     private Tipo mTipo = Tipo.PELICULAS;
     private SerieController mSerieController;
     private PeliculaController mPeliculaController;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -243,4 +250,6 @@ public class MainActivity extends AppCompatActivity
         PeliculaDAO.closeRealm();
         SerieDAO.closeRealm();
     }
+
+
 }
