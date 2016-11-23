@@ -86,7 +86,9 @@ public class FeatureFragment extends Fragment {
     }
 
     public void redraw() {
-        mAdapter.notifyDataSetChanged();
+        if(mAdapter != null) {
+            mAdapter.notifyDataSetChanged();
+        }
     }
 
     public class SpacesItemDecoration extends RecyclerView.ItemDecoration {
