@@ -50,6 +50,8 @@ public class MainActivity extends AppCompatActivity
         implements FeatureFragment.ListenerFeature, CambioDePagina, FavChange,
         Controller.ListenerSeries, Controller.ListenerPeliculas {
 
+    private static boolean CONFIRM_LEAVE;
+
     private NavigationView navigationView;
     private FeaturePager mFeaturePager;
     private List<Pelicula> mPeliculas;
@@ -66,6 +68,8 @@ public class MainActivity extends AppCompatActivity
         FacebookSdk.sdkInitialize(getApplicationContext());
         AppEventsLogger.activateApp(this);
         setContentView(R.layout.activity_main);
+
+        CONFIRM_LEAVE = false;
 
         // Carga inicial de peliculas y series
         mPeliculaController = new PeliculaController(this);
@@ -100,12 +104,24 @@ public class MainActivity extends AppCompatActivity
         navigationViewSetup();
 
     }
-    
+
+    @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.main_drawerLayout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        } else {
+        }
+        else if(getSupportFragmentManager().getBackStackEntryCount() == 1) {
+            if(CONFIRM_LEAVE == true) {
+                finish();
+            }
+            else {
+                Toast.makeText(MainActivity.this, R.string.confirm_leave, Toast.LENGTH_SHORT).show();
+                CONFIRM_LEAVE = true;
+            }
+
+        }
+        else {
             super.onBackPressed();
         }
     }
@@ -252,6 +268,10 @@ public class MainActivity extends AppCompatActivity
         PeliculaDAO.closeRealm();
         SerieDAO.closeRealm();
     }
+
+
+
+
 
 
 }
