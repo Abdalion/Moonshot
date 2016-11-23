@@ -34,6 +34,7 @@ import a1.t1mo.mobjav.a816.myapplication.utils.CambioDePagina;
 import a1.t1mo.mobjav.a816.myapplication.utils.FavChange;
 import a1.t1mo.mobjav.a816.myapplication.utils.Listener;
 import a1.t1mo.mobjav.a816.myapplication.utils.Tipo;
+import a1.t1mo.mobjav.a816.myapplication.utils.TipoDeFeature;
 import a1.t1mo.mobjav.a816.myapplication.view.detalle.DetallePager;
 import a1.t1mo.mobjav.a816.myapplication.view.feature.FeatureFragment;
 import a1.t1mo.mobjav.a816.myapplication.view.login.LoginActivity;
@@ -229,8 +230,8 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void onFavChange(int id, boolean isFav) {
-        if (mTipo == Tipo.PELICULAS) {
+    public void onFavChange(int id, boolean isFav, TipoDeFeature tipoDeFeature) {
+        if (tipoDeFeature.equals(TipoDeFeature.PELICULA)) {
             mPeliculaController.setFavorito(id, isFav);
         } else {
             mSerieController.setFavorito(id, isFav);

@@ -19,6 +19,7 @@ import a1.t1mo.mobjav.a816.myapplication.R;
 import a1.t1mo.mobjav.a816.myapplication.data.services.TmdbService;
 import a1.t1mo.mobjav.a816.myapplication.model.serie.Serie;
 import a1.t1mo.mobjav.a816.myapplication.utils.FavChange;
+import a1.t1mo.mobjav.a816.myapplication.utils.TipoDeFeature;
 
 public class DetalleSerie extends Fragment {
     private Serie mSerie;
@@ -55,7 +56,7 @@ public class DetalleSerie extends Fragment {
         likeButton.setOnLikeListener(new OnLikeListener() {
             @Override
             public void liked(LikeButton likeButton) {
-                mFavCallback.onFavChange(mSerie.getId(), true);
+                mFavCallback.onFavChange(mSerie.getId(), true, TipoDeFeature.SERIE);
                 Snackbar.make(getView(), "Agregado A Favoritos", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
 
@@ -63,7 +64,7 @@ public class DetalleSerie extends Fragment {
 
             @Override
             public void unLiked(LikeButton likeButton) {
-                mFavCallback.onFavChange(mSerie.getId(), false);
+                mFavCallback.onFavChange(mSerie.getId(), false, TipoDeFeature.SERIE);
                 Snackbar.make(getView(), "Eliminado De Favoritos", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
