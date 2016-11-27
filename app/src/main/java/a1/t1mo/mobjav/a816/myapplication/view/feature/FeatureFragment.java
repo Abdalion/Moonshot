@@ -13,7 +13,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import java.util.List;
+
 import a1.t1mo.mobjav.a816.myapplication.R;
+import a1.t1mo.mobjav.a816.myapplication.controller.Controller;
+import a1.t1mo.mobjav.a816.myapplication.controller.PeliculaController;
+import a1.t1mo.mobjav.a816.myapplication.controller.SerieController;
+import a1.t1mo.mobjav.a816.myapplication.model.Feature;
 import a1.t1mo.mobjav.a816.myapplication.utils.Tipo;
 import a1.t1mo.mobjav.a816.myapplication.view.MainActivity;
 
@@ -28,7 +34,9 @@ import a1.t1mo.mobjav.a816.myapplication.view.MainActivity;
 public class FeatureFragment extends Fragment {
     private static final String ARGUMENT_TIPO = "Tipo";
     private MainActivity mMainActivity;
+    private Controller mController;
     private FeatureAdapter mAdapter;
+    private List<Feature> mFeatures;
     private SwipeRefreshLayout swipeRefresh;
 
     public static FeatureFragment getFeatureFragment(Tipo tipo) {
@@ -57,6 +65,12 @@ public class FeatureFragment extends Fragment {
 
         Bundle bundle = getArguments();
         Tipo tipo = (Tipo) bundle.getSerializable(ARGUMENT_TIPO);
+        if (tipo == Tipo.PELICULAS || tipo == Tipo.FAVORITOS_PELICULAS) {
+            mController = new PeliculaController(getContext());
+        } else {
+            mController = new SerieController(getContext());
+        }
+        mController.getFeatures(R.id.menu_peliculas_opcion_todas); // Hack
         mAdapter = new FeatureAdapter(mMainActivity, tipo);
         mAdapter.setListener(mMainActivity);
         View view = inflater.inflate(R.layout.fragment_grilla, container, false);

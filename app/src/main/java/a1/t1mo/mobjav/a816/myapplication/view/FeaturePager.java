@@ -1,5 +1,6 @@
 package a1.t1mo.mobjav.a816.myapplication.view;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -8,20 +9,19 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import a1.t1mo.mobjav.a816.myapplication.R;
 import a1.t1mo.mobjav.a816.myapplication.utils.Tipo;
 
-public class FeaturePager extends Fragment {
-    private MainActivity mainActivity;
+public class FeaturePager extends Fragment implements NavMenuListener {
+    private CambioDePagina mCallback;
     private FeaturePagerAdapter mAdapter;
-    private LayoutInflater mInflater;
-    private ViewGroup mContainer;
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof MainActivity) {
-            mainActivity = (MainActivity) context;
+        if (context instanceof Activity) {
+            mCallback = (CambioDePagina) context;
         }
     }
 
@@ -32,12 +32,10 @@ public class FeaturePager extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-        View view = inflater.inflate(R.layout.fragment_view_pager, mContainer, false);
+        View view = inflater.inflate(R.layout.fragment_view_pager, container, false);
         mAdapter = new FeaturePagerAdapter(getChildFragmentManager());
         ViewPager viewPager = (ViewPager) view.findViewById(R.id.viewPager);
         viewPager.setAdapter(mAdapter);
-
         TabLayout tabLayout = (TabLayout) view.findViewById(R.id.tabLayout);
         tabLayout.setupWithViewPager(viewPager);
 
@@ -54,8 +52,8 @@ public class FeaturePager extends Fragment {
                 else if (position == 1)
                     tipo = Tipo.SERIES;
                 else
-                    tipo = Tipo.FAVORITOS;
-                mainActivity.onCambioDePagina(tipo);
+                    tipo = Tipo.FAVORITOS_PELICULAS;
+                mCallback.onCambioDePagina(tipo);
             }
 
             @Override
@@ -68,5 +66,10 @@ public class FeaturePager extends Fragment {
 
     public void redrawFragment(Tipo tipo) {
         mAdapter.redrawFragment(tipo);
+    }
+
+    @Override
+    public void onMenuItemSelected(int id) {
+
     }
 }

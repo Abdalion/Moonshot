@@ -29,22 +29,11 @@ import a1.t1mo.mobjav.a816.myapplication.view.MainActivity;
 
 public class FeatureAdapter extends RecyclerView.Adapter<FeatureAdapter.FeatureHolder> {
     private FeatureFragment.ListenerFeature mListener;
-    private List<? extends Feature> mFeatures;
+    private List<Feature> mFeatures;
     private final static int FADE_DURATION = 300;
 
-    public FeatureAdapter(MainActivity activity, Tipo tipo) {
-        switch (tipo) {
-            case PELICULAS:
-                mFeatures = activity.getPeliculas();
-                break;
-            case SERIES:
-                mFeatures = activity.getSeries();
-                break;
-            case FAVORITOS:
-                mFeatures = activity.getFavoritos();
-                break;
-        }
-        //Log.d("FeatureAdapter", "Tipo: " + tipo.titulo + " Cantidad cargada: " + mFeatures.size());
+    public FeatureAdapter(List<Feature> features) {
+        mFeatures = features;
     }
 
     public void setListener(FeatureFragment.ListenerFeature listener) {
@@ -91,10 +80,10 @@ public class FeatureAdapter extends RecyclerView.Adapter<FeatureAdapter.FeatureH
 
         private void bindFeature(Feature feature) {
             Glide
-                    .with(mImagen.getContext())
-                    .load(TmdbService.IMAGE_URL_W154 + feature.getPosterPath())
-                    .fitCenter()
-                    .into(mImagen);
+                .with(mImagen.getContext())
+                .load(TmdbService.IMAGE_URL_W154 + feature.getPosterPath())
+                .fitCenter()
+                .into(mImagen);
         }
 
         @Override

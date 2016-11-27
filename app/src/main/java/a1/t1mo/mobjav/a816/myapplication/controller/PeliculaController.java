@@ -8,6 +8,7 @@ import a1.t1mo.mobjav.a816.myapplication.R;
 import a1.t1mo.mobjav.a816.myapplication.data.PeliculaDAO;
 import a1.t1mo.mobjav.a816.myapplication.model.Genre;
 import a1.t1mo.mobjav.a816.myapplication.model.pelicula.Pelicula;
+import a1.t1mo.mobjav.a816.myapplication.utils.ConnectivityCheck;
 import a1.t1mo.mobjav.a816.myapplication.utils.Listener;
 
 /**
@@ -18,7 +19,7 @@ import a1.t1mo.mobjav.a816.myapplication.utils.Listener;
  * Archivo creado por Juan Pablo on 22/10/2016.
  */
 
-public class PeliculaController extends Controller {
+public class PeliculaController implements Controller {
     private PeliculaDAO mPeliculaDAO;
     private Context mContext;
 
@@ -56,7 +57,7 @@ public class PeliculaController extends Controller {
     }
 
     public void getPeliculasPorGenero(Integer id, ListenerPeliculas listener) {
-        if (hasConnectivity(mContext)) {
+        if (ConnectivityCheck.hasConnectivity(mContext)) {
             mPeliculaDAO.getPeliculasPorGeneroDeTmdb(id, listener);
         } else {
             listener.onFinish(mPeliculaDAO.getPeliculasPorGeneroDeRealm(id));

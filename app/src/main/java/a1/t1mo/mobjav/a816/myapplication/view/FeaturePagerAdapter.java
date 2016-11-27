@@ -18,7 +18,7 @@ public class FeaturePagerAdapter extends FragmentStatePagerAdapter {
         mArrayDeFragments = new FeatureFragment[3];
         mArrayDeFragments[0] = FeatureFragment.getFeatureFragment(Tipo.PELICULAS);
         mArrayDeFragments[1] = FeatureFragment.getFeatureFragment(Tipo.SERIES);
-        mArrayDeFragments[2] = FeatureFragment.getFeatureFragment(Tipo.FAVORITOS);
+        mArrayDeFragments[2] = FeatureFragment.getFeatureFragment(Tipo.FAVORITOS_PELICULAS);
     }
 
     public CharSequence getPageTitle(int position) {
@@ -60,7 +60,8 @@ public class FeaturePagerAdapter extends FragmentStatePagerAdapter {
             case SERIES:
                 index = 1;
                 break;
-            case FAVORITOS:
+            case FAVORITOS_PELICULAS:
+            case FAVORITOS_SERIES:
                 index = 2;
         }
         mArrayDeFragments[index] = FeatureFragment.getFeatureFragment(tipo);
