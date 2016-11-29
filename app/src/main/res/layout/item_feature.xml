@@ -1,12 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <ImageView
         android:id="@+id/img_feature"
         android:layout_width="@dimen/poster_width_small"
         android:layout_height="@dimen/poster_height_small"/>
+
+    <com.like.LikeButton
+        app:icon_type="heart"
+        app:icon_size="30sp"
+        android:id="@+id/fav_button_main"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        app:is_enabled="false"
+        />
 
 </RelativeLayout>

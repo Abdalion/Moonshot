@@ -10,14 +10,20 @@ import android.view.animation.ScaleAnimation;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.like.LikeButton;
 
 import java.util.List;
 
 import a1.t1mo.mobjav.a816.myapplication.R;
+import a1.t1mo.mobjav.a816.myapplication.controller.PeliculaController;
+import a1.t1mo.mobjav.a816.myapplication.controller.SerieController;
 import a1.t1mo.mobjav.a816.myapplication.data.services.TmdbService;
 import a1.t1mo.mobjav.a816.myapplication.model.Feature;
+import a1.t1mo.mobjav.a816.myapplication.model.pelicula.Pelicula;
+import a1.t1mo.mobjav.a816.myapplication.model.serie.Serie;
 import a1.t1mo.mobjav.a816.myapplication.utils.Tipo;
 import a1.t1mo.mobjav.a816.myapplication.view.MainActivity;
+import a1.t1mo.mobjav.a816.myapplication.view.detalle.DetalleSerie;
 
 /**
  * MoonShot App
@@ -55,6 +61,7 @@ public class FeatureAdapter extends RecyclerView.Adapter<FeatureAdapter.FeatureH
     public FeatureHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         View view = layoutInflater.inflate(R.layout.item_feature, parent, false);
+
         return new FeatureHolder(view);
     }
 
@@ -82,11 +89,13 @@ public class FeatureAdapter extends RecyclerView.Adapter<FeatureAdapter.FeatureH
             implements View.OnClickListener {
 
         private ImageView mImagen;
+        private LikeButton mLikeButton;
 
         public FeatureHolder(View itemView) {
             super(itemView);
             itemView.setOnClickListener(this);
             mImagen = (ImageView) itemView.findViewById(R.id.img_feature);
+            mLikeButton = (LikeButton) itemView.findViewById(R.id.fav_button_main);
         }
 
         private void bindFeature(Feature feature) {
@@ -95,6 +104,22 @@ public class FeatureAdapter extends RecyclerView.Adapter<FeatureAdapter.FeatureH
                     .load(TmdbService.IMAGE_URL_W154 + feature.getPosterPath())
                     .fitCenter()
                     .into(mImagen);
+
+            if(feature instanceof Pelicula) {
+                if(((Pelicula) feature).isFavorito())
+                    mLikeButton.setLiked(true);
+                else{
+                    mLikeButton.setLiked(false);
+                }
+            }
+            else if(feature instanceof Serie){
+                if(((Serie) feature).isFavorito())
+                    mLikeButton.setLiked(true);
+                else{
+                    mLikeButton.setLiked(false);
+                }
+            }
+
         }
 
         @Override
