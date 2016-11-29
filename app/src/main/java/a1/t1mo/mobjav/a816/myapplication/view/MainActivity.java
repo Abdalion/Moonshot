@@ -233,7 +233,7 @@ public class MainActivity extends AppCompatActivity
     public void onFavChange(int id, boolean isFav, TipoDeFeature tipoDeFeature) {
         if (tipoDeFeature.equals(TipoDeFeature.PELICULA)) {
             mPeliculaController.setFavorito(id, isFav);
-        } else {
+        } else
             mSerieController.setFavorito(id, isFav);
         }
     }
