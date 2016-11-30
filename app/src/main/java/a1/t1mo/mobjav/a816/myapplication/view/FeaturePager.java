@@ -8,6 +8,8 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.RotateAnimation;
+
 import a1.t1mo.mobjav.a816.myapplication.R;
 import a1.t1mo.mobjav.a816.myapplication.utils.Tipo;
 
@@ -37,6 +39,13 @@ public class FeaturePager extends Fragment {
         mAdapter = new FeaturePagerAdapter(getChildFragmentManager());
         ViewPager viewPager = (ViewPager) view.findViewById(R.id.viewPager);
         viewPager.setAdapter(mAdapter);
+        viewPager.setPageTransformer(false, new ViewPager.PageTransformer() {
+
+            public void transformPage(View page, float position) {
+
+                page.setRotationY(position * -60); // animation style... change as you want..
+            }
+        });
 
         TabLayout tabLayout = (TabLayout) view.findViewById(R.id.tabLayout);
         tabLayout.setupWithViewPager(viewPager);
