@@ -47,17 +47,12 @@ import a1.t1mo.mobjav.a816.myapplication.view.login.facebook.FacebookUtils;
  * Turno Tarde
  */
 
-public class MainActivity extends AppCompatActivity implements CambioDePagina, FavChange {
+public class MainActivity extends AppCompatActivity implements CambioDePagina {
     private static boolean CONFIRM_LEAVE;
     private NavigationView navigationView;
     private FeaturePager mFeaturePager;
-    private List<Pelicula> mPeliculas;
-    private List<Serie> mSeries;
     private List<? extends Feature> mFavoritos;
     private Tipo mTipo = Tipo.PELICULAS;
-    private SerieController mSerieController;
-    private PeliculaController mPeliculaController;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,8 +86,9 @@ public class MainActivity extends AppCompatActivity implements CambioDePagina, F
                 .add(R.id.main_contenedorDeFragment, mFeaturePager)
                 .addToBackStack("back")
                 .commit();
-        navigationViewSetup();
-
+        navigationView = (NavigationView) findViewById(R.id.main_navigationView);
+        navigationView.setCheckedItem(R.id.menu_peliculas_opcion_todas);
+        navigationView.setNavigationItemSelectedListener(mFeaturePager);
     }
 
     @Override
@@ -110,21 +106,6 @@ public class MainActivity extends AppCompatActivity implements CambioDePagina, F
         } else {
             super.onBackPressed();
         }
-    }
-
-    private void navigationViewSetup() {
-        navigationView = (NavigationView) findViewById(R.id.main_navigationView);
-        navigationView.setCheckedItem(R.id.menu_peliculas_opcion_todas);
-
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                getListaDeFeatures(item.getItemId());
-                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.main_drawerLayout);
-                drawer.closeDrawer(GravityCompat.START);
-                return true;
-            }
-        });
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -154,7 +135,6 @@ public class MainActivity extends AppCompatActivity implements CambioDePagina, F
 
         return super.onOptionsItemSelected(item);
     }
-
 
     private void getListaDeFeatures(int itemId) {
         switch (mTipo) {
@@ -187,47 +167,8 @@ public class MainActivity extends AppCompatActivity implements CambioDePagina, F
         }
     }
 
-    @Override
-    public void onClickFeature(Integer posicion) {
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.main_contenedorDeFragment, DetallePager.getDetallePager(posicion))
-                .addToBackStack("back")
-                .commit();
-    }
-
-    @Override
-    public void onFavChange(int id, boolean isFav, TipoDeFeature tipoDeFeature) {
-        if (tipoDeFeature.equals(TipoDeFeature.PELICULA)) {
-            mPeliculaController.setFavorito(id, isFav);
-        } else {
-            mSerieController.setFavorito(id, isFav);
-        }
-    }
-
-    public void downloadFeatures(SwipeRefreshLayout swipeRefresh) {
-        if (mTipo == Tipo.PELICULAS) {
-            mPeliculaController.getPeliculasPopularesDeTmdb(this);
-        } else {
-            mSerieController.getSeriesPopularesDeTmdb(this);
-        }
-        swipeRefresh.setRefreshing(false);
-    }
-
     public Tipo getTipo() {
         return mTipo;
-    }
-
-    public List<? extends Feature> getFavoritos() {
-        return mFavoritos;
-    }
-
-    public List<Serie> getSeries() {
-        return mSeries;
-    }
-
-    public List<Pelicula> getPeliculas() {
-        return mPeliculas;
     }
 
     @Override
@@ -236,6 +177,4 @@ public class MainActivity extends AppCompatActivity implements CambioDePagina, F
         PeliculaDAO.closeRealm();
         SerieDAO.closeRealm();
     }
-
-
 }

@@ -1,7 +1,5 @@
 package a1.t1mo.mobjav.a816.myapplication.view.feature;
 
-import android.app.Activity;
-import android.content.Context;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -11,7 +9,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import java.util.List;
 
@@ -22,7 +19,6 @@ import a1.t1mo.mobjav.a816.myapplication.controller.SerieController;
 import a1.t1mo.mobjav.a816.myapplication.model.Feature;
 import a1.t1mo.mobjav.a816.myapplication.utils.Listener;
 import a1.t1mo.mobjav.a816.myapplication.utils.Tipo;
-import a1.t1mo.mobjav.a816.myapplication.view.MainActivity;
 
 /**
  * MoonShot App
@@ -94,6 +90,10 @@ public class FeatureFragment extends Fragment implements Listener<List<? extends
     @Override
     public void done(List<? extends Feature> param) {
         mAdapter.setFeatures(param);
+    }
+
+    public void redraw(int menuId) {
+        mController.getFeatures(menuId, this);
     }
 
     public class SpacesItemDecoration extends RecyclerView.ItemDecoration {

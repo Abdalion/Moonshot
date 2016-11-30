@@ -3,18 +3,24 @@ package a1.t1mo.mobjav.a816.myapplication.view;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.DrawerLayout;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
 import a1.t1mo.mobjav.a816.myapplication.R;
 import a1.t1mo.mobjav.a816.myapplication.utils.Tipo;
 
-public class FeaturePager extends Fragment implements NavMenuListener {
+public class FeaturePager extends Fragment implements NavigationView.OnNavigationItemSelectedListener {
     private CambioDePagina mCallback;
+    private ViewPager mViewPager;
     private FeaturePagerAdapter mAdapter;
 
     @Override
@@ -34,12 +40,12 @@ public class FeaturePager extends Fragment implements NavMenuListener {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_view_pager, container, false);
         mAdapter = new FeaturePagerAdapter(getChildFragmentManager());
-        ViewPager viewPager = (ViewPager) view.findViewById(R.id.viewPager);
-        viewPager.setAdapter(mAdapter);
+        mViewPager = (ViewPager) view.findViewById(R.id.viewPager);
+        mViewPager.setAdapter(mAdapter);
         TabLayout tabLayout = (TabLayout) view.findViewById(R.id.tabLayout);
-        tabLayout.setupWithViewPager(viewPager);
+        tabLayout.setupWithViewPager(mViewPager);
 
-        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
             }
@@ -64,12 +70,11 @@ public class FeaturePager extends Fragment implements NavMenuListener {
         return view;
     }
 
-    public void redrawFragment(Tipo tipo) {
-        mAdapter.redrawFragment(tipo);
-    }
-
     @Override
-    public void onMenuItemSelected(int id) {
-
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        mAdapter.redrawFragment(mViewPager.getCurrentItem(), item.getItemId());
+        DrawerLayout drawer = (DrawerLayout) getActivity().findViewById(R.id.main_drawerLayout);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
     }
 }

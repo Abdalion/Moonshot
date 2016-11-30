@@ -84,7 +84,7 @@ public class FeatureAdapter extends RecyclerView.Adapter<FeatureAdapter.FeatureH
 
         @Override
         public void onClick(View v) {
-            mListener.onClickFeature(getLayoutPosition());
+            // TODO: 30/11/2016 startActivity(Detalle.getIntent()) 
         }
     }
 }
