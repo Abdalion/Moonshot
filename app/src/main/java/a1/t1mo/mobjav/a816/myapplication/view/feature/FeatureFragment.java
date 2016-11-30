@@ -20,6 +20,7 @@ import a1.t1mo.mobjav.a816.myapplication.controller.Controller;
 import a1.t1mo.mobjav.a816.myapplication.controller.PeliculaController;
 import a1.t1mo.mobjav.a816.myapplication.controller.SerieController;
 import a1.t1mo.mobjav.a816.myapplication.model.Feature;
+import a1.t1mo.mobjav.a816.myapplication.utils.Listener;
 import a1.t1mo.mobjav.a816.myapplication.utils.Tipo;
 import a1.t1mo.mobjav.a816.myapplication.view.MainActivity;
 
@@ -31,17 +32,17 @@ import a1.t1mo.mobjav.a816.myapplication.view.MainActivity;
  * Archivo creado por Juan Pablo on 04/11/2016.
  */
 
-public class FeatureFragment extends Fragment {
+public class FeatureFragment extends Fragment implements Listener<List<? extends Feature>> {
     private static final String ARGUMENT_TIPO = "Tipo";
-    private MainActivity mMainActivity;
+    public static final String ARGUMENT_MENU_ID = "Menu ID";
     private Controller mController;
     private FeatureAdapter mAdapter;
-    private List<Feature> mFeatures;
     private SwipeRefreshLayout swipeRefresh;
 
-    public static FeatureFragment getFeatureFragment(Tipo tipo) {
+    public static FeatureFragment getFeatureFragment(Tipo tipo, int menuId) {
         Bundle bundle = new Bundle();
         bundle.putSerializable(ARGUMENT_TIPO, tipo);
+        bundle.putInt(ARGUMENT_MENU_ID, menuId);
         FeatureFragment fragment = new FeatureFragment();
         fragment.setArguments(bundle);
         return fragment;
@@ -52,27 +53,18 @@ public class FeatureFragment extends Fragment {
     }
 
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof Activity) {
-            mMainActivity = (MainActivity) context;
-        }
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         Bundle bundle = getArguments();
         Tipo tipo = (Tipo) bundle.getSerializable(ARGUMENT_TIPO);
         if (tipo == Tipo.PELICULAS || tipo == Tipo.FAVORITOS_PELICULAS) {
-            mController = new PeliculaController(getContext());
+            mController = new PeliculaController();
         } else {
-            mController = new SerieController(getContext());
+            mController = new SerieController();
         }
-        mController.getFeatures(R.id.menu_peliculas_opcion_todas); // Hack
-        mAdapter = new FeatureAdapter(mMainActivity, tipo);
-        mAdapter.setListener(mMainActivity);
+        mController.getFeatures(bundle.getInt(ARGUMENT_MENU_ID), this);
+        mAdapter = new FeatureAdapter();
         View view = inflater.inflate(R.layout.fragment_grilla, container, false);
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.rv_grilla);
 
@@ -99,10 +91,9 @@ public class FeatureFragment extends Fragment {
         return view;
     }
 
-    public void redraw() {
-        if(mAdapter != null) {
-            mAdapter.notifyDataSetChanged();
-        }
+    @Override
+    public void done(List<? extends Feature> param) {
+        mAdapter.setFeatures(param);
     }
 
     public class SpacesItemDecoration extends RecyclerView.ItemDecoration {
@@ -124,9 +115,5 @@ public class FeatureFragment extends Fragment {
                 outRect.top = 0;
             }
         }
-    }
-
-    public interface ListenerFeature {
-        void onClickFeature(Integer posicion);
     }
 }

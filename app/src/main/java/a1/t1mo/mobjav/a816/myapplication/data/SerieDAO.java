@@ -8,6 +8,7 @@ import java.util.List;
 import a1.t1mo.mobjav.a816.myapplication.controller.Controller;
 import a1.t1mo.mobjav.a816.myapplication.data.services.ServiceFactory;
 import a1.t1mo.mobjav.a816.myapplication.data.services.TmdbService;
+import a1.t1mo.mobjav.a816.myapplication.model.Feature;
 import a1.t1mo.mobjav.a816.myapplication.model.serie.ListadoSeries;
 import a1.t1mo.mobjav.a816.myapplication.model.serie.Serie;
 import a1.t1mo.mobjav.a816.myapplication.utils.Listener;
@@ -81,13 +82,13 @@ public class SerieDAO {
         return mRealm.where(Serie.class).equalTo("id", id).findFirst();
     }
 
-    public void getSeriesPopularesDeTmdb(final Controller.ListenerSeries listener) {
+    public void getSeriesPopularesDeTmdb(final Listener<List<? extends Feature>> listener) {
         sTmdbService.getSeriesPopulares().enqueue(new Callback<ListadoSeries>() {
             @Override
             public void onResponse(Call<ListadoSeries> call, Response<ListadoSeries> response) {
                 if (response.isSuccessful()) {
                     persistirEnRealm(response.body().getSeries());
-                    listener.onDone(getSeriesPopularesDeRealm());
+                    listener.done(getSeriesPopularesDeRealm());
                 } else {
                     Log.e(TAG, "El servidor respondio con el codigo " + response.code() +
                             " Llamando a getSeriesPopularesDeTmdb()");
@@ -105,13 +106,13 @@ public class SerieDAO {
         return mRealm.where(Serie.class).findAllSorted("popularidad", Sort.DESCENDING);
     }
 
-    public void getSeriesPorGeneroDeTmdb(final Integer id, final Controller.ListenerSeries listener) {
+    public void getSeriesPorGeneroDeTmdb(final Integer id, final Listener<List<? extends Feature>> listener) {
         sTmdbService.getSeriesPorGenero(id).enqueue(new Callback<ListadoSeries>() {
             @Override
             public void onResponse(Call<ListadoSeries> call, Response<ListadoSeries> response) {
                 if (response.isSuccessful()) {
                     persistirEnRealm(response.body().getSeries());
-                    listener.onDone(getSeriesPorGeneroDeRealm(id));
+                    listener.done(getSeriesPorGeneroDeRealm(id));
                 } else {
                     Log.e(TAG, "El servidor respondio con el codigo " + response.code() +
                             " Llamando a getSeriesPorGeneroDeTmdb(" + id + ")");
@@ -166,32 +167,6 @@ public class SerieDAO {
             @Override
             public void onError(Throwable error) {
                 Log.e(TAG, "Error al persistir las series");
-            }
-        });
-    }
-
-    public void agregarAFavoritos(final Integer id) {
-        mRealm.executeTransaction(new Realm.Transaction() {
-            @Override
-            public void execute(Realm realm) {
-                Serie serie = realm.where(Serie.class).equalTo("id", id).findFirst();
-                if (serie != null) {
-                    serie.setFavorito(true);
-                    realm.copyToRealmOrUpdate(serie);
-                }
-            }
-        });
-    }
-
-    public void quitarDeFavoritos(final Integer id) {
-        mRealm.executeTransaction(new Realm.Transaction() {
-            @Override
-            public void execute(Realm realm) {
-                Serie serie = realm.where(Serie.class).equalTo("id", id).findFirst();
-                if (serie != null) {
-                    serie.setFavorito(false);
-                    realm.copyToRealmOrUpdate(serie);
-                }
             }
         });
     }

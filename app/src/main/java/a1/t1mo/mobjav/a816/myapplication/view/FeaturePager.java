@@ -20,7 +20,7 @@ public class FeaturePager extends Fragment implements NavMenuListener {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof Activity) {
+        if (context instanceof CambioDePagina) {
             mCallback = (CambioDePagina) context;
         }
     }

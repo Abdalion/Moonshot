@@ -15,10 +15,13 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
+
 import java.util.List;
+
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
 import com.facebook.login.LoginManager;
+
 import a1.t1mo.mobjav.a816.myapplication.R;
 import a1.t1mo.mobjav.a816.myapplication.controller.Controller;
 import a1.t1mo.mobjav.a816.myapplication.controller.PeliculaController;
@@ -44,12 +47,8 @@ import a1.t1mo.mobjav.a816.myapplication.view.login.facebook.FacebookUtils;
  * Turno Tarde
  */
 
-public class MainActivity extends AppCompatActivity
-        implements FeatureFragment.ListenerFeature, CambioDePagina, FavChange,
-        Controller.ListenerSeries, Controller.ListenerPeliculas {
-
+public class MainActivity extends AppCompatActivity implements CambioDePagina, FavChange {
     private static boolean CONFIRM_LEAVE;
-
     private NavigationView navigationView;
     private FeaturePager mFeaturePager;
     private List<Pelicula> mPeliculas;
@@ -69,20 +68,13 @@ public class MainActivity extends AppCompatActivity
 
         CONFIRM_LEAVE = false;
 
-        // Carga inicial de peliculas y series
-        mPeliculaController = new PeliculaController(this);
-        mPeliculas = mPeliculaController.getPeliculasPopularesDeRealm();
-        mFavoritos = mPeliculaController.getFavoritos();
-        mSerieController = new SerieController(this);
-        mSeries = mSerieController.getSeriesPopularesDeRealm();
-
-        if(FacebookUtils.checkIfLogged()) {
+        if (FacebookUtils.checkIfLogged()) {
             FacebookUtils.requestUserInfo("name", new Listener<String>() {
                 @Override
                 public void done(String param) {
                     Toast.makeText(MainActivity.this, "Welcome " + param, Toast.LENGTH_SHORT).show();
                 }
-            });;
+            });
         }
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -108,18 +100,14 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.main_drawerLayout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        }
-        else if(getSupportFragmentManager().getBackStackEntryCount() == 1) {
-            if(CONFIRM_LEAVE == true) {
+        } else if (getSupportFragmentManager().getBackStackEntryCount() == 1) {
+            if (CONFIRM_LEAVE) {
                 finish();
-            }
-            else {
+            } else {
                 Toast.makeText(MainActivity.this, R.string.confirm_leave, Toast.LENGTH_SHORT).show();
                 CONFIRM_LEAVE = true;
             }
-
-        }
-        else {
+        } else {
             super.onBackPressed();
         }
     }
@@ -141,29 +129,26 @@ public class MainActivity extends AppCompatActivity
 
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        if(!FacebookUtils.checkIfLogged()) {
+        if (!FacebookUtils.checkIfLogged()) {
             inflater.inflate(R.menu.menu_navigation_toolbar_opciones, menu);
-        }
-        else if(FacebookUtils.checkIfLogged()) {
+        } else if (FacebookUtils.checkIfLogged()) {
             inflater.inflate(R.menu.menu_settings, menu);
         }
         return true;
     }
 
-    public boolean onOptionsItemSelected(MenuItem item){
+    public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.guest) {
-            if(!FacebookUtils.checkIfLogged()) {
-                startActivity(new Intent(this,LoginActivity.class));
+            if (!FacebookUtils.checkIfLogged()) {
+                startActivity(new Intent(this, LoginActivity.class));
             }
-        }
-        else if(id == R.id.menu_logout){
+        } else if (id == R.id.menu_logout) {
             //ESTE LOGOUT ES SOLO DE FACEBOOK.
             LoginManager.getInstance().logOut();
             Toast.makeText(this, "Logged out!", Toast.LENGTH_SHORT).show();
             startActivity(new Intent(this, MainActivity.class));
-        }
-        else if(id == R.id.menu_configuration) {
+        } else if (id == R.id.menu_configuration) {
             Toast.makeText(this, "Configuracion!", Toast.LENGTH_SHORT).show();
         }
 
@@ -212,20 +197,6 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void onFinish(List<Pelicula> peliculas) {
-        mPeliculas = peliculas;
-        Log.d("Main", "Cargadas las peliculas. Cantidad = " + mPeliculas.size());
-        mFeaturePager.redrawFragment(Tipo.PELICULAS);
-    }
-
-    @Override
-    public void onDone(List<Serie> series) {
-        mSeries = series;
-        Log.d("Main", "Cargadas las series. Cantidad = " + mSeries.size());
-        mFeaturePager.redrawFragment(Tipo.SERIES);
-    }
-
-    @Override
     public void onFavChange(int id, boolean isFav, TipoDeFeature tipoDeFeature) {
         if (tipoDeFeature.equals(TipoDeFeature.PELICULA)) {
             mPeliculaController.setFavorito(id, isFav);
@@ -234,7 +205,7 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    public void downloadFeatures(SwipeRefreshLayout swipeRefresh){
+    public void downloadFeatures(SwipeRefreshLayout swipeRefresh) {
         if (mTipo == Tipo.PELICULAS) {
             mPeliculaController.getPeliculasPopularesDeTmdb(this);
         } else {
@@ -265,10 +236,6 @@ public class MainActivity extends AppCompatActivity
         PeliculaDAO.closeRealm();
         SerieDAO.closeRealm();
     }
-
-
-
-
 
 
 }

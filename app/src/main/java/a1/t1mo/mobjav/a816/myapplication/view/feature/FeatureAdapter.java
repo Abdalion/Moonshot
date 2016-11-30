@@ -28,17 +28,8 @@ import a1.t1mo.mobjav.a816.myapplication.view.MainActivity;
  */
 
 public class FeatureAdapter extends RecyclerView.Adapter<FeatureAdapter.FeatureHolder> {
-    private FeatureFragment.ListenerFeature mListener;
-    private List<Feature> mFeatures;
+    private List<? extends Feature> mFeatures = null;
     private final static int FADE_DURATION = 300;
-
-    public FeatureAdapter(List<Feature> features) {
-        mFeatures = features;
-    }
-
-    public void setListener(FeatureFragment.ListenerFeature listener) {
-        this.mListener = listener;
-    }
 
     @Override
     public FeatureHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -65,6 +56,11 @@ public class FeatureAdapter extends RecyclerView.Adapter<FeatureAdapter.FeatureH
                 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
         anim.setDuration(FADE_DURATION);
         view.startAnimation(anim);
+    }
+
+    public void setFeatures(List<? extends Feature> features) {
+        mFeatures = features;
+        notifyDataSetChanged();
     }
 
     public class FeatureHolder extends RecyclerView.ViewHolder
