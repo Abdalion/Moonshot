@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "741131938250",
+    "firebase_url": "https://moonshot-e48af.firebaseio.com",
+    "project_id": "moonshot-e48af",
+    "storage_bucket": "moonshot-e48af.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:741131938250:android:93e0486f06a17d5f",
+        "android_client_info": {
+          "package_name": "a1.t1mo.mobjav.a816.myapplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "741131938250-05nd51psll4ehocdr6ujme64sjcm4tf7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCPdObOrk6OSya3dL-Bk0lAZ09yYP8f-4k"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

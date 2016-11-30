@@ -105,13 +105,13 @@
         android:textColor="#fff"
         android:id="@+id/login_button_twitter"/>
 
-    <Button
+<!--    <Button
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:background="#dc4e41"
         android:text="Sign in with google +"
         android:textAllCaps="false"
         android:textColor="#fff"
-        android:id="@+id/login_button_google"/>
+        android:id="@+id/login_button_google"/>-->
 
 </LinearLayout>

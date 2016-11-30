@@ -22,6 +22,8 @@ import java.util.List;
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
 import com.facebook.login.LoginManager;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.like.LikeButton;
 import com.like.OnLikeListener;
 
@@ -65,6 +67,7 @@ public class MainActivity extends AppCompatActivity
     private Tipo mTipo = Tipo.PELICULAS;
     private SerieController mSerieController;
     private PeliculaController mPeliculaController;
+    FirebaseUser user;
 
 
     @Override
@@ -82,14 +85,10 @@ public class MainActivity extends AppCompatActivity
         mFavoritos = mPeliculaController.getFavoritos();
         mSerieController = new SerieController(this);
         mSeries = mSerieController.getSeriesPopularesDeRealm();
+        user = FirebaseAuth.getInstance().getCurrentUser();
 
-        if(FacebookUtils.checkIfLogged()) {
-            FacebookUtils.requestUserInfo("name", new Listener<String>() {
-                @Override
-                public void done(String param) {
-                    Toast.makeText(MainActivity.this, "Welcome " + param, Toast.LENGTH_SHORT).show();
-                }
-            });;
+        if(isNot(user == null)) {
+            Toast.makeText(this, "Welcome " + user.getDisplayName() + "!", Toast.LENGTH_SHORT).show();
         }
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -148,11 +147,11 @@ public class MainActivity extends AppCompatActivity
 
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        if(!FacebookUtils.checkIfLogged()) {
-            inflater.inflate(R.menu.menu_navigation_toolbar_opciones, menu);
-        }
-        else if(FacebookUtils.checkIfLogged()) {
+        if(isNot(user == null)) {
             inflater.inflate(R.menu.menu_settings, menu);
+        }
+        else {
+            inflater.inflate(R.menu.menu_navigation_toolbar_opciones, menu);
         }
         return true;
     }
@@ -160,20 +159,18 @@ public class MainActivity extends AppCompatActivity
     public boolean onOptionsItemSelected(MenuItem item){
         int id = item.getItemId();
         if (id == R.id.guest) {
-            if(!FacebookUtils.checkIfLogged()) {
+            if(user == null) {
                 startActivity(new Intent(this,LoginActivity.class));
             }
         }
         else if(id == R.id.menu_logout){
-            //ESTE LOGOUT ES SOLO DE FACEBOOK.
-            LoginManager.getInstance().logOut();
+            FirebaseAuth.getInstance().signOut();
             Toast.makeText(this, "Logged out!", Toast.LENGTH_SHORT).show();
             startActivity(new Intent(this, MainActivity.class));
         }
         else if(id == R.id.menu_configuration) {
-            Toast.makeText(this, "Configuracion!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Configuration", Toast.LENGTH_SHORT).show();
         }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -273,6 +270,10 @@ public class MainActivity extends AppCompatActivity
         super.onDestroy();
         PeliculaDAO.closeRealm();
         SerieDAO.closeRealm();
+    }
+
+    private boolean isNot(boolean bool) {
+        return !bool;
     }
 
 
