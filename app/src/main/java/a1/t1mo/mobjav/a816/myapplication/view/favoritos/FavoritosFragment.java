@@ -17,6 +17,7 @@ import a1.t1mo.mobjav.a816.myapplication.controller.Controller;
 import a1.t1mo.mobjav.a816.myapplication.controller.PeliculaController;
 import a1.t1mo.mobjav.a816.myapplication.controller.SerieController;
 import a1.t1mo.mobjav.a816.myapplication.model.Feature;
+import a1.t1mo.mobjav.a816.myapplication.model.serie.ListadoSeries;
 import a1.t1mo.mobjav.a816.myapplication.utils.Listener;
 import a1.t1mo.mobjav.a816.myapplication.utils.Tipo;
 import a1.t1mo.mobjav.a816.myapplication.view.feature.FeatureAdapter;
@@ -28,6 +29,7 @@ public class FavoritosFragment extends Fragment implements Listener<List<? exten
     private static final String STATE_MENU_ID = "Menu ID";
     private PeliculaController mPeliculaController;
     private SerieController mSerieController;
+    private List<Feature> mFeatures;
     private FeatureAdapter mAdapter;
     private int mMenuID;
     private SwipeRefreshLayout swipeRefresh;
@@ -42,9 +44,19 @@ public class FavoritosFragment extends Fragment implements Listener<List<? exten
 
         if (savedInstanceState != null) {
             mMenuID = savedInstanceState.getInt(STATE_MENU_ID);
+        } else {
+            mMenuID = R.id.menu_favoritos_opcion_peliculas;
         }
 
-        mController.getFeatures(mMenuID, this);
+        mPeliculaController = new PeliculaController();
+        mSerieController = new SerieController();
+
+        if (mMenuID == R.id.menu_favoritos_opcion_peliculas) {
+            mPeliculaController.getFavoritos();
+        } else {
+            mSerieController.getFavoritos();
+        }
+
         mAdapter = new FeatureAdapter();
         View view = inflater.inflate(R.layout.fragment_grilla, container, false);
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.rv_grilla);
