@@ -1,11 +1,19 @@
 package a1.t1mo.mobjav.a816.myapplication.view;
 
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapShader;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -17,9 +25,16 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import java.util.List;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
+import com.bumptech.glide.load.model.GlideUrl;
+import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
+import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
 import com.facebook.login.LoginManager;
@@ -44,6 +59,7 @@ import a1.t1mo.mobjav.a816.myapplication.utils.Tipo;
 import a1.t1mo.mobjav.a816.myapplication.utils.TipoDeFeature;
 import a1.t1mo.mobjav.a816.myapplication.view.detalle.DetallePager;
 import a1.t1mo.mobjav.a816.myapplication.view.feature.FeatureFragment;
+import a1.t1mo.mobjav.a816.myapplication.view.login.CropCircleTransform;
 import a1.t1mo.mobjav.a816.myapplication.view.login.LoginActivity;
 import a1.t1mo.mobjav.a816.myapplication.view.login.facebook.FacebookUtils;
 
@@ -133,17 +149,34 @@ public class MainActivity extends AppCompatActivity
 
     private void navigationViewSetup() {
         navigationView = (NavigationView) findViewById(R.id.main_navigationView);
-        navigationView.setCheckedItem(R.id.menu_peliculas_opcion_todas);
 
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                getListaDeFeatures(item.getItemId());
-                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.main_drawerLayout);
-                drawer.closeDrawer(GravityCompat.START);
-                return true;
-            }
-        });
+            navigationView.setCheckedItem(R.id.menu_peliculas_opcion_todas);
+
+            navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+                @Override
+                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                    getListaDeFeatures(item.getItemId());
+                    DrawerLayout drawer = (DrawerLayout) findViewById(R.id.main_drawerLayout);
+                    drawer.closeDrawer(GravityCompat.START);
+                    return true;
+                }
+            });
+
+        if (isNot(user == null)) {
+            View headerLayout = navigationView.getHeaderView(0);
+            TextView textView = (TextView) headerLayout.findViewById(R.id.nombreDePersona);
+            textView.setText(user.getDisplayName());
+
+            final ImageView imageView = (ImageView) headerLayout.findViewById(R.id.imageViewPersona);
+            Glide.with(this).load(user.getPhotoUrl()).bitmapTransform(new CropCircleTransform(this)).into(imageView);
+        }
+        else{
+            View headerLayout = navigationView.getHeaderView(0);
+            TextView textView = (TextView) headerLayout.findViewById(R.id.nombreDePersona);
+            textView.setText("Usuario no Registrado");
+        }
+
+
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -206,7 +239,9 @@ public class MainActivity extends AppCompatActivity
             navigationView.inflateMenu(R.menu.menu_navigation_favoritos);
         }
         Log.d("Main", "Cambio a pagina de " + mTipo.titulo);
+
     }
+
 
     @Override
     public void onClickFeature(Integer posicion) {
