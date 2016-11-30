@@ -1,6 +1,5 @@
 package a1.t1mo.mobjav.a816.myapplication.view;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;

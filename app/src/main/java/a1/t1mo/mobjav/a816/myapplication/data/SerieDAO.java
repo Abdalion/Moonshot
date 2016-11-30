@@ -134,7 +134,6 @@ public class SerieDAO {
     }
 
     private void persistirEnRealm(final Serie serie) {
-        serie.setFavorito(false);
         mRealm.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {

@@ -30,15 +30,13 @@ import a1.t1mo.mobjav.a816.myapplication.utils.Tipo;
 
 public class FeatureFragment extends Fragment implements Listener<List<? extends Feature>> {
     private static final String ARGUMENT_TIPO = "Tipo";
-    public static final String ARGUMENT_MENU_ID = "Menu ID";
     private Controller mController;
     private FeatureAdapter mAdapter;
     private SwipeRefreshLayout swipeRefresh;
 
-    public static FeatureFragment getFeatureFragment(Tipo tipo, int menuId) {
+    public static FeatureFragment getFeatureFragment(Tipo tipo) {
         Bundle bundle = new Bundle();
         bundle.putSerializable(ARGUMENT_TIPO, tipo);
-        bundle.putInt(ARGUMENT_MENU_ID, menuId);
         FeatureFragment fragment = new FeatureFragment();
         fragment.setArguments(bundle);
         return fragment;
@@ -54,12 +52,15 @@ public class FeatureFragment extends Fragment implements Listener<List<? extends
 
         Bundle bundle = getArguments();
         Tipo tipo = (Tipo) bundle.getSerializable(ARGUMENT_TIPO);
+        int menuID;
         if (tipo == Tipo.PELICULAS || tipo == Tipo.FAVORITOS_PELICULAS) {
             mController = new PeliculaController();
+            menuID = R.id.menu_peliculas_opcion_todas;
         } else {
             mController = new SerieController();
+            menuID = R.id.menu_series_opcion_todas;
         }
-        mController.getFeatures(bundle.getInt(ARGUMENT_MENU_ID), this);
+        mController.getFeatures(menuID, this);
         mAdapter = new FeatureAdapter();
         View view = inflater.inflate(R.layout.fragment_grilla, container, false);
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.rv_grilla);

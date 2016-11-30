@@ -51,8 +51,6 @@ public class MainActivity extends AppCompatActivity implements CambioDePagina {
     private static boolean CONFIRM_LEAVE;
     private NavigationView navigationView;
     private FeaturePager mFeaturePager;
-    private List<? extends Feature> mFavoritos;
-    private Tipo mTipo = Tipo.PELICULAS;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -136,39 +134,16 @@ public class MainActivity extends AppCompatActivity implements CambioDePagina {
         return super.onOptionsItemSelected(item);
     }
 
-    private void getListaDeFeatures(int itemId) {
-        switch (mTipo) {
-            case PELICULAS:
-                mPeliculaController.getPeliculas(itemId, this);
-                break;
-            case SERIES:
-                mSerieController.getSeries(itemId, this);
-                break;
-            case FAVORITOS:
-                if (itemId == R.id.menu_favoritos_opcion_peliculas) {
-                    mFavoritos = mPeliculaController.getFavoritos();
-                } else {
-                    mFavoritos = mSerieController.getFavoritos();
-                }
-                mFeaturePager.redrawFragment(Tipo.FAVORITOS);
-        }
-    }
-
     @Override
     public void onCambioDePagina(Tipo tipo) {
         navigationView.getMenu().clear();
-        mTipo = tipo;
-        if (mTipo == Tipo.PELICULAS) {
+        if (tipo == Tipo.PELICULAS) {
             navigationView.inflateMenu(R.menu.menu_navigation_peliculas);
-        } else if (mTipo == Tipo.SERIES) {
+        } else if (tipo == Tipo.SERIES) {
             navigationView.inflateMenu(R.menu.menu_navigation_series);
         } else {
             navigationView.inflateMenu(R.menu.menu_navigation_favoritos);
         }
-    }
-
-    public Tipo getTipo() {
-        return mTipo;
     }
 
     @Override
