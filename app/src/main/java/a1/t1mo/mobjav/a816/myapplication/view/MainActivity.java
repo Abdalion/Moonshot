@@ -187,7 +187,7 @@ public class MainActivity extends AppCompatActivity
                 if (itemId == R.id.menu_favoritos_opcion_peliculas) {
                     mFavoritos = mPeliculaController.getFavoritos();
                 } else {
-                    mFavoritos = mSerieController.getFavoritos();
+                    mFavoritos = mSerieController.getFavoritos(MainActivity.this);
                 }
                 mFeaturePager.redrawFragment(Tipo.FAVORITOS);
         }

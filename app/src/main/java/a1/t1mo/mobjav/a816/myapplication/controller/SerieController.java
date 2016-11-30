@@ -74,7 +74,7 @@ public class SerieController extends Controller {
         mSerieDAO.setFavorito(id, isFav);
     }
 
-    public List<Serie> getFavoritos() {
-        return mSerieDAO.getFavoritos();
+    public List<Serie> getFavoritos(Context context) {
+        return mSerieDAO.getFavoritos(context);
     }
 }

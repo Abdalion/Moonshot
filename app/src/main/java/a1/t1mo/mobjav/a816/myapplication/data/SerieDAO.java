@@ -1,6 +1,11 @@
 package a1.t1mo.mobjav.a816.myapplication.data;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.util.Log;
+
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -201,7 +206,7 @@ public class SerieDAO {
             @Override
             public void execute(Realm realm) {
                 Serie serie = realm.where(Serie.class).equalTo("id", id).findFirst();
-                if (serie != null) {
+                if (isNot(serie == null)) {
                     serie.setFavorito(isFav);
                     realm.copyToRealmOrUpdate(serie);
                 }
@@ -209,7 +214,25 @@ public class SerieDAO {
         });
     }
 
-    public List<Serie> getFavoritos() {
-        return mRealm.where(Serie.class).equalTo("favorito", true).findAll();
+    public List<Serie> getFavoritos(Context context) {
+        List<Serie> listaDeSeries = new ArrayList<>();
+        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetwork = connectivityManager.getActiveNetworkInfo();
+        if(isNot(FirebaseAuth.getInstance().getCurrentUser() == null)
+                && isNot(activeNetwork == null)
+                && (activeNetwork.isConnectedOrConnecting())) {
+
+
+        }
+        else {
+            listaDeSeries = mRealm.where(Serie.class).equalTo("favorito", true).findAll();
+        }
+        return listaDeSeries;
     }
+
+    private boolean isNot(boolean bool) {
+        return !bool;
+    }
+
+
 }
