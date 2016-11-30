@@ -9,6 +9,6 @@ package a1.t1mo.mobjav.a816.myapplication.utils;
  */
 
 public enum Tipo {
-    PELICULAS, SERIES, FAVORITOS_PELICULAS, FAVORITOS_SERIES;
+    PELICULAS, SERIES, FAVORITOS;
 }
 

@@ -1,4 +1,4 @@
-package a1.t1mo.mobjav.a816.myapplication.view.feature;
+package a1.t1mo.mobjav.a816.myapplication.view.favoritos;
 
 import android.graphics.Rect;
 import android.os.Bundle;
@@ -19,48 +19,26 @@ import a1.t1mo.mobjav.a816.myapplication.controller.SerieController;
 import a1.t1mo.mobjav.a816.myapplication.model.Feature;
 import a1.t1mo.mobjav.a816.myapplication.utils.Listener;
 import a1.t1mo.mobjav.a816.myapplication.utils.Tipo;
+import a1.t1mo.mobjav.a816.myapplication.view.feature.FeatureAdapter;
 
 /**
- * MoonShot App
- * Proyecto Integrador
- * Curso de Desarrollo Mobile Android
- * Turno Tarde
- * Archivo creado por Juan Pablo on 04/11/2016.
+ * Created by dh-mob-tt on 30/11/16.
  */
-
-public class FeatureFragment extends Fragment implements Listener<List<? extends Feature>> {
-    private static final String ARGUMENT_TIPO = "Tipo";
+public class FavoritosFragment extends Fragment implements Listener<List<? extends Feature>> {
     private static final String STATE_MENU_ID = "Menu ID";
-    private Controller mController;
+    private PeliculaController mPeliculaController;
+    private SerieController mSerieController;
     private FeatureAdapter mAdapter;
     private int mMenuID;
     private SwipeRefreshLayout swipeRefresh;
 
-    public static FeatureFragment getFeatureFragment(Tipo tipo) {
-        Bundle bundle = new Bundle();
-        bundle.putSerializable(ARGUMENT_TIPO, tipo);
-        FeatureFragment fragment = new FeatureFragment();
-        fragment.setArguments(bundle);
-        return fragment;
-    }
-
-    public FeatureFragment() {
+    public FavoritosFragment() {
         // Required empty public constructor
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-        Bundle bundle = getArguments();
-        Tipo tipo = (Tipo) bundle.getSerializable(ARGUMENT_TIPO);
-        if (tipo == Tipo.PELICULAS) {
-            mController = new PeliculaController();
-            mMenuID = R.id.menu_peliculas_opcion_todas;
-        } else {
-            mController = new SerieController();
-            mMenuID = R.id.menu_series_opcion_todas;
-        }
 
         if (savedInstanceState != null) {
             mMenuID = savedInstanceState.getInt(STATE_MENU_ID);

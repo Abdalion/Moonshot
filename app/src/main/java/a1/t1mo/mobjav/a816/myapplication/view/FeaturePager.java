@@ -57,7 +57,7 @@ public class FeaturePager extends Fragment implements NavigationView.OnNavigatio
                 else if (position == 1)
                     tipo = Tipo.SERIES;
                 else
-                    tipo = Tipo.FAVORITOS_PELICULAS;
+                    tipo = Tipo.FAVORITOS;
                 mCallback.onCambioDePagina(tipo);
             }
 
