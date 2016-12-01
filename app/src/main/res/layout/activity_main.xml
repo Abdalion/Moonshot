@@ -7,7 +7,6 @@
                                         android:background="@color/colorPalabras2"
                                         tools:context="a1.t1mo.mobjav.a816.myapplication.view.MainActivity"
                                         android:id="@+id/main_drawerLayout">
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -26,6 +25,7 @@
                 android:layout_height="?attr/actionBarSize"
                 android:background="@drawable/header_toolbar"
                 app:popupTheme="@style/AppTheme.PopupOverlay"
+                app:layout_scrollFlags="scroll|enterAlways|snap"
                 />
 
         </android.support.design.widget.AppBarLayout>
@@ -39,10 +39,6 @@
             />
     </LinearLayout>
 
-
-
-
-
     <android.support.design.widget.NavigationView
         app:itemTextColor="@color/colorPalabras"
         android:layout_width="wrap_content"
@@ -55,5 +51,4 @@
         >
 
     </android.support.design.widget.NavigationView>
-
 </android.support.v4.widget.DrawerLayout>

@@ -112,8 +112,10 @@ public class MainActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.main_drawerLayout);
+
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
         mFeaturePager = new FeaturePager();
@@ -247,7 +249,7 @@ public class MainActivity extends AppCompatActivity
     public void onClickFeature(Integer posicion) {
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.main_drawerLayout, DetallePager.getDetallePager(posicion))
+                .replace(R.id.main_contenedorDeFragment, DetallePager.getDetallePager(posicion))
                 .addToBackStack("back")
                 .commit();
     }

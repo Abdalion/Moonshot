@@ -55,17 +55,18 @@ public class DetallePelicula extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_detalle, container, false);
 
+        Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar_view);
+        toolbar.setNavigationIcon(R.drawable.left);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().onBackPressed();
+            }
+        });
+
         CollapsingToolbarLayout collapsingToolbar =
                 (CollapsingToolbarLayout) view.findViewById(R.id.collapsing_toolbar);
-        collapsingToolbar.setTitle(mPelicula.getTagline());
-
-        Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar_view);
-        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
-        if (toolbar != null) {
-            toolbar.setSubtitle("Descripción");
-        }
-        context = view.getContext();
-
+        collapsingToolbar.setTitleEnabled(false);
 
 
         LikeButton likeButton = (LikeButton) view.findViewById(R.id.fav_button);

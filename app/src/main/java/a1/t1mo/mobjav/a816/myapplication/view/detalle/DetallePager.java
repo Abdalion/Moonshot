@@ -2,9 +2,11 @@ package a1.t1mo.mobjav.a816.myapplication.view.detalle;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -61,11 +63,7 @@ public class DetallePager extends Fragment {
         View view = inflater.inflate(R.layout.view_pager_detalle, container, false);
         ViewPager viewPager = (ViewPager) view.findViewById(R.id.viewPagerDetalle);
 
-        Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
 
-        //for crate home button
-        AppCompatActivity activity = (AppCompatActivity) getActivity();
-        activity.setSupportActionBar(toolbar);
 
 
         if(mMainActivity.getTipo() == PELICULAS) {
@@ -107,4 +105,6 @@ public class DetallePager extends Fragment {
         viewPager.setCurrentItem(posicion);
         return view;
     }
+
+
 }
