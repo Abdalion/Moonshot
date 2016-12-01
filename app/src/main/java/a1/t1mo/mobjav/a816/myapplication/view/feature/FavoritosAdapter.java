@@ -23,10 +23,12 @@ import a1.t1mo.mobjav.a816.myapplication.view.detalle.DetalleActivity;
  */
 public class FavoritosAdapter extends RecyclerView.Adapter<FavoritosAdapter.FavoritoHolder> {
     private List<? extends Feature> mFeatures;
+    private View.OnClickListener mListener;
     private final static int FADE_DURATION = 300;
 
-    public FavoritosAdapter(List<? extends Feature> features) {
+    public FavoritosAdapter(View.OnClickListener listener, List<? extends Feature> features) {
         mFeatures = features;
+        mListener = listener;
     }
 
     @Override
@@ -59,14 +61,13 @@ public class FavoritosAdapter extends RecyclerView.Adapter<FavoritosAdapter.Favo
         view.startAnimation(anim);
     }
 
-    public class FavoritoHolder extends RecyclerView.ViewHolder
-            implements View.OnClickListener {
+    public class FavoritoHolder extends RecyclerView.ViewHolder {
 
         private ImageView mImagen;
 
         public FavoritoHolder(View itemView) {
             super(itemView);
-            itemView.setOnClickListener(this);
+            itemView.setOnClickListener(mListener);
             mImagen = (ImageView) itemView.findViewById(R.id.img_feature);
         }
 
@@ -76,11 +77,6 @@ public class FavoritosAdapter extends RecyclerView.Adapter<FavoritosAdapter.Favo
                 .load(TmdbService.IMAGE_URL_W154 + feature.getPosterPath())
                 .fitCenter()
                 .into(mImagen);
-        }
-
-        @Override
-        public void onClick(View view) {
-            DetalleActivity.getIntent(view.getContext(), Tipo.FAVORITOS, )
         }
     }
 }
