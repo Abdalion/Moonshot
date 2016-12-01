@@ -96,7 +96,7 @@ public class DetalleSerie extends Fragment {
 //        TextView textViewGenre =  (TextView) view.findViewById(R.id.fragment_detalle_genero);
 //        textViewGenre.setText(mSerie.getGeneros());
 
-        ImageView imageViewImagenId = (ImageView) view.findViewById(R.id.fragment_detalle_imagenId);
+        ImageView imageViewImagenId = (ImageView) view.findViewById(R.id.backdrop);
         Glide
                 .with(getContext())
                 .load(TmdbService.IMAGE_URL_W185 + mSerie.getBackdropPath())

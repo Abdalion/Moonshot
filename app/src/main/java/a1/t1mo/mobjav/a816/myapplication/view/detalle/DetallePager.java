@@ -5,6 +5,8 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,6 +60,13 @@ public class DetallePager extends Fragment {
         Integer posicion = bundle.getInt(ARGUMENT_POSICION);
         View view = inflater.inflate(R.layout.view_pager_detalle, container, false);
         ViewPager viewPager = (ViewPager) view.findViewById(R.id.viewPagerDetalle);
+
+        Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+
+        //for crate home button
+        AppCompatActivity activity = (AppCompatActivity) getActivity();
+        activity.setSupportActionBar(toolbar);
+
 
         if(mMainActivity.getTipo() == PELICULAS) {
             viewPager.setAdapter(new DetallePeliculaAdapter(getChildFragmentManager(),

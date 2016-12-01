@@ -247,7 +247,7 @@ public class MainActivity extends AppCompatActivity
     public void onClickFeature(Integer posicion) {
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.main_contenedorDeFragment, DetallePager.getDetallePager(posicion))
+                .replace(R.id.main_drawerLayout, DetallePager.getDetallePager(posicion))
                 .addToBackStack("back")
                 .commit();
     }

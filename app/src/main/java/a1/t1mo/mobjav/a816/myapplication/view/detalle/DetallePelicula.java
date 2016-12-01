@@ -1,10 +1,15 @@
 package a1.t1mo.mobjav.a816.myapplication.view.detalle;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -24,6 +29,7 @@ import a1.t1mo.mobjav.a816.myapplication.utils.TipoDeFeature;
 public class DetallePelicula extends Fragment {
     private Pelicula mPelicula;
     private FavChange mFavCallback;
+    private Context context;
 
     public static DetallePelicula getDetalle(Pelicula pelicula) {
         DetallePelicula detallePelicula = new DetallePelicula();
@@ -48,8 +54,22 @@ public class DetallePelicula extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_detalle, container, false);
+
+        CollapsingToolbarLayout collapsingToolbar =
+                (CollapsingToolbarLayout) view.findViewById(R.id.collapsing_toolbar);
+        collapsingToolbar.setTitle(mPelicula.getTagline());
+
+        Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar_view);
+        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+        if (toolbar != null) {
+            toolbar.setSubtitle("Descripción");
+        }
+        context = view.getContext();
+
+
+
         LikeButton likeButton = (LikeButton) view.findViewById(R.id.fav_button);
-        if(mPelicula.isFavorito()) {
+        if (mPelicula.isFavorito()) {
             likeButton.setLiked(true);
         }
         likeButton.setOnLikeListener(new OnLikeListener() {
@@ -82,27 +102,26 @@ public class DetallePelicula extends Fragment {
         ratingBar.setRating(mPelicula.getPuntajePromedio().floatValue());
 
 
-        TextView textViewDuracion =  (TextView) view.findViewById(R.id.fragment_detalle_duracion);
-        if (mPelicula.getDuracion() == null){
+        TextView textViewDuracion = (TextView) view.findViewById(R.id.fragment_detalle_duracion);
+        if (mPelicula.getDuracion() == null) {
             textViewDuracion.setText("N/A");
-        }
-        else {
+        } else {
             textViewDuracion.setText(Integer.toString(mPelicula.getDuracion()));
         }
 //        TextView textViewGenre =  (TextView) view.findViewById(R.id.fragment_detalle_genero);
 //        textViewGenre.setText(mPelicula.getGeneros());
 
-        ImageView imageViewImagenId = (ImageView) view.findViewById(R.id.fragment_detalle_imagenId);
+        ImageView imageViewImagenId = (ImageView) view.findViewById(R.id.backdrop);
         Glide
-            .with(getContext())
-            .load(TmdbService.IMAGE_URL_W300 + mPelicula.getBackdropPath())
-            .fitCenter()
-            .into(imageViewImagenId);
+                .with(getContext())
+                .load(TmdbService.IMAGE_URL_W300 + mPelicula.getBackdropPath())
+                .fitCenter()
+                .into(imageViewImagenId);
 
         TextView textViewLenguaje = (TextView) view.findViewById(R.id.fragment_detalle_lenguaje);
         textViewLenguaje.setText(mPelicula.getLenguaje());
 
-        TextView textViewTrama =  (TextView) view.findViewById(R.id.fragment_detalle_trama);
+        TextView textViewTrama = (TextView) view.findViewById(R.id.fragment_detalle_trama);
         textViewTrama.setText(mPelicula.getResumen());
 
 //        TextView textViewHomePage =  (TextView) view.findViewById(R.id.fragment_detalle_homepage);
@@ -110,4 +129,5 @@ public class DetallePelicula extends Fragment {
 
         return view;
     }
+
 }
