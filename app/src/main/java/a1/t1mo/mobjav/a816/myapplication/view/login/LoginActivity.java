@@ -43,6 +43,7 @@ import com.twitter.sdk.android.core.identity.TwitterAuthClient;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 
 public class LoginActivity extends AppCompatActivity {
     private CallbackManager mCallbackManager;
@@ -120,6 +121,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void loginToFirebase(final AuthCredential credential) {
+        finish();
          mAuth.signInWithCredential(credential).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
              @Override
              public void onComplete(@NonNull Task<AuthResult> task) {
@@ -134,7 +136,11 @@ public class LoginActivity extends AppCompatActivity {
                          }
                          else {
                              Log.d("Firebase", "Creado user en la base de datos remota");
-                             User myUser = new User(user.getDisplayName(), user.getUid(), new ArrayList<Serie>(), new ArrayList<Pelicula>());
+                             User myUser = new User();
+                             myUser.setUserID(user.getUid());
+                             myUser.setUsername(user.getDisplayName());
+                             myUser.setPeliculasFavoritas(new HashMap<String, Integer>());
+                             myUser.setSeriesFavoritas(new HashMap<String, Integer>());
                              firebaseDatabase.getReference().child("users").child(user.getUid()).setValue(myUser);
                          }
                      }
