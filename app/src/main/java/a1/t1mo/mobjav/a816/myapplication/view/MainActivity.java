@@ -9,7 +9,6 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -17,11 +16,9 @@ import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -45,16 +42,8 @@ import com.like.LikeButton;
 import com.like.OnLikeListener;
 
 import a1.t1mo.mobjav.a816.myapplication.R;
-import a1.t1mo.mobjav.a816.myapplication.controller.Controller;
-import a1.t1mo.mobjav.a816.myapplication.controller.PeliculaController;
-import a1.t1mo.mobjav.a816.myapplication.controller.SerieController;
 import a1.t1mo.mobjav.a816.myapplication.data.PeliculaDAO;
 import a1.t1mo.mobjav.a816.myapplication.data.SerieDAO;
-import a1.t1mo.mobjav.a816.myapplication.model.Feature;
-import a1.t1mo.mobjav.a816.myapplication.model.pelicula.Pelicula;
-import a1.t1mo.mobjav.a816.myapplication.model.serie.Serie;
-import a1.t1mo.mobjav.a816.myapplication.utils.CambioDePagina;
-import a1.t1mo.mobjav.a816.myapplication.utils.FavChange;
 import a1.t1mo.mobjav.a816.myapplication.utils.Listener;
 import a1.t1mo.mobjav.a816.myapplication.utils.Tipo;
 import a1.t1mo.mobjav.a816.myapplication.utils.TipoDeFeature;
@@ -71,22 +60,11 @@ import a1.t1mo.mobjav.a816.myapplication.view.login.facebook.FacebookUtils;
  * Turno Tarde
  */
 
-public class MainActivity extends AppCompatActivity
-        implements FeatureFragment.ListenerFeature, CambioDePagina, FavChange,
-        Controller.ListenerSeries, Controller.ListenerPeliculas {
-
+public class MainActivity extends AppCompatActivity implements CambioDePagina {
     private static boolean CONFIRM_LEAVE;
-
     private NavigationView navigationView;
     private FeaturePager mFeaturePager;
-    private List<Pelicula> mPeliculas;
-    private List<Serie> mSeries;
-    private List<? extends Feature> mFavoritos;
-    private Tipo mTipo = Tipo.PELICULAS;
-    private SerieController mSerieController;
-    private PeliculaController mPeliculaController;
     FirebaseUser user;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,14 +75,7 @@ public class MainActivity extends AppCompatActivity
 
         CONFIRM_LEAVE = false;
 
-        // Carga inicial de peliculas y series
-        mPeliculaController = new PeliculaController(this);
-        mPeliculas = mPeliculaController.getPeliculasPopularesDeRealm();
-        mFavoritos = mPeliculaController.getFavoritos(MainActivity.this);
-        mSerieController = new SerieController(this);
-        mSeries = mSerieController.getSeriesPopularesDeRealm();
         user = FirebaseAuth.getInstance().getCurrentUser();
-
         if(isNot(user == null)) {
             Toast.makeText(this, "Welcome " + user.getDisplayName() + "!", Toast.LENGTH_SHORT).show();
         }
@@ -125,8 +96,9 @@ public class MainActivity extends AppCompatActivity
                 .add(R.id.main_contenedorDeFragment, mFeaturePager)
                 .addToBackStack("back")
                 .commit();
-        navigationViewSetup();
-
+        navigationView = (NavigationView) findViewById(R.id.main_navigationView);
+        navigationView.setCheckedItem(R.id.menu_peliculas_opcion_todas);
+        navigationView.setNavigationItemSelectedListener(mFeaturePager);
     }
 
     @Override
@@ -134,18 +106,14 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.main_drawerLayout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        }
-        else if(getSupportFragmentManager().getBackStackEntryCount() == 1) {
-            if(CONFIRM_LEAVE == true) {
+        } else if (getSupportFragmentManager().getBackStackEntryCount() == 1) {
+            if (CONFIRM_LEAVE) {
                 finish();
-            }
-            else {
+            } else {
                 Toast.makeText(MainActivity.this, R.string.confirm_leave, Toast.LENGTH_SHORT).show();
                 CONFIRM_LEAVE = true;
             }
-
-        }
-        else {
+        } else {
             super.onBackPressed();
         }
     }
@@ -200,7 +168,7 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-    public boolean onOptionsItemSelected(MenuItem item){
+    public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.guest) {
             if(user == null) {
@@ -213,63 +181,18 @@ public class MainActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
-
-    private void getListaDeFeatures(int itemId) {
-        switch (mTipo) {
-            case PELICULAS:
-                mPeliculaController.getPeliculas(itemId, this);
-                break;
-            case SERIES:
-                mSerieController.getSeries(itemId, this);
-                break;
-            case FAVORITOS:
-                if (itemId == R.id.menu_favoritos_opcion_peliculas) {
-                    mFavoritos = mPeliculaController.getFavoritos(MainActivity.this);
-                } else {
-                    mFavoritos = mSerieController.getFavoritos(MainActivity.this);
-                }
-                mFeaturePager.redrawFragment(Tipo.FAVORITOS);
-        }
-    }
-
     @Override
     public void onCambioDePagina(Tipo tipo) {
         navigationView.getMenu().clear();
-        mTipo = tipo;
-        if (mTipo == Tipo.PELICULAS) {
+        if (tipo == Tipo.PELICULAS) {
             navigationView.inflateMenu(R.menu.menu_navigation_peliculas);
-        } else if (mTipo == Tipo.SERIES) {
+        } else if (tipo == Tipo.SERIES) {
             navigationView.inflateMenu(R.menu.menu_navigation_series);
         } else {
             navigationView.inflateMenu(R.menu.menu_navigation_favoritos);
         }
-        Log.d("Main", "Cambio a pagina de " + mTipo.titulo);
-
     }
 
-
-    @Override
-    public void onClickFeature(Integer posicion) {
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.main_drawerLayout, DetallePager.getDetallePager(posicion))
-                .addToBackStack("back")
-                .commit();
-    }
-
-    @Override
-    public void onFinish(List<Pelicula> peliculas) {
-        mPeliculas = peliculas;
-        Log.d("Main", "Cargadas las peliculas. Cantidad = " + mPeliculas.size());
-        mFeaturePager.redrawFragment(Tipo.PELICULAS);
-    }
-
-    @Override
-    public void onDone(List<Serie> series) {
-        mSeries = series;
-        Log.d("Main", "Cargadas las series. Cantidad = " + mSeries.size());
-        mFeaturePager.redrawFragment(Tipo.SERIES);
-    }
 
     @Override
     public void onFavChange(int id, boolean isFav, TipoDeFeature tipoDeFeature) {
@@ -284,42 +207,10 @@ public class MainActivity extends AppCompatActivity
     public void favNotLogued() {
         startActivity(new Intent(this, LoginActivity.class));
     }
-
-    public void downloadFeatures(SwipeRefreshLayout swipeRefresh){
-        if (mTipo == Tipo.PELICULAS) {
-            mPeliculaController.getPeliculasPopularesDeTmdb(this);
-        } else {
-            mSerieController.getSeriesPopularesDeTmdb(this);
-        }
-        swipeRefresh.setRefreshing(false);
-    }
-
-    public Tipo getTipo() {
-        return mTipo;
-    }
-
-    public List<? extends Feature> getFavoritos() {
-        return mFavoritos;
-    }
-
-    public List<Serie> getSeries() {
-        return mSeries;
-    }
-
-    public List<Pelicula> getPeliculas() {
-        return mPeliculas;
-    }
-
-    @Override
     protected void onDestroy() {
         super.onDestroy();
         PeliculaDAO.closeRealm();
         SerieDAO.closeRealm();
     }
-
-    private boolean isNot(boolean bool) {
-        return !bool;
-    }
-
 
 }

@@ -9,15 +9,6 @@ package a1.t1mo.mobjav.a816.myapplication.utils;
  */
 
 public enum Tipo {
-
-    PELICULAS("Peliculas"), SERIES("Series"), FAVORITOS("Favoritos");
-
-    public String titulo;
-
-    Tipo(String titulo) {
-        this.titulo = titulo;
-    }
-
-
+    PELICULAS, SERIES, FAVORITOS;
 }
 

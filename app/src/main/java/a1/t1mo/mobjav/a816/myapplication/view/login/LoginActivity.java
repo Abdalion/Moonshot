@@ -10,6 +10,7 @@ import a1.t1mo.mobjav.a816.myapplication.model.serie.Serie;
 import a1.t1mo.mobjav.a816.myapplication.view.MainActivity;
 
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -44,6 +45,9 @@ import com.twitter.sdk.android.core.identity.TwitterAuthClient;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+
+import a1.t1mo.mobjav.a816.myapplication.R;
+import a1.t1mo.mobjav.a816.myapplication.view.MainActivity;
 
 public class LoginActivity extends AppCompatActivity {
     private CallbackManager mCallbackManager;

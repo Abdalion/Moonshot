@@ -1,7 +1,6 @@
 package a1.t1mo.mobjav.a816.myapplication.view.feature;
 
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,27 +33,12 @@ import a1.t1mo.mobjav.a816.myapplication.view.detalle.DetalleSerie;
  */
 
 public class FeatureAdapter extends RecyclerView.Adapter<FeatureAdapter.FeatureHolder> {
-    private FeatureFragment.ListenerFeature mListener;
-    private List<? extends Feature> mFeatures;
+    private List<? extends Feature> mFeatures = null;
     private final static int FADE_DURATION = 300;
+    private View.OnClickListener mListener;
 
-    public FeatureAdapter(MainActivity activity, Tipo tipo) {
-        switch (tipo) {
-            case PELICULAS:
-                mFeatures = activity.getPeliculas();
-                break;
-            case SERIES:
-                mFeatures = activity.getSeries();
-                break;
-            case FAVORITOS:
-                mFeatures = activity.getFavoritos();
-                break;
-        }
-        //Log.d("FeatureAdapter", "Tipo: " + tipo.titulo + " Cantidad cargada: " + mFeatures.size());
-    }
-
-    public void setListener(FeatureFragment.ListenerFeature listener) {
-        this.mListener = listener;
+    public FeatureAdapter(View.OnClickListener listener) {
+        mListener = listener;
     }
 
     @Override
@@ -85,15 +69,18 @@ public class FeatureAdapter extends RecyclerView.Adapter<FeatureAdapter.FeatureH
         view.startAnimation(anim);
     }
 
-    public class FeatureHolder extends RecyclerView.ViewHolder
-            implements View.OnClickListener {
+    public void setFeatures(List<? extends Feature> features) {
+        mFeatures = features;
+        notifyDataSetChanged();
+    }
 
+    public class FeatureHolder extends RecyclerView.ViewHolder {
         private ImageView mImagen;
         private LikeButton mLikeButton;
 
         public FeatureHolder(View itemView) {
             super(itemView);
-            itemView.setOnClickListener(this);
+            itemView.setOnClickListener(mListener);
             mImagen = (ImageView) itemView.findViewById(R.id.img_feature);
             mLikeButton = (LikeButton) itemView.findViewById(R.id.fav_button_main);
         }
@@ -120,11 +107,6 @@ public class FeatureAdapter extends RecyclerView.Adapter<FeatureAdapter.FeatureH
                 }
             }
 
-        }
-
-        @Override
-        public void onClick(View v) {
-            mListener.onClickFeature(getLayoutPosition());
         }
     }
 }

@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 
 import java.util.List;
 
+import a1.t1mo.mobjav.a816.myapplication.model.Feature;
 import a1.t1mo.mobjav.a816.myapplication.model.pelicula.Pelicula;
 
 /**
@@ -16,17 +17,26 @@ import a1.t1mo.mobjav.a816.myapplication.model.pelicula.Pelicula;
  * Archivo creado por Juan Pablo on 09/11/2016.
  */
 
-public class DetallePeliculaAdapter extends FragmentStatePagerAdapter {
-    private List<Pelicula> mListaDePeliculas;
+public class DetallePeliculaAdapter extends DetalleAdapter {
+    private List<? extends Feature> mListaDePeliculas;
 
-    public DetallePeliculaAdapter(FragmentManager fm, List<Pelicula> peliculas) {
+    public DetallePeliculaAdapter(FragmentManager fm, List<? extends Feature> peliculas) {
         super(fm);
         mListaDePeliculas = peliculas;
     }
 
+    public DetallePeliculaAdapter(FragmentManager fm) {
+        super(fm);
+    }
+
+    public void setFeatures(List<? extends Feature> features) {
+        mListaDePeliculas = features;
+        notifyDataSetChanged();
+    }
+
     @Override
     public Fragment getItem(int position) {
-        return DetallePelicula.getDetalle(mListaDePeliculas.get(position));
+        return DetallePelicula.getDetalle((Pelicula) mListaDePeliculas.get(position));
     }
 
     @Override
