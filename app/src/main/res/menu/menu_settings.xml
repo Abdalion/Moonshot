@@ -10,8 +10,6 @@
         app:showAsAction="always"
         >
         <menu>
-            <item android:id="@+id/menu_logout"
-                android:title="@string/logout"/>
             <item android:id="@+id/menu_configuration"
                 android:title="@string/configuration" />
         </menu>

@@ -161,6 +161,13 @@ public class MainActivity extends AppCompatActivity
                     getListaDeFeatures(item.getItemId());
                     DrawerLayout drawer = (DrawerLayout) findViewById(R.id.main_drawerLayout);
                     drawer.closeDrawer(GravityCompat.START);
+                    int id = item.getItemId();
+                    if (id==R.id.logout_nav){
+                        FirebaseAuth.getInstance().signOut();
+                        Toast.makeText(MainActivity.this, "Logged out!", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(MainActivity.this,MainActivity.class));
+                    }
+
                     return true;
                 }
             });
@@ -199,11 +206,6 @@ public class MainActivity extends AppCompatActivity
             if(user == null) {
                 startActivity(new Intent(this,LoginActivity.class));
             }
-        }
-        else if(id == R.id.menu_logout){
-            FirebaseAuth.getInstance().signOut();
-            Toast.makeText(this, "Logged out!", Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(this, MainActivity.class));
         }
         else if(id == R.id.menu_configuration) {
             Toast.makeText(this, "Configuration", Toast.LENGTH_SHORT).show();
