@@ -14,6 +14,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.google.firebase.auth.FirebaseAuth;
 import com.like.LikeButton;
 import com.like.OnLikeListener;
 
@@ -69,20 +70,33 @@ public class DetalleSerie extends Fragment {
         if(mSerie.isFavorito()) {
             likeButton.setLiked(true);
         }
+
+        likeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(FirebaseAuth.getInstance().getCurrentUser() == null) {
+                    mFavCallback.favNotLogued();
+                    view.cancelPendingInputEvents();
+                }
+            }
+        });
         likeButton.setOnLikeListener(new OnLikeListener() {
             @Override
             public void liked(LikeButton likeButton) {
-                mFavCallback.onFavChange(mSerie.getId(), true, TipoDeFeature.SERIE);
-                Snackbar.make(getView(), "Agregado A Favoritos", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-
+                if(FirebaseAuth.getInstance().getCurrentUser() != null) {
+                    mFavCallback.onFavChange(mSerie.getId(), true, TipoDeFeature.SERIE);
+                    Snackbar.make(getView(), "Agregado A Favoritos", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                }
             }
 
             @Override
             public void unLiked(LikeButton likeButton) {
-                mFavCallback.onFavChange(mSerie.getId(), false, TipoDeFeature.SERIE);
-                Snackbar.make(getView(), "Eliminado De Favoritos", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                if(FirebaseAuth.getInstance().getCurrentUser() != null) {
+                    mFavCallback.onFavChange(mSerie.getId(), false, TipoDeFeature.SERIE);
+                    Snackbar.make(getView(), "Eliminado De Favoritos", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                }
             }
         });
 

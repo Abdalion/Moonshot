@@ -276,7 +276,11 @@ public class MainActivity extends AppCompatActivity
         } else {
             mSerieController.setFavorito(id, isFav);
         }
+    }
 
+    @Override
+    public void favNotLogued() {
+        startActivity(new Intent(this, LoginActivity.class));
     }
 
     public void downloadFeatures(SwipeRefreshLayout swipeRefresh){

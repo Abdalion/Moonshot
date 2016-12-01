@@ -17,6 +17,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.google.firebase.auth.FirebaseAuth;
 import com.like.LikeButton;
 import com.like.OnLikeListener;
 
@@ -25,6 +26,7 @@ import a1.t1mo.mobjav.a816.myapplication.data.services.TmdbService;
 import a1.t1mo.mobjav.a816.myapplication.model.pelicula.Pelicula;
 import a1.t1mo.mobjav.a816.myapplication.utils.FavChange;
 import a1.t1mo.mobjav.a816.myapplication.utils.TipoDeFeature;
+import a1.t1mo.mobjav.a816.myapplication.view.login.LoginActivity;
 
 public class DetallePelicula extends Fragment {
     private Pelicula mPelicula;
@@ -69,24 +71,37 @@ public class DetallePelicula extends Fragment {
         collapsingToolbar.setTitleEnabled(false);
 
 
-        LikeButton likeButton = (LikeButton) view.findViewById(R.id.fav_button);
+        final LikeButton likeButton = (LikeButton) view.findViewById(R.id.fav_button);
         if (mPelicula.isFavorito()) {
             likeButton.setLiked(true);
         }
+        likeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(FirebaseAuth.getInstance().getCurrentUser() == null) {
+                    mFavCallback.favNotLogued();
+                    view.cancelPendingInputEvents();
+                }
+            }
+        });
         likeButton.setOnLikeListener(new OnLikeListener() {
+
             @Override
             public void liked(LikeButton likeButton) {
-                mFavCallback.onFavChange(mPelicula.getId(), true, TipoDeFeature.PELICULA);
-                Snackbar.make(getView(), "Agregado a favoritos", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                if(FirebaseAuth.getInstance().getCurrentUser() != null) {
+                    mFavCallback.onFavChange(mPelicula.getId(), true, TipoDeFeature.PELICULA);
+                    Snackbar.make(getView(), "Agregado a favoritos", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                }
             }
 
             @Override
             public void unLiked(LikeButton likeButton) {
-                mFavCallback.onFavChange(mPelicula.getId(), false, TipoDeFeature.PELICULA);
-                Snackbar.make(getView(), "Eliminado de favoritos", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-
+                if(FirebaseAuth.getInstance().getCurrentUser() != null) {
+                    mFavCallback.onFavChange(mPelicula.getId(), false, TipoDeFeature.PELICULA);
+                    Snackbar.make(getView(), "Eliminado de favoritos", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                }
             }
         });
 
