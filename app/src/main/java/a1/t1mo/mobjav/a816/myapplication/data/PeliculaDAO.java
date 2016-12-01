@@ -1,13 +1,26 @@
 package a1.t1mo.mobjav.a816.myapplication.data;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.util.Log;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import a1.t1mo.mobjav.a816.myapplication.controller.Controller;
 import a1.t1mo.mobjav.a816.myapplication.data.services.ServiceFactory;
 import a1.t1mo.mobjav.a816.myapplication.data.services.TmdbService;
+import a1.t1mo.mobjav.a816.myapplication.model.User;
 import a1.t1mo.mobjav.a816.myapplication.model.pelicula.ListadoPeliculas;
 import a1.t1mo.mobjav.a816.myapplication.model.pelicula.Pelicula;
 import a1.t1mo.mobjav.a816.myapplication.utils.Listener;
@@ -33,6 +46,8 @@ public class PeliculaDAO {
     private static TmdbService sTmdbService;
     private Realm mRealm;
     private static PeliculaDAO sInstance;
+    private FirebaseUser mFirebaseUser;
+    private List<Pelicula> mListaDeFavoritos;
 
     private PeliculaDAO() {
         sTmdbService = ServiceFactory.getTmdbService();
@@ -132,10 +147,35 @@ public class PeliculaDAO {
                     .findAllSorted("popularidad", Sort.DESCENDING);
     }
 
-    public List<Pelicula> getFavoritos() {
-        return mRealm.where(Pelicula.class).equalTo("favorito", true).findAll();
-
+    public List<Pelicula> getFavoritos(Context context) {
+        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetwork = connectivityManager.getActiveNetworkInfo();
+        if(!(FirebaseAuth.getInstance().getCurrentUser() == null)
+                && !(activeNetwork == null)
+                && (activeNetwork.isConnectedOrConnecting())) {
+            mFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+            DatabaseReference userReference = FirebaseDatabase.getInstance().getReference().child("users").child(mFirebaseUser.getUid());
+            userReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    User myUser = dataSnapshot.getValue(User.class);
+                    Map<String, Integer> myMap = (Map<String, Integer>) myUser.getPeliculasFavoritas();
+                    for(Integer i : myMap.values()) {
+                        setFavoritoRealm(i, true);
+                    }
+                    mListaDeFavoritos = mRealm.where(Pelicula.class).equalTo("favorito", true).findAll();
+                }
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                }
+            });
+        }
+        else {
+            mListaDeFavoritos = mRealm.where(Pelicula.class).equalTo("favorito", true).findAll();
+        }
+        return mListaDeFavoritos;
     }
+
 
     private void persistirEnRealm(final Pelicula pelicula) {
         mRealm.executeTransaction(new Realm.Transaction() {
@@ -208,7 +248,7 @@ public class PeliculaDAO {
         });
     }
 
-    public void setFavorito(final Integer id, final boolean isFav) {
+    private void setFavoritoRealm(final Integer id, final boolean isFav) {
         mRealm.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
@@ -219,5 +259,37 @@ public class PeliculaDAO {
                 }
             }
         });
+    }
+
+    public void setFavorito(Integer id, boolean isFav) {
+        setFavoritoRealm(id, isFav);
+        setFavoritoFirebase(id, isFav);
+    }
+
+    private void setFavoritoFirebase(final Integer id, boolean isFav) {
+        mFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("users").child(mFirebaseUser.getUid()).child("peliculasFavoritas");
+        if(isFav) {
+            databaseReference.push().setValue(id);
+        }
+        else if(!(isFav)) {
+            databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    Map<String, Integer> map = (Map<String, Integer>) dataSnapshot.getValue();
+                    for (Map.Entry<String, Integer> entry : map.entrySet()) {
+                        Long longId = new Long(id);
+                        if (longId.equals(entry.getValue()))
+                            databaseReference.child(entry.getKey()).removeValue();
+
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+        }
     }
 }

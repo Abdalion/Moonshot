@@ -75,8 +75,8 @@ public class PeliculaController extends Controller {
         mPeliculaDAO.setFavorito(id, isFav);
     }
 
-    public List<Pelicula> getFavoritos() {
-        return mPeliculaDAO.getFavoritos();
+    public List<Pelicula> getFavoritos(Context context) {
+        return mPeliculaDAO.getFavoritos(context);
     }
 
     public List<Pelicula> getPeliculasPopularesDeRealm() {

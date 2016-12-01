@@ -99,7 +99,7 @@ public class MainActivity extends AppCompatActivity
         // Carga inicial de peliculas y series
         mPeliculaController = new PeliculaController(this);
         mPeliculas = mPeliculaController.getPeliculasPopularesDeRealm();
-        mFavoritos = mPeliculaController.getFavoritos();
+        mFavoritos = mPeliculaController.getFavoritos(MainActivity.this);
         mSerieController = new SerieController(this);
         mSeries = mSerieController.getSeriesPopularesDeRealm();
         user = FirebaseAuth.getInstance().getCurrentUser();
@@ -221,7 +221,7 @@ public class MainActivity extends AppCompatActivity
                 break;
             case FAVORITOS:
                 if (itemId == R.id.menu_favoritos_opcion_peliculas) {
-                    mFavoritos = mPeliculaController.getFavoritos();
+                    mFavoritos = mPeliculaController.getFavoritos(MainActivity.this);
                 } else {
                     mFavoritos = mSerieController.getFavoritos(MainActivity.this);
                 }

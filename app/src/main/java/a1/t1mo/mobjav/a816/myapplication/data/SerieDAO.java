@@ -245,8 +245,8 @@ public class SerieDAO {
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     Map<String, Integer> map = (Map<String, Integer>) dataSnapshot.getValue();
                     for(Map.Entry<String, Integer> entry : map.entrySet()) {
-                        //todo esta mierda no funciona.
-                        if(id == entry.getValue())
+                        Long longId = new Long(id);
+                        if(longId.equals(entry.getValue()))
                             databaseReference.child(entry.getKey()).removeValue();
 
                     }
