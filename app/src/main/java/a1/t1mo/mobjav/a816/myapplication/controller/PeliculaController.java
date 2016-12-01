@@ -1,5 +1,7 @@
 package a1.t1mo.mobjav.a816.myapplication.controller;
 
+import android.util.Log;
+
 import java.util.List;
 
 import a1.t1mo.mobjav.a816.myapplication.R;
@@ -27,8 +29,10 @@ public class PeliculaController implements Controller {
     @Override
     public void getFeatures(int menuId, Listener<List<? extends Feature>> listener) {
         if (menuId == R.id.menu_peliculas_opcion_todas) {
+            Log.d(getClass().getSimpleName(), "Traer peliculas populares");
             getPeliculasPopulares(listener);
         } else {
+            Log.d(getClass().getSimpleName(), "Traer peliculas de genero");
             getPeliculasPorGenero(Genre.PELICULA_ID.get(menuId), listener);
         }
     }

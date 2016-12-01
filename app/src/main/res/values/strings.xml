@@ -10,7 +10,6 @@
     <string name="confirm_leave">Press again to leave</string>
 
 
-
     <!-- Strings related to login -->
     <string name="login_successfull">Bienvenido!</string>
     <string name="login_cancelled">Login cancelado</string>

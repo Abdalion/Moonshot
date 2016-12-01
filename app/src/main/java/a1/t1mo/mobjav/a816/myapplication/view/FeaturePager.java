@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -72,6 +73,8 @@ public class FeaturePager extends Fragment implements NavigationView.OnNavigatio
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         mAdapter.redrawFragment(mViewPager.getCurrentItem(), item.getItemId());
+        Log.d(getClass().getSimpleName(), "Current Page: " + mViewPager.getCurrentItem() +
+                " Menu item: " + item.getTitle());
         DrawerLayout drawer = (DrawerLayout) getActivity().findViewById(R.id.main_drawerLayout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
