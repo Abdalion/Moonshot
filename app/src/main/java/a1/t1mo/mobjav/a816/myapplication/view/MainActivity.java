@@ -1,5 +1,6 @@
 package a1.t1mo.mobjav.a816.myapplication.view;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -249,7 +250,7 @@ public class MainActivity extends AppCompatActivity
     public void onClickFeature(Integer posicion) {
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.main_contenedorDeFragment, DetallePager.getDetallePager(posicion))
+                .replace(R.id.main_drawerLayout, DetallePager.getDetallePager(posicion))
                 .addToBackStack("back")
                 .commit();
     }
