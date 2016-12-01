@@ -21,7 +21,7 @@
         android:layout_height="wrap_content"
         android:text="Android Studio"
         android:textSize="20dp"
-        android:textColor="#ffffff"
+        android:textColor="#717171"
         android:layout_marginTop="5dp"
         android:layout_gravity="center"
         android:id="@+id/nombreDePersona"/>
