@@ -63,5 +63,11 @@
             android:icon="@drawable/kim">
         </item>
 
+        <item
+            android:id="@+id/logout_nav"
+            android:title="Log out"
+            >
+        </item>
+
     </group>
 </menu>

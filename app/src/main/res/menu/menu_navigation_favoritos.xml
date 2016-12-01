@@ -13,5 +13,11 @@
             android:title="Series"
             android:icon="@drawable/series">
         </item>
+
+        <item
+            android:id="@+id/logout_nav"
+            android:title="Log out"
+            >
+        </item>
     </group>
 </menu>
