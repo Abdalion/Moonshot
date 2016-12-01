@@ -1,11 +1,8 @@
 package a1.t1mo.mobjav.a816.myapplication.view.login;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
-import a1.t1mo.mobjav.a816.myapplication.R;
-import a1.t1mo.mobjav.a816.myapplication.view.MainActivity;
-
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -18,8 +15,10 @@ import com.facebook.FacebookSdk;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 
-
 import java.util.Arrays;
+
+import a1.t1mo.mobjav.a816.myapplication.R;
+import a1.t1mo.mobjav.a816.myapplication.view.MainActivity;
 
 public class LoginActivity extends AppCompatActivity {
     CallbackManager mCallbackManager;

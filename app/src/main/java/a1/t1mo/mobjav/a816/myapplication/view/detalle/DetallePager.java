@@ -1,7 +1,6 @@
 package a1.t1mo.mobjav.a816.myapplication.view.detalle;
 
 import android.app.Activity;
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -14,10 +13,11 @@ import java.util.List;
 import a1.t1mo.mobjav.a816.myapplication.R;
 import a1.t1mo.mobjav.a816.myapplication.model.pelicula.Pelicula;
 import a1.t1mo.mobjav.a816.myapplication.model.serie.Serie;
-import a1.t1mo.mobjav.a816.myapplication.utils.Tipo;
 import a1.t1mo.mobjav.a816.myapplication.view.MainActivity;
 
-import static a1.t1mo.mobjav.a816.myapplication.utils.Tipo.*;
+import static a1.t1mo.mobjav.a816.myapplication.utils.Tipo.FAVORITOS;
+import static a1.t1mo.mobjav.a816.myapplication.utils.Tipo.PELICULAS;
+import static a1.t1mo.mobjav.a816.myapplication.utils.Tipo.SERIES;
 
 /**
  * MoonShot App
@@ -58,23 +58,23 @@ public class DetallePager extends Fragment {
         View view = inflater.inflate(R.layout.view_pager_detalle, container, false);
         ViewPager viewPager = (ViewPager) view.findViewById(R.id.viewPagerDetalle);
 
-        if(mMainActivity.getTipo() == PELICULAS) {
-            viewPager.setAdapter(new DetallePeliculaAdapter(getChildFragmentManager(),
-                    mMainActivity.getPeliculas()));
-        }
-        else if(mMainActivity.getTipo() == SERIES) {
-            viewPager.setAdapter(new DetalleSerieAdapter(getChildFragmentManager(),
-                    mMainActivity.getSeries()));
-        }
-        else if(mMainActivity.getTipo() == FAVORITOS) {
-            if (mMainActivity.getFavoritos().get(0) instanceof Pelicula) { // BAD VOODOO
-                viewPager.setAdapter(new DetallePeliculaAdapter(getChildFragmentManager(),
-                        (List<Pelicula>) mMainActivity.getFavoritos()));
-            } else {
-                viewPager.setAdapter(new DetalleSerieAdapter(getChildFragmentManager(),
-                        (List<Serie>) mMainActivity.getFavoritos()));
-            }
-        }
+//        if(mMainActivity.getTipo() == PELICULAS) {
+//            viewPager.setAdapter(new DetallePeliculaAdapter(getChildFragmentManager(),
+//                    mMainActivity.getPeliculas()));
+//        }
+//        else if(mMainActivity.getTipo() == SERIES) {
+//            viewPager.setAdapter(new DetalleSerieAdapter(getChildFragmentManager(),
+//                    mMainActivity.getSeries()));
+//        }
+//        else if(mMainActivity.getTipo() == FAVORITOS) {
+//            if (mMainActivity.getFavoritos().get(0) instanceof Pelicula) { // BAD VOODOO
+//                viewPager.setAdapter(new DetallePeliculaAdapter(getChildFragmentManager(),
+//                        (List<Pelicula>) mMainActivity.getFavoritos()));
+//            } else {
+//                viewPager.setAdapter(new DetalleSerieAdapter(getChildFragmentManager(),
+//                        (List<Serie>) mMainActivity.getFavoritos()));
+//            }
+//        }
 
 /*        switch (mMainActivity.getTipo()) {
             case PELICULAS:

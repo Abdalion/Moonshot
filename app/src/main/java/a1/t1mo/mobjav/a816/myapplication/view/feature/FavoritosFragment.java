@@ -8,41 +8,22 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.List;
-
 import a1.t1mo.mobjav.a816.myapplication.R;
 import a1.t1mo.mobjav.a816.myapplication.controller.Controller;
 import a1.t1mo.mobjav.a816.myapplication.controller.PeliculaController;
 import a1.t1mo.mobjav.a816.myapplication.controller.SerieController;
-import a1.t1mo.mobjav.a816.myapplication.model.Feature;
-import a1.t1mo.mobjav.a816.myapplication.utils.Listener;
-import a1.t1mo.mobjav.a816.myapplication.utils.Tipo;
 
 /**
- * MoonShot App
- * Proyecto Integrador
- * Curso de Desarrollo Mobile Android
- * Turno Tarde
- * Archivo creado por Juan Pablo on 04/11/2016.
+ * Created by dh-mob-tt on 30/11/16.
  */
-
-public class FeatureFragment extends GridFragment implements Listener<List<? extends Feature>> {
-    private static final String ARGUMENT_TIPO = "Tipo";
+public class FavoritosFragment extends GridFragment {
     private static final String STATE_MENU_ID = "Menu ID";
     private Controller mController;
-    private FeatureAdapter mAdapter;
+    private FavoritosAdapter mAdapter;
     private int mMenuID;
     private SwipeRefreshLayout mSwipeRefresh;
 
-    public static FeatureFragment getFeatureFragment(Tipo tipo) {
-        Bundle bundle = new Bundle();
-        bundle.putSerializable(ARGUMENT_TIPO, tipo);
-        FeatureFragment fragment = new FeatureFragment();
-        fragment.setArguments(bundle);
-        return fragment;
-    }
-
-    public FeatureFragment() {
+    public FavoritosFragment() {
         // Required empty public constructor
     }
 
@@ -50,33 +31,17 @@ public class FeatureFragment extends GridFragment implements Listener<List<? ext
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        Bundle bundle = getArguments();
-        Tipo tipo = (Tipo) bundle.getSerializable(ARGUMENT_TIPO);
-        if (tipo == Tipo.PELICULAS) {
-            mController = new PeliculaController();
-            mMenuID = R.id.menu_peliculas_opcion_todas;
-        } else {
-            mController = new SerieController();
-            mMenuID = R.id.menu_series_opcion_todas;
-        }
-
         if (savedInstanceState != null) {
             mMenuID = savedInstanceState.getInt(STATE_MENU_ID);
+        } else {
+            mMenuID = R.id.menu_favoritos_opcion_peliculas;
         }
 
-        mController.getFeatures(mMenuID, this);
-        mAdapter = new FeatureAdapter();
         View view = inflater.inflate(R.layout.fragment_grilla, container, false);
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.rv_grilla);
 
-        mSwipeRefresh = (SwipeRefreshLayout) view.findViewById(R.id.grilla_swipe_refresh);
-        mSwipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                mController.getFeatures(mMenuID, FeatureFragment.this);
-                mSwipeRefresh.setRefreshing(false);
-            }
-        });
+        mController = getController(mMenuID);
+        mAdapter = new FavoritosAdapter(mController.getFavoritos());
 
         recyclerView.addItemDecoration(new SpacesItemDecoration(4));
         recyclerView.setHasFixedSize(true);
@@ -90,6 +55,14 @@ public class FeatureFragment extends GridFragment implements Listener<List<? ext
 
             }
         });
+        mSwipeRefresh = (SwipeRefreshLayout) view.findViewById(R.id.grilla_swipe_refresh);
+        mSwipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                mController.getFavoritos();
+                mSwipeRefresh.setRefreshing(false);
+            }
+        });
         return view;
     }
 
@@ -99,13 +72,17 @@ public class FeatureFragment extends GridFragment implements Listener<List<? ext
         outState.putInt(STATE_MENU_ID, mMenuID);
     }
 
-    @Override
-    public void done(List<? extends Feature> param) {
-        mAdapter.setFeatures(param);
-    }
-
     public void redraw(int menuId) {
         mMenuID = menuId;
-        mController.getFeatures(mMenuID, this);
+        mController = getController(mMenuID);
+        mAdapter.setFeatures(mController.getFavoritos());
+    }
+
+    public Controller getController(int menuID) {
+        if (menuID == R.id.menu_favoritos_opcion_peliculas) {
+            return new PeliculaController();
+        } else {
+            return new SerieController();
+        }
     }
 }

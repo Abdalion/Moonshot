@@ -5,7 +5,6 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
-import a1.t1mo.mobjav.a816.myapplication.controller.Controller;
 import a1.t1mo.mobjav.a816.myapplication.data.services.ServiceFactory;
 import a1.t1mo.mobjav.a816.myapplication.data.services.TmdbService;
 import a1.t1mo.mobjav.a816.myapplication.model.Feature;

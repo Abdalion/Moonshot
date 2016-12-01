@@ -1,7 +1,5 @@
 package a1.t1mo.mobjav.a816.myapplication.controller;
 
-import android.content.Context;
-
 import java.util.List;
 
 import a1.t1mo.mobjav.a816.myapplication.R;
@@ -9,7 +7,6 @@ import a1.t1mo.mobjav.a816.myapplication.data.PeliculaDAO;
 import a1.t1mo.mobjav.a816.myapplication.model.Feature;
 import a1.t1mo.mobjav.a816.myapplication.model.Genre;
 import a1.t1mo.mobjav.a816.myapplication.model.pelicula.Pelicula;
-import a1.t1mo.mobjav.a816.myapplication.utils.ConnectivityCheck;
 import a1.t1mo.mobjav.a816.myapplication.utils.Listener;
 
 /**

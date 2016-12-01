@@ -17,35 +17,37 @@ import a1.t1mo.mobjav.a816.myapplication.data.services.TmdbService;
 import a1.t1mo.mobjav.a816.myapplication.model.Feature;
 
 /**
- * MoonShot App
- * Proyecto Integrador
- * Curso de Desarrollo Mobile Android
- * Turno Tarde
- * Archivo creado por Juan Pablo on 16/11/2016.
+ * Created by dh-mob-tt on 30/11/16.
  */
-
-public class FeatureAdapter extends RecyclerView.Adapter<FeatureAdapter.FeatureHolder> {
-    private List<? extends Feature> mFeatures = null;
+public class FavoritosAdapter extends RecyclerView.Adapter<FavoritosAdapter.FavoritoHolder> {
+    private List<? extends Feature> mFeatures;
     private final static int FADE_DURATION = 300;
 
-    @Override
-    public FeatureHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        View view = layoutInflater.inflate(R.layout.item_feature, parent, false);
-        return new FeatureHolder(view);
+    public FavoritosAdapter(List<? extends Feature> features) {
+        mFeatures = features;
     }
 
     @Override
-    public void onBindViewHolder(FeatureHolder holder, int position) {
-        if (mFeatures != null && !mFeatures.isEmpty()) {
-            holder.bindFeature(mFeatures.get(position));
-            setScaleAnimation(holder.itemView);
-        }
+    public FavoritoHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+        View view = inflater.inflate(R.layout.item_feature, parent, false);
+        return new FavoritoHolder(view);
+    }
+
+    @Override
+    public void onBindViewHolder(FavoritoHolder holder, int position) {
+        holder.bindFeature(mFeatures.get(position));
+        setScaleAnimation(holder.itemView);
     }
 
     @Override
     public int getItemCount() {
-        return mFeatures == null ? 0 : mFeatures.size();
+        return mFeatures.size();
+    }
+
+    public void setFeatures(List<? extends Feature> features) {
+        mFeatures = features;
+        notifyDataSetChanged();
     }
 
     private void setScaleAnimation(View view) {
@@ -55,17 +57,12 @@ public class FeatureAdapter extends RecyclerView.Adapter<FeatureAdapter.FeatureH
         view.startAnimation(anim);
     }
 
-    public void setFeatures(List<? extends Feature> features) {
-        mFeatures = features;
-        notifyDataSetChanged();
-    }
-
-    public class FeatureHolder extends RecyclerView.ViewHolder
+    public class FavoritoHolder extends RecyclerView.ViewHolder
             implements View.OnClickListener {
 
         private ImageView mImagen;
 
-        public FeatureHolder(View itemView) {
+        public FavoritoHolder(View itemView) {
             super(itemView);
             itemView.setOnClickListener(this);
             mImagen = (ImageView) itemView.findViewById(R.id.img_feature);
@@ -80,9 +77,8 @@ public class FeatureAdapter extends RecyclerView.Adapter<FeatureAdapter.FeatureH
         }
 
         @Override
-        public void onClick(View v) {
-            // TODO: 30/11/2016 startActivity(Detalle.getIntent()) 
+        public void onClick(View view) {
+            // TODO: 30/11/2016 startActivity(Detalle.getIntent())
         }
     }
 }
-

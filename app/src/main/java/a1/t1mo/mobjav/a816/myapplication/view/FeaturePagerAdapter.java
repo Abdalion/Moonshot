@@ -3,22 +3,25 @@ package a1.t1mo.mobjav.a816.myapplication.view;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+
 import a1.t1mo.mobjav.a816.myapplication.utils.Tipo;
+import a1.t1mo.mobjav.a816.myapplication.view.feature.FavoritosFragment;
 import a1.t1mo.mobjav.a816.myapplication.view.feature.FeatureFragment;
+import a1.t1mo.mobjav.a816.myapplication.view.feature.GridFragment;
 
 /**
  * Created by dh-mob-tt on 31/10/16.
  */
 
 public class FeaturePagerAdapter extends FragmentStatePagerAdapter {
-    private FeatureFragment[] mArrayDeFragments;
+    private GridFragment[] mArrayDeFragments;
 
     public FeaturePagerAdapter(FragmentManager fm) {
         super(fm);
-        mArrayDeFragments = new FeatureFragment[3];
+        mArrayDeFragments = new GridFragment[3];
         mArrayDeFragments[0] = FeatureFragment.getFeatureFragment(Tipo.PELICULAS);
         mArrayDeFragments[1] = FeatureFragment.getFeatureFragment(Tipo.SERIES);
-        mArrayDeFragments[2] = FeatureFragment.getFeatureFragment(Tipo.FAVORITOS);
+        mArrayDeFragments[2] = new FavoritosFragment();
     }
 
     public CharSequence getPageTitle(int position) {

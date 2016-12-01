@@ -2,42 +2,26 @@ package a1.t1mo.mobjav.a816.myapplication.view;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Toast;
-
-import java.util.List;
 
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
 import com.facebook.login.LoginManager;
 
 import a1.t1mo.mobjav.a816.myapplication.R;
-import a1.t1mo.mobjav.a816.myapplication.controller.Controller;
-import a1.t1mo.mobjav.a816.myapplication.controller.PeliculaController;
-import a1.t1mo.mobjav.a816.myapplication.controller.SerieController;
 import a1.t1mo.mobjav.a816.myapplication.data.PeliculaDAO;
 import a1.t1mo.mobjav.a816.myapplication.data.SerieDAO;
-import a1.t1mo.mobjav.a816.myapplication.model.Feature;
-import a1.t1mo.mobjav.a816.myapplication.model.pelicula.Pelicula;
-import a1.t1mo.mobjav.a816.myapplication.model.serie.Serie;
-import a1.t1mo.mobjav.a816.myapplication.utils.FavChange;
 import a1.t1mo.mobjav.a816.myapplication.utils.Listener;
 import a1.t1mo.mobjav.a816.myapplication.utils.Tipo;
-import a1.t1mo.mobjav.a816.myapplication.utils.TipoDeFeature;
-import a1.t1mo.mobjav.a816.myapplication.view.detalle.DetallePager;
-import a1.t1mo.mobjav.a816.myapplication.view.feature.FeatureFragment;
 import a1.t1mo.mobjav.a816.myapplication.view.login.LoginActivity;
 import a1.t1mo.mobjav.a816.myapplication.view.login.facebook.FacebookUtils;
 
