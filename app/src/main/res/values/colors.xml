@@ -3,10 +3,11 @@
     <color name="colorPrimary">#ffffff</color>
     <color name="colorPrimaryDark">#81383737</color>
     <color name="colorAccent">#ff0000</color>
-    <color name="colorAccentInicio">#000000</color>
+    <color name="colorAccentInicio">#ffffff</color>
     <color name="colorPalabras">#000000</color>
     <color name="colorPalabras2">#000000</color>
     <color name="colorPalabras3">#ffffff</color>
+    <color name="colorBlanco">#ffffff</color>
     <color name="colorFondoTransparente">#84939393</color>
     <color name="colorPrueba">#de7070</color>
     <color name="colorLetraClarita">#bd939393</color>
