@@ -87,6 +87,7 @@ public class PeliculaDAO {
             public void onResponse(Call<ListadoPeliculas> call, Response<ListadoPeliculas> response) {
                 if (response.isSuccessful()) {
                     persistirEnRealm(response.body().getPeliculas());
+                    Log.d(TAG, "Cantidad de peliculas recibidas " + response.body().getPeliculas().size());
                     listener.done(getPeliculasPopularesDeRealm());
                 } else {
                     Log.e(TAG, "El servidor respondio con el codigo " + response.code() +
@@ -126,10 +127,14 @@ public class PeliculaDAO {
     }
 
     public List<Pelicula> getPeliculasPorGeneroDeRealm(Integer id) {
-        return mRealm
+        List<Pelicula> peliculas =
+                mRealm
                     .where(Pelicula.class)
-                    .equalTo("generos.id", id)
+                    .equalTo("generos.id", 28)
                     .findAllSorted("popularidad", Sort.DESCENDING);
+
+        Log.d(TAG, "Cantidad de peliculas: " + peliculas.size());
+        return peliculas;
     }
 
     public List<Pelicula> getFavoritos() {
@@ -147,31 +152,18 @@ public class PeliculaDAO {
     }
 
     private void persistirEnRealm(final RealmList<Pelicula> peliculas) {
-        mRealm.executeTransactionAsync(new Realm.Transaction() {
-            @Override
-            public void execute(Realm bgRealm) {
-                RealmResults<Pelicula> persistidas = bgRealm.where(Pelicula.class).findAll();
-                List<Integer> ids = new ArrayList<>();
-                for (Pelicula pelicula : persistidas) {
-                    ids.add(pelicula.getId());
-                }
-                for (Pelicula pelicula : peliculas) {
-                    if (!ids.contains(pelicula.getId())) {
-                        bgRealm.copyToRealmOrUpdate(pelicula);
+        Log.d(TAG, "Entramos a persistirEnRealm");
+        for (final Pelicula pelicula : peliculas) {
+            if (mRealm.where(Pelicula.class).equalTo("id", pelicula.getId()).findFirst() == null) {
+                mRealm.executeTransaction(new Realm.Transaction() {
+                    @Override
+                    public void execute(Realm realm) {
+                        realm.copyToRealmOrUpdate(pelicula);
+                        Log.d(TAG, "Guardamos la pelicula: " + pelicula.getTitulo());
                     }
-                }
+                });
             }
-        }, new Realm.Transaction.OnSuccess() {
-            @Override
-            public void onSuccess() {
-                Log.d(TAG, "Se persistieron las peliculas correctamente.");
-            }
-        }, new Realm.Transaction.OnError() {
-            @Override
-            public void onError(Throwable error) {
-                Log.e(TAG, "Error al persistir las peliculas");
-            }
-        });
+        }
     }
 
     public void setFavorito(final Integer id, final boolean isFav) {

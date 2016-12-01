@@ -27,6 +27,11 @@ import a1.t1mo.mobjav.a816.myapplication.model.Feature;
 public class FeatureAdapter extends RecyclerView.Adapter<FeatureAdapter.FeatureHolder> {
     private List<? extends Feature> mFeatures = null;
     private final static int FADE_DURATION = 300;
+    private View.OnClickListener mListener;
+
+    public FeatureAdapter(View.OnClickListener listener) {
+        mListener = listener;
+    }
 
     @Override
     public FeatureHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -60,14 +65,12 @@ public class FeatureAdapter extends RecyclerView.Adapter<FeatureAdapter.FeatureH
         notifyDataSetChanged();
     }
 
-    public class FeatureHolder extends RecyclerView.ViewHolder
-            implements View.OnClickListener {
-
+    public class FeatureHolder extends RecyclerView.ViewHolder {
         private ImageView mImagen;
 
         public FeatureHolder(View itemView) {
             super(itemView);
-            itemView.setOnClickListener(this);
+            itemView.setOnClickListener(mListener);
             mImagen = (ImageView) itemView.findViewById(R.id.img_feature);
         }
 
@@ -77,11 +80,6 @@ public class FeatureAdapter extends RecyclerView.Adapter<FeatureAdapter.FeatureH
                 .load(TmdbService.IMAGE_URL_W154 + feature.getPosterPath())
                 .fitCenter()
                 .into(mImagen);
-        }
-
-        @Override
-        public void onClick(View v) {
-            // TODO: 30/11/2016 startActivity(Detalle.getIntent()) 
         }
     }
 }

@@ -15,6 +15,8 @@ import java.util.List;
 import a1.t1mo.mobjav.a816.myapplication.R;
 import a1.t1mo.mobjav.a816.myapplication.data.services.TmdbService;
 import a1.t1mo.mobjav.a816.myapplication.model.Feature;
+import a1.t1mo.mobjav.a816.myapplication.utils.Tipo;
+import a1.t1mo.mobjav.a816.myapplication.view.detalle.DetalleActivity;
 
 /**
  * Created by dh-mob-tt on 30/11/16.
@@ -78,7 +80,7 @@ public class FavoritosAdapter extends RecyclerView.Adapter<FavoritosAdapter.Favo
 
         @Override
         public void onClick(View view) {
-            // TODO: 30/11/2016 startActivity(Detalle.getIntent())
+            DetalleActivity.getIntent(view.getContext(), Tipo.FAVORITOS, )
         }
     }
 }
