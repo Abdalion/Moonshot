@@ -11,6 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:id="@+id/uno"
         >
 
 
@@ -25,7 +26,6 @@
                 android:layout_height="?attr/actionBarSize"
                 android:background="@drawable/header_toolbar"
                 app:popupTheme="@style/AppTheme.PopupOverlay"
-                app:layout_scrollFlags="scroll|enterAlways|snap"
                 />
 
         </android.support.design.widget.AppBarLayout>
@@ -52,3 +52,4 @@
 
     </android.support.design.widget.NavigationView>
 </android.support.v4.widget.DrawerLayout>
+

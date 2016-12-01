@@ -2,8 +2,10 @@ package a1.t1mo.mobjav.a816.myapplication.view.detalle;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,6 +50,20 @@ public class DetalleSerie extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_detalle, container, false);
+
+        Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar_view);
+        toolbar.setNavigationIcon(R.drawable.left);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().onBackPressed();
+            }
+        });
+
+        CollapsingToolbarLayout collapsingToolbar =
+                (CollapsingToolbarLayout) view.findViewById(R.id.collapsing_toolbar);
+        collapsingToolbar.setTitleEnabled(false);
+
 
         LikeButton likeButton = (LikeButton) view.findViewById(R.id.fav_button);
         if(mSerie.isFavorito()) {
