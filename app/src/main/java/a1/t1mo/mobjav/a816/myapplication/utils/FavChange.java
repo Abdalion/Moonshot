@@ -9,6 +9,6 @@ package a1.t1mo.mobjav.a816.myapplication.utils;
  */
 
 public interface FavChange {
-    void onFavChange(int id, boolean isFav, TipoDeFeature tipoDeFeature);
+    void onFavChange(int id, boolean isFav);
     void favNotLogued();
 }

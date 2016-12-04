@@ -14,11 +14,16 @@ import a1.t1mo.mobjav.a816.myapplication.R;
 import a1.t1mo.mobjav.a816.myapplication.controller.Controller;
 import a1.t1mo.mobjav.a816.myapplication.controller.PeliculaController;
 import a1.t1mo.mobjav.a816.myapplication.controller.SerieController;
+import a1.t1mo.mobjav.a816.myapplication.data.PeliculaDAO;
+import a1.t1mo.mobjav.a816.myapplication.data.SerieDAO;
 import a1.t1mo.mobjav.a816.myapplication.model.Feature;
+import a1.t1mo.mobjav.a816.myapplication.utils.FavChange;
 import a1.t1mo.mobjav.a816.myapplication.utils.Listener;
 import a1.t1mo.mobjav.a816.myapplication.utils.Tipo;
+import a1.t1mo.mobjav.a816.myapplication.utils.TipoDeFeature;
+import a1.t1mo.mobjav.a816.myapplication.view.login.LoginActivity;
 
-public class DetalleActivity extends AppCompatActivity implements Listener<List<? extends Feature>> {
+public class DetalleActivity extends AppCompatActivity implements Listener<List<? extends Feature>>, FavChange {
     private static final String ARGUMENT_TIPO = "Tipo";
     private static final String ARGUMENT_MENU_ID = "Menu ID";
     private static final String ARGUMENT_POSICION = "Posicion";
@@ -40,12 +45,12 @@ public class DetalleActivity extends AppCompatActivity implements Listener<List<
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detalle);
-
         Bundle bundle = getIntent().getExtras();
         int menuId = bundle.getInt(ARGUMENT_MENU_ID);
         int posicion = bundle.getInt(ARGUMENT_POSICION);
         Tipo tipo = (Tipo) bundle.getSerializable(ARGUMENT_TIPO);
 
+        //todo: Tagged controller para ahorrarnos crear un objeto?
         if (tipo == Tipo.PELICULAS) {
             mController = new PeliculaController();
             mAdapter = new DetallePeliculaAdapter(getSupportFragmentManager());
@@ -63,6 +68,27 @@ public class DetalleActivity extends AppCompatActivity implements Listener<List<
         mViewPager = (ViewPager) findViewById(R.id.viewpager_detalle);
         mViewPager.setAdapter(mAdapter);
         mViewPager.setCurrentItem(posicion);
+    }
+
+    @Override
+    public void onFavChange(int id, boolean isFav) {
+        if(mController instanceof PeliculaController) {
+            ((PeliculaController) mController).setFavorito(id, isFav);
+        }
+        else {
+            ((SerieController) mController).setFavorito(id, isFav);
+        }
+    }
+
+    @Override
+    public void favNotLogued() {
+        startActivity(new Intent(this, LoginActivity.class));
+    }
+
+    protected void onDestroy() {
+        super.onDestroy();
+        PeliculaDAO.closeRealm();
+        SerieDAO.closeRealm();
     }
 
     @Override

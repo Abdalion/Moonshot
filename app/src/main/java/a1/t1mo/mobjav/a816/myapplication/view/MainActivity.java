@@ -111,6 +111,7 @@ public class MainActivity extends AppCompatActivity implements CambioDePagina {
 
     //todo: Juan navigationViewSetup.
     private void navigationViewSetup() {
+/*
         navigationView = (NavigationView) findViewById(R.id.main_navigationView);
 
             navigationView.setCheckedItem(R.id.menu_peliculas_opcion_todas);
@@ -146,6 +147,7 @@ public class MainActivity extends AppCompatActivity implements CambioDePagina {
             textView.setText("Usuario no Registrado");
         }
 
+*/
 
     }
 
@@ -181,27 +183,6 @@ public class MainActivity extends AppCompatActivity implements CambioDePagina {
         } else {
             navigationView.inflateMenu(R.menu.menu_navigation_favoritos);
         }
-    }
-
-
-    @Override
-    public void onFavChange(int id, boolean isFav, TipoDeFeature tipoDeFeature) {
-        if (tipoDeFeature.equals(TipoDeFeature.PELICULA)) {
-            mPeliculaController.setFavorito(id, isFav);
-        } else {
-            mSerieController.setFavorito(id, isFav);
-        }
-    }
-
-    @Override
-    public void favNotLogued() {
-        startActivity(new Intent(this, LoginActivity.class));
-    }
-
-    protected void onDestroy() {
-        super.onDestroy();
-        PeliculaDAO.closeRealm();
-        SerieDAO.closeRealm();
     }
 
 }

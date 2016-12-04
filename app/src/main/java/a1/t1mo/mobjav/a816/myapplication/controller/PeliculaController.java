@@ -38,6 +38,12 @@ public class PeliculaController implements Controller {
         }
     }
 
+    //todo: ?
+    @Override
+    public List<? extends Feature> getFavoritos() {
+        return null;
+    }
+
     public void getPeliculasPopulares(Listener<List<? extends Feature>> listener) {
         mPeliculaDAO.getPeliculasPopularesDeTmdb(listener);
     }

@@ -70,11 +70,12 @@ public class DetallePelicula extends Fragment {
                 (CollapsingToolbarLayout) view.findViewById(R.id.collapsing_toolbar);
         collapsingToolbar.setTitleEnabled(false);
 
-
         final LikeButton likeButton = (LikeButton) view.findViewById(R.id.fav_button);
+
         if (mPelicula.isFavorito()) {
             likeButton.setLiked(true);
         }
+
         likeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -89,7 +90,7 @@ public class DetallePelicula extends Fragment {
             @Override
             public void liked(LikeButton likeButton) {
                 if(FirebaseAuth.getInstance().getCurrentUser() != null) {
-                    mFavCallback.onFavChange(mPelicula.getId(), true, TipoDeFeature.PELICULA);
+                    mFavCallback.onFavChange(mPelicula.getId(), true);
                     Snackbar.make(getView(), "Agregado a favoritos", Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
                 }
@@ -98,7 +99,7 @@ public class DetallePelicula extends Fragment {
             @Override
             public void unLiked(LikeButton likeButton) {
                 if(FirebaseAuth.getInstance().getCurrentUser() != null) {
-                    mFavCallback.onFavChange(mPelicula.getId(), false, TipoDeFeature.PELICULA);
+                    mFavCallback.onFavChange(mPelicula.getId(), false);
                     Snackbar.make(getView(), "Eliminado de favoritos", Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
                 }

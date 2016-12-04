@@ -1,5 +1,7 @@
 package a1.t1mo.mobjav.a816.myapplication.controller;
 
+import android.content.Context;
+
 import java.util.List;
 
 import a1.t1mo.mobjav.a816.myapplication.R;
@@ -23,6 +25,12 @@ public class SerieController implements Controller {
         } else {
             getSeriesPorGenero(Genre.SERIE_ID.get(menuId), listener);
         }
+    }
+
+    //todo: ?
+    @Override
+    public List<? extends Feature> getFavoritos() {
+        return null;
     }
 
     public void getSeriesPopulares(Listener<List<? extends Feature>> listener) {

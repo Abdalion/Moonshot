@@ -84,7 +84,7 @@ public class DetalleSerie extends Fragment {
             @Override
             public void liked(LikeButton likeButton) {
                 if(FirebaseAuth.getInstance().getCurrentUser() != null) {
-                    mFavCallback.onFavChange(mSerie.getId(), true, TipoDeFeature.SERIE);
+                    mFavCallback.onFavChange(mSerie.getId(), true);
                     Snackbar.make(getView(), "Agregado A Favoritos", Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
                 }
@@ -93,7 +93,7 @@ public class DetalleSerie extends Fragment {
             @Override
             public void unLiked(LikeButton likeButton) {
                 if(FirebaseAuth.getInstance().getCurrentUser() != null) {
-                    mFavCallback.onFavChange(mSerie.getId(), false, TipoDeFeature.SERIE);
+                    mFavCallback.onFavChange(mSerie.getId(), false);
                     Snackbar.make(getView(), "Eliminado De Favoritos", Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
                 }
