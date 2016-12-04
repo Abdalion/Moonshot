@@ -52,6 +52,7 @@ public class PeliculaController implements Controller {
         mPeliculaDAO.getPeliculasPorGeneroDeTmdb(id, listener);
     }
 
+    @Override
     public void setFavorito(final int id, final boolean isFav) {
         mPeliculaDAO.setFavorito(id, isFav);
     }

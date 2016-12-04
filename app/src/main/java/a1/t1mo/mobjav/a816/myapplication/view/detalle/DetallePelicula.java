@@ -31,7 +31,6 @@ import a1.t1mo.mobjav.a816.myapplication.view.login.LoginActivity;
 public class DetallePelicula extends Fragment {
     private Pelicula mPelicula;
     private FavChange mFavCallback;
-    private Context context;
 
     public static DetallePelicula getDetalle(Pelicula pelicula) {
         DetallePelicula detallePelicula = new DetallePelicula();

@@ -27,6 +27,7 @@ import a1.t1mo.mobjav.a816.myapplication.model.User;
 import a1.t1mo.mobjav.a816.myapplication.model.Feature;
 import a1.t1mo.mobjav.a816.myapplication.model.serie.ListadoSeries;
 import a1.t1mo.mobjav.a816.myapplication.model.serie.Serie;
+import a1.t1mo.mobjav.a816.myapplication.utils.ConnectivityCheck;
 import a1.t1mo.mobjav.a816.myapplication.utils.Listener;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
@@ -161,31 +162,17 @@ public class SerieDAO {
     }
 
     private void persistirEnRealm(final RealmList<Serie> series) {
-        mRealm.executeTransactionAsync(new Realm.Transaction() {
-            @Override
-            public void execute(Realm bgRealm) {
-                RealmResults<Serie> persistidas = bgRealm.where(Serie.class).findAll();
-                List<Integer> ids = new ArrayList<>();
-                for (Serie serie : persistidas) {
-                    ids.add(serie.getId());
-                }
-                for (Serie serie : series) {
-                    if (!ids.contains(serie.getId())) {
-                        bgRealm.copyToRealmOrUpdate(serie);
+        for (final Serie serie : series) {
+            if (mRealm.where(Serie.class).equalTo("id", serie.getId()).findFirst() == null) {
+                mRealm.executeTransaction(new Realm.Transaction() {
+                    @Override
+                    public void execute(Realm realm) {
+                        realm.copyToRealmOrUpdate(serie);
+                        Log.d(TAG, "Guardamos la serie: " + serie.getNombre());
                     }
-                }
+                });
             }
-        }, new Realm.Transaction.OnSuccess() {
-            @Override
-            public void onSuccess() {
-                Log.d(TAG, "Se persistieron las series correctamente.");
-            }
-        }, new Realm.Transaction.OnError() {
-            @Override
-            public void onError(Throwable error) {
-                Log.e(TAG, "Error al persistir las series");
-            }
-        });
+        }
     }
 
     private void setFavoritoRealm(final int id, final boolean isFav) {
@@ -226,7 +213,6 @@ public class SerieDAO {
 
                 @Override
                 public void onCancelled(DatabaseError databaseError) {
-
                 }
             });
         }
@@ -234,11 +220,8 @@ public class SerieDAO {
     }
 
     public List<Serie> getFavoritos(Context context) {
-        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetwork = connectivityManager.getActiveNetworkInfo();
         if (isNot(FirebaseAuth.getInstance().getCurrentUser() == null)
-                && isNot(activeNetwork == null)
-                && (activeNetwork.isConnectedOrConnecting())) {
+                && ConnectivityCheck.hasConnectivity(context)) {
             mFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
             DatabaseReference userReference = FirebaseDatabase.getInstance().getReference().child("users").child(mFirebaseUser.getUid());
             userReference.addListenerForSingleValueEvent(new ValueEventListener() {

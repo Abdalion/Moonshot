@@ -18,8 +18,8 @@ import com.facebook.appevents.AppEventsLogger;
 import com.google.firebase.auth.FirebaseUser;
 
 import a1.t1mo.mobjav.a816.myapplication.R;
-import a1.t1mo.mobjav.a816.myapplication.controller.PeliculaController;
-import a1.t1mo.mobjav.a816.myapplication.controller.SerieController;
+import a1.t1mo.mobjav.a816.myapplication.data.PeliculaDAO;
+import a1.t1mo.mobjav.a816.myapplication.data.SerieDAO;
 import a1.t1mo.mobjav.a816.myapplication.utils.Tipo;
 import a1.t1mo.mobjav.a816.myapplication.view.login.LoginActivity;
 
@@ -49,11 +49,11 @@ public class MainActivity extends AppCompatActivity implements CambioDePagina {
         setContentView(R.layout.activity_main);
 
         CONFIRM_LEAVE = false;
-        if(isUserLogged()) {
+        if (isUserLogged()) {
             firebaseUser = getCurrentUser();
         }
 
-        if(isUserLogged()) {
+        if (isUserLogged()) {
             Toast.makeText(this, "Welcome " + firebaseUser.getDisplayName() + "!", Toast.LENGTH_SHORT).show();
         }
 
@@ -140,10 +140,9 @@ public class MainActivity extends AppCompatActivity implements CambioDePagina {
 
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        if(isUserLogged()) {
+        if (isUserLogged()) {
             inflater.inflate(R.menu.menu_settings, menu);
-        }
-        else {
+        } else {
             inflater.inflate(R.menu.menu_navigation_toolbar_opciones, menu);
         }
         return true;
@@ -152,9 +151,8 @@ public class MainActivity extends AppCompatActivity implements CambioDePagina {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.guest && isNot(isUserLogged())) {
-            startActivity(new Intent(this,LoginActivity.class));
-        }
-        else if(id == R.id.menu_configuration) {
+            startActivity(new Intent(this, LoginActivity.class));
+        } else if (id == R.id.menu_configuration) {
             Toast.makeText(this, "Configuration", Toast.LENGTH_SHORT).show();
         }
         return super.onOptionsItemSelected(item);
@@ -172,4 +170,10 @@ public class MainActivity extends AppCompatActivity implements CambioDePagina {
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        PeliculaDAO.closeRealm();
+        SerieDAO.closeRealm();
+    }
 }

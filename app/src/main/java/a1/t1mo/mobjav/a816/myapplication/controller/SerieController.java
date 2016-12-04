@@ -41,6 +41,7 @@ public class SerieController implements Controller {
         mSerieDAO.getSeriesPorGeneroDeTmdb(id, listener);
     }
 
+    @Override
     public void setFavorito(final int id, final boolean isFav) {
         mSerieDAO.setFavorito(id, isFav);
     }

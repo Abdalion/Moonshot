@@ -23,6 +23,7 @@ import a1.t1mo.mobjav.a816.myapplication.model.User;
 import a1.t1mo.mobjav.a816.myapplication.model.Feature;
 import a1.t1mo.mobjav.a816.myapplication.model.pelicula.ListadoPeliculas;
 import a1.t1mo.mobjav.a816.myapplication.model.pelicula.Pelicula;
+import a1.t1mo.mobjav.a816.myapplication.utils.ConnectivityCheck;
 import a1.t1mo.mobjav.a816.myapplication.utils.Listener;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
@@ -153,11 +154,8 @@ public class PeliculaDAO {
     }
 
     public List<Pelicula> getFavoritos(Context context) {
-        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetwork = connectivityManager.getActiveNetworkInfo();
         if (!(FirebaseAuth.getInstance().getCurrentUser() == null)
-                && !(activeNetwork == null)
-                && (activeNetwork.isConnectedOrConnecting())) {
+                && ConnectivityCheck.hasConnectivity(context)) {
             mFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
             DatabaseReference userReference = FirebaseDatabase.getInstance().getReference().child("users").child(mFirebaseUser.getUid());
             userReference.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -244,7 +242,6 @@ public class PeliculaDAO {
 
                 @Override
                 public void onCancelled(DatabaseError databaseError) {
-
                 }
             });
         }
