@@ -32,7 +32,7 @@
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="51c263a8fd9ff3d2fd9d1071f25536062d3b58e0" />
-        <activity android:name=".view.detalle.DetalleActivity">
+        <activity android:name=".view.detalle.DetalleActivity"></activity>
     </application>
 
 </manifest>
