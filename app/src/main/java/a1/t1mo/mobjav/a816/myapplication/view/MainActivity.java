@@ -1,19 +1,8 @@
 package a1.t1mo.mobjav.a816.myapplication.view;
 
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapShader;
-import android.graphics.Canvas;
-import android.graphics.Paint;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
-import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
-import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -26,32 +15,26 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-import java.util.List;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
-import com.bumptech.glide.load.model.GlideUrl;
-import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
-import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
-import com.facebook.login.LoginManager;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.like.LikeButton;
-import com.like.OnLikeListener;
 
 import a1.t1mo.mobjav.a816.myapplication.R;
+import a1.t1mo.mobjav.a816.myapplication.controller.PeliculaController;
+import a1.t1mo.mobjav.a816.myapplication.controller.SerieController;
 import a1.t1mo.mobjav.a816.myapplication.data.PeliculaDAO;
 import a1.t1mo.mobjav.a816.myapplication.data.SerieDAO;
-import a1.t1mo.mobjav.a816.myapplication.utils.Listener;
 import a1.t1mo.mobjav.a816.myapplication.utils.Tipo;
 import a1.t1mo.mobjav.a816.myapplication.utils.TipoDeFeature;
-import a1.t1mo.mobjav.a816.myapplication.view.detalle.DetallePager;
-import a1.t1mo.mobjav.a816.myapplication.view.feature.FeatureFragment;
 import a1.t1mo.mobjav.a816.myapplication.view.login.CropCircleTransform;
 import a1.t1mo.mobjav.a816.myapplication.view.login.LoginActivity;
-import a1.t1mo.mobjav.a816.myapplication.view.login.facebook.FacebookUtils;
+
+import static a1.t1mo.mobjav.a816.myapplication.utils.General.isNot;
+import static a1.t1mo.mobjav.a816.myapplication.utils.UserActions.getCurrentUser;
+import static a1.t1mo.mobjav.a816.myapplication.utils.UserActions.isUserLogged;
 
 /**
  * MoonShot App
@@ -61,9 +44,12 @@ import a1.t1mo.mobjav.a816.myapplication.view.login.facebook.FacebookUtils;
  */
 
 public class MainActivity extends AppCompatActivity implements CambioDePagina {
+
     private static boolean CONFIRM_LEAVE;
     private NavigationView navigationView;
     private FeaturePager mFeaturePager;
+    private PeliculaController mPeliculaController;
+    private SerieController mSerieController;
     FirebaseUser user;
 
     @Override
@@ -72,11 +58,15 @@ public class MainActivity extends AppCompatActivity implements CambioDePagina {
         FacebookSdk.sdkInitialize(getApplicationContext());
         AppEventsLogger.activateApp(this);
         setContentView(R.layout.activity_main);
+        mPeliculaController = new PeliculaController();
+        mSerieController = new SerieController();
 
         CONFIRM_LEAVE = false;
+        if(isUserLogged()) {
+            user = getCurrentUser();
+        }
 
-        user = FirebaseAuth.getInstance().getCurrentUser();
-        if(isNot(user == null)) {
+        if(isUserLogged()) {
             Toast.makeText(this, "Welcome " + user.getDisplayName() + "!", Toast.LENGTH_SHORT).show();
         }
 
@@ -90,10 +80,11 @@ public class MainActivity extends AppCompatActivity implements CambioDePagina {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
+
         mFeaturePager = new FeaturePager();
         getSupportFragmentManager()
                 .beginTransaction()
-                .add(R.id.main_contenedorDeFragment, mFeaturePager)
+                .replace(R.id.main_contenedorDeFragment, mFeaturePager)
                 .addToBackStack("back")
                 .commit();
         navigationView = (NavigationView) findViewById(R.id.main_navigationView);
@@ -118,6 +109,7 @@ public class MainActivity extends AppCompatActivity implements CambioDePagina {
         }
     }
 
+    //todo: Juan navigationViewSetup.
     private void navigationViewSetup() {
         navigationView = (NavigationView) findViewById(R.id.main_navigationView);
 
@@ -140,7 +132,7 @@ public class MainActivity extends AppCompatActivity implements CambioDePagina {
                 }
             });
 
-        if (isNot(user == null)) {
+        if (isUserLogged()) {
             View headerLayout = navigationView.getHeaderView(0);
             TextView textView = (TextView) headerLayout.findViewById(R.id.nombreDePersona);
             textView.setText(user.getDisplayName());
@@ -159,7 +151,7 @@ public class MainActivity extends AppCompatActivity implements CambioDePagina {
 
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        if(isNot(user == null)) {
+        if(isUserLogged()) {
             inflater.inflate(R.menu.menu_settings, menu);
         }
         else {
@@ -170,10 +162,8 @@ public class MainActivity extends AppCompatActivity implements CambioDePagina {
 
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.guest) {
-            if(user == null) {
-                startActivity(new Intent(this,LoginActivity.class));
-            }
+        if (id == R.id.guest && isNot(isUserLogged())) {
+            startActivity(new Intent(this,LoginActivity.class));
         }
         else if(id == R.id.menu_configuration) {
             Toast.makeText(this, "Configuration", Toast.LENGTH_SHORT).show();
@@ -207,6 +197,7 @@ public class MainActivity extends AppCompatActivity implements CambioDePagina {
     public void favNotLogued() {
         startActivity(new Intent(this, LoginActivity.class));
     }
+
     protected void onDestroy() {
         super.onDestroy();
         PeliculaDAO.closeRealm();
