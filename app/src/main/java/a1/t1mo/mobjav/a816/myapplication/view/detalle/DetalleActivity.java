@@ -18,7 +18,7 @@ import a1.t1mo.mobjav.a816.myapplication.utils.Listener;
 import a1.t1mo.mobjav.a816.myapplication.utils.Tipo;
 import a1.t1mo.mobjav.a816.myapplication.view.login.LoginActivity;
 
-public class DetalleActivity extends AppCompatActivity implements Listener<List<? extends Feature>>, FavChange {
+public class DetalleActivity extends AppCompatActivity implements FavChange {
     private static final String ARGUMENT_TIPO = "Tipo";
     private static final String ARGUMENT_MENU_ID = "Menu ID";
     private static final String ARGUMENT_POSICION = "Posicion";
@@ -57,8 +57,15 @@ public class DetalleActivity extends AppCompatActivity implements Listener<List<
 
         if (menuId == R.id.menu_favoritos_opcion_series || menuId == R.id.menu_favoritos_opcion_peliculas) {
             mAdapter.setFeatures(mController.getFavoritos());
+            mViewPager.setCurrentItem(mPosicion);
         } else {
-            mController.getFeatures(menuId, this);
+            mController.getFeatures(menuId, new Listener<List<? extends Feature>>() {
+                @Override
+                public void done(List<? extends Feature> param) {
+                    mAdapter.setFeatures(param);
+                    mViewPager.setCurrentItem(mPosicion);
+                }
+            });
         }
 
         mViewPager = (ViewPager) findViewById(R.id.viewpager_detalle);
@@ -73,11 +80,5 @@ public class DetalleActivity extends AppCompatActivity implements Listener<List<
     @Override
     public void favNotLogued() {
         startActivity(new Intent(this, LoginActivity.class));
-    }
-
-    @Override
-    public void done(List<? extends Feature> param) {
-        mAdapter.setFeatures(param);
-        mViewPager.setCurrentItem(mPosicion);
     }
 }

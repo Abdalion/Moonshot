@@ -2,7 +2,6 @@ package a1.t1mo.mobjav.a816.myapplication.view.feature;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.ShareCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.List;
-import java.util.concurrent.RecursiveAction;
 
 import a1.t1mo.mobjav.a816.myapplication.R;
 import a1.t1mo.mobjav.a816.myapplication.controller.Controller;
