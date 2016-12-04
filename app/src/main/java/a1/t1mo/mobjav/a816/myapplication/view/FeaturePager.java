@@ -43,7 +43,7 @@ public class FeaturePager extends Fragment implements NavigationView.OnNavigatio
         mAdapter = new FeaturePagerAdapter(getChildFragmentManager());
         mViewPager = (ViewPager) view.findViewById(R.id.viewPager);
         mViewPager.setAdapter(mAdapter);
-        viewPager.setPageTransformer(false, new ViewPager.PageTransformer() {
+        mViewPager.setPageTransformer(false, new ViewPager.PageTransformer() {
             public void transformPage(View page, float position) {
                 page.setRotationY(position * -60); // animation style... change as you want..
             }

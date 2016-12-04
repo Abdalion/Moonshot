@@ -73,7 +73,7 @@ public class SerieDAO {
     }
 
     public Boolean isPersisted(Integer id) {
-        return mRealm.where(Serie.class).equalTo("id", id).count() == 0;
+        return mRealm.where(Serie.class).equalTo("id", id).count() == 1;
     }
 
     public void getSerieDeTmdb(final Integer id, final Listener<Serie> listener) {
@@ -96,7 +96,7 @@ public class SerieDAO {
         });
     }
 
-    public Serie getSerieDeRealm(Integer id) {
+    private Serie getSerieDeRealm(Integer id) {
         return mRealm.where(Serie.class).equalTo("id", id).findFirst();
     }
 
@@ -120,7 +120,7 @@ public class SerieDAO {
         });
     }
 
-    public List<Serie> getSeriesPopularesDeRealm() {
+    private List<Serie> getSeriesPopularesDeRealm() {
         return mRealm.where(Serie.class).findAllSorted("popularidad", Sort.DESCENDING);
     }
 
@@ -144,7 +144,7 @@ public class SerieDAO {
         });
     }
 
-    public List<Serie> getSeriesPorGeneroDeRealm(Integer id) {
+    private List<Serie> getSeriesPorGeneroDeRealm(Integer id) {
         return mRealm
                 .where(Serie.class)
                 .equalTo("generos.id", id)
@@ -201,7 +201,7 @@ public class SerieDAO {
         });
     }
 
-    public void setFavorito(final  int id, final boolean isFav) {
+    public void setFavorito(final int id, final boolean isFav) {
         setFavoritoRealm(id, isFav);
         setFavoritoFirebase(id, isFav);
     }
@@ -209,17 +209,16 @@ public class SerieDAO {
     private void setFavoritoFirebase(final Integer id, boolean isFav) {
         mFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("users").child(mFirebaseUser.getUid()).child("seriesFavoritas");
-        if(isFav) {
+        if (isFav) {
             databaseReference.push().setValue(id);
-        }
-        else if(isNot(isFav)){
+        } else {
             databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     Map<String, Integer> map = (Map<String, Integer>) dataSnapshot.getValue();
-                    for(Map.Entry<String, Integer> entry : map.entrySet()) {
+                    for (Map.Entry<String, Integer> entry : map.entrySet()) {
                         Long longId = new Long(id);
-                        if(longId.equals(entry.getValue()))
+                        if (longId.equals(entry.getValue()))
                             databaseReference.child(entry.getKey()).removeValue();
 
                     }
@@ -237,27 +236,27 @@ public class SerieDAO {
     public List<Serie> getFavoritos(Context context) {
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetwork = connectivityManager.getActiveNetworkInfo();
-        if(isNot(FirebaseAuth.getInstance().getCurrentUser() == null)
+        if (isNot(FirebaseAuth.getInstance().getCurrentUser() == null)
                 && isNot(activeNetwork == null)
                 && (activeNetwork.isConnectedOrConnecting())) {
             mFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
             DatabaseReference userReference = FirebaseDatabase.getInstance().getReference().child("users").child(mFirebaseUser.getUid());
             userReference.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                User myUser = dataSnapshot.getValue(User.class);
-                Map<String, Integer> myMap = (Map<String, Integer>) myUser.getSeriesFavoritas();
-                for(Integer i : myMap.values()) {
-                    setFavoritoRealm(i, true);
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    User myUser = dataSnapshot.getValue(User.class);
+                    Map<String, Integer> myMap = (Map<String, Integer>) myUser.getSeriesFavoritas();
+                    for (Integer i : myMap.values()) {
+                        setFavoritoRealm(i, true);
+                    }
+                    mListaDeFavoritos = mRealm.where(Serie.class).equalTo("favorito", true).findAll();
                 }
-                mListaDeFavoritos = mRealm.where(Serie.class).equalTo("favorito", true).findAll();
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-            }
-        });
-        }
-        else {
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                }
+            });
+        } else {
             mListaDeFavoritos = mRealm.where(Serie.class).equalTo("favorito", true).findAll();
         }
         return mListaDeFavoritos;

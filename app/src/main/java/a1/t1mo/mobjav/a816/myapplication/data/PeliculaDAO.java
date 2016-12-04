@@ -69,7 +69,7 @@ public class PeliculaDAO {
     }
 
     public Boolean isPersisted(Integer id) {
-        return mRealm.where(Pelicula.class).equalTo("id", id).count() == 0;
+        return mRealm.where(Pelicula.class).equalTo("id", id).count() == 1;
     }
 
     public void getPeliculaDeTmdb(final Integer id, final Listener<Pelicula> listener) {
@@ -92,7 +92,7 @@ public class PeliculaDAO {
         });
     }
 
-    public Pelicula getPeliculaDeRealm(Integer id) {
+    private Pelicula getPeliculaDeRealm(Integer id) {
         return mRealm.where(Pelicula.class).equalTo("id", id).findFirst();
     }
 
@@ -117,7 +117,7 @@ public class PeliculaDAO {
         });
     }
 
-    public List<Pelicula> getPeliculasPopularesDeRealm() {
+    private List<Pelicula> getPeliculasPopularesDeRealm() {
         return mRealm.where(Pelicula.class).findAllSorted("popularidad", Sort.DESCENDING);
     }
 
@@ -141,12 +141,12 @@ public class PeliculaDAO {
         });
     }
 
-    public List<Pelicula> getPeliculasPorGeneroDeRealm(Integer id) {
+    private List<Pelicula> getPeliculasPorGeneroDeRealm(Integer id) {
         List<Pelicula> peliculas =
                 mRealm
-                    .where(Pelicula.class)
-                    .equalTo("generos.id", 28)
-                    .findAllSorted("popularidad", Sort.DESCENDING);
+                        .where(Pelicula.class)
+                        .equalTo("generos.id", id)
+                        .findAllSorted("popularidad", Sort.DESCENDING);
 
         Log.d(TAG, "Cantidad de peliculas: " + peliculas.size());
         return peliculas;
@@ -155,7 +155,7 @@ public class PeliculaDAO {
     public List<Pelicula> getFavoritos(Context context) {
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetwork = connectivityManager.getActiveNetworkInfo();
-        if(!(FirebaseAuth.getInstance().getCurrentUser() == null)
+        if (!(FirebaseAuth.getInstance().getCurrentUser() == null)
                 && !(activeNetwork == null)
                 && (activeNetwork.isConnectedOrConnecting())) {
             mFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -164,18 +164,18 @@ public class PeliculaDAO {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     User myUser = dataSnapshot.getValue(User.class);
-                    Map<String, Integer> myMap = (Map<String, Integer>) myUser.getPeliculasFavoritas();
-                    for(Integer i : myMap.values()) {
+                    Map<String, Integer> myMap = myUser.getPeliculasFavoritas();
+                    for (Integer i : myMap.values()) {
                         setFavoritoRealm(i, true);
                     }
                     mListaDeFavoritos = mRealm.where(Pelicula.class).equalTo("favorito", true).findAll();
                 }
+
                 @Override
                 public void onCancelled(DatabaseError databaseError) {
                 }
             });
-        }
-        else {
+        } else {
             mListaDeFavoritos = mRealm.where(Pelicula.class).equalTo("favorito", true).findAll();
         }
         return mListaDeFavoritos;
@@ -184,10 +184,10 @@ public class PeliculaDAO {
 
     private void persistirEnRealm(final Pelicula pelicula) {
         mRealm.executeTransaction(new Realm.Transaction() {
-                @Override
-                public void execute(Realm realm) {
-                    realm.copyToRealmOrUpdate(pelicula);
-                }
+            @Override
+            public void execute(Realm realm) {
+                realm.copyToRealmOrUpdate(pelicula);
+            }
         });
     }
 
@@ -227,10 +227,9 @@ public class PeliculaDAO {
     private void setFavoritoFirebase(final Integer id, boolean isFav) {
         mFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("users").child(mFirebaseUser.getUid()).child("peliculasFavoritas");
-        if(isFav) {
+        if (isFav) {
             databaseReference.push().setValue(id);
-        }
-        else if(!(isFav)) {
+        } else {
             databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {

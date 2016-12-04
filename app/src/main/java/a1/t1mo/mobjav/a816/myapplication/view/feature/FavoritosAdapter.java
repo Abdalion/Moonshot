@@ -46,7 +46,7 @@ public class FavoritosAdapter extends RecyclerView.Adapter<FavoritosAdapter.Favo
 
     @Override
     public int getItemCount() {
-        return mFeatures.size();
+        return mFeatures == null ? 0 : mFeatures.size();
     }
 
     public void setFeatures(List<? extends Feature> features) {
