@@ -25,7 +25,6 @@ public class FavoritosFragment extends GridFragment implements View.OnClickListe
     private RecyclerView mRecyclerView;
     private FavoritosAdapter mAdapter;
     private int mMenuID;
-    private SwipeRefreshLayout mSwipeRefresh;
 
     public FavoritosFragment() {
         // Required empty public constructor
@@ -52,21 +51,6 @@ public class FavoritosFragment extends GridFragment implements View.OnClickListe
         mRecyclerView.setAdapter(mAdapter);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 3);
         mRecyclerView.setLayoutManager(gridLayoutManager);
-        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-
-            }
-        });
-        mSwipeRefresh = (SwipeRefreshLayout) view.findViewById(R.id.grilla_swipe_refresh);
-        mSwipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                mController.getFavoritos();
-                mSwipeRefresh.setRefreshing(false);
-            }
-        });
         return view;
     }
 

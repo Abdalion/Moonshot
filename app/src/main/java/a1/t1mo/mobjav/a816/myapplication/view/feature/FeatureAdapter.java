@@ -69,7 +69,7 @@ public class FeatureAdapter extends RecyclerView.Adapter<FeatureAdapter.FeatureH
         notifyDataSetChanged();
     }
 
-    public void addFeatureList(List<? extends Feature> features) {
+    public void addFeatureList(List<Pelicula> features) {
         mFeatures.addAll(features);
         notifyDataSetChanged();
     }
