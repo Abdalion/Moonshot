@@ -13,9 +13,11 @@ import a1.t1mo.mobjav.a816.myapplication.utils.Listener;
 
 public class SerieController implements Controller {
     private SerieDAO mSerieDAO;
+    private Context mContext;
 
-    public SerieController() {
+    public SerieController(Context context) {
         mSerieDAO = SerieDAO.getDAO();
+        mContext = context;
     }
 
     @Override
@@ -25,6 +27,11 @@ public class SerieController implements Controller {
         } else {
             getSeriesPorGenero(Genre.SERIE_ID.get(menuId), listener);
         }
+    }
+
+    @Override
+    public void getSiguientePagina(int menuId, Listener<List<? extends Feature>> listener) {
+
     }
 
     //todo: ?

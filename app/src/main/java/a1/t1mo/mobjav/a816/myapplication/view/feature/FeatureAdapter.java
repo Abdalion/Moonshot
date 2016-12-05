@@ -14,15 +14,10 @@ import com.like.LikeButton;
 import java.util.List;
 
 import a1.t1mo.mobjav.a816.myapplication.R;
-import a1.t1mo.mobjav.a816.myapplication.controller.PeliculaController;
-import a1.t1mo.mobjav.a816.myapplication.controller.SerieController;
 import a1.t1mo.mobjav.a816.myapplication.data.services.TmdbService;
 import a1.t1mo.mobjav.a816.myapplication.model.Feature;
 import a1.t1mo.mobjav.a816.myapplication.model.pelicula.Pelicula;
 import a1.t1mo.mobjav.a816.myapplication.model.serie.Serie;
-import a1.t1mo.mobjav.a816.myapplication.utils.Tipo;
-import a1.t1mo.mobjav.a816.myapplication.view.MainActivity;
-import a1.t1mo.mobjav.a816.myapplication.view.detalle.DetalleSerie;
 
 /**
  * MoonShot App
@@ -71,6 +66,11 @@ public class FeatureAdapter extends RecyclerView.Adapter<FeatureAdapter.FeatureH
 
     public void setFeatures(List<? extends Feature> features) {
         mFeatures = features;
+        notifyDataSetChanged();
+    }
+
+    public void addFeatureList(List<? extends Feature> features) {
+        mFeatures.addAll(features);
         notifyDataSetChanged();
     }
 

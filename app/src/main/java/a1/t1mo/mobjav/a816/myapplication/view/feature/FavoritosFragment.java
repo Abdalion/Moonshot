@@ -95,9 +95,9 @@ public class FavoritosFragment extends GridFragment implements View.OnClickListe
 
     public Controller getController(int menuID) {
         if (menuID == R.id.menu_favoritos_opcion_peliculas) {
-            return new PeliculaController();
+            return new PeliculaController(getContext());
         } else {
-            return new SerieController();
+            return new SerieController(getContext());
         }
     }
 }

@@ -1,29 +1,15 @@
 package a1.t1mo.mobjav.a816.myapplication.view.detalle;
 
 import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.RotateAnimation;
-
-import java.util.List;
 
 import a1.t1mo.mobjav.a816.myapplication.R;
-import a1.t1mo.mobjav.a816.myapplication.model.pelicula.Pelicula;
-import a1.t1mo.mobjav.a816.myapplication.model.serie.Serie;
 import a1.t1mo.mobjav.a816.myapplication.view.MainActivity;
-
-import static a1.t1mo.mobjav.a816.myapplication.utils.Tipo.FAVORITOS;
-import static a1.t1mo.mobjav.a816.myapplication.utils.Tipo.PELICULAS;
-import static a1.t1mo.mobjav.a816.myapplication.utils.Tipo.SERIES;
 
 /**
  * MoonShot App

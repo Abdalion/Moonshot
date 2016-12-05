@@ -48,10 +48,10 @@ public class DetalleActivity extends AppCompatActivity implements FavChange {
 
         //todo: Tagged controller para ahorrarnos crear un objeto?
         if (tipo == Tipo.PELICULAS) {
-            mController = new PeliculaController();
+            mController = new PeliculaController(this);
             mAdapter = new DetallePeliculaAdapter(getSupportFragmentManager());
         } else {
-            mController = new SerieController();
+            mController = new SerieController(this);
             mAdapter = new DetalleSerieAdapter(getSupportFragmentManager());
         }
 

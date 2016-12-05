@@ -22,7 +22,6 @@ import a1.t1mo.mobjav.a816.myapplication.R;
 import a1.t1mo.mobjav.a816.myapplication.data.services.TmdbService;
 import a1.t1mo.mobjav.a816.myapplication.model.serie.Serie;
 import a1.t1mo.mobjav.a816.myapplication.utils.FavChange;
-import a1.t1mo.mobjav.a816.myapplication.utils.TipoDeFeature;
 
 public class DetalleSerie extends Fragment {
     private Serie mSerie;
