@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     
-    <group android:checkableBehavior="single">
+    <group android:checkableBehavior="single"
+        android:id="@+id/groupmain">
+
 
         <item
             android:id="@+id/menu_series_opcion_todas"
@@ -63,6 +65,10 @@
             android:icon="@drawable/kim">
         </item>
 
+    </group>
+
+    <group
+        android:id="@+id/groupmain2">
         <item
             android:id="@+id/logout_nav"
             android:title="Log out"
