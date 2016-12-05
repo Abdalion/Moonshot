@@ -10,4 +10,6 @@ package a1.t1mo.mobjav.a816.myapplication.model;
 
 public interface Feature {
     String getPosterPath();
+
+    boolean isFavorito();
 }

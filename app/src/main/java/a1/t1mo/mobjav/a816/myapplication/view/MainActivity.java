@@ -96,48 +96,6 @@ public class MainActivity extends AppCompatActivity implements CambioDePagina {
         }
     }
 
-    //todo: Juan navigationViewSetup.
-    private void navigationViewSetup() {
-/*
-        navigationView = (NavigationView) findViewById(R.id.main_navigationView);
-
-            navigationView.setCheckedItem(R.id.menu_peliculas_opcion_todas);
-
-            navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-                @Override
-                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                    getListaDeFeatures(item.getItemId());
-                    DrawerLayout drawer = (DrawerLayout) findViewById(R.id.main_drawerLayout);
-                    drawer.closeDrawer(GravityCompat.START);
-                    int id = item.getItemId();
-                    if (id==R.id.logout_nav){
-                        FirebaseAuth.getInstance().signOut();
-                        Toast.makeText(MainActivity.this, "Logged out!", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(MainActivity.this,MainActivity.class));
-                    }
-
-                    return true;
-                }
-            });
-
-        if (isUserLogged()) {
-            View headerLayout = navigationView.getHeaderView(0);
-            TextView textView = (TextView) headerLayout.findViewById(R.id.nombreDePersona);
-            textView.setText(firebaseUser.getDisplayName());
-
-            final ImageView imageView = (ImageView) headerLayout.findViewById(R.id.imageViewPersona);
-            Glide.with(this).load(firebaseUser.getPhotoUrl()).bitmapTransform(new CropCircleTransform(this)).into(imageView);
-        }
-        else{
-            View headerLayout = navigationView.getHeaderView(0);
-            TextView textView = (TextView) headerLayout.findViewById(R.id.nombreDePersona);
-            textView.setText("Usuario no Registrado");
-        }
-
-*/
-
-    }
-
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         if (isUserLogged()) {

@@ -92,19 +92,11 @@ public class FeatureAdapter extends RecyclerView.Adapter<FeatureAdapter.FeatureH
                     .fitCenter()
                     .into(mImagen);
 
-            if(feature instanceof Pelicula) {
-                if(((Pelicula) feature).isFavorito())
-                    mLikeButton.setLiked(true);
-                else{
-                    mLikeButton.setLiked(false);
-                }
+            if (feature.isFavorito()) {
+                mLikeButton.setLiked(true);
             }
-            else if(feature instanceof Serie){
-                if(((Serie) feature).isFavorito())
-                    mLikeButton.setLiked(true);
-                else{
-                    mLikeButton.setLiked(false);
-                }
+            else{
+                mLikeButton.setVisibility(View.GONE);
             }
 
         }

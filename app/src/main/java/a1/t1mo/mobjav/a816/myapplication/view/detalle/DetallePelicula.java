@@ -120,7 +120,7 @@ public class DetallePelicula extends Fragment {
             textViewDuracion.setText(Integer.toString(mPelicula.getDuracion()));
         }
 //        TextView textViewGenre =  (TextView) view.findViewById(R.id.fragment_detalle_genero);
-//        textViewGenre.setText(mPelicula.getGeneros());
+//        textViewGenre.setText(mPelicula.getGeneros().toString());
 
         ImageView imageViewImagenId = (ImageView) view.findViewById(R.id.backdrop);
         Glide
