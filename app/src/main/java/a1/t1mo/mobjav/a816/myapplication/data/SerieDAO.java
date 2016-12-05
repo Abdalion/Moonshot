@@ -18,6 +18,7 @@ import a1.t1mo.mobjav.a816.myapplication.data.services.ServiceFactory;
 import a1.t1mo.mobjav.a816.myapplication.data.services.TmdbService;
 import a1.t1mo.mobjav.a816.myapplication.model.Feature;
 import a1.t1mo.mobjav.a816.myapplication.model.User;
+import a1.t1mo.mobjav.a816.myapplication.model.pelicula.Pelicula;
 import a1.t1mo.mobjav.a816.myapplication.model.serie.ListadoSeries;
 import a1.t1mo.mobjav.a816.myapplication.model.serie.Serie;
 import a1.t1mo.mobjav.a816.myapplication.utils.ConnectivityCheck;
@@ -40,6 +41,7 @@ import retrofit2.Response;
 
 public class SerieDAO {
     private static final String TAG = SerieDAO.class.getSimpleName();
+    private static final int PAGE_SIZE = 20;
     private static TmdbService sTmdbService;
     private Realm mRealm;
     private static SerieDAO sInstance;
@@ -89,7 +91,7 @@ public class SerieDAO {
         });
     }
 
-    private Serie getSerieDeRealm(Integer id) {
+    public Serie getSerieDeRealm(Integer id) {
         return mRealm.where(Serie.class).equalTo("id", id).findFirst();
     }
 
@@ -113,8 +115,40 @@ public class SerieDAO {
         });
     }
 
-    private List<Serie> getSeriesPopularesDeRealm() {
-        return mRealm.where(Serie.class).findAllSorted("popularidad", Sort.DESCENDING);
+    public void getSeriesPopularesDeTmdb(final int page, final Listener<List<? extends Feature>> listener) {
+        sTmdbService.getSeriesPopulares().enqueue(new Callback<ListadoSeries>() {
+            @Override
+            public void onResponse(Call<ListadoSeries> call, Response<ListadoSeries> response) {
+                if (response.isSuccessful()) {
+                    persistirEnRealm(response.body().getSeries());
+                    listener.done(getSeriesPopularesDeRealm(page));
+                } else {
+                    Log.e(TAG, "El servidor respondio con el codigo " + response.code() +
+                            " Llamando a getSeriesPopularesDeTmdb()");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ListadoSeries> call, Throwable t) {
+                Log.e(TAG, "No se pudo obtener la lista de series populares.");
+            }
+        });
+    }
+
+    public List<Serie> getSeriesPopularesDeRealm() {
+        return mRealm
+                .where(Serie.class)
+                .findAllSorted("popularidad", Sort.DESCENDING)
+                .subList(0, PAGE_SIZE);
+    }
+
+    public List<Serie> getSeriesPopularesDeRealm(int page) {
+        int indiceUltimaSerie = (int) mRealm.where(Serie.class).count();
+        int indice = (page + 1) * PAGE_SIZE < indiceUltimaSerie ? (page + 1) * PAGE_SIZE : indiceUltimaSerie;
+        return mRealm
+                .where(Serie.class)
+                .findAllSorted("popularidad", Sort.DESCENDING)
+                .subList(0, indice);
     }
 
     public void getSeriesPorGeneroDeTmdb(final String id, final Listener<List<? extends Feature>> listener) {
@@ -137,11 +171,42 @@ public class SerieDAO {
         });
     }
 
-    private List<Serie> getSeriesPorGeneroDeRealm(String id) {
+    public void getSeriesPorGeneroDeTmdb(final int page, final String id, final Listener<List<? extends Feature>> listener) {
+        sTmdbService.getSeriesPorGenero(id).enqueue(new Callback<ListadoSeries>() {
+            @Override
+            public void onResponse(Call<ListadoSeries> call, Response<ListadoSeries> response) {
+                if (response.isSuccessful()) {
+                    persistirEnRealm(response.body().getSeries());
+                    listener.done(getSeriesPorGeneroDeRealm(page, id));
+                } else {
+                    Log.e(TAG, "El servidor respondio con el codigo " + response.code() +
+                            " Llamando a getSeriesPorGeneroDeTmdb(" + id + ")");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ListadoSeries> call, Throwable t) {
+                Log.e(TAG, "No se pudo obtener la lista de series por genero.");
+            }
+        });
+    }
+
+    public List<Serie> getSeriesPorGeneroDeRealm(String id) {
         return mRealm
                 .where(Serie.class)
                 .equalTo("generos.value", id)
-                .findAllSorted("popularidad", Sort.DESCENDING);
+                .findAllSorted("popularidad", Sort.DESCENDING)
+                .subList(0, PAGE_SIZE);
+    }
+
+    public List<Serie> getSeriesPorGeneroDeRealm(int page, String id) {
+        int indiceUltimaSerie = (int) mRealm.where(Serie.class).count();
+        int indice = (page + 1) * PAGE_SIZE < indiceUltimaSerie ? (page + 1) * PAGE_SIZE : indiceUltimaSerie;
+        return mRealm
+                .where(Serie.class)
+                .equalTo("generos.value", id)
+                .findAllSorted("popularidad", Sort.DESCENDING)
+                .subList(0, indice);
     }
 
     private void persistirEnRealm(final Serie serie) {
@@ -239,5 +304,9 @@ public class SerieDAO {
 
     private boolean isNot(boolean bool) {
         return !bool;
+    }
+
+    public boolean isLastPage(int page) {
+        return mRealm.where(Pelicula.class).count() % PAGE_SIZE <= page;
     }
 }

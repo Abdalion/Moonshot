@@ -9,11 +9,13 @@ import a1.t1mo.mobjav.a816.myapplication.data.SerieDAO;
 import a1.t1mo.mobjav.a816.myapplication.model.Feature;
 import a1.t1mo.mobjav.a816.myapplication.model.Genre;
 import a1.t1mo.mobjav.a816.myapplication.model.serie.Serie;
+import a1.t1mo.mobjav.a816.myapplication.utils.ConnectivityCheck;
 import a1.t1mo.mobjav.a816.myapplication.utils.Listener;
 
 public class SerieController implements Controller {
     private SerieDAO mSerieDAO;
     private Context mContext;
+    private int mPaginaActual = 0;
 
     public SerieController(Context context) {
         mSerieDAO = SerieDAO.getDAO();
@@ -22,38 +24,52 @@ public class SerieController implements Controller {
 
     @Override
     public void getFeatures(int menuId, Listener<List<? extends Feature>> listener) {
-        if (menuId == R.id.menu_series_opcion_todas) {
-            getSeriesPopulares(listener);
+        if (ConnectivityCheck.hasConnectivity(mContext)) {
+            if (menuId == R.id.menu_peliculas_opcion_todas) {
+                mSerieDAO.getSeriesPopularesDeTmdb(listener);
+            } else {
+                mSerieDAO.getSeriesPorGeneroDeTmdb(Genre.SERIE_ID.get(menuId), listener);
+            }
         } else {
-            getSeriesPorGenero(Genre.SERIE_ID.get(menuId), listener);
+            if (menuId == R.id.menu_peliculas_opcion_todas) {
+                listener.done(mSerieDAO.getSeriesPopularesDeRealm());
+            } else {
+                listener.done(mSerieDAO.getSeriesPorGeneroDeRealm(Genre.SERIE_ID.get(menuId)));
+            }
         }
     }
 
     @Override
-    public void getSiguientePagina(int menuId, Listener<List<? extends Feature>> listener) {
-
+    public void getNextPage(int menuId, Listener<List<? extends Feature>> listener) {
+        mPaginaActual++;
+        if (ConnectivityCheck.hasConnectivity(mContext)) {
+            if (menuId == R.id.menu_peliculas_opcion_todas) {
+                mSerieDAO.getSeriesPopularesDeTmdb(mPaginaActual, listener);
+            } else {
+                mSerieDAO.getSeriesPorGeneroDeTmdb(mPaginaActual, Genre.SERIE_ID.get(menuId), listener);
+            }
+        } else {
+            if (menuId == R.id.menu_peliculas_opcion_todas) {
+                listener.done(mSerieDAO.getSeriesPopularesDeRealm(mPaginaActual));
+            } else {
+                listener.done(mSerieDAO.getSeriesPorGeneroDeRealm(mPaginaActual, Genre.SERIE_ID.get(menuId)));
+            }
+        }
     }
 
-    //todo: ?
+    @Override
+    public boolean isLastPage(int page) {
+        return mSerieDAO.isLastPage(page);
+    }
+
     @Override
     public List<? extends Feature> getFavoritos() {
-        return null;
+        return mSerieDAO.getFavoritos(mContext);
     }
 
-    public void getSeriesPopulares(Listener<List<? extends Feature>> listener) {
-        mSerieDAO.getSeriesPopularesDeTmdb(listener);
-    }
-
-    public void getSeriesPorGenero(String id, Listener<List<? extends Feature>> listener) {
-        mSerieDAO.getSeriesPorGeneroDeTmdb(id, listener);
-    }
 
     @Override
     public void setFavorito(final int id, final boolean isFav) {
         mSerieDAO.setFavorito(id, isFav);
-    }
-
-    public List<Serie> getFavoritos(Context context) {
-        return mSerieDAO.getFavoritos(context);
     }
 }

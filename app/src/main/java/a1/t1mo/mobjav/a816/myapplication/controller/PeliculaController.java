@@ -41,14 +41,32 @@ public class PeliculaController implements Controller {
             if (menuId == R.id.menu_peliculas_opcion_todas) {
                 listener.done(mPeliculaDAO.getPeliculasPopularesDeRealm());
             } else {
-                mPeliculaDAO.getPeliculasPorGeneroDeTmdb(Genre.PELICULA_ID.get(menuId), listener);
+                listener.done(mPeliculaDAO.getPeliculasPorGeneroDeRealm(Genre.PELICULA_ID.get(menuId)));
             }
         }
     }
 
     @Override
-    public void getSiguientePagina(int menuId, Listener<List<? extends Feature>> listener) {
+    public void getNextPage(int menuId, Listener<List<? extends Feature>> listener) {
+        mPaginaActual++;
+        if (ConnectivityCheck.hasConnectivity(mContext)) {
+            if (menuId == R.id.menu_peliculas_opcion_todas) {
+                mPeliculaDAO.getPeliculasPopularesDeTmdb(mPaginaActual, listener);
+            } else {
+                mPeliculaDAO.getPeliculasPorGeneroDeTmdb(mPaginaActual, Genre.PELICULA_ID.get(menuId), listener);
+            }
+        } else {
+            if (menuId == R.id.menu_peliculas_opcion_todas) {
+                listener.done(mPeliculaDAO.getPeliculasPopularesDeRealm(mPaginaActual));
+            } else {
+                listener.done(mPeliculaDAO.getPeliculasPorGeneroDeRealm(mPaginaActual, Genre.PELICULA_ID.get(menuId)));
+            }
+        }
+    }
 
+    @Override
+    public boolean isLastPage(int page) {
+        return mPeliculaDAO.isLastPage(page);
     }
 
     @Override

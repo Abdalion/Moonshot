@@ -105,7 +105,7 @@ public class FeatureFragment extends GridFragment implements Listener<List<? ext
                         if ((mVisibleItemCount + mPastVisiblesItems) >= mTotalItemCount) {
                             mLoading = true;
                             Log.v("...", "Last Item Wow !");
-                            mController.getSiguientePagina(mMenuID, this);
+                            mController.getNextPage(mMenuID, FeatureFragment.this);
                         }
                     }
                 }
