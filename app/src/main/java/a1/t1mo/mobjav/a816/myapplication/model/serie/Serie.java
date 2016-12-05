@@ -5,7 +5,6 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 import a1.t1mo.mobjav.a816.myapplication.model.Feature;
-import a1.t1mo.mobjav.a816.myapplication.model.Genre;
 import a1.t1mo.mobjav.a816.myapplication.model.RealmString;
 import io.realm.RealmList;
 import io.realm.RealmObject;
@@ -29,8 +28,8 @@ public class Serie extends RealmObject implements Feature {
     public String backdropPath;
     @SerializedName("first_air_date")
     public String fechaDeEstreno;
-    @SerializedName("genres")
-    public RealmList<Genre> generos;
+    @SerializedName("genre_ids")
+    public RealmList<RealmString> generos;
     @SerializedName("homepage")
     public String homepage;
     @SerializedName("languages")
@@ -80,11 +79,11 @@ public class Serie extends RealmObject implements Feature {
         this.fechaDeEstreno = fechaDeEstreno;
     }
 
-    public List<Genre> getGeneros() {
+    public RealmList<RealmString> getGeneros() {
         return generos;
     }
 
-    public void setGeneros(RealmList<Genre> generos) {
+    public void setGeneros(RealmList<RealmString> generos) {
         this.generos = generos;
     }
 

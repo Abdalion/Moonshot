@@ -125,7 +125,7 @@ public class SerieDAO {
         return mRealm.where(Serie.class).findAllSorted("popularidad", Sort.DESCENDING);
     }
 
-    public void getSeriesPorGeneroDeTmdb(final Integer id, final Listener<List<? extends Feature>> listener) {
+    public void getSeriesPorGeneroDeTmdb(final String id, final Listener<List<? extends Feature>> listener) {
         sTmdbService.getSeriesPorGenero(id).enqueue(new Callback<ListadoSeries>() {
             @Override
             public void onResponse(Call<ListadoSeries> call, Response<ListadoSeries> response) {
@@ -145,10 +145,10 @@ public class SerieDAO {
         });
     }
 
-    private List<Serie> getSeriesPorGeneroDeRealm(Integer id) {
+    private List<Serie> getSeriesPorGeneroDeRealm(String id) {
         return mRealm
                 .where(Serie.class)
-                .equalTo("generos.id", id)
+                .equalTo("generos.value", id)
                 .findAllSorted("popularidad", Sort.DESCENDING);
     }
 

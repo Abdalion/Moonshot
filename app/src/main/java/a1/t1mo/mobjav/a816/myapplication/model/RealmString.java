@@ -14,19 +14,19 @@ import io.realm.RealmObject;
  * Clase necesaria porque Realm todavia no soporta Listas de tipos primitivos como String
  */
 public class RealmString extends RealmObject {
-    private String stringValue;
+    private String value;
 
     public RealmString() {}
 
-    public RealmString(String stringValue){
-        this.stringValue =  stringValue;
+    public RealmString(String value){
+        this.value = value;
     }
 
-    public String getStringValue() {
-        return stringValue;
+    public String getValue() {
+        return value;
     }
 
-    public void setStringValue(String stringValue) {
-        this.stringValue = stringValue;
+    public void setValue(String value) {
+        this.value = value;
     }
 }

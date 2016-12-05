@@ -2,10 +2,8 @@ package a1.t1mo.mobjav.a816.myapplication.model.pelicula;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.util.List;
-
 import a1.t1mo.mobjav.a816.myapplication.model.Feature;
-import a1.t1mo.mobjav.a816.myapplication.model.Genre;
+import a1.t1mo.mobjav.a816.myapplication.model.RealmString;
 import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
@@ -27,8 +25,8 @@ public class Pelicula extends RealmObject implements Feature {
     private boolean adultos;
     @SerializedName("backdrop_path")
     private String backdropPath;
-    @SerializedName("genres")
-    private RealmList<Genre> generos;
+    @SerializedName("genre_ids")
+    private RealmList<RealmString> generos;
     @SerializedName("homepage")
     private String homepage;
     @SerializedName("imdb_id")
@@ -72,11 +70,11 @@ public class Pelicula extends RealmObject implements Feature {
         this.backdropPath = backdropPath;
     }
 
-    public List<Genre> getGeneros() {
+    public RealmList<RealmString> getGeneros() {
         return generos;
     }
 
-    public void setGeneros(RealmList<Genre> genres) {
+    public void setGeneros(RealmList<RealmString> genres) {
         this.generos = genres;
     }
 

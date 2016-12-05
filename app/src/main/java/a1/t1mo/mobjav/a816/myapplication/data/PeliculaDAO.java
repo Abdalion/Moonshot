@@ -122,7 +122,7 @@ public class PeliculaDAO {
         return mRealm.where(Pelicula.class).findAllSorted("popularidad", Sort.DESCENDING);
     }
 
-    public void getPeliculasPorGeneroDeTmdb(final Integer id, final Listener<List<? extends Feature>> listener) {
+    public void getPeliculasPorGeneroDeTmdb(final String id, final Listener<List<? extends Feature>> listener) {
         sTmdbService.getPeliculasPorGenero(id).enqueue(new Callback<ListadoPeliculas>() {
             @Override
             public void onResponse(Call<ListadoPeliculas> call, Response<ListadoPeliculas> response) {
@@ -142,11 +142,11 @@ public class PeliculaDAO {
         });
     }
 
-    private List<Pelicula> getPeliculasPorGeneroDeRealm(Integer id) {
+    private List<Pelicula> getPeliculasPorGeneroDeRealm(String id) {
         List<Pelicula> peliculas =
                 mRealm
                         .where(Pelicula.class)
-                        .equalTo("generos.id", id)
+                        .equalTo("generos.value", id)
                         .findAllSorted("popularidad", Sort.DESCENDING);
 
         Log.d(TAG, "Cantidad de peliculas: " + peliculas.size());
@@ -197,7 +197,8 @@ public class PeliculaDAO {
                     @Override
                     public void execute(Realm realm) {
                         realm.copyToRealmOrUpdate(pelicula);
-                        Log.d(TAG, "Guardamos la pelicula: " + pelicula.getTitulo());
+                        Log.d(TAG, "Guardamos la pelicula: " + pelicula.getTitulo() + "\nGenero: " +
+                        pelicula.getGeneros());
                     }
                 });
             }

@@ -37,7 +37,7 @@ public class SerieController implements Controller {
         mSerieDAO.getSeriesPopularesDeTmdb(listener);
     }
 
-    public void getSeriesPorGenero(Integer id, Listener<List<? extends Feature>> listener) {
+    public void getSeriesPorGenero(String id, Listener<List<? extends Feature>> listener) {
         mSerieDAO.getSeriesPorGeneroDeTmdb(id, listener);
     }
 

@@ -34,7 +34,7 @@ public interface TmdbService {
     Call<ListadoPeliculas> getPeliculasMejorRankeadas();
 
     @GET("genre/{genre_id}/movies")
-    Call<ListadoPeliculas> getPeliculasPorGenero(@Path("genre_id") Integer genero);
+    Call<ListadoPeliculas> getPeliculasPorGenero(@Path("genre_id") String genero);
 
     @GET("tv/{tv_id}")
     Call<Serie> getSerie(@Path("tv_id") Integer id);
@@ -46,5 +46,5 @@ public interface TmdbService {
     Call<ListadoSeries> getSeriesMejorRankeadas();
 
     @GET("discover/tv")
-    Call<ListadoSeries> getSeriesPorGenero(@Query("with_genres") Integer genero);
+    Call<ListadoSeries> getSeriesPorGenero(@Query("with_genres") String genero);
 }

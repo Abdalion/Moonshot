@@ -91,7 +91,7 @@ public final class ServiceFactory {
 
         @Override
         public RealmList<RealmString> deserialize(JsonElement json, Type typeOfT,
-                      JsonDeserializationContext context) throws JsonParseException {
+                                                  JsonDeserializationContext context) throws JsonParseException {
 
             RealmList<RealmString> realmStrings = new RealmList<>();
             JsonArray stringList = json.getAsJsonArray();

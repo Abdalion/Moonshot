@@ -48,7 +48,7 @@ public class PeliculaController implements Controller {
         mPeliculaDAO.getPeliculasPopularesDeTmdb(listener);
     }
 
-    public void getPeliculasPorGenero(Integer id, Listener<List<? extends Feature>> listener) {
+    public void getPeliculasPorGenero(String id, Listener<List<? extends Feature>> listener) {
         mPeliculaDAO.getPeliculasPorGeneroDeTmdb(id, listener);
     }
 
