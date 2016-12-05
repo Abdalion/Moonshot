@@ -21,14 +21,20 @@
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id"/>
 
-        <activity android:name=".view.MainActivity">
+        <activity android:name=".view.MainActivity"
+            android:screenOrientation="landscape"
+            android:configChanges="keyboardHidden|orientation|screenSize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".view.login.LoginActivity"></activity>
+        <activity android:name=".view.login.LoginActivity"
+            android:screenOrientation="landscape"
+            android:configChanges="keyboardHidden|orientation|screenSize">
+
+        </activity>
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="51c263a8fd9ff3d2fd9d1071f25536062d3b58e0" />
