@@ -96,7 +96,7 @@ public class SerieDAO {
     }
 
     public void getSeriesPopularesDeTmdb(final Listener<List<? extends Feature>> listener) {
-        sTmdbService.getSeriesPopulares().enqueue(new Callback<ListadoSeries>() {
+        sTmdbService.getSeriesPopulares(0).enqueue(new Callback<ListadoSeries>() {
             @Override
             public void onResponse(Call<ListadoSeries> call, Response<ListadoSeries> response) {
                 if (response.isSuccessful()) {
@@ -116,7 +116,7 @@ public class SerieDAO {
     }
 
     public void getSeriesPopularesDeTmdb(final int page, final Listener<List<? extends Feature>> listener) {
-        sTmdbService.getSeriesPopulares().enqueue(new Callback<ListadoSeries>() {
+        sTmdbService.getSeriesPopulares(page).enqueue(new Callback<ListadoSeries>() {
             @Override
             public void onResponse(Call<ListadoSeries> call, Response<ListadoSeries> response) {
                 if (response.isSuccessful()) {
@@ -152,7 +152,7 @@ public class SerieDAO {
     }
 
     public void getSeriesPorGeneroDeTmdb(final String id, final Listener<List<? extends Feature>> listener) {
-        sTmdbService.getSeriesPorGenero(id).enqueue(new Callback<ListadoSeries>() {
+        sTmdbService.getSeriesPorGenero(id, 0).enqueue(new Callback<ListadoSeries>() {
             @Override
             public void onResponse(Call<ListadoSeries> call, Response<ListadoSeries> response) {
                 if (response.isSuccessful()) {
@@ -172,7 +172,7 @@ public class SerieDAO {
     }
 
     public void getSeriesPorGeneroDeTmdb(final int page, final String id, final Listener<List<? extends Feature>> listener) {
-        sTmdbService.getSeriesPorGenero(id).enqueue(new Callback<ListadoSeries>() {
+        sTmdbService.getSeriesPorGenero(id, page).enqueue(new Callback<ListadoSeries>() {
             @Override
             public void onResponse(Call<ListadoSeries> call, Response<ListadoSeries> response) {
                 if (response.isSuccessful()) {
@@ -264,7 +264,6 @@ public class SerieDAO {
                         Long longId = new Long(id);
                         if (longId.equals(entry.getValue()))
                             databaseReference.child(entry.getKey()).removeValue();
-
                     }
                 }
 

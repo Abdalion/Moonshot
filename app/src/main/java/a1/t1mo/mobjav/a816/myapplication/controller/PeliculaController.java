@@ -65,8 +65,8 @@ public class PeliculaController implements Controller {
     }
 
     @Override
-    public boolean isLastPage(int page) {
-        return mPeliculaDAO.isLastPage(page);
+    public boolean isLastPage() {
+        return (!ConnectivityCheck.hasConnectivity(mContext) && mPeliculaDAO.isLastPage(mPaginaActual));
     }
 
     @Override

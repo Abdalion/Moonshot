@@ -96,12 +96,11 @@ public class FeatureFragment extends GridFragment implements Listener<List<? ext
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-                if (dy > 0) //check for scroll down
-                {
+                if (dy > 0) {
                     mVisibleItemCount = gridLayoutManager.getChildCount();
                     mTotalItemCount = gridLayoutManager.getItemCount();
                     mPastVisiblesItems = gridLayoutManager.findFirstVisibleItemPosition();
-                    if (!mLoading) {
+                    if (!mLoading && !mController.isLastPage()) {
                         if ((mVisibleItemCount + mPastVisiblesItems) >= mTotalItemCount) {
                             mLoading = true;
                             Log.v("...", "Last Item Wow !");
@@ -123,6 +122,7 @@ public class FeatureFragment extends GridFragment implements Listener<List<? ext
 
     @Override
     public void done(List<? extends Feature> param) {
+        Log.d(getClass().getSimpleName(), "Cantidad de Features recibidos: " + param.size());
         mAdapter.setFeatures(param);
         if (mSwipeRefresh.isRefreshing()) mSwipeRefresh.setRefreshing(false);
     }

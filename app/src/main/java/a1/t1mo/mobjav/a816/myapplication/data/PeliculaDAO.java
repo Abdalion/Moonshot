@@ -95,7 +95,7 @@ public class PeliculaDAO {
     }
 
     public void getPeliculasPopularesDeTmdb(final Listener<List<? extends Feature>> listener) {
-        sTmdbService.getPeliculasPopulares().enqueue(new Callback<ListadoPeliculas>() {
+        sTmdbService.getPeliculasPopulares(0).enqueue(new Callback<ListadoPeliculas>() {
             @Override
             public void onResponse(Call<ListadoPeliculas> call, Response<ListadoPeliculas> response) {
                 if (response.isSuccessful()) {
@@ -123,7 +123,7 @@ public class PeliculaDAO {
                     listener.done(getPeliculasPopularesDeRealm(page));
                 } else {
                     Log.e(TAG, "El servidor respondio con el codigo " + response.code() +
-                            " Llamando a getPeliculasPopularesDeTmdb()");
+                            " Llamando a getPeliculasPopularesDeTmdb()" + " Pagina: " + page);
                 }
             }
 
@@ -151,7 +151,7 @@ public class PeliculaDAO {
     }
 
     public void getPeliculasPorGeneroDeTmdb(final String id, final Listener<List<? extends Feature>> listener) {
-        sTmdbService.getPeliculasPorGenero(id).enqueue(new Callback<ListadoPeliculas>() {
+        sTmdbService.getPeliculasPorGenero(id, 0).enqueue(new Callback<ListadoPeliculas>() {
             @Override
             public void onResponse(Call<ListadoPeliculas> call, Response<ListadoPeliculas> response) {
                 if (response.isSuccessful()) {
@@ -171,7 +171,7 @@ public class PeliculaDAO {
     }
 
     public void getPeliculasPorGeneroDeTmdb(final int page, final String id, final Listener<List<? extends Feature>> listener) {
-        sTmdbService.getPeliculasPorGenero(id).enqueue(new Callback<ListadoPeliculas>() {
+        sTmdbService.getPeliculasPorGenero(id, page).enqueue(new Callback<ListadoPeliculas>() {
             @Override
             public void onResponse(Call<ListadoPeliculas> call, Response<ListadoPeliculas> response) {
                 if (response.isSuccessful()) {

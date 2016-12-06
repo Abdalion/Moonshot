@@ -25,13 +25,13 @@ public class SerieController implements Controller {
     @Override
     public void getFeatures(int menuId, Listener<List<? extends Feature>> listener) {
         if (ConnectivityCheck.hasConnectivity(mContext)) {
-            if (menuId == R.id.menu_peliculas_opcion_todas) {
+            if (menuId == R.id.menu_series_opcion_todas) {
                 mSerieDAO.getSeriesPopularesDeTmdb(listener);
             } else {
                 mSerieDAO.getSeriesPorGeneroDeTmdb(Genre.SERIE_ID.get(menuId), listener);
             }
         } else {
-            if (menuId == R.id.menu_peliculas_opcion_todas) {
+            if (menuId == R.id.menu_series_opcion_todas) {
                 listener.done(mSerieDAO.getSeriesPopularesDeRealm());
             } else {
                 listener.done(mSerieDAO.getSeriesPorGeneroDeRealm(Genre.SERIE_ID.get(menuId)));
@@ -43,13 +43,13 @@ public class SerieController implements Controller {
     public void getNextPage(int menuId, Listener<List<? extends Feature>> listener) {
         mPaginaActual++;
         if (ConnectivityCheck.hasConnectivity(mContext)) {
-            if (menuId == R.id.menu_peliculas_opcion_todas) {
+            if (menuId == R.id.menu_series_opcion_todas) {
                 mSerieDAO.getSeriesPopularesDeTmdb(mPaginaActual, listener);
             } else {
                 mSerieDAO.getSeriesPorGeneroDeTmdb(mPaginaActual, Genre.SERIE_ID.get(menuId), listener);
             }
         } else {
-            if (menuId == R.id.menu_peliculas_opcion_todas) {
+            if (menuId == R.id.menu_series_opcion_todas) {
                 listener.done(mSerieDAO.getSeriesPopularesDeRealm(mPaginaActual));
             } else {
                 listener.done(mSerieDAO.getSeriesPorGeneroDeRealm(mPaginaActual, Genre.SERIE_ID.get(menuId)));
@@ -58,8 +58,8 @@ public class SerieController implements Controller {
     }
 
     @Override
-    public boolean isLastPage(int page) {
-        return mSerieDAO.isLastPage(page);
+    public boolean isLastPage() {
+        return (!ConnectivityCheck.hasConnectivity(mContext) && mSerieDAO.isLastPage(mPaginaActual));
     }
 
     @Override
