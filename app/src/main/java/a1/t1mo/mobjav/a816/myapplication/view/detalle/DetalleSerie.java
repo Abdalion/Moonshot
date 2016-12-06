@@ -19,6 +19,8 @@ import com.like.OnLikeListener;
 
 import a1.t1mo.mobjav.a816.myapplication.R;
 import a1.t1mo.mobjav.a816.myapplication.data.services.TmdbService;
+import a1.t1mo.mobjav.a816.myapplication.model.Genre;
+import a1.t1mo.mobjav.a816.myapplication.model.RealmString;
 import a1.t1mo.mobjav.a816.myapplication.model.serie.Serie;
 import a1.t1mo.mobjav.a816.myapplication.utils.FavChange;
 
@@ -118,8 +120,24 @@ public class DetalleSerie extends Fragment {
 //        TextView textViewDuracion =  (TextView) view.findViewById(R.id.fragment_detalle_duracion);
 //        textViewDuracion.setText(mSerie.getDuracion().toString());
 
-//        TextView textViewGenre =  (TextView) view.findViewById(R.id.fragment_detalle_genero);
-//        textViewGenre.setText(mSerie.getGeneros());
+        StringBuilder sb = new StringBuilder();
+        int i = 0;
+        String coma;
+        for (RealmString genero : mSerie.getGeneros()) {
+            String tituloGenero = Genre.ID_INVERTIDO_SERIE.get(genero.getValue());
+            if (tituloGenero != null) {
+                if (i == 0) {
+                    coma = "";
+                    i = 1;
+                } else {
+                    coma = ", ";
+                }
+                sb.append(coma + tituloGenero);
+            }
+        }
+
+        TextView textViewGenre =  (TextView) view.findViewById(R.id.fragment_detalle_genero);
+        textViewGenre.setText(sb.toString());
 
         ImageView imageViewImagenId = (ImageView) view.findViewById(R.id.backdrop);
         Glide

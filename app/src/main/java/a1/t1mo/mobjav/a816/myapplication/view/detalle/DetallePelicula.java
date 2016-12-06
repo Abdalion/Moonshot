@@ -121,13 +121,16 @@ public class DetallePelicula extends Fragment {
         int i = 0;
         String coma;
         for (RealmString genero : mPelicula.getGeneros()) {
-            if (i == 0) {
-                coma = "";
-            } else {
-                coma = ", ";
+            String tituloGenero = Genre.ID_INVERTIDO_PELICULA.get(genero.getValue());
+            if (tituloGenero != null) {
+                if (i == 0) {
+                    coma = "";
+                    i = 1;
+                } else {
+                    coma = ", ";
+                }
+                sb.append(coma + tituloGenero);
             }
-
-            sb.append(coma+ Genre.ID_INVERTIDO_PELICULA.get(genero.getValue()));
         }
 
         TextView textViewGenre =  (TextView) view.findViewById(R.id.fragment_detalle_genero);
