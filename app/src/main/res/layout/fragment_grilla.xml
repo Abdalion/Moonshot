@@ -4,11 +4,28 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_grilla"
+
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:clipToPadding="false"/>
+        android:orientation="vertical">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_grilla"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"/>
+
+        <TextView
+            android:id="@+id/grilla_texto_favoritos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Go ahead and add a favorite!"
+            android:textSize="25dp"
+            android:visibility="gone"
+            android:layout_gravity="center"
+            android:textColor="#ffffff"/>
+    </FrameLayout>
 
 </android.support.v4.widget.SwipeRefreshLayout>
 
