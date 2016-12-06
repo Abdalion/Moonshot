@@ -22,7 +22,7 @@ import a1.t1mo.mobjav.a816.myapplication.utils.Listener;
 public class PeliculaController implements Controller {
     private PeliculaDAO mPeliculaDAO;
     private Context mContext;
-    private int mPaginaActual = 0;
+    private int mPaginaActual = 1;
 
     public PeliculaController(Context context) {
         mPeliculaDAO = PeliculaDAO.getDAO();
@@ -77,5 +77,9 @@ public class PeliculaController implements Controller {
     @Override
     public void setFavorito(final int id, final boolean isFav) {
         mPeliculaDAO.setFavorito(id, isFav);
+    }
+
+    public void setPaginaActual(int paginaActual) {
+        mPaginaActual = paginaActual;
     }
 }

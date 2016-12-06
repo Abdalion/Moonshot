@@ -136,6 +136,7 @@ public class FeatureFragment extends GridFragment implements Listener<List<? ext
 
     public void redraw(int menuId) {
         mMenuID = menuId;
+        mController.setPaginaActual(1);
         mController.getFeatures(mMenuID, this);
     }
 }
