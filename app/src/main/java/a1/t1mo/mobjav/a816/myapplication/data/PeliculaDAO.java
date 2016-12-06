@@ -30,6 +30,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static a1.t1mo.mobjav.a816.myapplication.utils.UserActions.isUserLogged;
+
 /**
  * MoonShot App
  * Proyecto Integrador
@@ -91,26 +93,6 @@ public class PeliculaDAO {
 
     public Pelicula getPeliculaDeRealm(Integer id) {
         return mRealm.where(Pelicula.class).equalTo("id", id).findFirst();
-    }
-
-    public void getPeliculasPopularesDeTmdb(final Listener<List<? extends Feature>> listener) {
-        sTmdbService.getPeliculasPopulares(1).enqueue(new Callback<ListadoPeliculas>() {
-            @Override
-            public void onResponse(Call<ListadoPeliculas> call, Response<ListadoPeliculas> response) {
-                if (response.isSuccessful()) {
-                    persistirEnRealm(response.body().getPeliculas());
-                    listener.done(getPeliculasPopularesDeRealm());
-                } else {
-                    Log.e(TAG, "El servidor respondio con el codigo " + response.code() +
-                            " Llamando a getPeliculasPopularesDeTmdb()");
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ListadoPeliculas> call, Throwable t) {
-                Log.e(TAG, "No se pudo obtener la lista de peliculas populares.");
-            }
-        });
     }
 
     public void getPeliculasPopularesDeTmdb(final int page, final Listener<List<? extends Feature>> listener) {
@@ -198,7 +180,7 @@ public class PeliculaDAO {
     }
 
     public List<Pelicula> getPeliculasPorGeneroDeRealm(int page, String id) {
-        int cantidadDePeliculas = (int) mRealm.where(Pelicula.class).count();
+        int cantidadDePeliculas = (int) mRealm.where(Pelicula.class).equalTo("generos.value", id).count();
         int indice = (page + 1) * PAGE_SIZE < cantidadDePeliculas ? (page + 1) * PAGE_SIZE : cantidadDePeliculas;
         return mRealm
                 .where(Pelicula.class)
@@ -228,7 +210,14 @@ public class PeliculaDAO {
                 }
             });
         } else {
-            listener.done(getFavoritosDeRealm());
+            if(!isUserLogged()) {
+                for(Pelicula pelicula : getFavoritosDeRealm()) {
+                    setFavoritoRealm(pelicula.getId(), false);
+                }
+            }
+            else {
+                listener.done(getFavoritosDeRealm());
+            }
         }
     }
 

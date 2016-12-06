@@ -15,12 +15,13 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.RotateAnimation;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 
 import a1.t1mo.mobjav.a816.myapplication.R;
+import a1.t1mo.mobjav.a816.myapplication.controller.PeliculaController;
+import a1.t1mo.mobjav.a816.myapplication.model.pelicula.Pelicula;
 import a1.t1mo.mobjav.a816.myapplication.utils.Tipo;
 
 import static a1.t1mo.mobjav.a816.myapplication.utils.UserActions.isUserLogged;

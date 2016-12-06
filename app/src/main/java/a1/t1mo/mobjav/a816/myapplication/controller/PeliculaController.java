@@ -33,15 +33,15 @@ public class PeliculaController implements Controller {
     public void getFeatures(int menuId, Listener<List<? extends Feature>> listener) {
         if (ConnectivityCheck.hasConnectivity(mContext)) {
             if (menuId == R.id.menu_peliculas_opcion_todas) {
-                mPeliculaDAO.getPeliculasPopularesDeTmdb(listener);
+                mPeliculaDAO.getPeliculasPopularesDeTmdb(mPaginaActual, listener);
             } else {
-                mPeliculaDAO.getPeliculasPorGeneroDeTmdb(Genre.PELICULA_ID.get(menuId), listener);
+                mPeliculaDAO.getPeliculasPorGeneroDeTmdb(mPaginaActual, Genre.PELICULA_ID.get(menuId), listener);
             }
         } else {
             if (menuId == R.id.menu_peliculas_opcion_todas) {
-                listener.done(mPeliculaDAO.getPeliculasPopularesDeRealm());
+                listener.done(mPeliculaDAO.getPeliculasPopularesDeRealm(mPaginaActual));
             } else {
-                listener.done(mPeliculaDAO.getPeliculasPorGeneroDeRealm(Genre.PELICULA_ID.get(menuId)));
+                listener.done(mPeliculaDAO.getPeliculasPorGeneroDeRealm(mPaginaActual, Genre.PELICULA_ID.get(menuId)));
             }
         }
     }
@@ -79,6 +79,12 @@ public class PeliculaController implements Controller {
         mPeliculaDAO.setFavorito(id, isFav);
     }
 
+    @Override
+    public int getPaginaActual() {
+        return mPaginaActual;
+    }
+
+    @Override
     public void setPaginaActual(int paginaActual) {
         mPaginaActual = paginaActual;
     }

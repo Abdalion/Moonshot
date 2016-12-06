@@ -9,6 +9,8 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.transition.Slide;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -56,11 +58,9 @@ public class MainActivity extends AppCompatActivity implements CambioDePagina {
         setContentView(R.layout.activity_main);
 
         CONFIRM_LEAVE = false;
-        if (isUserLogged()) {
-            firebaseUser = getCurrentUser();
-        }
 
         if (isUserLogged()) {
+            firebaseUser = getCurrentUser();
             Toast.makeText(this, "Welcome " + firebaseUser.getDisplayName() + "!", Toast.LENGTH_SHORT).show();
         }
 
@@ -88,22 +88,38 @@ public class MainActivity extends AppCompatActivity implements CambioDePagina {
 
     }
 
-    @Override
-    public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.main_drawerLayout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else if (getSupportFragmentManager().getBackStackEntryCount() == 1) {
-            if (CONFIRM_LEAVE) {
-                finish();
-            } else {
-                Toast.makeText(MainActivity.this, R.string.confirm_leave, Toast.LENGTH_SHORT).show();
-                CONFIRM_LEAVE = true;
-            }
+    private void navigationViewSetup() {
+        if (isUserLogged()) {
+            View headerLayout = navigationView.getHeaderView(0);
+            TextView textView = (TextView) headerLayout.findViewById(R.id.nombreDePersona);
+            textView.setText(firebaseUser.getDisplayName());
+
+            final ImageView imageView = (ImageView) headerLayout.findViewById(R.id.imageViewPersona);
+            Glide.with(this).load(firebaseUser.getPhotoUrl()).bitmapTransform(new CropCircleTransform(this)).into(imageView);
         } else {
-            super.onBackPressed();
+            View headerLayout = navigationView.getHeaderView(0);
+            TextView textView = (TextView) headerLayout.findViewById(R.id.nombreDePersona);
+            textView.setText("Usuario no Registrado");
         }
     }
+
+
+        @Override
+        public void onBackPressed () {
+            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.main_drawerLayout);
+            if (drawer.isDrawerOpen(GravityCompat.START)) {
+                drawer.closeDrawer(GravityCompat.START);
+            } else if (getSupportFragmentManager().getBackStackEntryCount() == 1) {
+                if (CONFIRM_LEAVE) {
+                    finish();
+                } else {
+                    Toast.makeText(MainActivity.this, R.string.confirm_leave, Toast.LENGTH_SHORT).show();
+                    CONFIRM_LEAVE = true;
+                }
+            } else {
+                super.onBackPressed();
+            }
+        }
 
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -119,6 +135,7 @@ public class MainActivity extends AppCompatActivity implements CambioDePagina {
         int id = item.getItemId();
         if (id == R.id.guest && isNot(isUserLogged())) {
             startActivity(new Intent(this, LoginActivity.class));
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
         } else if (id == R.id.menu_configuration) {
             Toast.makeText(this, "Configuration", Toast.LENGTH_SHORT).show();
         }

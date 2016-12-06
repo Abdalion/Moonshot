@@ -1,5 +1,6 @@
 package a1.t1mo.mobjav.a816.myapplication.view.feature;
 
+import android.animation.LayoutTransition;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -130,7 +131,7 @@ public class FeatureFragment extends GridFragment implements Listener<List<? ext
     @Override
     public void onClick(View view) {
         Intent intent = DetalleActivity.getIntent(getContext(), mTipo, mMenuID,
-                mRecyclerView.getChildAdapterPosition(view));
+                mController.getPaginaActual(), mRecyclerView.getChildAdapterPosition(view));
         startActivity(intent);
     }
 

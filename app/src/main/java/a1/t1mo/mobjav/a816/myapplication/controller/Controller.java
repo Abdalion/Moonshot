@@ -19,6 +19,7 @@ public interface Controller {
 
     void getNextPage(int menuId, Listener<List<? extends Feature>> listener);
 
+    int getPaginaActual();
     void setPaginaActual(int page);
 
     boolean isLastPage();
