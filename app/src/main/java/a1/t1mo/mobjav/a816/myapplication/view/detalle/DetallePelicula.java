@@ -28,6 +28,8 @@ import a1.t1mo.mobjav.a816.myapplication.utils.FavChange;
 import a1.t1mo.mobjav.a816.myapplication.utils.TipoDeFeature;
 import a1.t1mo.mobjav.a816.myapplication.view.login.LoginActivity;
 
+import static a1.t1mo.mobjav.a816.myapplication.utils.UserActions.getCurrentUser;
+
 public class DetallePelicula extends Fragment {
     private Pelicula mPelicula;
     private FavChange mFavCallback;
@@ -75,32 +77,28 @@ public class DetallePelicula extends Fragment {
             likeButton.setLiked(true);
         }
 
-        likeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(FirebaseAuth.getInstance().getCurrentUser() == null) {
-                    mFavCallback.favNotLogued();
-                    view.cancelPendingInputEvents();
-                }
-            }
-        });
         likeButton.setOnLikeListener(new OnLikeListener() {
-
             @Override
             public void liked(LikeButton likeButton) {
-                if(FirebaseAuth.getInstance().getCurrentUser() != null) {
+                if(getCurrentUser() != null) {
                     mFavCallback.onFavChange(mPelicula.getId(), true);
-                    Snackbar.make(getView(), "Agregado a favoritos", Snackbar.LENGTH_LONG)
+                    Snackbar.make(getView(), R.string.added_favorite, Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
+                }
+                else {
+                    mFavCallback.favNotLogued();
                 }
             }
 
             @Override
             public void unLiked(LikeButton likeButton) {
-                if(FirebaseAuth.getInstance().getCurrentUser() != null) {
+                if(getCurrentUser() != null) {
                     mFavCallback.onFavChange(mPelicula.getId(), false);
-                    Snackbar.make(getView(), "Eliminado de favoritos", Snackbar.LENGTH_LONG)
+                    Snackbar.make(getView(), R.string.removed_favorite, Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
+                }
+                else{
+                    mFavCallback.favNotLogued();
                 }
             }
         });

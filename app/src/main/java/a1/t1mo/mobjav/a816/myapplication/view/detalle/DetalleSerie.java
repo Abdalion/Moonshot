@@ -24,6 +24,8 @@ import a1.t1mo.mobjav.a816.myapplication.model.serie.Serie;
 import a1.t1mo.mobjav.a816.myapplication.utils.FavChange;
 import a1.t1mo.mobjav.a816.myapplication.utils.TipoDeFeature;
 
+import static a1.t1mo.mobjav.a816.myapplication.utils.UserActions.getCurrentUser;
+
 public class DetalleSerie extends Fragment {
     private Serie mSerie;
     private FavChange mFavCallback;
@@ -71,31 +73,28 @@ public class DetalleSerie extends Fragment {
             likeButton.setLiked(true);
         }
 
-        likeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(FirebaseAuth.getInstance().getCurrentUser() == null) {
-                    mFavCallback.favNotLogued();
-                    view.cancelPendingInputEvents();
-                }
-            }
-        });
         likeButton.setOnLikeListener(new OnLikeListener() {
             @Override
             public void liked(LikeButton likeButton) {
-                if(FirebaseAuth.getInstance().getCurrentUser() != null) {
+                if(getCurrentUser() != null) {
                     mFavCallback.onFavChange(mSerie.getId(), true);
-                    Snackbar.make(getView(), "Agregado A Favoritos", Snackbar.LENGTH_LONG)
+                    Snackbar.make(getView(), R.string.added_favorite, Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
+                }
+                else {
+                    mFavCallback.favNotLogued();
                 }
             }
 
             @Override
             public void unLiked(LikeButton likeButton) {
-                if(FirebaseAuth.getInstance().getCurrentUser() != null) {
+                if(getCurrentUser() != null) {
                     mFavCallback.onFavChange(mSerie.getId(), false);
-                    Snackbar.make(getView(), "Eliminado De Favoritos", Snackbar.LENGTH_LONG)
+                    Snackbar.make(getView(), R.string.added_favorite, Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
+                }
+                else {
+                    mFavCallback.favNotLogued();
                 }
             }
         });

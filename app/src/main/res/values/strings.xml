@@ -8,6 +8,8 @@
     <string name="configuration">Configuration</string>
     <string name="updated">Updated</string>
     <string name="confirm_leave">Press again to leave</string>
+    <string name="removed_favorite">Removed from favorites</string>
+    <string name="added_favorite">Added to favorites.</string>
 
 
     <!-- Strings related to login -->
