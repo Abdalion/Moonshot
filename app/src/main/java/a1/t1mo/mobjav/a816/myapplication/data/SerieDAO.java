@@ -129,26 +129,6 @@ public class SerieDAO {
                 .subList(0, indice);
     }
 
-    public void getSeriesPorGeneroDeTmdb(final String id, final Listener<List<? extends Feature>> listener) {
-        sTmdbService.getSeriesPorGenero(id, 1).enqueue(new Callback<ListadoSeries>() {
-            @Override
-            public void onResponse(Call<ListadoSeries> call, Response<ListadoSeries> response) {
-                if (response.isSuccessful()) {
-                    persistirEnRealm(response.body().getSeries());
-                    listener.done(getSeriesPorGeneroDeRealm(id));
-                } else {
-                    Log.e(TAG, "El servidor respondio con el codigo " + response.code() +
-                            " Llamando a getSeriesPorGeneroDeTmdb(" + id + ")");
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ListadoSeries> call, Throwable t) {
-                Log.e(TAG, "No se pudo obtener la lista de series por genero.");
-            }
-        });
-    }
-
     public void getSeriesPorGeneroDeTmdb(final int page, final String id, final Listener<List<? extends Feature>> listener) {
         sTmdbService.getSeriesPorGenero(id, page).enqueue(new Callback<ListadoSeries>() {
             @Override
@@ -178,7 +158,7 @@ public class SerieDAO {
     }
 
     public List<Serie> getSeriesPorGeneroDeRealm(int page, String id) {
-        int cantidadDeSeries = (int) mRealm.where(Serie.class).count();
+        int cantidadDeSeries = (int) mRealm.where(Serie.class).equalTo("generos.value", id).count();
         int indice = (page + 1) * PAGE_SIZE < cantidadDeSeries ? (page + 1) * PAGE_SIZE : cantidadDeSeries;
         return mRealm
                 .where(Serie.class)

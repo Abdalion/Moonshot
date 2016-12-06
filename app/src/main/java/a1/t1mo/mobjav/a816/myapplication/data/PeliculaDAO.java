@@ -178,7 +178,7 @@ public class PeliculaDAO {
     }
 
     public List<Pelicula> getPeliculasPorGeneroDeRealm(int page, String id) {
-        int cantidadDePeliculas = (int) mRealm.where(Pelicula.class).count();
+        int cantidadDePeliculas = (int) mRealm.where(Pelicula.class).equalTo("generos.value", id).count();
         int indice = (page + 1) * PAGE_SIZE < cantidadDePeliculas ? (page + 1) * PAGE_SIZE : cantidadDePeliculas;
         return mRealm
                 .where(Pelicula.class)
