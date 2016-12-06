@@ -130,8 +130,8 @@ public class DetallePelicula extends Fragment {
             sb.append(coma+ Genre.ID_INVERTIDO_PELICULA.get(genero.getValue()));
         }
 
-//        TextView textViewGenre =  (TextView) view.findViewById(R.id.fragment_detalle_genero);
-//        textViewGenre.setText(mPelicula.getGeneros().toString());
+        TextView textViewGenre =  (TextView) view.findViewById(R.id.fragment_detalle_genero);
+        textViewGenre.setText(sb.toString());
 
         ImageView imageViewImagenId = (ImageView) view.findViewById(R.id.backdrop);
         Glide

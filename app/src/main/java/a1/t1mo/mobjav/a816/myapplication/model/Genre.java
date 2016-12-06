@@ -35,6 +35,37 @@ public class Genre extends RealmObject {
 
     public static final Map<Integer, String> PELICULA_ID = crearDiccionarioPelicula();
     public static final Map<Integer, String> SERIE_ID = crearDiccionarioSerie();
+    public static final Map<String, String> ID_INVERTIDO_PELICULA = crearDiccionarioIdPelicula();
+    public static final Map<String, String> ID_INVERTIDO_SERIE = crearDiccionarioIdSerie();
+
+    private static Map<String,String> crearDiccionarioIdSerie() {
+        Map<String, String> diccionarioIdSerie = new ArrayMap<>(9);
+        diccionarioIdSerie.put("10759","Accion");
+        diccionarioIdSerie.put("10765","Ciencia Ficcion");
+        diccionarioIdSerie.put("35","Comedia");
+        diccionarioIdSerie.put("80","Crimen");
+        diccionarioIdSerie.put("99","Documental");
+        diccionarioIdSerie.put("18","Drama");
+        diccionarioIdSerie.put("10762","Infantil");
+        diccionarioIdSerie.put("9648","Misterio");
+        diccionarioIdSerie.put("10764","Reallity");
+        return diccionarioIdSerie;
+    }
+
+    private static Map<String,String> crearDiccionarioIdPelicula() {
+        Map<String, String> diccionarioId = new ArrayMap<>(9);
+        diccionarioId.put("28","Accion");
+        diccionarioId.put("12","Aventura");
+        diccionarioId.put("878","Ciencia Ficcion");
+        diccionarioId.put("35","Comedia");
+        diccionarioId.put("80","Crimen");
+        diccionarioId.put("18","Drama");
+        diccionarioId.put("27","Horror");
+        diccionarioId.put("10749","Romance");
+        diccionarioId.put("53","Thriller");
+
+        return diccionarioId;
+    }
 
 
     private static Map<Integer, String> crearDiccionarioPelicula() {
