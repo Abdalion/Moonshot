@@ -89,6 +89,10 @@ public class FeatureAdapter extends RecyclerView.Adapter<FeatureAdapter.FeatureH
                 mLikeButton.setVisibility(View.VISIBLE);
                 mLikeButton.setLiked(true);
             }
+            else{
+                mLikeButton.setLiked(false);
+                mLikeButton.setVisibility(View.GONE);
+            }
         }
     }
 }

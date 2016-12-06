@@ -22,6 +22,7 @@ public interface TmdbService {
     String IMAGE_URL_W154 = "http://image.tmdb.org/t/p/w154";
     String IMAGE_URL_W185 = "http://image.tmdb.org/t/p/w185";
     String IMAGE_URL_W300 = "http://image.tmdb.org/t/p/w300";
+    String IMAGE_URL_W500 = "http://image.tmdb.org/t/p/w500";
     String API_KEY = "f705c06489826188c47e25f982e97f17";
 
     @GET("movie/{movie_id}")

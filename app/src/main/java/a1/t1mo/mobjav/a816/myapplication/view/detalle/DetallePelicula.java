@@ -120,7 +120,7 @@ public class DetallePelicula extends Fragment {
         ImageView imageViewImagenId = (ImageView) view.findViewById(R.id.backdrop);
         Glide
                 .with(getContext())
-                .load(TmdbService.IMAGE_URL_W300 + mPelicula.getBackdropPath())
+                .load(TmdbService.IMAGE_URL_W500 + mPelicula.getBackdropPath())
                 .fitCenter()
                 .into(imageViewImagenId);
 

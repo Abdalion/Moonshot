@@ -124,7 +124,7 @@ public class DetalleSerie extends Fragment {
         ImageView imageViewImagenId = (ImageView) view.findViewById(R.id.backdrop);
         Glide
                 .with(getContext())
-                .load(TmdbService.IMAGE_URL_W185 + mSerie.getBackdropPath())
+                .load(TmdbService.IMAGE_URL_W500 + mSerie.getBackdropPath())
                 .fitCenter()
                 .into(imageViewImagenId);
 
