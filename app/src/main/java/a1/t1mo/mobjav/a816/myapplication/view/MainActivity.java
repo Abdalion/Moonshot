@@ -54,6 +54,7 @@ public class MainActivity extends AppCompatActivity implements CambioDePagina {
         setContentView(R.layout.activity_main);
 
         CONFIRM_LEAVE = false;
+
         if (isUserLogged()) {
             firebaseUser = getCurrentUser();
         }
