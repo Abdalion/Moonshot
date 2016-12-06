@@ -69,7 +69,7 @@ public class FavoritosFragment extends GridFragment
     @Override
     public void onClick(View view) {
         Intent intent = DetalleActivity.getIntent(getContext(), getTipo(), mMenuID,
-                mRecyclerView.getChildAdapterPosition(view));
+                mController.getPaginaActual(), mRecyclerView.getChildAdapterPosition(view));
         startActivity(intent);
     }
 

@@ -25,15 +25,15 @@ public class SerieController implements Controller {
     public void getFeatures(int menuId, Listener<List<? extends Feature>> listener) {
         if (ConnectivityCheck.hasConnectivity(mContext)) {
             if (menuId == R.id.menu_series_opcion_todas) {
-                mSerieDAO.getSeriesPopularesDeTmdb(listener);
+                mSerieDAO.getSeriesPopularesDeTmdb(mPaginaActual, listener);
             } else {
-                mSerieDAO.getSeriesPorGeneroDeTmdb(Genre.SERIE_ID.get(menuId), listener);
+                mSerieDAO.getSeriesPorGeneroDeTmdb(mPaginaActual, Genre.SERIE_ID.get(menuId), listener);
             }
         } else {
             if (menuId == R.id.menu_series_opcion_todas) {
-                listener.done(mSerieDAO.getSeriesPopularesDeRealm());
+                listener.done(mSerieDAO.getSeriesPopularesDeRealm(mPaginaActual));
             } else {
-                listener.done(mSerieDAO.getSeriesPorGeneroDeRealm(Genre.SERIE_ID.get(menuId)));
+                listener.done(mSerieDAO.getSeriesPorGeneroDeRealm(mPaginaActual, Genre.SERIE_ID.get(menuId)));
             }
         }
     }
@@ -71,6 +71,12 @@ public class SerieController implements Controller {
         mSerieDAO.setFavorito(id, isFav);
     }
 
+    @Override
+    public int getPaginaActual() {
+        return mPaginaActual;
+    }
+
+    @Override
     public void setPaginaActual(int paginaActual) {
         mPaginaActual = paginaActual;
     }

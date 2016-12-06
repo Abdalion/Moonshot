@@ -130,7 +130,7 @@ public class FeatureFragment extends GridFragment implements Listener<List<? ext
     @Override
     public void onClick(View view) {
         Intent intent = DetalleActivity.getIntent(getContext(), mTipo, mMenuID,
-                mRecyclerView.getChildAdapterPosition(view));
+                mController.getPaginaActual(), mRecyclerView.getChildAdapterPosition(view));
         startActivity(intent);
     }
 

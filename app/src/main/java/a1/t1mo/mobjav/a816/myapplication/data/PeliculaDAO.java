@@ -93,26 +93,6 @@ public class PeliculaDAO {
         return mRealm.where(Pelicula.class).equalTo("id", id).findFirst();
     }
 
-    public void getPeliculasPopularesDeTmdb(final Listener<List<? extends Feature>> listener) {
-        sTmdbService.getPeliculasPopulares(1).enqueue(new Callback<ListadoPeliculas>() {
-            @Override
-            public void onResponse(Call<ListadoPeliculas> call, Response<ListadoPeliculas> response) {
-                if (response.isSuccessful()) {
-                    persistirEnRealm(response.body().getPeliculas());
-                    listener.done(getPeliculasPopularesDeRealm());
-                } else {
-                    Log.e(TAG, "El servidor respondio con el codigo " + response.code() +
-                            " Llamando a getPeliculasPopularesDeTmdb()");
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ListadoPeliculas> call, Throwable t) {
-                Log.e(TAG, "No se pudo obtener la lista de peliculas populares.");
-            }
-        });
-    }
-
     public void getPeliculasPopularesDeTmdb(final int page, final Listener<List<? extends Feature>> listener) {
         sTmdbService.getPeliculasPopulares(page).enqueue(new Callback<ListadoPeliculas>() {
             @Override

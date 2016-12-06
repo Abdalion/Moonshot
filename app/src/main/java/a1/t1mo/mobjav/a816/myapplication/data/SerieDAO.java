@@ -93,26 +93,6 @@ public class SerieDAO {
         return mRealm.where(Serie.class).equalTo("id", id).findFirst();
     }
 
-    public void getSeriesPopularesDeTmdb(final Listener<List<? extends Feature>> listener) {
-        sTmdbService.getSeriesPopulares(1).enqueue(new Callback<ListadoSeries>() {
-            @Override
-            public void onResponse(Call<ListadoSeries> call, Response<ListadoSeries> response) {
-                if (response.isSuccessful()) {
-                    persistirEnRealm(response.body().getSeries());
-                    listener.done(getSeriesPopularesDeRealm());
-                } else {
-                    Log.e(TAG, "El servidor respondio con el codigo " + response.code() +
-                            " Llamando a getSeriesPopularesDeTmdb()");
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ListadoSeries> call, Throwable t) {
-                Log.e(TAG, "No se pudo obtener la lista de series populares.");
-            }
-        });
-    }
-
     public void getSeriesPopularesDeTmdb(final int page, final Listener<List<? extends Feature>> listener) {
         sTmdbService.getSeriesPopulares(page).enqueue(new Callback<ListadoSeries>() {
             @Override
