@@ -67,9 +67,12 @@ public class SerieController implements Controller {
         return mSerieDAO.getFavoritos(mContext);
     }
 
-
     @Override
     public void setFavorito(final int id, final boolean isFav) {
         mSerieDAO.setFavorito(id, isFav);
+    }
+
+    public void setPaginaActual(int paginaActual) {
+        mPaginaActual = paginaActual;
     }
 }
