@@ -19,19 +19,23 @@ import a1.t1mo.mobjav.a816.myapplication.utils.Listener;
 import a1.t1mo.mobjav.a816.myapplication.utils.Tipo;
 import a1.t1mo.mobjav.a816.myapplication.view.login.LoginActivity;
 
-public class DetalleActivity extends AppCompatActivity implements FavChange {
+public class DetalleActivity extends AppCompatActivity
+        implements FavChange, Listener<List<? extends Feature>> {
+
     private static final String ARGUMENT_TIPO = "Tipo";
     private static final String ARGUMENT_MENU_ID = "Menu ID";
+    private static final String ARGUMENT_PAGINA = "Pagina Actual";
     private static final String ARGUMENT_POSICION = "Posicion";
     private ViewPager mViewPager;
     private DetalleAdapter mAdapter;
     private Controller mController;
     private int mPosicion;
 
-    public static Intent getIntent(Context context, Tipo tipo, int menuId, int posicion) {
+    public static Intent getIntent(Context context, Tipo tipo, int menuId, int page, int posicion) {
         Bundle bundle = new Bundle();
         bundle.putSerializable(ARGUMENT_TIPO, tipo);
         bundle.putInt(ARGUMENT_MENU_ID, menuId);
+        bundle.putInt(ARGUMENT_PAGINA, page);
         bundle.putInt(ARGUMENT_POSICION, posicion);
         Intent intent = new Intent(context, DetalleActivity.class);
         intent.putExtras(bundle);
@@ -44,33 +48,28 @@ public class DetalleActivity extends AppCompatActivity implements FavChange {
         setContentView(R.layout.activity_detalle);
         Bundle bundle = getIntent().getExtras();
         int menuId = bundle.getInt(ARGUMENT_MENU_ID);
+        int page = bundle.getInt(ARGUMENT_PAGINA);
         mPosicion = bundle.getInt(ARGUMENT_POSICION);
         Tipo tipo = (Tipo) bundle.getSerializable(ARGUMENT_TIPO);
 
-        //todo: Tagged controller para ahorrarnos crear un objeto?
         if (tipo == Tipo.PELICULAS) {
-            mController = new PeliculaController();
+            mController = new PeliculaController(this);
             mAdapter = new DetallePeliculaAdapter(getSupportFragmentManager());
         } else {
-            mController = new SerieController();
+            mController = new SerieController(this);
             mAdapter = new DetalleSerieAdapter(getSupportFragmentManager());
         }
-
-        if (menuId == R.id.menu_favoritos_opcion_series || menuId == R.id.menu_favoritos_opcion_peliculas) {
-            mAdapter.setFeatures(mController.getFavoritos());
-            mViewPager.setCurrentItem(mPosicion);
-        } else {
-            mController.getFeatures(menuId, new Listener<List<? extends Feature>>() {
-                @Override
-                public void done(List<? extends Feature> param) {
-                    mAdapter.setFeatures(param);
-                    mViewPager.setCurrentItem(mPosicion);
-                }
-            });
-        }
+        mController.setPaginaActual(page);
 
         mViewPager = (ViewPager) findViewById(R.id.viewpager_detalle);
         mViewPager.setAdapter(mAdapter);
+
+        if (menuId == R.id.menu_favoritos_opcion_series || menuId == R.id.menu_favoritos_opcion_peliculas) {
+            mController.getFavoritos(this);
+        } else {
+            mController.getFeatures(menuId, this);
+        }
+
         mViewPager.setPageTransformer(false, new ViewPager.PageTransformer() {
             @Override
             public void transformPage(View page, float position) {
@@ -90,5 +89,11 @@ public class DetalleActivity extends AppCompatActivity implements FavChange {
     @Override
     public void favNotLogued() {
         startActivity(new Intent(this, LoginActivity.class));
+    }
+
+    @Override
+    public void done(List<? extends Feature> param) {
+        mAdapter.setFeatures(param);
+        mViewPager.setCurrentItem(mPosicion);
     }
 }

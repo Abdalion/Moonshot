@@ -1,8 +1,6 @@
 package a1.t1mo.mobjav.a816.myapplication.data;
 
 import android.content.Context;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.util.Log;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -13,14 +11,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import a1.t1mo.mobjav.a816.myapplication.data.services.ServiceFactory;
 import a1.t1mo.mobjav.a816.myapplication.data.services.TmdbService;
-import a1.t1mo.mobjav.a816.myapplication.model.User;
 import a1.t1mo.mobjav.a816.myapplication.model.Feature;
+import a1.t1mo.mobjav.a816.myapplication.model.User;
 import a1.t1mo.mobjav.a816.myapplication.model.pelicula.ListadoPeliculas;
 import a1.t1mo.mobjav.a816.myapplication.model.pelicula.Pelicula;
 import a1.t1mo.mobjav.a816.myapplication.utils.ConnectivityCheck;
@@ -28,7 +25,6 @@ import a1.t1mo.mobjav.a816.myapplication.utils.Listener;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import io.realm.RealmList;
-import io.realm.RealmResults;
 import io.realm.Sort;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -44,11 +40,11 @@ import retrofit2.Response;
 
 public class PeliculaDAO {
     private static final String TAG = PeliculaDAO.class.getSimpleName();
+    private static final int PAGE_SIZE = 20;
     private static TmdbService sTmdbService;
     private Realm mRealm;
     private static PeliculaDAO sInstance;
     private FirebaseUser mFirebaseUser;
-    private List<Pelicula> mListaDeFavoritos;
 
     private PeliculaDAO() {
         sTmdbService = ServiceFactory.getTmdbService();
@@ -93,21 +89,20 @@ public class PeliculaDAO {
         });
     }
 
-    private Pelicula getPeliculaDeRealm(Integer id) {
+    public Pelicula getPeliculaDeRealm(Integer id) {
         return mRealm.where(Pelicula.class).equalTo("id", id).findFirst();
     }
 
-    public void getPeliculasPopularesDeTmdb(final Listener<List<? extends Feature>> listener) {
-        sTmdbService.getPeliculasPopulares().enqueue(new Callback<ListadoPeliculas>() {
+    public void getPeliculasPopularesDeTmdb(final int page, final Listener<List<? extends Feature>> listener) {
+        sTmdbService.getPeliculasPopulares(page).enqueue(new Callback<ListadoPeliculas>() {
             @Override
             public void onResponse(Call<ListadoPeliculas> call, Response<ListadoPeliculas> response) {
                 if (response.isSuccessful()) {
                     persistirEnRealm(response.body().getPeliculas());
-                    Log.d(TAG, "Cantidad de peliculas recibidas " + response.body().getPeliculas().size());
-                    listener.done(getPeliculasPopularesDeRealm());
+                    listener.done(getPeliculasPopularesDeRealm(page));
                 } else {
                     Log.e(TAG, "El servidor respondio con el codigo " + response.code() +
-                            " Llamando a getPeliculasPopularesDeTmdb()");
+                            " Llamando a getPeliculasPopularesDeTmdb()" + " Pagina: " + page);
                 }
             }
 
@@ -118,12 +113,24 @@ public class PeliculaDAO {
         });
     }
 
-    private List<Pelicula> getPeliculasPopularesDeRealm() {
-        return mRealm.where(Pelicula.class).findAllSorted("popularidad", Sort.DESCENDING);
+    public List<Pelicula> getPeliculasPopularesDeRealm() {
+        return mRealm
+                .where(Pelicula.class)
+                .findAllSorted("popularidad", Sort.DESCENDING)
+                .subList(0, PAGE_SIZE);
+    }
+
+    public List<Pelicula> getPeliculasPopularesDeRealm(int page) {
+        int cantidadDePeliculas = (int) mRealm.where(Pelicula.class).count();
+        int indice = (page + 1) * PAGE_SIZE < cantidadDePeliculas ? (page + 1) * PAGE_SIZE : cantidadDePeliculas;
+        return mRealm
+                .where(Pelicula.class)
+                .findAllSorted("popularidad", Sort.DESCENDING)
+                .subList(0, indice);
     }
 
     public void getPeliculasPorGeneroDeTmdb(final String id, final Listener<List<? extends Feature>> listener) {
-        sTmdbService.getPeliculasPorGenero(id).enqueue(new Callback<ListadoPeliculas>() {
+        sTmdbService.getPeliculasPorGenero(id, 1).enqueue(new Callback<ListadoPeliculas>() {
             @Override
             public void onResponse(Call<ListadoPeliculas> call, Response<ListadoPeliculas> response) {
                 if (response.isSuccessful()) {
@@ -142,19 +149,46 @@ public class PeliculaDAO {
         });
     }
 
-    private List<Pelicula> getPeliculasPorGeneroDeRealm(String id) {
-        List<Pelicula> peliculas =
-                mRealm
-                        .where(Pelicula.class)
-                        .equalTo("generos.value", id)
-                        .findAllSorted("popularidad", Sort.DESCENDING);
+    public void getPeliculasPorGeneroDeTmdb(final int page, final String id, final Listener<List<? extends Feature>> listener) {
+        sTmdbService.getPeliculasPorGenero(id, page).enqueue(new Callback<ListadoPeliculas>() {
+            @Override
+            public void onResponse(Call<ListadoPeliculas> call, Response<ListadoPeliculas> response) {
+                if (response.isSuccessful()) {
+                    persistirEnRealm(response.body().getPeliculas());
+                    listener.done(getPeliculasPorGeneroDeRealm(page, id));
+                } else {
+                    Log.e(TAG, "El servidor respondio con el codigo " + response.code() +
+                            " Llamando a getPeliculasPorGeneroDeTmdb(" + id + ")");
+                }
+            }
 
-        Log.d(TAG, "Cantidad de peliculas: " + peliculas.size());
-        return peliculas;
+            @Override
+            public void onFailure(Call<ListadoPeliculas> call, Throwable t) {
+                Log.e(TAG, "No se pudo obtener la lista de peliculas por genero.");
+            }
+        });
     }
 
-    public List<Pelicula> getFavoritos(Context context) {
-        if (!(FirebaseAuth.getInstance().getCurrentUser() == null)
+    public List<Pelicula> getPeliculasPorGeneroDeRealm(String id) {
+        return mRealm
+                .where(Pelicula.class)
+                .equalTo("generos.value", id)
+                .findAllSorted("popularidad", Sort.DESCENDING)
+                .subList(0, PAGE_SIZE);
+    }
+
+    public List<Pelicula> getPeliculasPorGeneroDeRealm(int page, String id) {
+        int cantidadDePeliculas = (int) mRealm.where(Pelicula.class).equalTo("generos.value", id).count();
+        int indice = (page + 1) * PAGE_SIZE < cantidadDePeliculas ? (page + 1) * PAGE_SIZE : cantidadDePeliculas;
+        return mRealm
+                .where(Pelicula.class)
+                .equalTo("generos.value", id)
+                .findAllSorted("popularidad", Sort.DESCENDING)
+                .subList(0, indice);
+    }
+
+    public void getFavoritos(Context context, final Listener<List<? extends Feature>> listener) {
+        if (FirebaseAuth.getInstance().getCurrentUser() != null
                 && ConnectivityCheck.hasConnectivity(context)) {
             mFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
             DatabaseReference userReference = FirebaseDatabase.getInstance().getReference().child("users").child(mFirebaseUser.getUid());
@@ -166,7 +200,7 @@ public class PeliculaDAO {
                     for (Integer i : myMap.values()) {
                         setFavoritoRealm(i, true);
                     }
-                    mListaDeFavoritos = mRealm.where(Pelicula.class).equalTo("favorito", true).findAll();
+                    listener.done(getFavoritosDeRealm());
                 }
 
                 @Override
@@ -174,9 +208,12 @@ public class PeliculaDAO {
                 }
             });
         } else {
-            mListaDeFavoritos = mRealm.where(Pelicula.class).equalTo("favorito", true).findAll();
+            listener.done(getFavoritosDeRealm());
         }
-        return mListaDeFavoritos;
+    }
+
+    private List<Pelicula> getFavoritosDeRealm() {
+        return mRealm.where(Pelicula.class).equalTo("favorito", true).findAll();
     }
 
 
@@ -197,8 +234,6 @@ public class PeliculaDAO {
                     @Override
                     public void execute(Realm realm) {
                         realm.copyToRealmOrUpdate(pelicula);
-                        Log.d(TAG, "Guardamos la pelicula: " + pelicula.getTitulo() + "\nGenero: " +
-                        pelicula.getGeneros());
                     }
                 });
             }
@@ -246,5 +281,10 @@ public class PeliculaDAO {
                 }
             });
         }
+    }
+
+    public boolean isLastPage(int page) {
+        int cantidadDePeliculas = (int) mRealm.where(Pelicula.class).count();
+        return (page >= cantidadDePeliculas % PAGE_SIZE && cantidadDePeliculas - page * PAGE_SIZE <= 0);
     }
 }

@@ -1,11 +1,6 @@
 package a1.t1mo.mobjav.a816.myapplication.model;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-
-import a1.t1mo.mobjav.a816.myapplication.model.pelicula.Pelicula;
-import a1.t1mo.mobjav.a816.myapplication.model.serie.Serie;
 
 /**
  * Created by Egon on 30/11/2016.

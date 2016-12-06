@@ -2,7 +2,6 @@ package a1.t1mo.mobjav.a816.myapplication.view.detalle;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
 
 import java.util.List;
 

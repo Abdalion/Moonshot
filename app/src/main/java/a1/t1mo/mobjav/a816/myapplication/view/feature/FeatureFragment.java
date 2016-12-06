@@ -38,6 +38,8 @@ public class FeatureFragment extends GridFragment implements Listener<List<? ext
     private int mMenuID;
     private Tipo mTipo;
     private SwipeRefreshLayout mSwipeRefresh;
+    private boolean mLoading = false;
+    private int mPastVisiblesItems, mVisibleItemCount, mTotalItemCount;
 
     public static FeatureFragment getFeatureFragment(Tipo tipo) {
         Bundle bundle = new Bundle();
@@ -64,10 +66,10 @@ public class FeatureFragment extends GridFragment implements Listener<List<? ext
         }
 
         if (mTipo == Tipo.PELICULAS) {
-            mController = new PeliculaController();
+            mController = new PeliculaController(getContext());
             mMenuID = R.id.menu_peliculas_opcion_todas;
         } else {
-            mController = new SerieController();
+            mController = new SerieController(getContext());
             mMenuID = R.id.menu_series_opcion_todas;
         }
 
@@ -80,21 +82,32 @@ public class FeatureFragment extends GridFragment implements Listener<List<? ext
         mSwipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                mSwipeRefresh.setRefreshing(true);
                 mController.getFeatures(mMenuID, FeatureFragment.this);
-                mSwipeRefresh.setRefreshing(false);
             }
         });
 
         mRecyclerView.addItemDecoration(new SpacesItemDecoration(4));
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setAdapter(mAdapter);
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 3);
+        final GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 3);
         mRecyclerView.setLayoutManager(gridLayoutManager);
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-
+                if (dy > 0) {
+                    mVisibleItemCount = gridLayoutManager.getChildCount();
+                    mTotalItemCount = gridLayoutManager.getItemCount();
+                    mPastVisiblesItems = gridLayoutManager.findFirstVisibleItemPosition();
+                    if (!mLoading && !mController.isLastPage()) {
+                        if ((mVisibleItemCount + mPastVisiblesItems) >= mTotalItemCount) {
+                            mLoading = true;
+                            Log.v("...", "Last Item Wow !");
+                            mController.getNextPage(mMenuID, FeatureFragment.this);
+                        }
+                    }
+                }
             }
         });
         return view;
@@ -110,18 +123,20 @@ public class FeatureFragment extends GridFragment implements Listener<List<? ext
     @Override
     public void done(List<? extends Feature> param) {
         mAdapter.setFeatures(param);
+        mLoading = false;
+        if (mSwipeRefresh.isRefreshing()) mSwipeRefresh.setRefreshing(false);
     }
 
     @Override
     public void onClick(View view) {
         Intent intent = DetalleActivity.getIntent(getContext(), mTipo, mMenuID,
-                mRecyclerView.getChildAdapterPosition(view));
-        Log.d(getClass().getSimpleName(), "Posicion clickeada: " + mRecyclerView.getChildAdapterPosition(view));
+                mController.getPaginaActual(), mRecyclerView.getChildAdapterPosition(view));
         startActivity(intent);
     }
 
     public void redraw(int menuId) {
         mMenuID = menuId;
+        mController.setPaginaActual(1);
         mController.getFeatures(mMenuID, this);
     }
 }

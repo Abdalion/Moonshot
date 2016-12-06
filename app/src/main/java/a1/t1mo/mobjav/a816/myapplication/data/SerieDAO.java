@@ -1,30 +1,23 @@
 package a1.t1mo.mobjav.a816.myapplication.data;
 
 import android.content.Context;
-import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.renderscript.Sampler;
 import android.util.Log;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.api.model.StringList;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.gson.annotations.SerializedName;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import a1.t1mo.mobjav.a816.myapplication.data.services.ServiceFactory;
 import a1.t1mo.mobjav.a816.myapplication.data.services.TmdbService;
-import a1.t1mo.mobjav.a816.myapplication.model.User;
 import a1.t1mo.mobjav.a816.myapplication.model.Feature;
+import a1.t1mo.mobjav.a816.myapplication.model.User;
 import a1.t1mo.mobjav.a816.myapplication.model.serie.ListadoSeries;
 import a1.t1mo.mobjav.a816.myapplication.model.serie.Serie;
 import a1.t1mo.mobjav.a816.myapplication.utils.ConnectivityCheck;
@@ -32,7 +25,6 @@ import a1.t1mo.mobjav.a816.myapplication.utils.Listener;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import io.realm.RealmList;
-import io.realm.RealmResults;
 import io.realm.Sort;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -48,11 +40,11 @@ import retrofit2.Response;
 
 public class SerieDAO {
     private static final String TAG = SerieDAO.class.getSimpleName();
+    private static final int PAGE_SIZE = 20;
     private static TmdbService sTmdbService;
     private Realm mRealm;
     private static SerieDAO sInstance;
     private FirebaseUser mFirebaseUser;
-    private List<Serie> mListaDeFavoritos;
 
     private SerieDAO() {
         sTmdbService = ServiceFactory.getTmdbService();
@@ -97,17 +89,17 @@ public class SerieDAO {
         });
     }
 
-    private Serie getSerieDeRealm(Integer id) {
+    public Serie getSerieDeRealm(Integer id) {
         return mRealm.where(Serie.class).equalTo("id", id).findFirst();
     }
 
-    public void getSeriesPopularesDeTmdb(final Listener<List<? extends Feature>> listener) {
-        sTmdbService.getSeriesPopulares().enqueue(new Callback<ListadoSeries>() {
+    public void getSeriesPopularesDeTmdb(final int page, final Listener<List<? extends Feature>> listener) {
+        sTmdbService.getSeriesPopulares(page).enqueue(new Callback<ListadoSeries>() {
             @Override
             public void onResponse(Call<ListadoSeries> call, Response<ListadoSeries> response) {
                 if (response.isSuccessful()) {
                     persistirEnRealm(response.body().getSeries());
-                    listener.done(getSeriesPopularesDeRealm());
+                    listener.done(getSeriesPopularesDeRealm(page));
                 } else {
                     Log.e(TAG, "El servidor respondio con el codigo " + response.code() +
                             " Llamando a getSeriesPopularesDeTmdb()");
@@ -121,17 +113,29 @@ public class SerieDAO {
         });
     }
 
-    private List<Serie> getSeriesPopularesDeRealm() {
-        return mRealm.where(Serie.class).findAllSorted("popularidad", Sort.DESCENDING);
+    public List<Serie> getSeriesPopularesDeRealm() {
+        return mRealm
+                .where(Serie.class)
+                .findAllSorted("popularidad", Sort.DESCENDING)
+                .subList(0, PAGE_SIZE);
     }
 
-    public void getSeriesPorGeneroDeTmdb(final String id, final Listener<List<? extends Feature>> listener) {
-        sTmdbService.getSeriesPorGenero(id).enqueue(new Callback<ListadoSeries>() {
+    public List<Serie> getSeriesPopularesDeRealm(int page) {
+        int cantidadDeSeries = (int) mRealm.where(Serie.class).count();
+        int indice = (page + 1) * PAGE_SIZE < cantidadDeSeries ? (page + 1) * PAGE_SIZE : cantidadDeSeries;
+        return mRealm
+                .where(Serie.class)
+                .findAllSorted("popularidad", Sort.DESCENDING)
+                .subList(0, indice);
+    }
+
+    public void getSeriesPorGeneroDeTmdb(final int page, final String id, final Listener<List<? extends Feature>> listener) {
+        sTmdbService.getSeriesPorGenero(id, page).enqueue(new Callback<ListadoSeries>() {
             @Override
             public void onResponse(Call<ListadoSeries> call, Response<ListadoSeries> response) {
                 if (response.isSuccessful()) {
                     persistirEnRealm(response.body().getSeries());
-                    listener.done(getSeriesPorGeneroDeRealm(id));
+                    listener.done(getSeriesPorGeneroDeRealm(page, id));
                 } else {
                     Log.e(TAG, "El servidor respondio con el codigo " + response.code() +
                             " Llamando a getSeriesPorGeneroDeTmdb(" + id + ")");
@@ -145,11 +149,22 @@ public class SerieDAO {
         });
     }
 
-    private List<Serie> getSeriesPorGeneroDeRealm(String id) {
+    public List<Serie> getSeriesPorGeneroDeRealm(String id) {
         return mRealm
                 .where(Serie.class)
                 .equalTo("generos.value", id)
-                .findAllSorted("popularidad", Sort.DESCENDING);
+                .findAllSorted("popularidad", Sort.DESCENDING)
+                .subList(0, PAGE_SIZE);
+    }
+
+    public List<Serie> getSeriesPorGeneroDeRealm(int page, String id) {
+        int cantidadDeSeries = (int) mRealm.where(Serie.class).equalTo("generos.value", id).count();
+        int indice = (page + 1) * PAGE_SIZE < cantidadDeSeries ? (page + 1) * PAGE_SIZE : cantidadDeSeries;
+        return mRealm
+                .where(Serie.class)
+                .equalTo("generos.value", id)
+                .findAllSorted("popularidad", Sort.DESCENDING)
+                .subList(0, indice);
     }
 
     private void persistirEnRealm(final Serie serie) {
@@ -207,7 +222,6 @@ public class SerieDAO {
                         Long longId = new Long(id);
                         if (longId.equals(entry.getValue()))
                             databaseReference.child(entry.getKey()).removeValue();
-
                     }
                 }
 
@@ -216,11 +230,10 @@ public class SerieDAO {
                 }
             });
         }
-
     }
 
-    public List<Serie> getFavoritos(Context context) {
-        if (isNot(FirebaseAuth.getInstance().getCurrentUser() == null)
+    public void getFavoritos(Context context, final Listener<List<? extends Feature>> listener) {
+        if (FirebaseAuth.getInstance().getCurrentUser() != null
                 && ConnectivityCheck.hasConnectivity(context)) {
             mFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
             DatabaseReference userReference = FirebaseDatabase.getInstance().getReference().child("users").child(mFirebaseUser.getUid());
@@ -232,7 +245,7 @@ public class SerieDAO {
                     for (Integer i : myMap.values()) {
                         setFavoritoRealm(i, true);
                     }
-                    mListaDeFavoritos = mRealm.where(Serie.class).equalTo("favorito", true).findAll();
+                    listener.done(getFavoritosDeRealm());
                 }
 
                 @Override
@@ -240,12 +253,20 @@ public class SerieDAO {
                 }
             });
         } else {
-            mListaDeFavoritos = mRealm.where(Serie.class).equalTo("favorito", true).findAll();
+            listener.done(getFavoritosDeRealm());
         }
-        return mListaDeFavoritos;
+    }
+
+    private List<? extends Feature> getFavoritosDeRealm() {
+        return mRealm.where(Serie.class).equalTo("favorito", true).findAll();
     }
 
     private boolean isNot(boolean bool) {
         return !bool;
+    }
+
+    public boolean isLastPage(int page) {
+        int cantidadDeSeries = (int) mRealm.where(Serie.class).count();
+        return (page >= cantidadDeSeries % PAGE_SIZE && cantidadDeSeries - page * PAGE_SIZE <= 0);
     }
 }
