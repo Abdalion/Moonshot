@@ -18,6 +18,7 @@ import a1.t1mo.mobjav.a816.myapplication.data.services.ServiceFactory;
 import a1.t1mo.mobjav.a816.myapplication.data.services.TmdbService;
 import a1.t1mo.mobjav.a816.myapplication.model.Feature;
 import a1.t1mo.mobjav.a816.myapplication.model.User;
+import a1.t1mo.mobjav.a816.myapplication.model.pelicula.Pelicula;
 import a1.t1mo.mobjav.a816.myapplication.model.serie.ListadoSeries;
 import a1.t1mo.mobjav.a816.myapplication.model.serie.Serie;
 import a1.t1mo.mobjav.a816.myapplication.utils.ConnectivityCheck;
@@ -29,6 +30,8 @@ import io.realm.Sort;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static a1.t1mo.mobjav.a816.myapplication.utils.UserActions.isUserLogged;
 
 /**
  * MoonShot App
@@ -253,11 +256,17 @@ public class SerieDAO {
                 }
             });
         } else {
-            listener.done(getFavoritosDeRealm());
+            if (!isUserLogged()) {
+                for (Serie serie : getFavoritosDeRealm()) {
+                    setFavoritoRealm(serie.getId(), false);
+                }
+            } else {
+                listener.done(getFavoritosDeRealm());
+            }
         }
     }
 
-    private List<? extends Feature> getFavoritosDeRealm() {
+    private List<Serie> getFavoritosDeRealm() {
         return mRealm.where(Serie.class).equalTo("favorito", true).findAll();
     }
 

@@ -30,6 +30,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static a1.t1mo.mobjav.a816.myapplication.utils.UserActions.isUserLogged;
+
 /**
  * MoonShot App
  * Proyecto Integrador
@@ -208,7 +210,14 @@ public class PeliculaDAO {
                 }
             });
         } else {
-            listener.done(getFavoritosDeRealm());
+            if(!isUserLogged()) {
+                for(Pelicula pelicula : getFavoritosDeRealm()) {
+                    setFavoritoRealm(pelicula.getId(), false);
+                }
+            }
+            else {
+                listener.done(getFavoritosDeRealm());
+            }
         }
     }
 
