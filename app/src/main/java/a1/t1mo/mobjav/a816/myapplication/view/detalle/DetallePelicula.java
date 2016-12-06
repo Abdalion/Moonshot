@@ -19,6 +19,8 @@ import com.like.OnLikeListener;
 
 import a1.t1mo.mobjav.a816.myapplication.R;
 import a1.t1mo.mobjav.a816.myapplication.data.services.TmdbService;
+import a1.t1mo.mobjav.a816.myapplication.model.Genre;
+import a1.t1mo.mobjav.a816.myapplication.model.RealmString;
 import a1.t1mo.mobjav.a816.myapplication.model.pelicula.Pelicula;
 import a1.t1mo.mobjav.a816.myapplication.utils.FavChange;
 
@@ -114,6 +116,20 @@ public class DetallePelicula extends Fragment {
         } else {
             textViewDuracion.setText(Integer.toString(mPelicula.getDuracion()));
         }
+
+        StringBuilder sb = new StringBuilder();
+        int i = 0;
+        String coma;
+        for (RealmString genero : mPelicula.getGeneros()) {
+            if (i == 0) {
+                coma = "";
+            } else {
+                coma = ", ";
+            }
+
+            sb.append(coma+ Genre.ID_INVERTIDO_PELICULA.get(genero.getValue()));
+        }
+
 //        TextView textViewGenre =  (TextView) view.findViewById(R.id.fragment_detalle_genero);
 //        textViewGenre.setText(mPelicula.getGeneros().toString());
 
