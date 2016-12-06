@@ -47,7 +47,6 @@ public class DetalleActivity extends AppCompatActivity implements FavChange {
         mPosicion = bundle.getInt(ARGUMENT_POSICION);
         Tipo tipo = (Tipo) bundle.getSerializable(ARGUMENT_TIPO);
 
-        //todo: Tagged controller para ahorrarnos crear un objeto?
         if (tipo == Tipo.PELICULAS) {
             mController = new PeliculaController(this);
             mAdapter = new DetallePeliculaAdapter(getSupportFragmentManager());
