@@ -135,7 +135,6 @@ public class LoginActivity extends AppCompatActivity {
                      @Override
                      public void onDataChange(DataSnapshot snapshot) {
                          if (snapshot.hasChild(user.getUid())) {
-                             //TODO: llamar al dao de series y peliculas y settear los favoritos. TAmbien en el controller de series y pelicuals tiene que guardar en firebase
                              Log.d("Firebase", "Existe el user en la base de datos remota");
                          }
                          else {

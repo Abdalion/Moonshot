@@ -1,6 +1,7 @@
 package a1.t1mo.mobjav.a816.myapplication.view;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -15,9 +16,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.RotateAnimation;
+import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseAuth;
 
 import a1.t1mo.mobjav.a816.myapplication.R;
 import a1.t1mo.mobjav.a816.myapplication.utils.Tipo;
+
+import static a1.t1mo.mobjav.a816.myapplication.utils.UserActions.isUserLogged;
 
 public class FeaturePager extends Fragment implements NavigationView.OnNavigationItemSelectedListener {
     private CambioDePagina mCallback;
@@ -78,6 +84,11 @@ public class FeaturePager extends Fragment implements NavigationView.OnNavigatio
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        if(isUserLogged() && item.getItemId() == R.id.logout_nav) {
+            FirebaseAuth.getInstance().signOut();
+            Toast.makeText(getContext(), "Logged out!", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(getContext(), MainActivity.class));
+        }
         mAdapter.redrawFragment(mViewPager.getCurrentItem(), item.getItemId());
         Log.d(getClass().getSimpleName(), "Current Page: " + mViewPager.getCurrentItem() +
                 " Menu item: " + item.getTitle());
@@ -85,4 +96,6 @@ public class FeaturePager extends Fragment implements NavigationView.OnNavigatio
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+
 }

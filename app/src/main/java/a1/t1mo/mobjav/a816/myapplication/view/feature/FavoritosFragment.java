@@ -37,7 +37,8 @@ public class FavoritosFragment extends GridFragment implements View.OnClickListe
 
         if (savedInstanceState != null) {
             mMenuID = savedInstanceState.getInt(STATE_MENU_ID);
-        } else {
+        }
+        else {
             mMenuID = R.id.menu_favoritos_opcion_peliculas;
         }
 

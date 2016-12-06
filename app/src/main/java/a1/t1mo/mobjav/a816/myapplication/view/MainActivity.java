@@ -2,6 +2,7 @@ package a1.t1mo.mobjav.a816.myapplication.view;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -11,16 +12,22 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import a1.t1mo.mobjav.a816.myapplication.R;
 import a1.t1mo.mobjav.a816.myapplication.data.PeliculaDAO;
 import a1.t1mo.mobjav.a816.myapplication.data.SerieDAO;
 import a1.t1mo.mobjav.a816.myapplication.utils.Tipo;
+import a1.t1mo.mobjav.a816.myapplication.view.login.CropCircleTransform;
 import a1.t1mo.mobjav.a816.myapplication.view.login.LoginActivity;
 
 import static a1.t1mo.mobjav.a816.myapplication.utils.General.isNot;
@@ -77,6 +84,8 @@ public class MainActivity extends AppCompatActivity implements CambioDePagina {
         navigationView = (NavigationView) findViewById(R.id.main_navigationView);
         navigationView.setCheckedItem(R.id.menu_peliculas_opcion_todas);
         navigationView.setNavigationItemSelectedListener(mFeaturePager);
+        navigationViewSetup();
+
     }
 
     @Override
@@ -116,6 +125,20 @@ public class MainActivity extends AppCompatActivity implements CambioDePagina {
         return super.onOptionsItemSelected(item);
     }
 
+    private void navigationViewSetup() {
+        if (isUserLogged()) {
+            View headerLayout = navigationView.getHeaderView(0);
+            TextView textView = (TextView) headerLayout.findViewById(R.id.nombreDePersona);
+            textView.setText(firebaseUser.getDisplayName());
+
+            final ImageView imageView = (ImageView) headerLayout.findViewById(R.id.imageViewPersona);
+            Glide.with(this).load(firebaseUser.getPhotoUrl()).bitmapTransform(new CropCircleTransform(this)).into(imageView);
+        } else {
+            View headerLayout = navigationView.getHeaderView(0);
+            TextView textView = (TextView) headerLayout.findViewById(R.id.nombreDePersona);
+            textView.setText("Usuario no Registrado");
+        }
+    }
     @Override
     public void onCambioDePagina(Tipo tipo) {
         navigationView.getMenu().clear();
