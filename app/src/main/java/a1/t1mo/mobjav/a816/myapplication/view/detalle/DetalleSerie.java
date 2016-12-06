@@ -95,6 +95,7 @@ public class DetalleSerie extends Fragment {
                     mFavCallback.favNotLogued();
                 }
             }
+
         });
 
         TextView textViewRating = (TextView) view.findViewById(R.id.fragment_detalle_tv_rating);
