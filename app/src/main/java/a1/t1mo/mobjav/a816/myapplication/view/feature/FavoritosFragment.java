@@ -3,6 +3,7 @@ package a1.t1mo.mobjav.a816.myapplication.view.feature;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.TextViewCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -43,6 +44,8 @@ public class FavoritosFragment extends GridFragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_grilla, container, false);
+        SwipeRefreshLayout swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.grilla_swipe_refresh);
+        swipeRefreshLayout.setEnabled(false);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.rv_grilla);
 
         if(isUserLogged()) {
