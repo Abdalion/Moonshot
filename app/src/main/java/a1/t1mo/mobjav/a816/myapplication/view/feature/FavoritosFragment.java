@@ -8,17 +8,23 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.List;
+
 import a1.t1mo.mobjav.a816.myapplication.R;
 import a1.t1mo.mobjav.a816.myapplication.controller.Controller;
 import a1.t1mo.mobjav.a816.myapplication.controller.PeliculaController;
 import a1.t1mo.mobjav.a816.myapplication.controller.SerieController;
+import a1.t1mo.mobjav.a816.myapplication.model.Feature;
+import a1.t1mo.mobjav.a816.myapplication.utils.Listener;
 import a1.t1mo.mobjav.a816.myapplication.utils.Tipo;
 import a1.t1mo.mobjav.a816.myapplication.view.detalle.DetalleActivity;
 
 /**
  * Created by dh-mob-tt on 30/11/16.
  */
-public class FavoritosFragment extends GridFragment implements View.OnClickListener {
+public class FavoritosFragment extends GridFragment
+        implements View.OnClickListener, Listener<List<? extends Feature>> {
+
     private static final String STATE_MENU_ID = "Menu ID";
     private Controller mController;
     private RecyclerView mRecyclerView;
@@ -42,15 +48,16 @@ public class FavoritosFragment extends GridFragment implements View.OnClickListe
 
         View view = inflater.inflate(R.layout.fragment_grilla, container, false);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.rv_grilla);
-
-        mController = getController(mMenuID);
-        mAdapter = new FavoritosAdapter(this, mController.getFavoritos());
-
         mRecyclerView.addItemDecoration(new SpacesItemDecoration(4));
         mRecyclerView.setHasFixedSize(true);
+        mAdapter = new FavoritosAdapter(this);
         mRecyclerView.setAdapter(mAdapter);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 3);
         mRecyclerView.setLayoutManager(gridLayoutManager);
+
+        mController = getController(mMenuID);
+        mController.getFavoritos(this);
+
         return view;
     }
 
@@ -70,7 +77,7 @@ public class FavoritosFragment extends GridFragment implements View.OnClickListe
     public void redraw(int menuId) {
         mMenuID = menuId;
         mController = getController(mMenuID);
-        mAdapter.setFeatures(mController.getFavoritos());
+        mController.getFavoritos(this);
     }
 
     private Tipo getTipo() {
@@ -83,5 +90,10 @@ public class FavoritosFragment extends GridFragment implements View.OnClickListe
         } else {
             return new SerieController(getContext());
         }
+    }
+
+    @Override
+    public void done(List<? extends Feature> param) {
+        mAdapter.setFeatures(param);
     }
 }

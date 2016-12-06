@@ -10,7 +10,7 @@ import com.google.firebase.auth.FirebaseUser;
 public class UserActions {
 
     public static boolean isUserLogged() {
-        return (FirebaseAuth.getInstance().getCurrentUser() != null) ? true : false;
+        return (FirebaseAuth.getInstance().getCurrentUser() != null);
     }
 
     public static FirebaseUser getCurrentUser() {

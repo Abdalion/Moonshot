@@ -8,7 +8,6 @@ import a1.t1mo.mobjav.a816.myapplication.R;
 import a1.t1mo.mobjav.a816.myapplication.data.SerieDAO;
 import a1.t1mo.mobjav.a816.myapplication.model.Feature;
 import a1.t1mo.mobjav.a816.myapplication.model.Genre;
-import a1.t1mo.mobjav.a816.myapplication.model.serie.Serie;
 import a1.t1mo.mobjav.a816.myapplication.utils.ConnectivityCheck;
 import a1.t1mo.mobjav.a816.myapplication.utils.Listener;
 
@@ -63,8 +62,8 @@ public class SerieController implements Controller {
     }
 
     @Override
-    public List<? extends Feature> getFavoritos() {
-        return mSerieDAO.getFavoritos(mContext);
+    public void getFavoritos(Listener<List<? extends Feature>> listener) {
+        mSerieDAO.getFavoritos(mContext, listener);
     }
 
     @Override

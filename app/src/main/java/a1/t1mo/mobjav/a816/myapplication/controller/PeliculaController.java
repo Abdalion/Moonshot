@@ -70,8 +70,8 @@ public class PeliculaController implements Controller {
     }
 
     @Override
-    public List<? extends Feature> getFavoritos() {
-        return mPeliculaDAO.getFavoritos(mContext);
+    public void getFavoritos(Listener<List<? extends Feature>> listener) {
+        mPeliculaDAO.getFavoritos(mContext, listener);
     }
 
     @Override

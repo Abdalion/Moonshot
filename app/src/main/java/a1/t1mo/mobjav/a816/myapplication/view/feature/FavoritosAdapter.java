@@ -24,8 +24,7 @@ public class FavoritosAdapter extends RecyclerView.Adapter<FavoritosAdapter.Favo
     private View.OnClickListener mListener;
     private final static int FADE_DURATION = 300;
 
-    public FavoritosAdapter(View.OnClickListener listener, List<? extends Feature> features) {
-        mFeatures = features;
+    public FavoritosAdapter(View.OnClickListener listener) {
         mListener = listener;
     }
 

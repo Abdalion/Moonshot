@@ -14,7 +14,6 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.google.firebase.auth.FirebaseAuth;
 import com.like.LikeButton;
 import com.like.OnLikeListener;
 
@@ -75,24 +74,22 @@ public class DetallePelicula extends Fragment {
         likeButton.setOnLikeListener(new OnLikeListener() {
             @Override
             public void liked(LikeButton likeButton) {
-                if(getCurrentUser() != null) {
+                if (getCurrentUser() != null) {
                     mFavCallback.onFavChange(mPelicula.getId(), true);
                     Snackbar.make(getView(), R.string.added_favorite, Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
-                }
-                else {
+                } else {
                     mFavCallback.favNotLogued();
                 }
             }
 
             @Override
             public void unLiked(LikeButton likeButton) {
-                if(getCurrentUser() != null) {
+                if (getCurrentUser() != null) {
                     mFavCallback.onFavChange(mPelicula.getId(), false);
                     Snackbar.make(getView(), R.string.removed_favorite, Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
-                }
-                else{
+                } else {
                     mFavCallback.favNotLogued();
                 }
             }
