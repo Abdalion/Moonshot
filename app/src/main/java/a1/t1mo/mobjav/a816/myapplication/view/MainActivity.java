@@ -8,6 +8,8 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.transition.Slide;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -86,7 +88,6 @@ public class MainActivity extends AppCompatActivity implements CambioDePagina {
 
     }
 
-
     private void navigationViewSetup() {
         if (isUserLogged()) {
             View headerLayout = navigationView.getHeaderView(0);
@@ -134,6 +135,7 @@ public class MainActivity extends AppCompatActivity implements CambioDePagina {
         int id = item.getItemId();
         if (id == R.id.guest && isNot(isUserLogged())) {
             startActivity(new Intent(this, LoginActivity.class));
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
         } else if (id == R.id.menu_configuration) {
             Toast.makeText(this, "Configuration", Toast.LENGTH_SHORT).show();
         }

@@ -1,5 +1,6 @@
 package a1.t1mo.mobjav.a816.myapplication.view.feature;
 
+import android.animation.LayoutTransition;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
