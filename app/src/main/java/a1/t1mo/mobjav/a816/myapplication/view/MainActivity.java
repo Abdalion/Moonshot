@@ -59,9 +59,6 @@ public class MainActivity extends AppCompatActivity implements CambioDePagina {
 
         if (isUserLogged()) {
             firebaseUser = getCurrentUser();
-        }
-
-        if (isUserLogged()) {
             Toast.makeText(this, "Welcome " + firebaseUser.getDisplayName() + "!", Toast.LENGTH_SHORT).show();
         }
 
