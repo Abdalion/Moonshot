@@ -14,7 +14,6 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.google.firebase.auth.FirebaseAuth;
 import com.like.LikeButton;
 import com.like.OnLikeListener;
 
@@ -68,31 +67,29 @@ public class DetalleSerie extends Fragment {
 
 
         LikeButton likeButton = (LikeButton) view.findViewById(R.id.fav_button);
-        if(mSerie.isFavorito()) {
+        if (mSerie.isFavorito()) {
             likeButton.setLiked(true);
         }
 
         likeButton.setOnLikeListener(new OnLikeListener() {
             @Override
             public void liked(LikeButton likeButton) {
-                if(getCurrentUser() != null) {
+                if (getCurrentUser() != null) {
                     mFavCallback.onFavChange(mSerie.getId(), true);
                     Snackbar.make(getView(), R.string.added_favorite, Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
-                }
-                else {
+                } else {
                     mFavCallback.favNotLogued();
                 }
             }
 
             @Override
             public void unLiked(LikeButton likeButton) {
-                if(getCurrentUser() != null) {
+                if (getCurrentUser() != null) {
                     mFavCallback.onFavChange(mSerie.getId(), false);
                     Snackbar.make(getView(), R.string.added_favorite, Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
-                }
-                else {
+                } else {
                     mFavCallback.favNotLogued();
                 }
             }
@@ -134,7 +131,7 @@ public class DetalleSerie extends Fragment {
         TextView textViewLenguaje = (TextView) view.findViewById(R.id.fragment_detalle_lenguaje);
         textViewLenguaje.setText(mSerie.getLenguaje());
 
-        TextView textViewTrama =  (TextView) view.findViewById(R.id.fragment_detalle_trama);
+        TextView textViewTrama = (TextView) view.findViewById(R.id.fragment_detalle_trama);
         textViewTrama.setText(mSerie.getResumen());
 
         return view;

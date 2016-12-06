@@ -18,7 +18,6 @@ import a1.t1mo.mobjav.a816.myapplication.data.services.ServiceFactory;
 import a1.t1mo.mobjav.a816.myapplication.data.services.TmdbService;
 import a1.t1mo.mobjav.a816.myapplication.model.Feature;
 import a1.t1mo.mobjav.a816.myapplication.model.User;
-import a1.t1mo.mobjav.a816.myapplication.model.pelicula.Pelicula;
 import a1.t1mo.mobjav.a816.myapplication.model.serie.ListadoSeries;
 import a1.t1mo.mobjav.a816.myapplication.model.serie.Serie;
 import a1.t1mo.mobjav.a816.myapplication.utils.ConnectivityCheck;
@@ -46,7 +45,6 @@ public class SerieDAO {
     private Realm mRealm;
     private static SerieDAO sInstance;
     private FirebaseUser mFirebaseUser;
-    private List<Serie> mListaDeFavoritos;
 
     private SerieDAO() {
         sTmdbService = ServiceFactory.getTmdbService();
@@ -274,8 +272,8 @@ public class SerieDAO {
         }
     }
 
-    public List<Serie> getFavoritos(Context context) {
-        if (isNot(FirebaseAuth.getInstance().getCurrentUser() == null)
+    public void getFavoritos(Context context, final Listener<List<? extends Feature>> listener) {
+        if (FirebaseAuth.getInstance().getCurrentUser() != null
                 && ConnectivityCheck.hasConnectivity(context)) {
             mFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
             DatabaseReference userReference = FirebaseDatabase.getInstance().getReference().child("users").child(mFirebaseUser.getUid());
@@ -287,7 +285,7 @@ public class SerieDAO {
                     for (Integer i : myMap.values()) {
                         setFavoritoRealm(i, true);
                     }
-                    mListaDeFavoritos = mRealm.where(Serie.class).equalTo("favorito", true).findAll();
+                    listener.done(getFavoritosDeRealm());
                 }
 
                 @Override
@@ -295,9 +293,12 @@ public class SerieDAO {
                 }
             });
         } else {
-            mListaDeFavoritos = mRealm.where(Serie.class).equalTo("favorito", true).findAll();
+            listener.done(getFavoritosDeRealm());
         }
-        return mListaDeFavoritos;
+    }
+
+    private List<? extends Feature> getFavoritosDeRealm() {
+        return mRealm.where(Serie.class).equalTo("favorito", true).findAll();
     }
 
     private boolean isNot(boolean bool) {

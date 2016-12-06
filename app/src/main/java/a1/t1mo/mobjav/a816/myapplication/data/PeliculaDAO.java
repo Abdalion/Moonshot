@@ -45,7 +45,6 @@ public class PeliculaDAO {
     private Realm mRealm;
     private static PeliculaDAO sInstance;
     private FirebaseUser mFirebaseUser;
-    private List<Pelicula> mListaDeFavoritos;
 
     private PeliculaDAO() {
         sTmdbService = ServiceFactory.getTmdbService();
@@ -145,9 +144,9 @@ public class PeliculaDAO {
         int cantidadDePeliculas = (int) mRealm.where(Pelicula.class).count();
         int indice = (page + 1) * PAGE_SIZE < cantidadDePeliculas ? (page + 1) * PAGE_SIZE : cantidadDePeliculas;
         return mRealm
-                    .where(Pelicula.class)
-                    .findAllSorted("popularidad", Sort.DESCENDING)
-                    .subList(0, indice);
+                .where(Pelicula.class)
+                .findAllSorted("popularidad", Sort.DESCENDING)
+                .subList(0, indice);
     }
 
     public void getPeliculasPorGeneroDeTmdb(final String id, final Listener<List<? extends Feature>> listener) {
@@ -202,14 +201,14 @@ public class PeliculaDAO {
         int cantidadDePeliculas = (int) mRealm.where(Pelicula.class).count();
         int indice = (page + 1) * PAGE_SIZE < cantidadDePeliculas ? (page + 1) * PAGE_SIZE : cantidadDePeliculas;
         return mRealm
-                    .where(Pelicula.class)
-                    .equalTo("generos.value", id)
-                    .findAllSorted("popularidad", Sort.DESCENDING)
-                    .subList(0, indice);
+                .where(Pelicula.class)
+                .equalTo("generos.value", id)
+                .findAllSorted("popularidad", Sort.DESCENDING)
+                .subList(0, indice);
     }
 
-    public List<Pelicula> getFavoritos(Context context) {
-        if (!(FirebaseAuth.getInstance().getCurrentUser() == null)
+    public void getFavoritos(Context context, final Listener<List<? extends Feature>> listener) {
+        if (FirebaseAuth.getInstance().getCurrentUser() != null
                 && ConnectivityCheck.hasConnectivity(context)) {
             mFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
             DatabaseReference userReference = FirebaseDatabase.getInstance().getReference().child("users").child(mFirebaseUser.getUid());
@@ -221,7 +220,7 @@ public class PeliculaDAO {
                     for (Integer i : myMap.values()) {
                         setFavoritoRealm(i, true);
                     }
-                    mListaDeFavoritos = mRealm.where(Pelicula.class).equalTo("favorito", true).findAll();
+                    listener.done(getFavoritosDeRealm());
                 }
 
                 @Override
@@ -229,9 +228,12 @@ public class PeliculaDAO {
                 }
             });
         } else {
-            mListaDeFavoritos = mRealm.where(Pelicula.class).equalTo("favorito", true).findAll();
+            listener.done(getFavoritosDeRealm());
         }
-        return mListaDeFavoritos;
+    }
+
+    private List<Pelicula> getFavoritosDeRealm() {
+        return mRealm.where(Pelicula.class).equalTo("favorito", true).findAll();
     }
 
 
