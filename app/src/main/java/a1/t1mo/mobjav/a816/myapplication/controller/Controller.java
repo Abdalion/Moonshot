@@ -16,8 +16,8 @@ import a1.t1mo.mobjav.a816.myapplication.utils.Listener;
 
 public interface Controller {
     void getFeatures(int menuId, Listener<List<? extends Feature>> listener);
-
+    void getNextPage(int menuId, Listener<List<? extends Feature>> listener);
+    boolean isLastPage();
     List<? extends Feature> getFavoritos();
-
     void setFavorito(final int id, final boolean isFav);
 }

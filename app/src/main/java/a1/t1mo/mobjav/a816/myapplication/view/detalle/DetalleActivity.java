@@ -48,10 +48,10 @@ public class DetalleActivity extends AppCompatActivity implements FavChange {
         Tipo tipo = (Tipo) bundle.getSerializable(ARGUMENT_TIPO);
 
         if (tipo == Tipo.PELICULAS) {
-            mController = new PeliculaController();
+            mController = new PeliculaController(this);
             mAdapter = new DetallePeliculaAdapter(getSupportFragmentManager());
         } else {
-            mController = new SerieController();
+            mController = new SerieController(this);
             mAdapter = new DetalleSerieAdapter(getSupportFragmentManager());
         }
 

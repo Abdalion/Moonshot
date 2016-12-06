@@ -1,15 +1,12 @@
 package a1.t1mo.mobjav.a816.myapplication.view.detalle;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -25,8 +22,6 @@ import a1.t1mo.mobjav.a816.myapplication.R;
 import a1.t1mo.mobjav.a816.myapplication.data.services.TmdbService;
 import a1.t1mo.mobjav.a816.myapplication.model.pelicula.Pelicula;
 import a1.t1mo.mobjav.a816.myapplication.utils.FavChange;
-import a1.t1mo.mobjav.a816.myapplication.utils.TipoDeFeature;
-import a1.t1mo.mobjav.a816.myapplication.view.login.LoginActivity;
 
 import static a1.t1mo.mobjav.a816.myapplication.utils.UserActions.getCurrentUser;
 

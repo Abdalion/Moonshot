@@ -28,23 +28,23 @@ public interface TmdbService {
     Call<Pelicula> getPelicula(@Path("movie_id") Integer id);
 
     @GET("movie/popular")
-    Call<ListadoPeliculas> getPeliculasPopulares();
+    Call<ListadoPeliculas> getPeliculasPopulares(@Query("page") int page);
 
     @GET("movie/top_rated")
     Call<ListadoPeliculas> getPeliculasMejorRankeadas();
 
     @GET("genre/{genre_id}/movies")
-    Call<ListadoPeliculas> getPeliculasPorGenero(@Path("genre_id") String genero);
+    Call<ListadoPeliculas> getPeliculasPorGenero(@Path("genre_id") String genero, @Query("page") int page);
 
     @GET("tv/{tv_id}")
     Call<Serie> getSerie(@Path("tv_id") Integer id);
 
     @GET("tv/popular")
-    Call<ListadoSeries> getSeriesPopulares();
+    Call<ListadoSeries> getSeriesPopulares(@Query("page") int page);
 
     @GET("tv/top_rated")
     Call<ListadoSeries> getSeriesMejorRankeadas();
 
     @GET("discover/tv")
-    Call<ListadoSeries> getSeriesPorGenero(@Query("with_genres") String genero);
+    Call<ListadoSeries> getSeriesPorGenero(@Query("with_genres") String genero, @Query("page") int page);
 }
