@@ -95,7 +95,7 @@ public class PeliculaDAO {
     }
 
     public void getPeliculasPopularesDeTmdb(final Listener<List<? extends Feature>> listener) {
-        sTmdbService.getPeliculasPopulares(0).enqueue(new Callback<ListadoPeliculas>() {
+        sTmdbService.getPeliculasPopulares(1).enqueue(new Callback<ListadoPeliculas>() {
             @Override
             public void onResponse(Call<ListadoPeliculas> call, Response<ListadoPeliculas> response) {
                 if (response.isSuccessful()) {
@@ -142,8 +142,8 @@ public class PeliculaDAO {
     }
 
     public List<Pelicula> getPeliculasPopularesDeRealm(int page) {
-        int indiceUltimaPelicula = (int) mRealm.where(Pelicula.class).count();
-        int indice = (page + 1) * PAGE_SIZE < indiceUltimaPelicula ? (page + 1) * PAGE_SIZE : indiceUltimaPelicula;
+        int cantidadDePeliculas = (int) mRealm.where(Pelicula.class).count();
+        int indice = (page + 1) * PAGE_SIZE < cantidadDePeliculas ? (page + 1) * PAGE_SIZE : cantidadDePeliculas;
         return mRealm
                     .where(Pelicula.class)
                     .findAllSorted("popularidad", Sort.DESCENDING)
@@ -151,7 +151,7 @@ public class PeliculaDAO {
     }
 
     public void getPeliculasPorGeneroDeTmdb(final String id, final Listener<List<? extends Feature>> listener) {
-        sTmdbService.getPeliculasPorGenero(id, 0).enqueue(new Callback<ListadoPeliculas>() {
+        sTmdbService.getPeliculasPorGenero(id, 1).enqueue(new Callback<ListadoPeliculas>() {
             @Override
             public void onResponse(Call<ListadoPeliculas> call, Response<ListadoPeliculas> response) {
                 if (response.isSuccessful()) {
@@ -199,8 +199,8 @@ public class PeliculaDAO {
     }
 
     public List<Pelicula> getPeliculasPorGeneroDeRealm(int page, String id) {
-        int indiceUltimaPelicula = (int) mRealm.where(Pelicula.class).count();
-        int indice = (page + 1) * PAGE_SIZE < indiceUltimaPelicula ? (page + 1) * PAGE_SIZE : indiceUltimaPelicula;
+        int cantidadDePeliculas = (int) mRealm.where(Pelicula.class).count();
+        int indice = (page + 1) * PAGE_SIZE < cantidadDePeliculas ? (page + 1) * PAGE_SIZE : cantidadDePeliculas;
         return mRealm
                     .where(Pelicula.class)
                     .equalTo("generos.value", id)
@@ -252,8 +252,6 @@ public class PeliculaDAO {
                     @Override
                     public void execute(Realm realm) {
                         realm.copyToRealmOrUpdate(pelicula);
-                        Log.d(TAG, "Guardamos la pelicula: " + pelicula.getTitulo() + "\nGenero: " +
-                        pelicula.getGeneros());
                     }
                 });
             }
@@ -304,6 +302,7 @@ public class PeliculaDAO {
     }
 
     public boolean isLastPage(int page) {
-        return mRealm.where(Pelicula.class).count() % PAGE_SIZE <= page;
+        int cantidadDePeliculas = (int) mRealm.where(Pelicula.class).count();
+        return (page >= cantidadDePeliculas % PAGE_SIZE && cantidadDePeliculas - page * PAGE_SIZE <= 0);
     }
 }

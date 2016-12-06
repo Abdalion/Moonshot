@@ -122,8 +122,8 @@ public class FeatureFragment extends GridFragment implements Listener<List<? ext
 
     @Override
     public void done(List<? extends Feature> param) {
-        Log.d(getClass().getSimpleName(), "Cantidad de Features recibidos: " + param.size());
         mAdapter.setFeatures(param);
+        mLoading = false;
         if (mSwipeRefresh.isRefreshing()) mSwipeRefresh.setRefreshing(false);
     }
 
@@ -131,7 +131,6 @@ public class FeatureFragment extends GridFragment implements Listener<List<? ext
     public void onClick(View view) {
         Intent intent = DetalleActivity.getIntent(getContext(), mTipo, mMenuID,
                 mRecyclerView.getChildAdapterPosition(view));
-        Log.d(getClass().getSimpleName(), "Posicion clickeada: " + mRecyclerView.getChildAdapterPosition(view));
         startActivity(intent);
     }
 

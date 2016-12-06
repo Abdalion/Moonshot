@@ -96,7 +96,7 @@ public class SerieDAO {
     }
 
     public void getSeriesPopularesDeTmdb(final Listener<List<? extends Feature>> listener) {
-        sTmdbService.getSeriesPopulares(0).enqueue(new Callback<ListadoSeries>() {
+        sTmdbService.getSeriesPopulares(1).enqueue(new Callback<ListadoSeries>() {
             @Override
             public void onResponse(Call<ListadoSeries> call, Response<ListadoSeries> response) {
                 if (response.isSuccessful()) {
@@ -143,8 +143,8 @@ public class SerieDAO {
     }
 
     public List<Serie> getSeriesPopularesDeRealm(int page) {
-        int indiceUltimaSerie = (int) mRealm.where(Serie.class).count();
-        int indice = (page + 1) * PAGE_SIZE < indiceUltimaSerie ? (page + 1) * PAGE_SIZE : indiceUltimaSerie;
+        int cantidadDeSeries = (int) mRealm.where(Serie.class).count();
+        int indice = (page + 1) * PAGE_SIZE < cantidadDeSeries ? (page + 1) * PAGE_SIZE : cantidadDeSeries;
         return mRealm
                 .where(Serie.class)
                 .findAllSorted("popularidad", Sort.DESCENDING)
@@ -152,7 +152,7 @@ public class SerieDAO {
     }
 
     public void getSeriesPorGeneroDeTmdb(final String id, final Listener<List<? extends Feature>> listener) {
-        sTmdbService.getSeriesPorGenero(id, 0).enqueue(new Callback<ListadoSeries>() {
+        sTmdbService.getSeriesPorGenero(id, 1).enqueue(new Callback<ListadoSeries>() {
             @Override
             public void onResponse(Call<ListadoSeries> call, Response<ListadoSeries> response) {
                 if (response.isSuccessful()) {
@@ -200,8 +200,8 @@ public class SerieDAO {
     }
 
     public List<Serie> getSeriesPorGeneroDeRealm(int page, String id) {
-        int indiceUltimaSerie = (int) mRealm.where(Serie.class).count();
-        int indice = (page + 1) * PAGE_SIZE < indiceUltimaSerie ? (page + 1) * PAGE_SIZE : indiceUltimaSerie;
+        int cantidadDeSeries = (int) mRealm.where(Serie.class).count();
+        int indice = (page + 1) * PAGE_SIZE < cantidadDeSeries ? (page + 1) * PAGE_SIZE : cantidadDeSeries;
         return mRealm
                 .where(Serie.class)
                 .equalTo("generos.value", id)
@@ -272,7 +272,6 @@ public class SerieDAO {
                 }
             });
         }
-
     }
 
     public List<Serie> getFavoritos(Context context) {
@@ -306,6 +305,7 @@ public class SerieDAO {
     }
 
     public boolean isLastPage(int page) {
-        return mRealm.where(Pelicula.class).count() % PAGE_SIZE <= page;
+        int cantidadDeSeries = (int) mRealm.where(Serie.class).count();
+        return (page >= cantidadDeSeries % PAGE_SIZE && cantidadDeSeries - page * PAGE_SIZE <= 0);
     }
 }

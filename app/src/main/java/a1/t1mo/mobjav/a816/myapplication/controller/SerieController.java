@@ -15,7 +15,7 @@ import a1.t1mo.mobjav.a816.myapplication.utils.Listener;
 public class SerieController implements Controller {
     private SerieDAO mSerieDAO;
     private Context mContext;
-    private int mPaginaActual = 0;
+    private int mPaginaActual = 1;
 
     public SerieController(Context context) {
         mSerieDAO = SerieDAO.getDAO();
