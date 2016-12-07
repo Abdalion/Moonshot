@@ -3,6 +3,8 @@ package a1.t1mo.mobjav.a816.myapplication.view.login;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.TextInputEditText;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -41,6 +43,8 @@ import a1.t1mo.mobjav.a816.myapplication.R;
 import a1.t1mo.mobjav.a816.myapplication.model.User;
 import a1.t1mo.mobjav.a816.myapplication.view.MainActivity;
 
+import static a1.t1mo.mobjav.a816.myapplication.utils.ConnectivityCheck.hasConnectivity;
+
 public class LoginActivity extends AppCompatActivity {
     private CallbackManager mCallbackManager;
     private TwitterAuthClient mTwitterAuthClient= new TwitterAuthClient();
@@ -57,6 +61,10 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.login_activity);
 
         mAuth = FirebaseAuth.getInstance();
+
+        final TextInputLayout inputNombre = (TextInputLayout) findViewById(R.id.full_name);
+        final TextInputLayout inputMail = (TextInputLayout) findViewById(R.id.email_address);
+        final TextInputLayout inputPassword = (TextInputLayout) findViewById(R.id.password);
 
         Button facebookButton = (Button)findViewById(R.id.login_button_facebook);
         facebookButton.setOnClickListener(new View.OnClickListener() {
@@ -104,6 +112,32 @@ public class LoginActivity extends AppCompatActivity {
                 });
             }
         });
+
+        Button customButton = (Button) findViewById(R.id.login_button_custom);
+        customButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(isEmailValid(inputMail.getEditText().getText())) {
+                    if(inputNombre.getEditText().getText().length() > 2) {
+                        if(inputPassword.getEditText().getText().length() > 5) {
+                            //customLoginToFirebase(inputMail.getEditText().getText().toString(), inputPassword.getEditText().getText().toString(), inputNombre.getEditText().getText().toString());
+                        }
+                        else {
+                            inputPassword.setErrorEnabled(true);
+                            inputPassword.setError("Invalid password! (Too short)");
+                        }
+                    }
+                    else {
+                        inputNombre.setErrorEnabled(true);
+                        inputNombre.setError("Invalid name! (Too short)");
+                    }
+                }
+                else {
+                    inputMail.setErrorEnabled(true);
+                    inputMail.setError("Invalid mail!");
+                }
+            }
+        });
     }
 
     @Override
@@ -117,7 +151,6 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void loginToFirebase(final AuthCredential credential) {
-        finish();
          mAuth.signInWithCredential(credential).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
              @Override
              public void onComplete(@NonNull Task<AuthResult> task) {
@@ -144,16 +177,11 @@ public class LoginActivity extends AppCompatActivity {
 
                      }
                  });
-
-
+                 finish();
                  startActivity(new Intent(LoginActivity.this, MainActivity.class));
                  LoginActivity.this.finish();
-
-
              }
          });
-
-
     }
 
     public void onBackPressed() {
@@ -161,5 +189,58 @@ public class LoginActivity extends AppCompatActivity {
         overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
 
     }
+
+    private boolean isEmailValid(CharSequence email) {
+        return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
+    }
+
+/*    private void customLoginToFirebase(final String email, final String password, final String username) {
+        finish();
+        mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if (!task.isSuccessful()) {
+                    Toast.makeText(LoginActivity.this, "Created user!", Toast.LENGTH_SHORT).show();
+                    mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            mAuth.signInWithEmailAndPassword(email, password);
+                            user = FirebaseAuth.getInstance().getCurrentUser();
+                            firebaseDatabase.getReference().child("users").addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot snapshot) {
+                                    if (snapshot.hasChild(user.getUid())) {
+                                        Log.d("Firebase", "Existe el user en la base de datos remota");
+                                    } else {
+                                        Log.d("Firebase", "Creado user en la base de datos remota");
+                                        User myUser = new User();
+                                        myUser.setUserID(user.getUid());
+                                        myUser.setUsername(username);
+                                        myUser.setPeliculasFavoritas(new HashMap<String, Integer>());
+                                        myUser.setSeriesFavoritas(new HashMap<String, Integer>());
+                                        firebaseDatabase.getReference().child("users").child(user.getUid()).setValue(myUser);
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+
+                                }
+                            });
+
+                        }
+                    });
+                }
+
+
+                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                LoginActivity.this.finish();
+
+            }
+        });
+    }*/
+
+
+
 
 }

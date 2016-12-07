@@ -75,8 +75,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:background="#b45705"
-        android:text="Sign Up"
-        android:textColor="#fff" />
+        android:text="Sign in"
+        android:textColor="#fff"
+        android:id="@+id/login_button_custom"/>
 
     <TextView
         android:layout_width="fill_parent"

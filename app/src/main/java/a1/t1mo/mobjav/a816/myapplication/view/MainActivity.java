@@ -142,20 +142,6 @@ public class MainActivity extends AppCompatActivity implements CambioDePagina {
         return super.onOptionsItemSelected(item);
     }
 
-    private void navigationViewSetup() {
-        if (isUserLogged()) {
-            View headerLayout = navigationView.getHeaderView(0);
-            TextView textView = (TextView) headerLayout.findViewById(R.id.nombreDePersona);
-            textView.setText(firebaseUser.getDisplayName());
-
-            final ImageView imageView = (ImageView) headerLayout.findViewById(R.id.imageViewPersona);
-            Glide.with(this).load(firebaseUser.getPhotoUrl()).bitmapTransform(new CropCircleTransform(this)).into(imageView);
-        } else {
-            View headerLayout = navigationView.getHeaderView(0);
-            TextView textView = (TextView) headerLayout.findViewById(R.id.nombreDePersona);
-            textView.setText("Usuario no Registrado");
-        }
-    }
     @Override
     public void onCambioDePagina(Tipo tipo) {
         navigationView.getMenu().clear();
